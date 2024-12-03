@@ -24,7 +24,6 @@ function ThemeTypeModeProvider({ children }: ThemeTypeModeProviderType) {
       }
       localStorage.setItem("themeModeDark", String(temaDark));
     } else {
-      console.log(storage === "true" ? true : false);
       setModeDark(storage === "true" ? true : false);
     }
   }, []);

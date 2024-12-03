@@ -1,4 +1,4 @@
-import { TextField, Stack, Button, Typography, Container } from "@mui/material";
+import { TextField, Stack, Button, Typography, Container, Icon, InputAdornment } from "@mui/material";
 
 function Login() {
   return (
@@ -8,9 +8,42 @@ function Login() {
           <Typography variant="button" fontSize={20}>
             INGRESAR
           </Typography>
-          <TextField autoFocus required variant="outlined" placeholder="Usuario o email" label="Usuario" fullWidth />
-          <TextField variant="outlined" placeholder="Contraseña" label="Contraseña" type="password" fullWidth />
-          <Button variant="contained">Ingresar</Button>
+          <TextField
+            slotProps={{
+              input: {
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Icon>person</Icon>
+                  </InputAdornment>
+                ),
+              },
+            }}
+            autoFocus
+            required
+            variant="outlined"
+            placeholder="Usuario o email"
+            label="Usuario"
+            fullWidth
+          />
+          <TextField
+            slotProps={{
+              input: {
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Icon>lock</Icon>
+                  </InputAdornment>
+                ),
+              },
+            }}
+            variant="outlined"
+            placeholder="Contraseña"
+            label="Contraseña"
+            type="password"
+            fullWidth
+          />
+          <Button variant="contained" size="large">
+            Ingresar
+          </Button>
         </Stack>
       </Stack>
     </Container>
