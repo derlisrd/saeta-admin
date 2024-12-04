@@ -54,6 +54,9 @@ function Login() {
               onChange={({ target }) => {
                 setPassword(target.value);
               }}
+              onKeyUp={({ key }) => {
+                key === "Enter" && handleLogin();
+              }}
               value={password}
             />
             <Button variant="contained" size="large" onClick={handleLogin}>
