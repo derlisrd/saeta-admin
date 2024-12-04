@@ -1,14 +1,13 @@
 import { ThemeProvider } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
-import useAuth from "@/hooks/useAuth";
 import PublicPages from "./public";
 import AutenticatedPages from "./auth";
 import useThemeLayout from "@/hooks/useThemeLayout";
+import useAuthStore from "@/store/authStore";
 
 function App() {
-  const { isAuth } = useAuth();
   const { theme } = useThemeLayout();
-
+  const { isAuth } = useAuthStore();
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
