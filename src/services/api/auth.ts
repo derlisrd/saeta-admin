@@ -3,10 +3,12 @@ import { LoginResponse } from "../dto/login";
 import BASE from "./base";
 
 export const apiServiceAuth = {
-    login : async( userEmail : string, password : string)=>{
+    login : async( username : string, password : string)=>{
         try {
-            const bodyRequest = {username: userEmail, password }
-            const {data,status} = await BASE.post('/login',bodyRequest)
+            const {data,status} = await BASE.post('/login',{
+              username,
+              password 
+            })
 
             return LoginResponse.fromJSON({
                 success: data.success,
