@@ -2,7 +2,7 @@ import useLogin from "@/core/hooks/login/useLogin";
 import { TextField, Stack, Button, Typography, Container, Icon, InputAdornment, CircularProgress } from "@mui/material";
 
 function Login() {
-  const { username, setUsername, password, setPassword, handleLogin, isLoading } = useLogin();
+  const { username, setUsername, password, setPassword, handleLogin, isLoading, error } = useLogin();
   return (
     <Container maxWidth="md">
       {isLoading ? (
