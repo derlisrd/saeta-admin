@@ -23,9 +23,11 @@ const useAuthStore = ()=>{
     const userData = authStore(state => state.userData)
     const setUserData = authStore(state => state.setUserData)
 
-    const iniciarSesion = (data : LoginResults) => {
-        setIsAuth(true);
-        setUserData(data);
+    const iniciarSesion = (data : LoginResults | null) => {
+        if(data !== null){
+            setIsAuth(true);
+            setUserData(data);
+        }
     }
 
 

@@ -8,7 +8,7 @@ export const apiServiceAuth = {
             const {data,status} = await BASE.post('/login',{
               username,
               password 
-            })
+            }) 
 
             return LoginResponse.fromJSON({
                 success: data.success,

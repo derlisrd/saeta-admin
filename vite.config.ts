@@ -16,18 +16,12 @@ export default defineConfig({
   },
   server: {
     port: 3000,
-    proxy : {
-      '/api/' : {
-        target: 'http://localhost:8000/api',
+    proxy: {
+      '/api': {
+        target: 'https://saeta.dev.saeta.uk',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '')
-      }
+        secure: false,
+      },
     },
-    cors: {
-      origin: "*",
-      methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-      preflightContinue: false,
-      optionsSuccessStatus: 204
-    }
   }
 });

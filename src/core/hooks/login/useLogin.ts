@@ -14,7 +14,6 @@ function useLogin() {
         setIsLoading(true)
         const res = await API.auth.login(username,password)
         setIsLoading(false)
-        clearError()
         
         if(!res.success){
             setError({code: res.status, message: res.message})
