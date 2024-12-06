@@ -1,4 +1,5 @@
 import ThemeTypeModeContext from "@/contexts/ThemeTypeModeContext";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { ReactNode, useCallback, useEffect, useState } from "react";
 
 interface ThemeTypeModeProviderType {
@@ -7,13 +8,12 @@ interface ThemeTypeModeProviderType {
 
 function ThemeTypeModeProvider({ children }: ThemeTypeModeProviderType) {
   const [modeDark, setModeDark] = useState(true);
-
+  const { current: storage, setItemValue } = useLocalStorage<boolean | null>("themeModeDark", null);
   const toggleTheme = () => {
     setModeDark(!modeDark);
   };
 
   const checkTheme = useCallback(() => {
-    const storage = localStorage.getItem("themeModeDark");
     let temaDark: boolean;
 
     if (storage === null) {
@@ -22,9 +22,9 @@ function ThemeTypeModeProvider({ children }: ThemeTypeModeProviderType) {
       } else {
         temaDark = false;
       }
-      localStorage.setItem("themeModeDark", String(temaDark));
+      setItemValue(temaDark);
     } else {
-      setModeDark(storage === "true" ? true : false);
+      setModeDark(storage);
     }
   }, []);
 

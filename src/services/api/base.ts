@@ -4,8 +4,7 @@ const XAPIKEY = import.meta.env.VITE_X_API_KEY;
 
 const BASE = axios.create({ baseURL: BASE_API_URL + "/api", headers: { 
     'x-api-key': XAPIKEY, 
-    Accept: 'application/json', 
-    'Content-Type': 'application/json'
+    Accept: 'application/json'
 } });
 
 export default BASE;
