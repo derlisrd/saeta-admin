@@ -8,9 +8,10 @@ interface ThemeTypeModeProviderType {
 
 function ThemeTypeModeProvider({ children }: ThemeTypeModeProviderType) {
   const [modeDark, setModeDark] = useState(true);
-  const { current: storage, setItemValue } = useLocalStorage<boolean | null>("themeModeDark", null);
+  const { current: storage, setItemValue: setStorage } = useLocalStorage<boolean | null>("themeModeDark", null);
   const toggleTheme = () => {
     setModeDark(!modeDark);
+    setStorage(!modeDark);
   };
 
   const checkTheme = useCallback(() => {
@@ -22,7 +23,7 @@ function ThemeTypeModeProvider({ children }: ThemeTypeModeProviderType) {
       } else {
         temaDark = false;
       }
-      setItemValue(temaDark);
+      setStorage(temaDark);
     } else {
       setModeDark(storage);
     }
