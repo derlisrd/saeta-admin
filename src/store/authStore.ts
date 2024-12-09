@@ -1,4 +1,6 @@
+import { useSessionStorage } from "@/hooks/useSessionStorage";
 import { LoginResults } from "@/services/dto/login";
+import { useCallback, useEffect } from "react";
 import { create } from "zustand";
 
 
@@ -18,18 +20,34 @@ const authStore = create<authStoreType>((set)=>({
 
 
 const useAuthStore = ()=>{
+    const {setItemValue : setSessionUserData, current : sessionUserData} = useSessionStorage<LoginResults | null>('userData',null)
     const isAuth = authStore((state) => state.isAuth);
     const setIsAuth = authStore((state) => state.setIsAuth);
     const userData = authStore(state => state.userData)
     const setUserData = authStore(state => state.setUserData)
 
-    const iniciarSesion = (data : LoginResults | null) => {
+    const iniciarSesion = (data : LoginResults | null, mantener ? : boolean) => {
         if(data !== null){
             setIsAuth(true);
             setUserData(data);
+            mantener && setSessionUserData(data)
         }
     }
 
+
+
+    const checkIsAuth = useCallback(async()=>{
+        if(sessionUserData !== null){
+            setIsAuth(true);
+            setUserData(sessionUserData);
+        }
+    },[])
+
+    useEffect(() => {
+        const ca = new AbortController(); let isActive = true;
+        if (isActive) {checkIsAuth()}
+        return () => {isActive = false;ca.abort();};
+      }, [checkIsAuth]);
 
     return {isAuth, userData, iniciarSesion}
 }

@@ -20,7 +20,7 @@ function useLogin() {
             return false;
         }
 
-        iniciarSesion(res.results)
+        iniciarSesion(res.results,true)
     }
 
     return { username,setUsername,password,setPassword, handleLogin, error, isLoading, clearError }
