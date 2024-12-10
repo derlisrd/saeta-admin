@@ -1,83 +1,42 @@
+import MenuNav from "./components/MenuNav";
 import useDrawerMenu from "@/hooks/useDrawerMenu";
-import { Drawer, Toolbar, Icon, IconButton, Box, List, ListItem, ListItemText, ListItemButton, ListItemIcon, Stack, Typography } from "@mui/material";
-import { NavigateOptions, Outlet, To, useLocation, useNavigate } from "react-router-dom";
-import { Fragment } from "react";
-import menu from "@/constants/menu";
-import SimpleBar from "simplebar-react";
 import useThemTypeMode from "@/hooks/useThemeTypeMode";
+import { Drawer, Box, Toolbar, Stack, Icon, IconButton } from "@mui/material";
+import { NavigateOptions, Outlet, To, useNavigate } from "react-router-dom";
 
 function AuthMenuLayout() {
+  const navigate = useNavigate();
   const { isOpenMenu, toggleMenu, isOpenMobileMenu, toggleMobileMenu, DRAWER_WIDTH } = useDrawerMenu();
   const { toggleTheme } = useThemTypeMode();
-  const { pathname } = useLocation();
-  const navigate = useNavigate();
 
   let margin_left = isOpenMenu ? `${DRAWER_WIDTH}px` : "0";
   let width_main = isOpenMenu ? `calc(100% - ${DRAWER_WIDTH}px)` : "100%";
-
-  const SELECTED = {
-    "&:hover, &.Mui-selected": {
-      borderRadius: "0 18px 18px 0",
-      margin: "0",
-      borderLeftStyle: "solid",
-      borderLeftWidth: "1px",
-      borderLeftColor: "primary.main",
-      div: { color: "primary.main" },
-      span: { fontWeight: "bold" },
-    },
-  };
 
   const navegar = (to: To, isMobile: boolean, options?: NavigateOptions) => {
     navigate(to, options);
     isMobile && toggleMobileMenu();
   };
 
-  const MenuNav = ({ isMobile = false }: { isMobile?: boolean }) => {
-    return (
-      <SimpleBar forceVisible="y" autoHide={true} style={{ maxHeight: "100vh" }}>
-        <Toolbar>
-          <Typography variant="button">SGA</Typography>
-        </Toolbar>
-        <List>
-          {menu.map((e) => (
-            <Fragment key={e.id}>
-              <ListItem disablePadding>
-                <ListItemButton selected={pathname === e.url} sx={SELECTED} onClick={() => navegar(e.url, isMobile)}>
-                  <ListItemIcon>
-                    <Icon>{e.icon}</Icon>
-                  </ListItemIcon>
-                  <ListItemText>{e.title}</ListItemText>
-                </ListItemButton>
-              </ListItem>
-            </Fragment>
-          ))}
-        </List>
-      </SimpleBar>
-    );
-  };
-
   const TopBar = () => {
     return (
-      <nav>
-        <Toolbar
-          component="header"
-          sx={{ position: "fixed", display: "flex", width: "100%", zIndex: 1100, backdropFilter: "blur(5px)", alignItems: "center", padding: "0 !important" }}
-        >
-          <Stack justifyContent="space-between" flexDirection="row" width="100%" alignItems="center">
-            <IconButton onClick={toggleMobileMenu} sx={{ minWidth: "50px", display: { xs: "block", md: "none" } }}>
-              <Icon>menu</Icon>
+      <Toolbar
+        component="header"
+        sx={{ position: "fixed", display: "flex", width: "100%", zIndex: 1100, backdropFilter: "blur(5px)", alignItems: "center", padding: "0 !important" }}
+      >
+        <Stack justifyContent="space-between" flexDirection="row" width="100%" alignItems="center">
+          <IconButton onClick={toggleMobileMenu} sx={{ minWidth: "50px", display: { xs: "block", md: "none" } }}>
+            <Icon>menu</Icon>
+          </IconButton>
+          <IconButton onClick={toggleMenu} sx={{ minWidth: "50px", marginLeft: margin_left, display: { xs: "none", md: "block", transition: "all 0.2s" } }}>
+            <Icon>menu</Icon>
+          </IconButton>
+          <Stack>
+            <IconButton onClick={toggleTheme}>
+              <Icon>light_mode</Icon>
             </IconButton>
-            <IconButton onClick={toggleMenu} sx={{ minWidth: "50px", marginLeft: margin_left, display: { xs: "none", md: "block", transition: "all 0.2s" } }}>
-              <Icon>menu</Icon>
-            </IconButton>
-            <Stack>
-              <IconButton onClick={toggleTheme}>
-                <Icon>light_mode</Icon>
-              </IconButton>
-            </Stack>
           </Stack>
-        </Toolbar>
-      </nav>
+        </Stack>
+      </Toolbar>
     );
   };
 
@@ -96,7 +55,7 @@ function AuthMenuLayout() {
           },
         }}
       >
-        <MenuNav />
+        <MenuNav navegar={navegar} />
       </Drawer>
       <Drawer
         variant="temporary"
@@ -110,7 +69,7 @@ function AuthMenuLayout() {
           "& .MuiDrawer-paper": { bosmizing: "border-box", width: 256 },
         }}
       >
-        <MenuNav isMobile />
+        <MenuNav navegar={navegar} isMobile />
       </Drawer>
       <TopBar />
       <Box sx={{ paddingTop: "48px", paddingLeft: 2, width: { md: width_main }, marginLeft: { md: margin_left }, transition: "all 0.2s" }}>
