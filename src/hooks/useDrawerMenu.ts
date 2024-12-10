@@ -2,7 +2,7 @@ import { useState } from "react";
 
 function useDrawerMenu() {
 
-    const [DRAWER_WIDTH] = useState(256)
+    const [DRAWER_WIDTH] = useState(220)
 
     const [isOpenMenu,setIsOpenMenu] = useState(true)
     const [isOpenMobileMenu,setIsOpenMobileMenu] = useState(false)

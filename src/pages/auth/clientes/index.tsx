@@ -1,5 +1,5 @@
-function Cliente() {
-  return <h1>cliente</h1>;
+function Clientes() {
+  return <h1>clientes</h1>;
 }
 
-export default Cliente;
+export default Clientes;

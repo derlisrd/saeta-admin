@@ -1,6 +1,6 @@
 import useDrawerMenu from "@/hooks/useDrawerMenu";
-import { Drawer, Toolbar, Icon, IconButton, Box, List, ListItem, ListItemText, ListItemButton, ListItemIcon, Stack } from "@mui/material";
-import { Outlet } from "react-router-dom";
+import { Drawer, Toolbar, Icon, IconButton, Box, List, ListItem, ListItemText, ListItemButton, ListItemIcon, Stack, Typography } from "@mui/material";
+import { NavigateOptions, Outlet, To, useLocation, useNavigate } from "react-router-dom";
 import { Fragment } from "react";
 import menu from "@/constants/menu";
 import SimpleBar from "simplebar-react";
@@ -9,18 +9,40 @@ import useThemTypeMode from "@/hooks/useThemeTypeMode";
 function AuthMenuLayout() {
   const { isOpenMenu, toggleMenu, isOpenMobileMenu, toggleMobileMenu, DRAWER_WIDTH } = useDrawerMenu();
   const { toggleTheme } = useThemTypeMode();
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   let margin_left = isOpenMenu ? `${DRAWER_WIDTH}px` : "0";
   let width_main = isOpenMenu ? `calc(100% - ${DRAWER_WIDTH}px)` : "100%";
 
-  const MenuNav = () => {
+  const SELECTED = {
+    "&:hover, &.Mui-selected": {
+      borderRadius: "0 18px 18px 0",
+      margin: "0",
+      borderLeftStyle: "solid",
+      borderLeftWidth: "1px",
+      borderLeftColor: "primary.main",
+      div: { color: "primary.main" },
+      span: { fontWeight: "bold" },
+    },
+  };
+
+  const navegar = (to: To, isMobile: boolean, options?: NavigateOptions) => {
+    navigate(to, options);
+    isMobile && toggleMobileMenu();
+  };
+
+  const MenuNav = ({ isMobile = false }: { isMobile?: boolean }) => {
     return (
       <SimpleBar forceVisible="y" autoHide={true} style={{ maxHeight: "100vh" }}>
+        <Toolbar>
+          <Typography variant="button">SGA</Typography>
+        </Toolbar>
         <List>
           {menu.map((e) => (
             <Fragment key={e.id}>
               <ListItem disablePadding>
-                <ListItemButton>
+                <ListItemButton selected={pathname === e.url} sx={SELECTED} onClick={() => navegar(e.url, isMobile)}>
                   <ListItemIcon>
                     <Icon>{e.icon}</Icon>
                   </ListItemIcon>
@@ -88,7 +110,7 @@ function AuthMenuLayout() {
           "& .MuiDrawer-paper": { bosmizing: "border-box", width: 256 },
         }}
       >
-        <MenuNav />
+        <MenuNav isMobile />
       </Drawer>
       <TopBar />
       <Box sx={{ paddingTop: "48px", paddingLeft: 2, width: { md: width_main }, marginLeft: { md: margin_left }, transition: "all 0.2s" }}>
