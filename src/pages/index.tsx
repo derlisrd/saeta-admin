@@ -5,7 +5,7 @@ import AutenticatedPages from "./auth";
 import useThemeLayout from "@/hooks/useThemeLayout";
 import useAuthStore from "@/store/authStore";
 
-function App() {
+function Pages() {
   const { theme } = useThemeLayout();
   const { isAuth } = useAuthStore();
   return (
@@ -16,4 +16,4 @@ function App() {
   );
 }
 
-export default App;
+export default Pages;

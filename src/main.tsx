@@ -1,12 +1,12 @@
 import { createRoot } from "react-dom/client";
-import App from "./pages";
 import { BrowserRouter } from "react-router-dom";
 import ThemeTypeModeProvider from "./providers/ThemeTypeModeProvider";
+import Pages from "./pages";
 
 createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
     <ThemeTypeModeProvider>
-      <App />
+      <Pages />
     </ThemeTypeModeProvider>
   </BrowserRouter>
 );
