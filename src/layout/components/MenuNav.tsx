@@ -1,7 +1,7 @@
 import "simplebar-react/dist/simplebar.min.css";
 import { Fragment, useState } from "react";
 import SimpleBar from "simplebar-react";
-import { Toolbar, List, ListItem, ListItemButton, ListItemText, ListItemIcon, Collapse, Icon, Typography } from "@mui/material";
+import { Toolbar, List, ListItem, ListItemButton, ListItemText, ListItemIcon, Collapse, Icon, Typography, ListItemButtonBaseProps } from "@mui/material";
 import menu from "@/constants/menu";
 import { useLocation } from "react-router-dom";
 
@@ -10,7 +10,7 @@ const MenuNav = ({ isMobile = false, navegar }: { isMobile?: boolean; navegar: F
   const [lista, setLista] = useState(menu);
 
   const SELECTED = {
-    ":hover, &.Mui-selected": {
+    "&.Mui-selected": {
       borderRadius: "0 18px 18px 0",
       margin: "0",
       borderLeftStyle: "solid",
@@ -19,7 +19,10 @@ const MenuNav = ({ isMobile = false, navegar }: { isMobile?: boolean; navegar: F
       div: { color: "primary.main" },
       span: { fontWeight: "bold" },
     },
-  };
+    ":hover": {
+      borderRadius: "0 18px 18px 0",
+    },
+  } as ListItemButtonBaseProps["sx"];
 
   const openCollapseMenu = (sw: boolean, id: number) => {
     let array = [...lista];
