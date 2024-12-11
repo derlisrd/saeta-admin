@@ -66,10 +66,10 @@ class Empresa {
 }
 
 export class LoginResults {
-  constructor(public user: User, public token: string, public empresa: Empresa) {}
+  constructor(public user: User, public token: string, public empresa: Empresa, public tokenRaw: string) {}
 
   static fromJSON(data: any): LoginResults {
-    return new LoginResults(User.fromJSON(data.user), data.token, Empresa.fromJSON(data.empresa));
+    return new LoginResults(User.fromJSON(data.user), data.token, Empresa.fromJSON(data.empresa), data.tokenRaw);
   }
 }
 

@@ -19,8 +19,8 @@ export default [
     },
     {
         id: 34,
-        title: 'Registros',
-        icon: 'settings',
+        title: 'Productos',
+        icon: 'inventory_2',
         color: '#0066cc',
         url: null,
         private: false,
@@ -31,7 +31,7 @@ export default [
                 title: 'Productos',
                 icon: 'inventory',
                 color: '#0066cc',
-                url: '/registros/productos',
+                url: '/productos/lista',
                 private: false,
             },
             {

@@ -8,7 +8,7 @@ type authStoreType = {
     isAuth: boolean,
     setIsAuth: (value : boolean)=> void,
     userData : LoginResults | null,
-    setUserData : (data : LoginResults) => void
+    setUserData : (data : LoginResults | null) => void
 }
 
 const authStore = create<authStoreType>((set)=>({
@@ -34,7 +34,11 @@ const useAuthStore = ()=>{
         }
     }
 
-
+    const cerrarSesion = ()=>{
+        setIsAuth(false)
+        setUserData(null)
+        setSessionUserData(null)
+    }
 
     const checkIsAuth = useCallback(async()=>{
         if(sessionUserData !== null){
@@ -49,7 +53,7 @@ const useAuthStore = ()=>{
         return () => {isActive = false;ca.abort();};
       }, [checkIsAuth]);
 
-    return {isAuth, userData, iniciarSesion}
+    return {isAuth, userData, iniciarSesion, cerrarSesion}
 }
 
 export default useAuthStore

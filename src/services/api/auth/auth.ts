@@ -1,6 +1,6 @@
 import axios from "axios";
 import { LoginResponse } from "../../dto/login";
-import BASE from "../base";
+import {BASE} from "../base";
 
 export const apiServiceAuth = {
     login : async( username : string, password : string)=>{

@@ -7,4 +7,5 @@ const BASE = axios.create({ baseURL: BASE_API_URL + "/api", headers: {
     Accept: 'application/json'
 } });
 
-export default BASE;
+
+export {BASE}
