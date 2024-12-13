@@ -27,6 +27,14 @@ export default [
         open: false,
         submenu: [
             {
+                id: 142325,
+                title: 'Agregar',
+                icon: 'category',
+                color: '#0066cc',
+                url: '/productos/add',
+                private: false,
+            },
+            {
                 id: 343,
                 title: 'Productos',
                 icon: 'inventory',
@@ -34,6 +42,7 @@ export default [
                 url: '/productos/lista',
                 private: false,
             },
+            
             {
                 id: 1425,
                 title: 'Categorias',
