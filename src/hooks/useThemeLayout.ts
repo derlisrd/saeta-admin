@@ -33,6 +33,13 @@ function useThemeLayout() {
           },
         },
       },
+      MuiFormHelperText:{
+        styleOverrides:{
+          root:{
+            fontSize:10
+          }
+        }
+      },
       MuiListItem: {
         styleOverrides: {
           root: {
@@ -61,6 +68,14 @@ function useThemeLayout() {
           root: {
             borderRadius: "8px",
             borderWidth: 0,
+            fontSize: 13,
+          },
+        },
+      },
+      MuiInputLabel: {
+        styleOverrides: {
+          root: {
+            fontSize: 13,
           },
         },
       },

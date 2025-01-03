@@ -13,7 +13,8 @@ export class AddProducto {
     disponible: number;
     tipo: number;
     cantidad_minima: number;
-  
+    stock: null | AddStock[];
+
     constructor({
       impuesto_id,
       codigo,
@@ -24,6 +25,7 @@ export class AddProducto {
       disponible,
       tipo,
       cantidad_minima,
+      stock
     }: {
       impuesto_id: number;
       codigo: number;
@@ -34,6 +36,7 @@ export class AddProducto {
       disponible: number;
       tipo: number;
       cantidad_minima: number;
+      stock: null | AddStock[];
     }) {
       this.impuesto_id = impuesto_id;
       this.codigo = codigo;
@@ -44,6 +47,7 @@ export class AddProducto {
       this.disponible = disponible;
       this.tipo = tipo;
       this.cantidad_minima = cantidad_minima;
+      this.stock = stock;
     }
   
     public static fromJSON(json: Record<string, any>): AddProducto {
@@ -57,6 +61,7 @@ export class AddProducto {
         disponible: json.disponible,
         tipo: json.tipo,
         cantidad_minima: json.cantidad_minima,
+        stock: json.stock ? json.stock.map((item: Record<string, any>) => AddStock.fromJSON(item)) : null,
       });
     }
   
@@ -71,6 +76,29 @@ export class AddProducto {
         disponible: this.disponible,
         tipo: this.tipo,
         cantidad_minima: this.cantidad_minima,
+      };
+    }
+  }
+
+  export class AddStock {
+    deposito_id: number;
+    cantidad: number;
+    constructor({ deposito_id, cantidad }: { deposito_id: number; cantidad: number }) {
+      this.deposito_id = deposito_id;
+      this.cantidad = cantidad;
+    }
+  
+    public static fromJSON(json: Record<string, any>): AddStock {
+      return new AddStock({
+        deposito_id: json.deposito_id,
+        cantidad: json.cantidad,
+      });
+    }
+  
+    public toJSON(): Record<string, any> {
+      return {
+        deposito_id: this.deposito_id,
+        cantidad: this.cantidad,
       };
     }
   }

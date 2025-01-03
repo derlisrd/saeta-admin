@@ -18,6 +18,10 @@ function AuthMenuLayout() {
     navigate(to, options);
     isMobile && toggleMobileMenu();
   };
+  const signOut = () => {
+    navigate("/");
+    cerrarSesion();
+  };
 
   const TopBar = () => {
     return (
@@ -36,7 +40,7 @@ function AuthMenuLayout() {
             <IconButton onClick={toggleTheme}>
               <Icon>light_mode</Icon>
             </IconButton>
-            <IconButton onClick={cerrarSesion}>
+            <IconButton onClick={signOut}>
               <Icon>exit_to_app</Icon>
             </IconButton>
           </Stack>
