@@ -19,7 +19,7 @@ import {
 } from "@mui/material";
 
 function AddProducto() {
-  const { form, changeByName, sendForm, loading, setForm, impuestos, categorias, depositos, medidas, addStock, stockState, setStockState } = useAddProducto();
+  const { form, changeByName, sendForm, loading, impuestos, categorias, depositos, medidas, addStock, stockState, setStockState } = useAddProducto();
 
   return (
     <div>
@@ -28,7 +28,7 @@ function AddProducto() {
         {loading && <LinearProgress sx={{ margin: "18px" }} />}
         <Grid container spacing={{ xs: 2, md: 2 }} alignItems="center">
           <Grid size={{ xs: 12, md: 6 }}>
-            <TextField fullWidth label="Código" autoFocus placeholder="Código de barras" required name="codigo" onChange={changeByName} />
+            <TextField fullWidth label="Código" autoFocus placeholder="Código de barras" required name="codigo" onChange={(e) => changeByName(e.target.name, e.target.value)} />
           </Grid>
           <Grid size={{ xs: 12, md: 2 }}>
             <Button variant="contained" size="large">
@@ -37,7 +37,7 @@ function AddProducto() {
           </Grid>
           <Grid size={{ xs: 12, md: 4 }}>
             <FormLabel id="tipo">Tipo:</FormLabel>
-            <RadioGroup row aria-labelledby="tipo" name="tipo" onChange={(e) => setForm({ ...form, tipo: Number(e.target.value) })}>
+            <RadioGroup row aria-labelledby="tipo" name="tipo" onChange={(e) => changeByName(e.target.name, Number(e.target.value))}>
               <FormControlLabel value="1" checked={form.tipo === 1} control={<Radio />} label="Producto" />
               <FormControlLabel value="2" checked={form.tipo === 2} control={<Radio />} label="Servicio" />
             </RadioGroup>
@@ -46,7 +46,7 @@ function AddProducto() {
             <Typography variant="button">INFORMACION</Typography>
           </Grid>
           <Grid size={{ xs: 12, md: 4 }}>
-            <TextField placeholder="Nombre" fullWidth required label="Nombre" name="nombre" onChange={changeByName} value={form.nombre} />
+            <TextField placeholder="Nombre" fullWidth required label="Nombre" name="nombre" onChange={(e) => changeByName(e.target.name, e.target.value)} value={form.nombre} />
           </Grid>
           <Grid size={{ xs: 12, md: 8 }}>
             <TextField placeholder="Descripción detallada" fullWidth label="Descripción detallada" />
@@ -58,7 +58,7 @@ function AddProducto() {
                 fullWidth
                 labelId="impuesto-label"
                 id="impuesto"
-                onChange={(e) => setForm({ ...form, impuesto_id: Number(e.target.value) })}
+                onChange={(e) => changeByName(e.target.name, Number(e.target.value))}
                 value={form.impuesto_id}
                 label="Impuesto"
                 name="impuesto_id"
@@ -80,7 +80,7 @@ function AddProducto() {
                 labelId="categorias-label"
                 id="Categoria"
                 value={form.category_id}
-                onChange={(e) => setForm({ ...form, category_id: Number(e.target.value) })}
+                onChange={(e) => changeByName(e.target.name, Number(e.target.value))}
                 label="Categoría"
                 name="category_id"
               >
@@ -101,7 +101,7 @@ function AddProducto() {
                 labelId="medidas-label"
                 id="Medidas"
                 value={form.medida_id}
-                onChange={(e) => setForm({ ...form, medida_id: Number(e.target.value) })}
+                onChange={(e) => changeByName(e.target.name, Number(e.target.value))}
                 label="Unidad de medida"
                 name="medida_id"
               >
@@ -174,20 +174,7 @@ function AddProducto() {
               AGREGAR
             </Button>
           </Grid>
-          <Grid size={12}>
-            {form.stock.length > 0 && (
-              <Box sx={{ padding: 2, border: "1px solid #ccc", borderRadius: 2 }}>
-                <Grid container spacing={2}>
-                  {form.stock.map((item, index) => (
-                    <Grid key={index} size={{ xs: 12, md: 6 }}>
-                      <Typography>{depositos.find((dep) => dep.id === item.deposito_id)?.nombre}</Typography>
-                      <Typography>{item.cantidad}</Typography>
-                    </Grid>
-                  ))}
-                </Grid>
-              </Box>
-            )}
-          </Grid>
+          <Grid size={12}></Grid>
         </Grid>
       </Box>
 

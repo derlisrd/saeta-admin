@@ -1,8 +1,12 @@
+
 import { apiServiceImpuestos } from "@/services/api/factura/impuesto";
 import { apiServiceCategorias } from "@/services/api/productos/categoria";
 import { apiServiceDepositos } from "@/services/api/productos/deposito";
 import { apiServiceMedidas } from "@/services/api/productos/medidas";
+import { apiServiceProductos } from "@/services/api/productos/producto";
 import { ImpuestoResults } from "@/services/dto/factura/impuesto";
+import { AddProducto } from "@/services/dto/productos/AddProducto";
+import { AddStock } from "@/services/dto/productos/AddStock";
 import { CategoriaResults } from "@/services/dto/productos/categoria";
 import { DepositoResults } from "@/services/dto/productos/deposito";
 import { MedidasResults } from "@/services/dto/productos/medidas";
@@ -17,58 +21,45 @@ function useAddProducto() {
     const [impuestos,setImpuestos] = useState<ImpuestoResults[]>([]);
     const [depositos,setDepositos] = useState<DepositoResults[]>([]);
     const [medidas,setMedidas] = useState<MedidasResults[]>([]);
-    const [form,setForm] = useState({
-        impuesto_id:0,
-        medida_id:0,
-        category_id:0,
-        codigo:'',
-        nombre:'',
-        costo:0,
-        precio_normal:0,
-        precio_minimo:0,
-        disponible:1,
-        tipo:1,
-        cantidad_minima:0,
-        stock: [] as Array<{ deposito_id: number; cantidad: number; }>
-    });
+    const [form,setForm] = useState(new AddProducto({}));
     const [stockState,setStockState] = useState({deposito_id:0,cantidad:0});
     const [error,setError] = useState({code:0,message:''});
     const clearError = () => setError({code:0,message:''});
     
-    const changeByName = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)=>{
-        const {name, value} = event.target
-        setForm({...form,[name]:value})
-    }
+    const changeByName = (name: string, value: any) => {
+        setForm((prev) => new AddProducto({ ...prev, [name]: value }));
+      };
 
-    const removeStock = (deposito_id:number) => {
-        const updatedStock = form.stock.filter(item => item.deposito_id !== deposito_id);
-        setForm({ ...form, stock: updatedStock });
-    }
+
 
     const addStock = () => {
-        const {deposito_id,cantidad} = stockState;
-        if(deposito_id === 0 || cantidad === 0){
-            setError({code:1,message:'Seleccione un deposito y una cantidad'})
-            return;
+      const {deposito_id,cantidad} = stockState
+        if (deposito_id === 0 || cantidad === 0) {
+          setError({ code: 1, message: "Seleccione un depósito y una cantidad" });
+          return;
         }
-        const existingStock = form.stock.find(item => item.deposito_id === deposito_id);
-        if (existingStock) {
-            const updatedStock = form.stock.map(item => {
-                if (item.deposito_id === deposito_id) {
-                    return { ...item, cantidad: item.cantidad + cantidad };
-                }
-                return item;
-            });
-            setForm({ ...form, stock: updatedStock });
-        } else {
-            setForm({ ...form, stock: [...form.stock, { deposito_id, cantidad }] });
-        }
-        setStockState({deposito_id:deposito_id,cantidad:0})
-    }
+        const existingStock = form.stock.find((item) => item.deposito_id === deposito_id);
+        const updatedStock = existingStock
+          ? form.stock.map((item) =>
+              item.deposito_id === deposito_id ? new AddStock({ ...item, cantidad: item.cantidad + cantidad }) : item
+            )
+          : [...form.stock, new AddStock({ deposito_id, cantidad })];
+        setForm(new AddProducto({ ...form, stock: updatedStock }));
+      };
 
-    const sendForm = async () => {
-        console.log(form)
-    }
+      const removeStock = (deposito_id: number) => {
+        const updatedStock = form.stock.filter((item) => item.deposito_id !== deposito_id);
+        setForm(new AddProducto({ ...form, stock: updatedStock }));
+      };
+    
+      const sendForm = async () => {
+        try {
+          const jsonForm = form.toJSON();
+          await apiServiceProductos.add(jsonForm, userData && userData.token);
+        } catch (err) {
+          setError({ code: 500, message: "Error al enviar el formulario" });
+        }
+      };
 
     const getDatas = useCallback(async()=>{
         Promise.all([
