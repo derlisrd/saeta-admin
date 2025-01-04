@@ -40,6 +40,10 @@ function useAddProducto() {
         setForm({...form,[name]:value})
     }
 
+    const removeStock = (deposito_id:number) => {
+        const updatedStock = form.stock.filter(item => item.deposito_id !== deposito_id);
+        setForm({ ...form, stock: updatedStock });
+    }
 
     const addStock = () => {
         const {deposito_id,cantidad} = stockState;
@@ -93,7 +97,7 @@ function useAddProducto() {
         getDatas()
     },[])
 
-    return { form, setForm, clearError, error, changeByName, sendForm, impuestos, categorias, depositos, loading,medidas, addStock, stockState, setStockState }
+    return { form, setForm, clearError, error, changeByName, sendForm, impuestos, categorias, depositos, loading,medidas, addStock, stockState, setStockState, removeStock }
 }
 
 export default useAddProducto;
