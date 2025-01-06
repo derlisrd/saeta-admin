@@ -53,12 +53,11 @@ function useAddProducto() {
       };
     
       const sendForm = async () => {
-        try {
+        
           const jsonForm = form.toJSON();
-          await apiServiceProductos.add(jsonForm, userData && userData.token);
-        } catch (err) {
-          setError({ code: 500, message: "Error al enviar el formulario" });
-        }
+          const res = await apiServiceProductos.add(jsonForm, userData && userData.token);
+          console.log(res)
+          //console.log(jsonForm, form)
       };
 
     const getDatas = useCallback(async()=>{

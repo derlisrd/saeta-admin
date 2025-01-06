@@ -118,13 +118,40 @@ function AddProducto() {
             <Typography variant="button">VALORES</Typography>
           </Grid>
           <Grid size={{ xs: 12, md: 3 }}>
-            <TextField placeholder="Costo" fullWidth required label="Costo" helperText="Costo del producto" />
+            <TextField
+              placeholder="Costo"
+              name="costo"
+              value={form.costo}
+              onChange={(e) => changeByName(e.target.name, Number(e.target.value))}
+              fullWidth
+              required
+              label="Costo"
+              helperText="Costo del producto"
+            />
           </Grid>
           <Grid size={{ xs: 12, md: 3 }}>
-            <TextField placeholder="Precio normal" fullWidth required label="Precio normal" helperText="Precio" />
+            <TextField
+              placeholder="Precio normal"
+              name="precio_normal"
+              value={form.precio_normal}
+              onChange={(e) => changeByName(e.target.name, Number(e.target.value))}
+              fullWidth
+              required
+              label="Precio normal"
+              helperText="Precio"
+            />
           </Grid>
           <Grid size={{ xs: 12, md: 3 }}>
-            <TextField placeholder="Precio mínimo" fullWidth required label="Precio mínimo" helperText="Precio con descuento" />
+            <TextField
+              placeholder="Precio mínimo"
+              name="precio_minimo"
+              value={form.precio_minimo}
+              onChange={(e) => changeByName(e.target.name, Number(e.target.value))}
+              fullWidth
+              required
+              label="Precio mínimo"
+              helperText="Precio con descuento"
+            />
           </Grid>
           <Grid size={{ xs: 12, md: 3 }}>
             <TextField placeholder="Generar precios por %" fullWidth label="Generar precios por %" helperText="Generar precios por %" />

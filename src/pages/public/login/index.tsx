@@ -68,7 +68,7 @@ function Login() {
                 id="password_user"
                 value={password}
               />
-              <Button variant="contained" type="submit" size="large" onClick={handleLogin}>
+              <Button variant="contained" type="submit" size="large">
                 Ingresar
               </Button>
             </Stack>

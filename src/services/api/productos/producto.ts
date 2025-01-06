@@ -1,6 +1,7 @@
 
-import { AddProducto } from "@/services/dto/productos/producto";
+import { AddProducto, AddProductoResponse } from "@/services/dto/productos/AddProducto";
 import { BASE } from "../base";
+import { ProductoResponse } from "@/services/dto/productos/producto";
 
 
 
@@ -9,17 +10,20 @@ export const apiServiceProductos = {
     list: async(token : string | null)=>{
         try {
             const {data, status} = await BASE.get('/productos',{headers: {Authorization : token}})
-
-            return {
-                success : data.success as boolean,
+            return ProductoResponse.fromJSON({
+                success: data.success,
                 status,
-                results: data.results
-            }
+                results: data.results,
+                message: ''
+            })
+           
         } catch (e) {
-            return {
-                success : false,
-                status : 500
-            }
+            return ProductoResponse.fromJSON({
+                success: false,
+                status: 500,
+                results: null,
+                message: 'Error al obtener productos'
+            })
         }
     },
     edit: ()=>{
@@ -39,19 +43,19 @@ export const apiServiceProductos = {
     add: async(form : AddProducto, token : string | null)=>{
         try {
             const { data, status } = await BASE.post('/productos', form, { headers: { Authorization: token } });
-            return {
-                success: data.success as boolean,
+            return AddProductoResponse.fromJSON({
+                success: data.success,
                 status,
                 results: data.results,
                 message: data.message
-            };
+            })
         } catch (e) {
-            return {
+            return AddProductoResponse.fromJSON({
                 success: false,
                 status: 500,
                 results: null,
-                message : 'Error al agregar el producto'
-            };
+                message: 'Error al crear producto'
+            })
         }
     },
 }

@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import AuthMenuLayout from "@/layout/AuthMenuLayout";
 import { Suspense, lazy, LazyExoticComponent } from "react";
 import LoadingPage from "@/core/components/ui/loading";
+import LogOut from "./logout";
 
 const Loadable =
   <T extends object>(Component: LazyExoticComponent<() => JSX.Element>) =>
@@ -22,6 +23,7 @@ function AutenticatedPages() {
         <Route path="/productos/lista" element={<ProductosLista />} />
         <Route path="/config/empresa" element={<ConfigEmpresa />} />
         <Route path="/productos/add" element={<ProductosAdd />} />
+        <Route path="/logout" element={<LogOut />} />
       </Route>
       <Route path="*" element={<Page404 />} />
     </Routes>
@@ -32,7 +34,7 @@ const Home = Loadable(lazy(() => import("./home")));
 const Page404 = Loadable(lazy(() => import("../common/page404")));
 const Clientes = Loadable(lazy(() => import("./clientes")));
 const ConfigEmpresa = Loadable(lazy(() => import("./config/empresa")));
-const ProductosLista = Loadable(lazy(() => import("./productos/lista")));
+const ProductosLista = Loadable(lazy(() => import("./productos/list")));
 const ProductosAdd = Loadable(lazy(() => import("./productos/add")));
 
 export default AutenticatedPages;

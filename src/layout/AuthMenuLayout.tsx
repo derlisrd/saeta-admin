@@ -1,14 +1,14 @@
 import MenuNav from "./components/MenuNav";
 import useDrawerMenu from "@/hooks/useDrawerMenu";
 import useThemTypeMode from "@/hooks/useThemeTypeMode";
-import useAuthStore from "@/store/authStore";
+
 import { Drawer, Box, Toolbar, Stack, Icon, IconButton } from "@mui/material";
 import { NavigateOptions, Outlet, To, useNavigate } from "react-router-dom";
 
 function AuthMenuLayout() {
   const navigate = useNavigate();
   const { isOpenMenu, toggleMenu, isOpenMobileMenu, toggleMobileMenu, DRAWER_WIDTH } = useDrawerMenu();
-  const { cerrarSesion } = useAuthStore();
+
   const { toggleTheme } = useThemTypeMode();
 
   let margin_left = isOpenMenu ? `${DRAWER_WIDTH}px` : "0";
@@ -18,10 +18,7 @@ function AuthMenuLayout() {
     navigate(to, options);
     isMobile && toggleMobileMenu();
   };
-  const signOut = () => {
-    navigate("/");
-    cerrarSesion();
-  };
+  const signOut = () => navigate("/logout");
 
   const TopBar = () => {
     return (

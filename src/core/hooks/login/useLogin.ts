@@ -28,7 +28,8 @@ function useLogin() {
         console.error("Input element with id 'password_user' not found");
         }
     }
-    const handleLogin = async()=>{
+    const handleLogin = async(e : React.FormEvent<HTMLFormElement>)=>{
+        e.preventDefault()
         setIsLoading(true)
         const res = await API.auth.login(username,password)
         setIsLoading(false)
