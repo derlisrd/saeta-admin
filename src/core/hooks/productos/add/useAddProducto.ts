@@ -1,4 +1,3 @@
-
 import { apiServiceImpuestos } from "@/services/api/factura/impuesto";
 import { apiServiceCategorias } from "@/services/api/productos/categoria";
 import { apiServiceDepositos } from "@/services/api/productos/deposito";
@@ -11,83 +10,199 @@ import { CategoriaResults } from "@/services/dto/productos/categoria";
 import { DepositoResults } from "@/services/dto/productos/deposito";
 import { MedidasResults } from "@/services/dto/productos/medidas";
 import useAuthStore from "@/store/authStore";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+
+
 
 function useAddProducto() {
+  const { userData } = useAuthStore();
+
+  const inputCodigoRef = useRef<HTMLInputElement>(null);
+
+  const [loading, setLoading] = useState(true);
+  const [categorias, setCategorias] = useState<CategoriaResults[]>([]);
+  const [impuestos, setImpuestos] = useState<ImpuestoResults[]>([]);
+  const [depositos, setDepositos] = useState<DepositoResults[]>([]);
+  const [medidas, setMedidas] = useState<MedidasResults[]>([]);
+  const [form, setForm] = useState(new AddProducto({}));
+  const [stockState, setStockState] = useState({ deposito_id: 0, cantidad: 0 });
+  const [error, setError] = useState({ code: 0, message: "" });
+  const [success, setSuccess] = useState({ active: false, message: "" });
+
+  const clearSuccess = () => setSuccess({ active: false, message: "" });
+  const clearForm = () => setForm(new AddProducto({}));
+  const clearError = () => setError({ code: 0, message: "" });
+
+  const clear = () => {
+    clearForm();
+    clearError();
+  };
+
+  const changeByName = (name: string, value: any) => {
+    setForm((prev) => new AddProducto({ ...prev, [name]: value }));
+  };
+
+  const generateCode = ()=>{
+    let code = Math.random().toString(36).slice(2);
+    setForm((prev) => new AddProducto({ ...prev, codigo: code }));
+    inputCodigoRef.current?.focus();
+  }
+
+  const verificarCodigoDisponible = async (codigo: string) => {
+    if (!codigo) return;
+    const res = await apiServiceProductos.verificarCodigoDisponible(codigo, userData && userData.token);
+    if (!res) {
+      setError({ code: 1, message: "El código ya está en uso" });
+      inputCodigoRef.current?.focus();
+      return
+    }
+    clearError();
+  }
+
+  const addStock = () => {
+    const { deposito_id, cantidad } = stockState;
+    console.log({deposito_id,cantidad})
+    if (deposito_id === 0 || cantidad === 0) {
+      setError({ code: 9, message: "Seleccione un depósito y una cantidad" });
+      return;
+    }
+    const existingStock = form.stock.find((item) => item.deposito_id === deposito_id);
+    const updatedStock = existingStock
+      ? form.stock.map((item) => (item.deposito_id === deposito_id ? new AddStock({ ...item, cantidad: item.cantidad + cantidad }) : item))
+      : [...form.stock, new AddStock({ deposito_id, cantidad })];
+    setForm(new AddProducto({ ...form, stock: updatedStock }));
+    setStockState({ deposito_id, cantidad: 0 });
+  };
+
+  const removeStock = (deposito_id: number) => {
+    const updatedStock = form.stock.filter((item) => item.deposito_id !== deposito_id);
+    setForm(new AddProducto({ ...form, stock: updatedStock }));
+  };
+
+  
+
+  const validateForm = () => {
+    const { codigo, nombre, precio_minimo, precio_normal, category_id, impuesto_id, medida_id, costo } = form;
+    if(!codigo){
+      setError({ code: 1, message: "El código es requerido" });
+      return false;
+    }
+    if(!nombre){
+      setError({ code: 2, message: "El nombre es requerido" });
+      return false;
+    }
+    if(impuesto_id === 0){
+      setError({ code: 3, message: "Seleccione un impuesto" });
+      return false;
+    }
+    if(category_id === 0){
+      setError({ code: 4, message: "Seleccione una categoría" });
+      return false;
+    }
+    if(medida_id === 0){
+      setError({ code: 5, message: "Seleccione una medida" });
+      return false;
+    }
+
+    if(!costo){
+      setError({ code: 6, message: "El costo es requerido" });
+      return false;
+    }
     
-    const {userData} = useAuthStore()
-    const [loading,setLoading] = useState(true);
-    const [categorias,setCategorias] = useState<CategoriaResults[]>([]);
-    const [impuestos,setImpuestos] = useState<ImpuestoResults[]>([]);
-    const [depositos,setDepositos] = useState<DepositoResults[]>([]);
-    const [medidas,setMedidas] = useState<MedidasResults[]>([]);
-    const [form,setForm] = useState(new AddProducto({}));
-    const [stockState,setStockState] = useState({deposito_id:0,cantidad:0});
-    const [error,setError] = useState({code:0,message:''});
-    const clearError = () => setError({code:0,message:''});
+    if(!precio_normal){
+      setError({ code: 7, message: "El precio normal es requerido" });
+      return false;
+    }
+    if(!precio_minimo){
+      setError({ code: 8, message: "El precio mínimo es requerido" });
+      return false;
+    }
     
-    const changeByName = (name: string, value: any) => {
-        setForm((prev) => new AddProducto({ ...prev, [name]: value }));
-      };
+    clearError();
+    return true
+  }
 
+  const sendForm = async () => {
+    if(!validateForm()) return;
+    setLoading(true);
+    const res = await apiServiceProductos.add(form, userData && userData.token);
+    setLoading(false);
+    if (res.success) {
+      setSuccess({ active: true, message: "Producto creado correctamente" });
+      clear();
+    }
+  };
 
+  const getDatas = useCallback(async () => {
+    setLoading(true);
 
-    const addStock = () => {
-      const {deposito_id,cantidad} = stockState
-        if (deposito_id === 0 || cantidad === 0) {
-          setError({ code: 1, message: "Seleccione un depósito y una cantidad" });
-          return;
-        }
-        const existingStock = form.stock.find((item) => item.deposito_id === deposito_id);
-        const updatedStock = existingStock
-          ? form.stock.map((item) =>
-              item.deposito_id === deposito_id ? new AddStock({ ...item, cantidad: item.cantidad + cantidad }) : item
-            )
-          : [...form.stock, new AddStock({ deposito_id, cantidad })];
-        setForm(new AddProducto({ ...form, stock: updatedStock }));
-      };
+    const impuestosFromLocalStorage = localStorage.getItem('impuestos');
+    const categoriasFromLocalStorage = localStorage.getItem('categorias');
+    const depositosFromLocalStorage = localStorage.getItem('depositos');
+    const medidasFromLocalStorage = localStorage.getItem('medidas');
 
-      const removeStock = (deposito_id: number) => {
-        const updatedStock = form.stock.filter((item) => item.deposito_id !== deposito_id);
-        setForm(new AddProducto({ ...form, stock: updatedStock }));
-      };
-    
-      const sendForm = async () => {
-        
-          const jsonForm = form.toJSON();
-          const res = await apiServiceProductos.add(jsonForm, userData && userData.token);
-          console.log(res)
-          //console.log(jsonForm, form)
-      };
+    if (impuestosFromLocalStorage && categoriasFromLocalStorage && depositosFromLocalStorage && medidasFromLocalStorage) {
+      setImpuestos(JSON.parse(impuestosFromLocalStorage));
+      setCategorias(JSON.parse(categoriasFromLocalStorage));
+      setDepositos(JSON.parse(depositosFromLocalStorage));
+      setMedidas(JSON.parse(medidasFromLocalStorage));
+      setLoading(false);
+    } else {
+      
+      const [impuestosRes, categoriasRes, depositosRes, medidasRes] = await Promise.all([
+        apiServiceImpuestos.list(userData && userData.token),
+        apiServiceCategorias.list(userData && userData.token),
+        apiServiceDepositos.list(userData && userData.token),
+        apiServiceMedidas.list(userData && userData.token)
+      ]);
 
-    const getDatas = useCallback(async()=>{
-        Promise.all([
-            apiServiceImpuestos.list( userData && userData.token),
-            apiServiceCategorias.list( userData && userData.token),
-            apiServiceDepositos.list( userData && userData.token),
-            apiServiceMedidas.list( userData && userData.token)
-        ])
-        .then(([impuestos,categorias,depositos,medidas])=>{
-            if(impuestos.success){
-                setImpuestos(impuestos.results || [])
-            }
-            if(categorias.success){
-                setCategorias(categorias.results || [])
-            }
-            if(depositos.success){
-                setDepositos(depositos.results || [])
-            }
-            if(medidas.success){
-                setMedidas(medidas.results || [])
-            }
-        }).finally(()=>setLoading(false))
-    },[userData])
+      if (impuestosRes.success) {
+        setImpuestos(impuestosRes.results || []);
+        localStorage.setItem('impuestos', JSON.stringify(impuestosRes.results));
+      }
+      if (categoriasRes.success) {
+        setCategorias(categoriasRes.results || []);
+        localStorage.setItem('categorias', JSON.stringify(categoriasRes.results));
+      }
+      if (depositosRes.success) {
+        setDepositos(depositosRes.results || []);
+        localStorage.setItem('depositos', JSON.stringify(depositosRes.results));
+      }
+      if (medidasRes.success) {
+        setMedidas(medidasRes.results || []);
+        localStorage.setItem('medidas', JSON.stringify(medidasRes.results));
+      }
 
-    useEffect(()=>{
-        getDatas()
-    },[])
+      setLoading(false);
+    }
+  }, [userData]);
 
-    return { form, setForm, clearError, error, changeByName, sendForm, impuestos, categorias, depositos, loading,medidas, addStock, stockState, setStockState, removeStock }
+  useEffect(() => {
+    getDatas();
+  }, []);
+
+  return {
+    form,
+    setForm,
+    clearError,
+    error,
+    changeByName,
+    sendForm,
+    impuestos,
+    categorias,
+    depositos,
+    loading,
+    medidas,
+    addStock,
+    stockState,
+    setStockState,
+    removeStock,
+    success,
+    clearSuccess,
+    verificarCodigoDisponible,
+    generateCode,
+    inputCodigoRef,
+  };
 }
 
 export default useAddProducto;

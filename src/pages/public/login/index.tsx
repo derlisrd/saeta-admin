@@ -1,12 +1,14 @@
 import useLogin from "@/core/hooks/login/useLogin";
+import useAuthStore from "@/store/authStore";
 import { TextField, Stack, Button, Typography, Container, Icon, InputAdornment, CircularProgress, Alert, IconButton } from "@mui/material";
 
 function Login() {
   const { username, setUsername, password, setPassword, handleLogin, isLoading, error, hide, toggleHide } = useLogin();
+  const { loading } = useAuthStore();
 
   return (
     <Container maxWidth="md">
-      {isLoading ? (
+      {isLoading || loading ? (
         <Stack sx={{ height: "100vh", alignItems: "center", justifyContent: "center", width: "100%" }}>
           <CircularProgress />
         </Stack>

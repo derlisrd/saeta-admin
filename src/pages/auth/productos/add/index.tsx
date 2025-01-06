@@ -1,10 +1,12 @@
 import Title from "@/core/components/ui/title";
 import useAddProducto from "@/core/hooks/productos/add/useAddProducto";
 import {
+  Alert,
   Box,
   Button,
   FormControl,
   FormControlLabel,
+  FormHelperText,
   FormLabel,
   Grid2 as Grid,
   InputLabel,
@@ -13,25 +15,65 @@ import {
   Radio,
   RadioGroup,
   Select,
+  Snackbar,
   Stack,
   TextField,
   Typography,
 } from "@mui/material";
 
 function AddProducto() {
-  const { form, changeByName, sendForm, loading, impuestos, categorias, depositos, medidas, addStock, stockState, setStockState } = useAddProducto();
-
+  const {
+    form,
+    changeByName,
+    sendForm,
+    loading,
+    impuestos,
+    categorias,
+    depositos,
+    medidas,
+    addStock,
+    stockState,
+    setStockState,
+    success,
+    clearSuccess,
+    inputCodigoRef,
+    verificarCodigoDisponible,
+    error,
+    generateCode,
+  } = useAddProducto();
   return (
     <div>
+      <Snackbar open={success.active} autoHideDuration={6000} onClose={clearSuccess}>
+        <Alert onClose={clearSuccess} severity="success" variant="filled" sx={{ width: "100%" }}>
+          {success.message}
+        </Alert>
+      </Snackbar>
       <Title>Agregar producto</Title>
       <Box sx={{ paddingBottom: 12 }}>
         {loading && <LinearProgress sx={{ margin: "18px" }} />}
         <Grid container spacing={{ xs: 2, md: 2 }} alignItems="center">
           <Grid size={{ xs: 12, md: 6 }}>
-            <TextField fullWidth label="Código" autoFocus placeholder="Código de barras" required name="codigo" onChange={(e) => changeByName(e.target.name, e.target.value)} />
+            <TextField
+              id="codigo"
+              fullWidth
+              error={error.code === 1}
+              helperText={error.code === 1 ? error.message : ""}
+              label="Código"
+              autoFocus
+              inputRef={inputCodigoRef}
+              onBlur={(e) => {
+                verificarCodigoDisponible(e.target.value);
+              }}
+              autoComplete="off"
+              placeholder="Código de barras"
+              required
+              value={form.codigo}
+              name="codigo"
+              onChange={(e) => changeByName(e.target.name, e.target.value)}
+            />
           </Grid>
           <Grid size={{ xs: 12, md: 2 }}>
-            <Button variant="contained" size="large">
+            <Button variant="contained" size="large" onClick={generateCode}>
               GENERAR
             </Button>
           </Grid>
@@ -46,13 +88,23 @@ function AddProducto() {
             <Typography variant="button">INFORMACION</Typography>
           </Grid>
           <Grid size={{ xs: 12, md: 4 }}>
-            <TextField placeholder="Nombre" fullWidth required label="Nombre" name="nombre" onChange={(e) => changeByName(e.target.name, e.target.value)} value={form.nombre} />
+            <TextField
+              error={error.code === 2}
+              helperText={error.code === 2 ? error.message : ""}
+              placeholder="Nombre"
+              fullWidth
+              required
+              label="Nombre"
+              name="nombre"
+              onChange={(e) => changeByName(e.target.name, e.target.value)}
+              value={form.nombre}
+            />
           </Grid>
           <Grid size={{ xs: 12, md: 8 }}>
             <TextField placeholder="Descripción detallada" fullWidth label="Descripción detallada" />
           </Grid>
           <Grid size={{ xs: 12, md: 4 }}>
-            <FormControl fullWidth>
+            <FormControl fullWidth error={error.code === 3}>
               <InputLabel id="impuesto-select-label">Impuesto</InputLabel>
               <Select
                 fullWidth
@@ -70,10 +122,11 @@ function AddProducto() {
                   </MenuItem>
                 ))}
               </Select>
+              <FormHelperText>IVA</FormHelperText>
             </FormControl>
           </Grid>
           <Grid size={{ xs: 12, md: 4 }}>
-            <FormControl fullWidth>
+            <FormControl fullWidth error={error.code === 4}>
               <InputLabel id="categoria-select-label">Categoría</InputLabel>
               <Select
                 fullWidth
@@ -91,14 +144,16 @@ function AddProducto() {
                   </MenuItem>
                 ))}
               </Select>
+              <FormHelperText>Categoría</FormHelperText>
             </FormControl>
           </Grid>
           <Grid size={{ xs: 12, md: 4 }}>
-            <FormControl fullWidth>
+            <FormControl fullWidth error={error.code === 5}>
               <InputLabel id="medidas-select-label">Unidad de medida</InputLabel>
               <Select
                 fullWidth
                 labelId="medidas-label"
+                required
                 id="Medidas"
                 value={form.medida_id}
                 onChange={(e) => changeByName(e.target.name, Number(e.target.value))}
@@ -112,6 +167,7 @@ function AddProducto() {
                   </MenuItem>
                 ))}
               </Select>
+              <FormHelperText>c/u</FormHelperText>
             </FormControl>
           </Grid>
           <Grid size={12}>
@@ -127,6 +183,7 @@ function AddProducto() {
               required
               label="Costo"
               helperText="Costo del producto"
+              error={error.code === 6}
             />
           </Grid>
           <Grid size={{ xs: 12, md: 3 }}>
@@ -139,6 +196,7 @@ function AddProducto() {
               required
               label="Precio normal"
               helperText="Precio"
+              error={error.code === 7}
             />
           </Grid>
           <Grid size={{ xs: 12, md: 3 }}>
@@ -151,6 +209,7 @@ function AddProducto() {
               required
               label="Precio mínimo"
               helperText="Precio con descuento"
+              error={error.code === 8}
             />
           </Grid>
           <Grid size={{ xs: 12, md: 3 }}>
@@ -171,10 +230,11 @@ function AddProducto() {
               onChange={(e) => {
                 setStockState({ ...stockState, cantidad: Number(e.target.value) });
               }}
+              error={error.code === 9}
             />
           </Grid>
           <Grid size={{ xs: 12, md: 4 }}>
-            <FormControl fullWidth>
+            <FormControl fullWidth error={error.code === 9}>
               <InputLabel id="deposito-select-label">Deposito</InputLabel>
               <Select
                 fullWidth

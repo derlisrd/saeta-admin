@@ -7,7 +7,15 @@ import { ProductoResponse } from "@/services/dto/productos/producto";
 
 
 export const apiServiceProductos = {
-    list: async(token : string | null)=>{
+    verificarCodigoDisponible: async (codigo: string, token: string | null): Promise<boolean> => {
+        try {
+            const { data } = await BASE.get(`/productos/verificar/${codigo}`, { headers: { Authorization: token } });
+            return data.success;
+        } catch (e) {
+            return false;
+        }
+    },
+    list: async(token : string | null) : Promise<ProductoResponse> => {
         try {
             const {data, status} = await BASE.get('/productos',{headers: {Authorization : token}})
             return ProductoResponse.fromJSON({
@@ -40,7 +48,7 @@ export const apiServiceProductos = {
             
         }
     },
-    add: async(form : AddProducto, token : string | null)=>{
+    add: async(form : AddProducto, token : string | null) : Promise<AddProductoResponse> =>{
         try {
             const { data, status } = await BASE.post('/productos', form, { headers: { Authorization: token } });
             return AddProductoResponse.fromJSON({

@@ -1,6 +1,6 @@
 import { useSessionStorage } from "@/hooks/useSessionStorage";
 import { LoginResults } from "@/services/dto/login";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { create } from "zustand";
 
 
@@ -25,6 +25,7 @@ const useAuthStore = ()=>{
     const setIsAuth = authStore((state) => state.setIsAuth);
     const userData = authStore(state => state.userData)
     const setUserData = authStore(state => state.setUserData)
+    const [loading,setLoading] = useState(true)
 
     const iniciarSesion = (data : LoginResults | null, mantener ? : boolean) => {
         if(data !== null){
@@ -41,10 +42,12 @@ const useAuthStore = ()=>{
     }
 
     const checkIsAuth = useCallback(async()=>{
+        setLoading(true)
         if(sessionUserData !== null){
             setIsAuth(true);
             setUserData(sessionUserData);
         }
+        setLoading(false)
     },[])
 
     useEffect(() => {
@@ -53,7 +56,7 @@ const useAuthStore = ()=>{
         return () => {isActive = false;ca.abort();};
       }, [checkIsAuth]);
 
-    return {isAuth, userData, iniciarSesion, cerrarSesion}
+    return {isAuth, userData, iniciarSesion, cerrarSesion, loading}
 }
 
 export default useAuthStore
