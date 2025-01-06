@@ -43,7 +43,7 @@ function AddProducto() {
   } = useAddProducto();
   return (
     <div>
-      <Snackbar open={success.active} autoHideDuration={6000} onClose={clearSuccess}>
+      <Snackbar anchorOrigin={{ vertical: "top", horizontal: "right" }} open={success.active} autoHideDuration={6000} onClose={clearSuccess}>
         <Alert onClose={clearSuccess} severity="success" variant="filled" sx={{ width: "100%" }}>
           {success.message}
         </Alert>
@@ -115,7 +115,9 @@ function AddProducto() {
                 label="Impuesto"
                 name="impuesto_id"
               >
-                <MenuItem value={0}>Sin información</MenuItem>
+                <MenuItem value={0} disabled>
+                  Seleccionar impuesto
+                </MenuItem>
                 {impuestos.map((item, index) => (
                   <MenuItem key={index} value={item.id}>
                     {item.descripcion}
@@ -137,7 +139,9 @@ function AddProducto() {
                 label="Categoría"
                 name="category_id"
               >
-                <MenuItem value={0}>Sin información</MenuItem>
+                <MenuItem value={0} disabled>
+                  Seleccionar categoria
+                </MenuItem>
                 {categorias.map((item, index) => (
                   <MenuItem key={index} value={item.id}>
                     {item.nombre}
@@ -160,7 +164,9 @@ function AddProducto() {
                 label="Unidad de medida"
                 name="medida_id"
               >
-                <MenuItem value={0}>Sin información</MenuItem>
+                <MenuItem value={0} disabled>
+                  Seleccionar medida
+                </MenuItem>
                 {medidas.map((item, index) => (
                   <MenuItem key={index} value={item.id}>
                     {item.descripcion}
@@ -247,7 +253,9 @@ function AddProducto() {
                   setStockState({ ...stockState, deposito_id: Number(e.target.value) });
                 }}
               >
-                <MenuItem value={0}>Sin información</MenuItem>
+                <MenuItem value={0} disabled>
+                  Seleccionar deposito
+                </MenuItem>
                 {depositos.map((item, index) => (
                   <MenuItem key={index} value={item.id}>
                     {item.nombre}
