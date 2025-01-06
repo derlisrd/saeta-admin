@@ -1,10 +1,10 @@
 import Loading from "@/core/components/ui/loading";
-import useAuthStore from "@/store/authStore";
+import { useAuth } from "@/providers/AuthProvider";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 function LogOut() {
-  const { cerrarSesion } = useAuthStore();
+  const { cerrarSesion } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {

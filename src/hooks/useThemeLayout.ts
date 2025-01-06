@@ -1,5 +1,4 @@
 import { createTheme } from "@mui/material/styles";
-// import { red } from "@mui/material/colors";
 import useThemeTypeMode from "@/hooks/useThemeTypeMode";
 
 function useThemeLayout() {
@@ -7,7 +6,21 @@ function useThemeLayout() {
   const {modeDark} = useThemeTypeMode()
 
   const theme = createTheme({
-    cssVariables: true,
+    palette: {
+      mode: modeDark ? 'dark' : 'light',
+      primary: {
+        main: '#3ecf8e',
+        // light: will be calculated from palette.primary.main,
+        // dark: will be calculated from palette.primary.main,
+        // contrastText: will be calculated to contrast with palette.primary.main
+      },
+      secondary: {
+        main: '#E0C2FF',
+        light: '#F5EBFF',
+        // dark: will be calculated from palette.secondary.main,
+        contrastText: '#47008F',
+      },
+    }, 
     components:{
       MuiCssBaseline:{
         styleOverrides:{
@@ -90,9 +103,7 @@ function useThemeLayout() {
         },
       }
     },
-    palette: {
-      mode: modeDark ? 'dark' : 'light'
-    },    
+       
     typography: {
       fontSize: 14,
       caption: {

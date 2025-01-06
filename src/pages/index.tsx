@@ -3,11 +3,11 @@ import { CssBaseline } from "@mui/material";
 import PublicPages from "./public";
 import AutenticatedPages from "./auth";
 import useThemeLayout from "@/hooks/useThemeLayout";
-import useAuthStore from "@/store/authStore";
+import { useAuth } from "@/providers/AuthProvider";
 
 function Pages() {
   const { theme } = useThemeLayout();
-  const { isAuth } = useAuthStore();
+  const { isAuth } = useAuth();
 
   return (
     <ThemeProvider theme={theme}>

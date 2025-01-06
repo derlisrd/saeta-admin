@@ -42,6 +42,13 @@ export const apiServiceAuth = {
                 message: "Error de servidor intente más tarde o contacte con Atención al cliente."
               });
             }
+    },
+    check: async (token: string | null) => {
+      try {
+        const { data } = await BASE.get("/check", {headers: {Authorization: token}})
+        return data.success as boolean
+      } catch (error) {
+        return false
+      }
     }
-    
 }

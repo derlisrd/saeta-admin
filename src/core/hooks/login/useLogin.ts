@@ -1,9 +1,9 @@
+import { useAuth } from "@/providers/AuthProvider";
 import API from "@/services/api";
-import useAuthStore from "@/store/authStore";
 import { useState } from "react";
 
 function useLogin() {
-    const {iniciarSesion} = useAuthStore()
+    const {iniciarSesion} = useAuth()
     const [username,setUsername] = useState('')
     const [password,setPassword] = useState('')
     const [hide,setHide] = useState(true)

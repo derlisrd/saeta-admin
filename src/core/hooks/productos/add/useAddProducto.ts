@@ -1,3 +1,4 @@
+import { useAuth } from "@/providers/AuthProvider";
 import { apiServiceImpuestos } from "@/services/api/factura/impuesto";
 import { apiServiceCategorias } from "@/services/api/productos/categoria";
 import { apiServiceDepositos } from "@/services/api/productos/deposito";
@@ -9,13 +10,12 @@ import { AddStock } from "@/services/dto/productos/AddStock";
 import { CategoriaResults } from "@/services/dto/productos/categoria";
 import { DepositoResults } from "@/services/dto/productos/deposito";
 import { MedidasResults } from "@/services/dto/productos/medidas";
-import useAuthStore from "@/store/authStore";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 
 
 function useAddProducto() {
-  const { userData } = useAuthStore();
+  const { userData } = useAuth();
 
   const inputCodigoRef = useRef<HTMLInputElement>(null);
 
@@ -24,7 +24,7 @@ function useAddProducto() {
   const [impuestos, setImpuestos] = useState<ImpuestoResults[]>([]);
   const [depositos, setDepositos] = useState<DepositoResults[]>([]);
   const [medidas, setMedidas] = useState<MedidasResults[]>([]);
-  const [form, setForm] = useState(new AddProducto({}));
+  const [form, setForm] = useState<AddProducto>(new AddProducto({}));
   const [stockState, setStockState] = useState({ deposito_id: 0, cantidad: 0 });
   const [error, setError] = useState({ code: 0, message: "" });
   const [success, setSuccess] = useState({ active: false, message: "" });

@@ -267,7 +267,7 @@ function AddProducto() {
 
       <Box sx={{ position: "fixed", bottom: 24, zIndex: 1000, right: 24 }} bgcolor="background.paper" boxShadow={3} borderRadius={2} p={2}>
         <Stack direction="row" spacing={1}>
-          <Button size="large" variant="outlined" onClick={sendForm}>
+          <Button size="large" variant="contained" onClick={sendForm}>
             GUARDAR
           </Button>
         </Stack>

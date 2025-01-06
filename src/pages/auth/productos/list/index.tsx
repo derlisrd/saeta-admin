@@ -1,20 +1,12 @@
-import API from "@/services/api";
-import useAuthStore from "@/store/authStore";
-import { Box } from "@mui/material";
-import { useEffect } from "react";
+import { Box, Container } from "@mui/material";
 
 function ListaProductos() {
-  const { userData } = useAuthStore();
-  const fetchData = async () => {
-    const res = await API.productos.list(userData && userData?.token);
-    console.log(res);
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  return <Box></Box>;
+  return (
+    <Container>
+      <h3>Productos o servicios</h3>
+      <Box></Box>
+    </Container>
+  );
 }
 
 export default ListaProductos;

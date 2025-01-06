@@ -1,4 +1,5 @@
 import { useSessionStorage } from "@/hooks/useSessionStorage";
+import { apiServiceAuth } from "@/services/api/auth/auth";
 import { LoginResults } from "@/services/dto/login";
 import { useCallback, useEffect, useState } from "react";
 import { create } from "zustand";
@@ -44,8 +45,11 @@ const useAuthStore = ()=>{
     const checkIsAuth = useCallback(async()=>{
         setLoading(true)
         if(sessionUserData !== null){
-            setIsAuth(true);
-            setUserData(sessionUserData);
+            const res = await apiServiceAuth.check(sessionUserData.token)
+            if(res){
+                setIsAuth(true);
+                setUserData(sessionUserData);
+            }
         }
         setLoading(false)
     },[])

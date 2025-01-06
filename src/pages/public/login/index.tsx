@@ -1,10 +1,10 @@
 import useLogin from "@/core/hooks/login/useLogin";
-import useAuthStore from "@/store/authStore";
+import { useAuth } from "@/providers/AuthProvider";
 import { TextField, Stack, Button, Typography, Container, Icon, InputAdornment, CircularProgress, Alert, IconButton } from "@mui/material";
 
 function Login() {
   const { username, setUsername, password, setPassword, handleLogin, isLoading, error, hide, toggleHide } = useLogin();
-  const { loading } = useAuthStore();
+  const { loading } = useAuth();
 
   return (
     <Container maxWidth="md">
