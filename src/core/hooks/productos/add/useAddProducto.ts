@@ -25,7 +25,7 @@ function useAddProducto() {
   const [depositos, setDepositos] = useState<DepositoResults[]>([]);
   const [medidas, setMedidas] = useState<MedidasResults[]>([]);
   const [form, setForm] = useState<AddProducto>(new AddProducto({}));
-  const [stockState, setStockState] = useState({ deposito_id: 0, cantidad: 0 });
+  const [stockState, setStockState] = useState<AddStock>(new AddStock({}));
   const [error, setError] = useState({ code: 0, message: "" });
   const [success, setSuccess] = useState({ active: false, message: "" });
 
@@ -59,19 +59,27 @@ function useAddProducto() {
     clearError();
   }
 
+  const changeStockState = (name : string, value :number)=>{
+      const updatedStockState = new AddStock({...stockState, [name]: value});
+      setStockState(updatedStockState);
+  }
+
   const addStock = () => {
     const { deposito_id, cantidad } = stockState;
-    console.log({deposito_id,cantidad})
+    
     if (deposito_id === 0 || cantidad === 0) {
       setError({ code: 9, message: "Seleccione un depósito y una cantidad" });
       return;
     }
+    const depositoFind =  depositos.find(e=> e.id === deposito_id)
+
     const existingStock = form.stock.find((item) => item.deposito_id === deposito_id);
     const updatedStock = existingStock
       ? form.stock.map((item) => (item.deposito_id === deposito_id ? new AddStock({ ...item, cantidad: item.cantidad + cantidad }) : item))
-      : [...form.stock, new AddStock({ deposito_id, cantidad })];
+      : [...form.stock, new AddStock({ deposito_id, cantidad, deposito: depositoFind?.nombre })];
     setForm(new AddProducto({ ...form, stock: updatedStock }));
-    setStockState({ deposito_id, cantidad: 0 });
+
+    setStockState(new AddStock({ deposito_id, cantidad: 0, deposito: depositoFind?.nombre }));
   };
 
   const removeStock = (deposito_id: number) => {
@@ -202,6 +210,7 @@ function useAddProducto() {
     verificarCodigoDisponible,
     generateCode,
     inputCodigoRef,
+    changeStockState
   };
 }
 

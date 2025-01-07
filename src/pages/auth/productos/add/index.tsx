@@ -9,8 +9,14 @@ import {
   FormHelperText,
   FormLabel,
   Grid2 as Grid,
+  Icon,
   InputLabel,
   LinearProgress,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
   MenuItem,
   Radio,
   RadioGroup,
@@ -33,13 +39,13 @@ function AddProducto() {
     medidas,
     addStock,
     stockState,
-    setStockState,
     success,
     clearSuccess,
     inputCodigoRef,
     verificarCodigoDisponible,
     error,
     generateCode,
+    changeStockState,
   } = useAddProducto();
   return (
     <div>
@@ -94,6 +100,7 @@ function AddProducto() {
               placeholder="Nombre"
               fullWidth
               required
+              autoComplete="off"
               label="Nombre"
               name="nombre"
               onChange={(e) => changeByName(e.target.name, e.target.value)}
@@ -233,8 +240,8 @@ function AddProducto() {
               name="cantidad"
               value={stockState.cantidad}
               autoComplete="off"
-              onChange={(e) => {
-                setStockState({ ...stockState, cantidad: Number(e.target.value) });
+              onChange={({ target }) => {
+                changeStockState(target.name, Number(target.value));
               }}
               error={error.code === 9}
             />
@@ -249,8 +256,8 @@ function AddProducto() {
                 value={stockState.deposito_id}
                 label="Deposito"
                 name="deposito_id"
-                onChange={(e) => {
-                  setStockState({ ...stockState, deposito_id: Number(e.target.value) });
+                onChange={({ target }) => {
+                  changeStockState(target.name, Number(target.value));
                 }}
               >
                 <MenuItem value={0} disabled>
@@ -269,7 +276,20 @@ function AddProducto() {
               AGREGAR
             </Button>
           </Grid>
-          <Grid size={12}></Grid>
+          <Grid size={12}>
+            <List>
+              {form.stock.map((e, i) => (
+                <ListItem disablePadding key={i}>
+                  <ListItemButton>
+                    <ListItemIcon>
+                      <Icon>delete</Icon>
+                    </ListItemIcon>
+                    <ListItemText primary={`Deposito: ${e.deposito}`} secondary={`Cantidad: ${e.cantidad}`} />
+                  </ListItemButton>
+                </ListItem>
+              ))}
+            </List>
+          </Grid>
         </Grid>
       </Box>
 

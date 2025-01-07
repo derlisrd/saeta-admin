@@ -1,10 +1,12 @@
 export class AddStock {
     deposito_id: number;
     cantidad: number;
+    deposito: string;
   
-    constructor({ deposito_id = 0, cantidad = 0 }: Partial<AddStock>) {
+    constructor({ deposito_id = 0, cantidad = 0, deposito ='' }: Partial<AddStock>) {
       this.deposito_id = deposito_id;
       this.cantidad = cantidad;
+      this.deposito = deposito
     }
   
     static fromJSON(json: Record<string, any>): AddStock {
@@ -15,6 +17,7 @@ export class AddStock {
       return {
         deposito_id: this.deposito_id,
         cantidad: this.cantidad,
+        deposito: this.deposito
       };
     }
   }
