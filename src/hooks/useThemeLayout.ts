@@ -93,6 +93,9 @@ function useThemeLayout() {
         },
       },
       MuiButton: {
+        defaultProps:{
+          variant:'contained'
+        },
         styleOverrides: {
           root: {
             borderRadius: "8px",
@@ -101,7 +104,16 @@ function useThemeLayout() {
             },
           },
         },
-      }
+      },
+      MuiTableCell:{
+        styleOverrides:{
+          root:{
+            fontSize:12,
+            padding:4,
+          }
+        }
+      },
+      
     },
        
     typography: {

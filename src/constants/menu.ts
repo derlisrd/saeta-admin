@@ -28,7 +28,7 @@ export default [
         submenu: [
             {
                 id: 14232,
-                title: '',
+                title: 'Generar pedido',
                 icon: 'category',
                 color: '#0066cc',
                 url: '/productos/add',

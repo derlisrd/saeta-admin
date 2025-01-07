@@ -85,7 +85,7 @@ function AddProducto() {
           </Grid>
           <Grid size={{ xs: 12, md: 4 }}>
             <FormLabel id="tipo">Tipo:</FormLabel>
-            <RadioGroup row aria-labelledby="tipo" name="tipo" onChange={(e) => changeByName(e.target.name, Number(e.target.value))}>
+            <RadioGroup row name="tipo" onChange={(e) => changeByName(e.target.name, Number(e.target.value))}>
               <FormControlLabel value="1" checked={form.tipo === 1} control={<Radio />} label="Producto" />
               <FormControlLabel value="2" checked={form.tipo === 2} control={<Radio />} label="Servicio" />
             </RadioGroup>
@@ -295,7 +295,7 @@ function AddProducto() {
 
       <Box sx={{ position: "fixed", bottom: 24, zIndex: 1000, right: 24 }} bgcolor="background.paper" boxShadow={3} borderRadius={2} p={2}>
         <Stack direction="row" spacing={1}>
-          <Button size="large" variant="contained" onClick={sendForm}>
+          <Button size="large" onClick={sendForm}>
             GUARDAR
           </Button>
         </Stack>
