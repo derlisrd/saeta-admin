@@ -20,7 +20,7 @@ export default [
     {
         id: 345,
         title: 'Ventas',
-        icon: 'inventory_2',
+        icon: 'store',
         color: '#0066cc',
         url: null,
         private: false,
@@ -29,42 +29,9 @@ export default [
             {
                 id: 14232,
                 title: 'Generar pedido',
-                icon: 'category',
+                icon: 'receipt_long',
                 color: '#0066cc',
-                url: '/productos/add',
-                private: false,
-            },
-            {
-                id: 343,
-                title: 'Productos',
-                icon: 'inventory',
-                color: '#0066cc',
-                url: '/productos/lista',
-                private: false,
-            },
-            
-            {
-                id: 1425,
-                title: 'Categorias',
-                icon: 'category',
-                color: '#0066cc',
-                url: '/registros/categorias',
-                private: false,
-            },
-            {
-                id: 145,
-                title: 'Clientes',
-                icon: 'supervisor_account',
-                color: '#0066cc',
-                url: '/registros/clientes',
-                private: false,
-            },
-            {
-                id: 14,
-                title: 'Usuarios',
-                icon: 'manage_accounts',
-                color: '#0066cc',
-                url: '/config/usuarios',
+                url: '/ventas/pedidos/add',
                 private: false,
             }
         ]
@@ -81,15 +48,15 @@ export default [
             {
                 id: 142325,
                 title: 'Agregar',
-                icon: 'category',
+                icon: 'add',
                 color: '#0066cc',
                 url: '/productos/add',
                 private: false,
             },
             {
                 id: 343,
-                title: 'Productos',
-                icon: 'inventory',
+                title: 'Lista',
+                icon: 'list',
                 color: '#0066cc',
                 url: '/productos/lista',
                 private: false,
@@ -101,22 +68,6 @@ export default [
                 icon: 'category',
                 color: '#0066cc',
                 url: '/registros/categorias',
-                private: false,
-            },
-            {
-                id: 145,
-                title: 'Clientes',
-                icon: 'supervisor_account',
-                color: '#0066cc',
-                url: '/registros/clientes',
-                private: false,
-            },
-            {
-                id: 14,
-                title: 'Usuarios',
-                icon: 'manage_accounts',
-                color: '#0066cc',
-                url: '/config/usuarios',
                 private: false,
             }
         ]
@@ -136,6 +87,14 @@ export default [
                 icon: 'admin_panel_settings',
                 color: '#0066cc',
                 url: '/config/empresa',
+                private: false,
+            },
+            {
+                id: 122322342,
+                title: 'Tema',
+                icon: 'brush',
+                color: '#0066cc',
+                url: '/config/tema',
                 private: false,
             }
         ]

@@ -18,6 +18,7 @@ import {
   ListItemIcon,
   ListItemText,
   MenuItem,
+  Paper,
   Radio,
   RadioGroup,
   Select,
@@ -55,7 +56,7 @@ function AddProducto() {
         </Alert>
       </Snackbar>
       <Title>Agregar producto</Title>
-      <Box sx={{ paddingBottom: 12 }}>
+      <Box boxShadow={4} padding={3} borderRadius={3} component={Paper}>
         {loading && <LinearProgress sx={{ margin: "18px" }} />}
         <Grid container spacing={{ xs: 2, md: 2 }} alignItems="center">
           <Grid size={{ xs: 12, md: 6 }}>

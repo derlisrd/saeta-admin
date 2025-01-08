@@ -1,6 +1,6 @@
 import MenuNav from "./components/MenuNav";
 import useDrawerMenu from "@/hooks/useDrawerMenu";
-import useThemTypeMode from "@/hooks/useThemeTypeMode";
+import useThemTypeMode from "@/hooks/useThemeCustom";
 
 import { Drawer, Box, Toolbar, Stack, Icon, IconButton } from "@mui/material";
 import { NavigateOptions, Outlet, To, useNavigate } from "react-router-dom";
@@ -9,7 +9,7 @@ function AuthMenuLayout() {
   const navigate = useNavigate();
   const { isOpenMenu, toggleMenu, isOpenMobileMenu, toggleMobileMenu, DRAWER_WIDTH } = useDrawerMenu();
 
-  const { toggleTheme } = useThemTypeMode();
+  const { toggleModeDark } = useThemTypeMode();
 
   let margin_left = isOpenMenu ? `${DRAWER_WIDTH}px` : "0";
   let width_main = isOpenMenu ? `calc(100% - ${DRAWER_WIDTH}px)` : "100%";
@@ -34,7 +34,7 @@ function AuthMenuLayout() {
             <Icon>menu</Icon>
           </IconButton>
           <Stack flexDirection="row">
-            <IconButton onClick={toggleTheme}>
+            <IconButton onClick={toggleModeDark}>
               <Icon>light_mode</Icon>
             </IconButton>
             <IconButton onClick={signOut}>

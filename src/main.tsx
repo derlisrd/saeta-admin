@@ -1,15 +1,15 @@
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
-import ThemeTypeModeProvider from "./providers/ThemeTypeModeProvider";
-import Pages from "./pages";
 import { AuthProvider } from "./providers/AuthProvider";
+import ThemeCustomProvider from "./providers/ThemeCustomProvider";
+import Pages from "./pages";
 
 createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
-    <ThemeTypeModeProvider>
+    <ThemeCustomProvider>
       <AuthProvider>
         <Pages />
       </AuthProvider>
-    </ThemeTypeModeProvider>
+    </ThemeCustomProvider>
   </BrowserRouter>
 );

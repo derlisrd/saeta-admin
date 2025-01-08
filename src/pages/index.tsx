@@ -2,15 +2,15 @@ import { ThemeProvider } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
 import PublicPages from "./public";
 import AutenticatedPages from "./auth";
-import useThemeLayout from "@/hooks/useThemeLayout";
 import { useAuth } from "@/providers/AuthProvider";
+import useThemeCustom from "@/hooks/useThemeCustom";
 
 function Pages() {
-  const { theme } = useThemeLayout();
+  const { customTheme } = useThemeCustom();
   const { isAuth } = useAuth();
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={customTheme ?? {}}>
       <CssBaseline />
       {!isAuth ? <PublicPages /> : <AutenticatedPages />}
     </ThemeProvider>
