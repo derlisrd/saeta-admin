@@ -20,6 +20,8 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  TableFooter,
+  TablePagination,
 } from "@mui/material";
 
 function ListaProductos() {
@@ -65,7 +67,7 @@ function ListaProductos() {
             <Grid size={{ xs: 12, md: 4 }}></Grid>
           </Grid>
           <TableContainer component={Paper} sx={{ borderRadius: 2 }}>
-            <Table stickyHeader>
+            <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
                   <TableCell>
@@ -98,8 +100,11 @@ function ListaProductos() {
                   </TableRow>
                 ))}
               </TableBody>
+
+              <TableFooter></TableFooter>
             </Table>
           </TableContainer>
+          <TablePagination rowsPerPageOptions={[10, 25, 100]} component="div" count={list.length} rowsPerPage={0} page={0} onPageChange={() => {}} onRowsPerPageChange={() => {}} />
         </Box>
       )}
     </Container>
