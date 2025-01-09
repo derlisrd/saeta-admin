@@ -1,4 +1,5 @@
 import { apiServiceAuth } from "./auth/auth";
+import { apiSErviceConfig } from "./empresa/config";
 import { apiServiceImpuestos } from "./factura/impuesto";
 import { apiServiceCategorias } from "./productos/categoria";
 import { apiServiceDepositos } from "./productos/deposito";
@@ -11,7 +12,8 @@ const API = {
     categorias: apiServiceCategorias,
     impuestos: apiServiceImpuestos,
     depositos: apiServiceDepositos,
-    medidas: apiServiceMedidas 
+    medidas: apiServiceMedidas,
+    config: apiSErviceConfig 
 }
 
 export default API

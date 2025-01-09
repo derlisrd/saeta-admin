@@ -1,25 +1,60 @@
 import useConfigEmpresa from "@/core/hooks/config/useConfigEmpresa";
-import { Box, Breadcrumbs, Grid2 as Grid, Paper, TextField, Typography } from "@mui/material";
+import { Box, Breadcrumbs, Container, Grid2 as Grid, Paper, TextField, Typography, Button, Snackbar, Alert } from "@mui/material";
 
 function Empresa() {
-  const { empresa } = useConfigEmpresa();
+  const { empresa, success, clearSuccess, onChange } = useConfigEmpresa();
 
   return (
-    <Box>
+    <Container>
       <h3>Empresa</h3>
       <Breadcrumbs separator="›">
         <Typography variant="overline">Configuración</Typography>
         <Typography variant="overline">Empresa</Typography>
       </Breadcrumbs>
-
+      <Snackbar anchorOrigin={{ vertical: "top", horizontal: "right" }} open={success.active} autoHideDuration={6000} onClose={clearSuccess}>
+        <Alert onClose={clearSuccess} severity="success" variant="filled" sx={{ width: "100%" }}>
+          {success.message}
+        </Alert>
+      </Snackbar>
       <Box boxShadow={4} padding={3} borderRadius={3} component={Paper}>
-        <Grid container>
+        <Grid container spacing={{ xs: 3, md: 2 }}>
+          <Grid size={{ xs: 12, md: 6 }}>
+            <TextField label="Nombre de empresa" fullWidth name="nombre" onChange={({ target }) => onChange(target.name, target.value)} value={empresa?.nombre} />
+          </Grid>
+          <Grid size={{ xs: 12, md: 6 }}>
+            <TextField onChange={({ target }) => onChange(target.name, target.value)} name="ruc" label="RUC" fullWidth value={empresa?.ruc} />
+          </Grid>
+          <Grid size={{ xs: 12, md: 6 }}>
+            <TextField name="telefono" onChange={({ target }) => onChange(target.name, target.value)} label="Teléfono" fullWidth value={empresa?.telefono} />
+          </Grid>
+          <Grid size={{ xs: 12, md: 6 }}>
+            <TextField
+              label="Dirección"
+              name="direccion"
+              onChange={({ target }) => {
+                onChange(target.name, target.value);
+              }}
+              fullWidth
+              value={empresa?.direccion}
+            />
+          </Grid>
+          <Grid size={{ xs: 12, md: 6 }}>
+            <TextField
+              label="Propietario"
+              name="propietario"
+              onChange={({ target }) => {
+                onChange(target.name, target.value);
+              }}
+              fullWidth
+              value={empresa?.propietario}
+            />
+          </Grid>
           <Grid size={{ xs: 12 }}>
-            <TextField label="Nombre de empresa" fullWidth value={empresa?.nombre} />
+            <Button>GUARDAR</Button>
           </Grid>
         </Grid>
       </Box>
-    </Box>
+    </Container>
   );
 }
 
