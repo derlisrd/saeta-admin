@@ -46,7 +46,7 @@ export class User {
   }
 }
 
-class Empresa {
+export class Empresa {
   constructor(
     public id: number,
     public nombre: string,
