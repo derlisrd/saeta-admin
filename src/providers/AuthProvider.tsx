@@ -10,6 +10,7 @@ type AuthContextType = {
   iniciarSesion: (data: LoginResults | null, mantener?: boolean) => void;
   cerrarSesion: () => void;
   loading: boolean;
+  updateUserData: (data: LoginResults) => void;
 };
 
 // Contexto inicializado como undefined para ser manejado correctamente por useContext
@@ -22,6 +23,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuth, setIsAuth] = useState(false);
   const [userData, setUserData] = useState<LoginResults | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const updateUserData = (data: LoginResults) => {
+    setUserData(data);
+  };
 
   // Función para iniciar sesión
   const iniciarSesion = useCallback(
@@ -47,9 +52,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setLoading(true);
     if (sessionUserData !== null) {
       const res = await apiServiceAuth.check(sessionUserData.token);
-      if (res) {
-        iniciarSesion(sessionUserData);
+      if (!res) {
+        cerrarSesion();
       }
+      iniciarSesion(sessionUserData);
     }
     setLoading(false);
   }, []);
@@ -59,7 +65,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     checkIsAuth();
   }, [checkIsAuth]);
 
-  return <AuthContext.Provider value={{ isAuth, userData, iniciarSesion, cerrarSesion, loading }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ isAuth, userData, iniciarSesion, cerrarSesion, loading, updateUserData }}>{children}</AuthContext.Provider>;
 };
 
 // Hook personalizado para usar el contexto
@@ -68,6 +74,6 @@ export const useAuth = () => {
   if (context === undefined) {
     throw new Error("useAuth debe ser usado dentro de un AuthProvider");
   }
-  const { isAuth, userData, iniciarSesion, cerrarSesion, loading } = context;
-  return { isAuth, userData, iniciarSesion, cerrarSesion, loading };
+  const { isAuth, userData, iniciarSesion, cerrarSesion, loading, updateUserData } = context;
+  return { isAuth, userData, iniciarSesion, cerrarSesion, loading, updateUserData };
 };
