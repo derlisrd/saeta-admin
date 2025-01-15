@@ -15,15 +15,41 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
     main: true,
     clientes: false,
   });
-  const [selectedDeposito] = useState(0);
+  const [selectedDeposito] = useState(1);
   const [pedido, setPedido] = useState(new AddPedido({}));
+  const [error, setError] = useState({ code: 0, message: "", active: false });
+
+  const clearError = () => setError({ ...error, active: false });
 
   const consultarCodigoInsertar = async (codigo: string, cantidad: number) => {
-    const res = await API.productos.consultarCodigoPorDeposito(userData && userData.token, codigo, selectedDeposito);
+    const items = pedido.items.filter((item) => item.codigo === codigo);
 
-    if (!res.success) {
-      console.log(res.message);
+    if (items.length > 0) {
+      const item = items[0];
+      const nuevoItem = new AddPedidoItem({
+        producto_id: item.producto_id,
+        deposito_id: selectedDeposito,
+        impuesto_id: item.impuesto_id,
+        cantidad: item.cantidad + cantidad,
+        precio: item.precio,
+        descuento: 0,
+        total: item.precio * (item.cantidad + cantidad),
+        observacion: "",
+        codigo: item.codigo,
+        nombre: item.nombre,
+      });
+
+      setPedido({
+        ...pedido,
+        items: pedido.items.map((item) => (item.codigo === codigo ? nuevoItem : item)),
+      });
       return;
+    }
+
+    const res = await API.productos.consultarCodigoPorDeposito(userData && userData.token, codigo, selectedDeposito);
+    console.log(res);
+    if (!res.success) {
+      setError({ code: res.status, message: res.message, active: true });
     }
     if (res.results) {
       const nuevoItem = new AddPedidoItem({
@@ -49,7 +75,7 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
     setModal({ ...modal, [name]: value });
   };
 
-  const values = { modal, handleModal, pedido, consultarCodigoInsertar };
+  const values = { modal, handleModal, pedido, consultarCodigoInsertar, error, clearError };
   return <AddPedidoContext.Provider value={values}>{children}</AddPedidoContext.Provider>;
 }
 

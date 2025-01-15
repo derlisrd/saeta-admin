@@ -12,7 +12,7 @@ export const apiServiceProductos = {
         success: data.success,
         status: status,
         results: data.results,
-        message: ""
+        message: data.message
       });
     } catch (e) {
         if (axios.isAxiosError(e)) {

@@ -10,9 +10,10 @@ function Item({ item }: ItemProps) {
   return (
     <Fragment>
       <Grid size={{ xs: 12, sm: 2 }}>{item.codigo}</Grid>
-      <Grid size={{ xs: 12, sm: 6 }}>{item.nombre}</Grid>
+      <Grid size={{ xs: 12, sm: 5 }}>{item.nombre}</Grid>
       <Grid size={{ xs: 12, sm: 1 }}>{item.cantidad}</Grid>
-      <Grid size={{ xs: 12, sm: 3 }}>{item.total}</Grid>
+      <Grid size={{ xs: 12, sm: 2 }}>{item.total}</Grid>
+      <Grid size={{ xs: 12, sm: 2 }}>a</Grid>
     </Fragment>
   );
 }
