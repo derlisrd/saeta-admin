@@ -29,6 +29,8 @@ export class AddPedido{
 
 export class AddPedidoItem{
     producto_id: number;
+    nombre: string;
+    codigo: string;
     deposito_id: number;
     impuesto_id: number;
     cantidad: number;
@@ -45,7 +47,9 @@ export class AddPedidoItem{
         precio = 0,
         descuento = 0,
         total = 0,
-        observacion = ""
+        observacion = "",
+        codigo = "",
+        nombre = ""
     }: Partial<AddPedidoItem>){
         this.producto_id = producto_id;
         this.deposito_id = deposito_id;
@@ -55,5 +59,7 @@ export class AddPedidoItem{
         this.descuento = descuento;
         this.total = total;
         this.observacion = observacion;
+        this.codigo = codigo;
+        this.nombre = nombre;
     }
 }

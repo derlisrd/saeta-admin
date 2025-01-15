@@ -1,8 +1,10 @@
 import { Dialog, DialogContent, DialogTitle, Fade, Grid2 as Grid, Icon, IconButton, InputAdornment, Stack, TextField, Tooltip, Typography, Zoom } from "@mui/material";
 import useAddPedido from "./useAddPedido";
+import Items from "./_components/items";
 
 function Main() {
-  const { modal } = useAddPedido();
+  const { modal, pedido, consultarCodigoInsertar } = useAddPedido();
+
   return (
     <Dialog open={modal.main} fullScreen TransitionComponent={Fade}>
       <DialogTitle>
@@ -17,15 +19,20 @@ function Main() {
       </DialogTitle>
       <DialogContent>
         <Grid container spacing={{ xs: 1 }}>
-          <Grid size={{ xs: 12, sm: 8, md: 8, lg: 9 }}>
-            <h6>ITEMS</h6>
+          <Grid size={{ xs: 12, sm: 12, md: 8, lg: 9 }}>
+            <Items items={pedido.items} />
           </Grid>
-          <Grid size={{ xs: 12, sm: 4, md: 4, lg: 3 }}>
+          <Grid size={{ xs: 12, sm: 12, md: 4, lg: 3 }}>
             <TextField
               placeholder="Código"
               fullWidth
               autoComplete="off"
               autoFocus
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  consultarCodigoInsertar("2", 1);
+                }
+              }}
               slotProps={{
                 input: {
                   startAdornment: (

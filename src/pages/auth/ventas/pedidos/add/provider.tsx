@@ -1,36 +1,55 @@
-import { createContext, ReactNode, useState } from "react";
-
-interface AddPedidoContextProps {
-  modal: {
-    main: boolean;
-    clientes: boolean;
-  };
-  handleModal: (name: string, value: boolean) => void;
-}
-
-export const AddPedidoContext = createContext<AddPedidoContextProps>({
-  modal: {
-    main: true,
-    clientes: false,
-  },
-  handleModal: () => {},
-});
+import { AddPedido, AddPedidoItem } from "@/services/dto/pedidos/AddPedido";
+import { ReactNode, useState } from "react";
+import { AddPedidoContext } from "./context";
+import API from "@/services/api";
+import { useAuth } from "@/providers/AuthProvider";
 
 interface AddPedidoProviderProps {
   children: ReactNode;
 }
 
 function AddPedidoProvider({ children }: AddPedidoProviderProps) {
+  const { userData } = useAuth();
+
   const [modal, setModal] = useState({
     main: true,
     clientes: false,
   });
+  const [selectedDeposito] = useState(0);
+  const [pedido, setPedido] = useState(new AddPedido({}));
+
+  const consultarCodigoInsertar = async (codigo: string, cantidad: number) => {
+    const res = await API.productos.consultarCodigoPorDeposito(userData && userData.token, codigo, selectedDeposito);
+
+    if (!res.success) {
+      console.log(res.message);
+      return;
+    }
+    if (res.results) {
+      const nuevoItem = new AddPedidoItem({
+        producto_id: res.results.id,
+        deposito_id: selectedDeposito,
+        impuesto_id: res.results.impuesto_id,
+        cantidad: cantidad,
+        precio: res.results.precio_normal,
+        descuento: 0,
+        total: res.results.precio_normal * cantidad,
+        observacion: "",
+        codigo: res.results.codigo,
+        nombre: res.results.nombre,
+      });
+      setPedido({
+        ...pedido,
+        items: [...pedido.items, nuevoItem],
+      });
+    }
+  };
 
   const handleModal = (name: string, value: boolean) => {
     setModal({ ...modal, [name]: value });
   };
 
-  const values = { modal, handleModal };
+  const values = { modal, handleModal, pedido, consultarCodigoInsertar };
   return <AddPedidoContext.Provider value={values}>{children}</AddPedidoContext.Provider>;
 }
 
