@@ -1,5 +1,5 @@
 import { AddPedido, AddPedidoItem } from "@/services/dto/pedidos/AddPedido";
-import { ReactNode, useState } from "react";
+import { ReactNode, useRef, useState } from "react";
 import { AddPedidoContext } from "./context";
 import API from "@/services/api";
 import { useAuth } from "@/providers/AuthProvider";
@@ -10,11 +10,12 @@ interface AddPedidoProviderProps {
 
 function AddPedidoProvider({ children }: AddPedidoProviderProps) {
   const { userData } = useAuth();
-
+  const inputCodigoRef = useRef<HTMLInputElement>(null);
   const [modal, setModal] = useState({
     main: true,
     clientes: false,
   });
+  const [loadingAddProducto, setLoadingAddProducto] = useState(false);
   const [selectedDeposito] = useState(1);
   const [pedido, setPedido] = useState(new AddPedido({}));
   const [error, setError] = useState({ code: 0, message: "", active: false });
@@ -45,11 +46,13 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
       });
       return;
     }
-
+    setLoadingAddProducto(true);
     const res = await API.productos.consultarCodigoPorDeposito(userData && userData.token, codigo, selectedDeposito);
-    console.log(res);
+    setLoadingAddProducto(false);
+
     if (!res.success) {
       setError({ code: res.status, message: res.message, active: true });
+      return;
     }
     if (res.results) {
       const nuevoItem = new AddPedidoItem({
@@ -75,7 +78,7 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
     setModal({ ...modal, [name]: value });
   };
 
-  const values = { modal, handleModal, pedido, consultarCodigoInsertar, error, clearError };
+  const values = { modal, handleModal, pedido, consultarCodigoInsertar, error, clearError, loadingAddProducto, inputCodigoRef };
   return <AddPedidoContext.Provider value={values}>{children}</AddPedidoContext.Provider>;
 }
 

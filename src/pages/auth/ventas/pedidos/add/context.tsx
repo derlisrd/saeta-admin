@@ -1,11 +1,13 @@
 import { AddPedido } from "@/services/dto/pedidos/AddPedido";
-import { createContext } from "react";
+import { createContext, Ref } from "react";
 
 interface AddPedidoContextProps {
   modal: {
     main: boolean;
     clientes: boolean;
   };
+  inputCodigoRef: Ref<HTMLInputElement>;
+  loadingAddProducto: boolean;
   clearError: () => void;
   error: {
     active: boolean;
@@ -18,10 +20,12 @@ interface AddPedidoContextProps {
 }
 
 export const AddPedidoContext = createContext<AddPedidoContextProps>({
+  inputCodigoRef: { current: null },
   modal: {
     main: true,
     clientes: false,
   },
+  loadingAddProducto: false,
   clearError: () => {},
   error: {
     active: false,
