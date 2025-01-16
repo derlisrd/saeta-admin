@@ -5,9 +5,9 @@ import { ConsultarPorDepositoResponse } from "@/services/dto/productos/consulta"
 import axios from 'axios'
 
 export const apiServiceProductos = {
-  consultarCodigoPorDeposito: async (token: string | null, codigo: string, deposito_id: number): Promise<ConsultarPorDepositoResponse> => {
+  consultarCodigoPorDeposito: async (token: string | null, codigo: string, deposito_id: number, cantidad : number): Promise<ConsultarPorDepositoResponse> => {
     try {
-      const { data, status } = await BASE.get(`/productos/consultar-por-deposito?codigo=${codigo}&deposito_id=${deposito_id}`, { headers: { Authorization: token } });
+      const { data, status } = await BASE.get(`/productos/consultar-por-deposito?codigo=${codigo}&deposito_id=${deposito_id}&cantidad=${cantidad}`, { headers: { Authorization: token } });
       return new ConsultarPorDepositoResponse({
         success: data.success,
         status: status,

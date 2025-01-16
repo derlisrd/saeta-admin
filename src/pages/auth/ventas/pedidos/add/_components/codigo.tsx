@@ -2,7 +2,7 @@ import { CircularProgress, Icon, IconButton, InputAdornment, TextField } from "@
 import { Ref } from "react";
 
 interface InputCodigoProps {
-  consultarCodigoInsertar: (codigo: string, cantidad: number) => void;
+  consultarCodigoInsertar: (codigo: string) => void;
   loading: boolean;
   ref?: Ref<HTMLInputElement>;
 }
@@ -11,6 +11,8 @@ function InputCodigo({ consultarCodigoInsertar, ref, loading }: InputCodigoProps
   return (
     <TextField
       placeholder="Código"
+      label="Código de producto"
+      helperText="Ingrese el código y presione ENTER"
       fullWidth
       inputRef={ref}
       autoComplete="off"
@@ -18,7 +20,7 @@ function InputCodigo({ consultarCodigoInsertar, ref, loading }: InputCodigoProps
       onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
           const target = e.target as HTMLInputElement; // Asegurar que e.target es un HTMLInputElement
-          consultarCodigoInsertar(target.value, 1);
+          consultarCodigoInsertar(target.value);
           target.value = "";
         }
       }}

@@ -8,7 +8,7 @@ import InputCantidad from "./_components/cantidad";
 import FinalizarButton from "./_components/finalizarbtn";
 
 function Main() {
-  const { modal, pedido, consultarCodigoInsertar, error, clearError, handleModal, loadingAddProducto } = useHook();
+  const { modal, pedido, consultarCodigoInsertar, error, clearError, handleModal, loadingAddProducto, cantidad, setCantidad } = useHook();
 
   return (
     <Dialog open={modal.main} fullScreen TransitionComponent={Fade}>
@@ -20,9 +20,9 @@ function Main() {
             <Items items={pedido.items} />
           </Grid>
           <Grid size={{ xs: 12, sm: 12, md: 4, lg: 3 }}>
-            <Stack spacing={2}>
+            <Stack spacing={2} pt={1}>
               <InputCodigo loading={loadingAddProducto} consultarCodigoInsertar={consultarCodigoInsertar} />
-              <InputCantidad />
+              <InputCantidad value={cantidad} setValue={setCantidad} />
               <FinalizarButton />
             </Stack>
           </Grid>

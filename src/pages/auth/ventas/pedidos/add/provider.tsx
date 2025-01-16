@@ -10,11 +10,14 @@ interface AddPedidoProviderProps {
 
 function AddPedidoProvider({ children }: AddPedidoProviderProps) {
   const { userData } = useAuth();
+
   const inputCodigoRef = useRef<HTMLInputElement>(null);
+
   const [modal, setModal] = useState({
     main: true,
     clientes: false,
   });
+  const [cantidad, setCantidad] = useState(1);
   const [loadingAddProducto, setLoadingAddProducto] = useState(false);
   const [selectedDeposito] = useState(1);
   const [pedido, setPedido] = useState(new AddPedido({}));
@@ -22,9 +25,8 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
 
   const clearError = () => setError({ ...error, active: false });
 
-  const consultarCodigoInsertar = async (codigo: string, cantidad: number) => {
+  const consultarCodigoInsertar = async (codigo: string) => {
     const items = pedido.items.filter((item) => item.codigo === codigo);
-
     if (items.length > 0) {
       const item = items[0];
       const nuevoItem = new AddPedidoItem({
@@ -47,7 +49,7 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
       return;
     }
     setLoadingAddProducto(true);
-    const res = await API.productos.consultarCodigoPorDeposito(userData && userData.token, codigo, selectedDeposito);
+    const res = await API.productos.consultarCodigoPorDeposito(userData && userData.token, codigo, selectedDeposito, cantidad);
     setLoadingAddProducto(false);
 
     if (!res.success) {
@@ -78,7 +80,7 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
     setModal({ ...modal, [name]: value });
   };
 
-  const values = { modal, handleModal, pedido, consultarCodigoInsertar, error, clearError, loadingAddProducto, inputCodigoRef };
+  const values = { modal, handleModal, pedido, consultarCodigoInsertar, error, clearError, loadingAddProducto, inputCodigoRef, cantidad, setCantidad };
   return <AddPedidoContext.Provider value={values}>{children}</AddPedidoContext.Provider>;
 }
 

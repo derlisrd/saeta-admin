@@ -1,11 +1,13 @@
 import { AddPedido } from "@/services/dto/pedidos/AddPedido";
-import { createContext, Ref } from "react";
+import { createContext, Dispatch, Ref, SetStateAction } from "react";
 
 interface AddPedidoContextProps {
   modal: {
     main: boolean;
     clientes: boolean;
   };
+  cantidad: number;
+  setCantidad: Dispatch<SetStateAction<number>>;
   inputCodigoRef: Ref<HTMLInputElement>;
   loadingAddProducto: boolean;
   clearError: () => void;
@@ -16,11 +18,13 @@ interface AddPedidoContextProps {
   };
   handleModal: (name: string, value: boolean) => void;
   pedido: AddPedido;
-  consultarCodigoInsertar: (codigo: string, cantidad: number) => void;
+  consultarCodigoInsertar: (codigo: string) => void;
 }
 
 export const AddPedidoContext = createContext<AddPedidoContextProps>({
   inputCodigoRef: { current: null },
+  cantidad: 1,
+  setCantidad: () => {},
   modal: {
     main: true,
     clientes: false,
