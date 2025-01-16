@@ -54,6 +54,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const res = await apiServiceAuth.check(sessionUserData.token);
       if (!res) {
         cerrarSesion();
+        setLoading(false);
+        return;
       }
       iniciarSesion(sessionUserData);
     }

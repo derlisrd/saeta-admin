@@ -1,33 +1,40 @@
 import { Icon, IconButton, InputAdornment, TextField } from "@mui/material";
-import { Ref, Dispatch, SetStateAction } from "react";
+import useHook from "../useHook";
+import { NumericFormat } from "react-number-format";
 
-interface InputCantidadProps {
-  ref?: Ref<HTMLInputElement>;
-  value: number;
-  setValue: Dispatch<SetStateAction<number>>;
-}
+function InputCantidad() {
+  const { cantidad, setCantidad } = useHook();
 
-function InputCantidad({ ref, value, setValue }: InputCantidadProps) {
+  const menos = () => {
+    let nuevaCantidad = cantidad - 1;
+    if (nuevaCantidad > 0) {
+      setCantidad(nuevaCantidad);
+    }
+  };
+
   return (
-    <TextField
+    <NumericFormat
+      customInput={TextField}
+      allowedDecimalSeparators={["%"]}
+      value={cantidad}
+      thousandSeparator=","
+      decimalSeparator="."
+      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCantidad(Number(e.target.value))}
       fullWidth
-      inputRef={ref}
-      value={value}
-      onChange={(e) => setValue(Number(e.target.value))}
       autoComplete="off"
       label="Cantidad"
       slotProps={{
         input: {
           startAdornment: (
             <InputAdornment position="start">
-              <IconButton onClick={() => setValue(value - 1)}>
+              <IconButton onClick={menos}>
                 <Icon>remove</Icon>
               </IconButton>
             </InputAdornment>
           ),
           endAdornment: (
             <InputAdornment position="end">
-              <IconButton onClick={() => setValue(value + 1)}>
+              <IconButton onClick={() => setCantidad(cantidad + 1)}>
                 <Icon>add_circle</Icon>
               </IconButton>
             </InputAdornment>

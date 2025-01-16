@@ -1,10 +1,8 @@
 import { DialogTitle, Icon, IconButton, Stack, Tooltip, Typography, Zoom } from "@mui/material";
+import useHook from "../useHook";
 
-interface TitleProps {
-  handleModal: (name: string, value: boolean) => void;
-}
-
-function Title({ handleModal }: TitleProps) {
+function Title() {
+  const { handleModal, pedidos, index } = useHook();
   return (
     <DialogTitle>
       <Stack direction={{ xs: "row" }} alignItems="center">
@@ -18,7 +16,7 @@ function Title({ handleModal }: TitleProps) {
             <Icon>arrow_back_ios_new</Icon>
           </IconButton>
         </Tooltip>
-        <Typography variant="body1">Pedido | Total: Gs</Typography>
+        <Typography variant="body1">Pedido | Total: {pedidos[index].total} Gs</Typography>
       </Stack>
     </DialogTitle>
   );

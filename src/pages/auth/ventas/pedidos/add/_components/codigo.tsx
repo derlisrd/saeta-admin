@@ -1,20 +1,15 @@
 import { CircularProgress, Icon, IconButton, InputAdornment, TextField } from "@mui/material";
-import { Ref } from "react";
+import useHook from "../useHook";
 
-interface InputCodigoProps {
-  consultarCodigoInsertar: (codigo: string) => void;
-  loading: boolean;
-  ref?: Ref<HTMLInputElement>;
-}
-
-function InputCodigo({ consultarCodigoInsertar, ref, loading }: InputCodigoProps) {
+function InputCodigo() {
+  const { inputCodigoRef, consultarCodigoInsertar, loadingAddProducto } = useHook();
   return (
     <TextField
       placeholder="Código"
       label="Código de producto"
       helperText="Ingrese el código y presione ENTER"
       fullWidth
-      inputRef={ref}
+      inputRef={inputCodigoRef}
       autoComplete="off"
       autoFocus
       onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -26,6 +21,7 @@ function InputCodigo({ consultarCodigoInsertar, ref, loading }: InputCodigoProps
       }}
       slotProps={{
         input: {
+          sx: { padding: 0.5, fontSize: 15 },
           startAdornment: (
             <InputAdornment position="start">
               <IconButton>
@@ -33,7 +29,7 @@ function InputCodigo({ consultarCodigoInsertar, ref, loading }: InputCodigoProps
               </IconButton>
             </InputAdornment>
           ),
-          endAdornment: <InputAdornment position="end">{loading && <CircularProgress size={20} />}</InputAdornment>,
+          endAdornment: <InputAdornment position="end">{loadingAddProducto && <CircularProgress size={20} />}</InputAdornment>,
         },
       }}
     />
