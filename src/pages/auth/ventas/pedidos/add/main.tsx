@@ -9,6 +9,7 @@ import FinalizarButton from "./_components/finalizarbtn";
 import AgregarButton from "./_components/agregarbtn";
 import CancelarButton from "./_components/cancelarbtn";
 import EsperarButton from "./_components/esperarbtn";
+import ListaDeEspera from "./_components/listadeespera";
 
 function Main() {
   const { modal, error, clearError } = useHook();
@@ -41,6 +42,9 @@ function Main() {
               </Grid>
               <Grid size={12}>
                 <EsperarButton />
+              </Grid>
+              <Grid size={12}>
+                <ListaDeEspera />
               </Grid>
             </Grid>
           </Grid>
