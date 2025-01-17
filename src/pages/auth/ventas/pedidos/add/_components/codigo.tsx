@@ -21,7 +21,7 @@ function InputCodigo() {
       }}
       slotProps={{
         input: {
-          sx: { padding: 0.5, fontSize: 15 },
+          sx: { padding: 0, fontSize: 15 },
           startAdornment: (
             <InputAdornment position="start">
               <IconButton>

@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import useHook from "../useHook";
 
-function AgregarBtn() {
+function AgregarButton() {
   const { inputCodigoRef, consultarCodigoInsertar } = useHook();
 
   const handleClick = () => {
@@ -19,4 +19,4 @@ function AgregarBtn() {
   );
 }
 
-export default AgregarBtn;
+export default AgregarButton;

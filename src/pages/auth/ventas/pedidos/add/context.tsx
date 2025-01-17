@@ -6,6 +6,8 @@ interface AddPedidoContextProps {
     main: boolean;
     clientes: boolean;
   };
+  esperar: () => void;
+  cancelar: () => void;
   removeItem: (id: number) => void;
   cantidad: number;
   setCantidad: Dispatch<SetStateAction<number>>;
@@ -33,6 +35,8 @@ export const AddPedidoContext = createContext<AddPedidoContextProps>({
     main: true,
     clientes: false,
   },
+  esperar: () => {},
+  cancelar: () => {},
   loadingAddProducto: false,
   clearError: () => {},
   error: {

@@ -37,14 +37,58 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
 
   const clearError = () => setError({ ...error, active: false });
 
+  const handleModal = (name: string, value: boolean) => {
+    setModal({ ...modal, [name]: value });
+  };
+
+  const esperar = () => {
+    const copiaPedidos = [...pedidos];
+    copiaPedidos.push(
+      new AddPedido({
+        cliente_id: 0,
+        formas_pago_id: 0,
+        tipo: 0,
+        porcentaje_descuento: 0,
+        descuento: 0,
+        total: 0,
+        items: [],
+      })
+    );
+    set(copiaPedidos, index + 1);
+    setIndex(index + 1);
+  };
+
+  const cancelar = () => {
+    const copiaPedidos = [...pedidos];
+    let nuevoIndex = index - 1;
+    if (nuevoIndex < 0) {
+      nuevoIndex = 0;
+    }
+    if (copiaPedidos.length > 1) {
+      copiaPedidos.splice(index, 1);
+    } else {
+      copiaPedidos[index] = new AddPedido({
+        cliente_id: 0,
+        formas_pago_id: 0,
+        tipo: 0,
+        porcentaje_descuento: 0,
+        descuento: 0,
+        total: 0,
+        items: [],
+      });
+    }
+    set(copiaPedidos, nuevoIndex);
+    setIndex(nuevoIndex);
+  };
+
   const removeItem = (id: number) => {
     let copiaPedidos = [...pedidos];
     let newItems = copiaPedidos[index].items.filter((item) => item.producto_id !== id);
     copiaPedidos[index].items = newItems;
-    set(copiaPedidos);
+    set(copiaPedidos, index);
   };
 
-  const set = (copiaPedidos: AddPedido[]) => {
+  const set = (copiaPedidos: AddPedido[], index: number) => {
     let nuevoTotal = 0;
     copiaPedidos[index].items.forEach((item) => {
       nuevoTotal += item.total;
@@ -76,7 +120,7 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
 
       const newItems = copiaPedidos[index].items.filter((item) => item.codigo !== codigo);
       copiaPedidos[index].items = [...newItems, nuevoItem];
-      set(copiaPedidos);
+      set(copiaPedidos, index);
       return;
     }
     setLoadingAddProducto(true);
@@ -102,19 +146,15 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
       });
 
       copiaPedidos[index].items = [...copiaPedidos[index].items, nuevoItem];
-      set(copiaPedidos);
+      set(copiaPedidos, index);
     }
-  };
-
-  const handleModal = (name: string, value: boolean) => {
-    setModal({ ...modal, [name]: value });
   };
 
   useEffect(() => {
     if (store) {
       setPedidos(store.pedidos);
       setIndex(store.index);
-      console.log("render store");
+      // console.log("render store");
     }
   }, []);
 
@@ -132,6 +172,8 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
     removeItem,
     index,
     setIndex,
+    esperar,
+    cancelar,
   };
   return <AddPedidoContext.Provider value={values}>{children}</AddPedidoContext.Provider>;
 }
