@@ -5,6 +5,7 @@ interface AddPedidoContextProps {
   modal: {
     main: boolean;
     clientes: boolean;
+    finalizar: boolean;
   };
   esperar: () => void;
   cancelar: () => void;
@@ -34,6 +35,7 @@ export const AddPedidoContext = createContext<AddPedidoContextProps>({
   modal: {
     main: true,
     clientes: false,
+    finalizar: false,
   },
   esperar: () => {},
   cancelar: () => {},

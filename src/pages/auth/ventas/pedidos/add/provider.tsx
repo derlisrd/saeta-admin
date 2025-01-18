@@ -16,7 +16,7 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
   const inputCodigoRef = useRef<HTMLInputElement>(null);
   const { setItemValue: setStore, current: store } = useStore<PedidoStoreType | null>("pedidoStore", null);
 
-  const [modal, setModal] = useState({ main: true, clientes: false });
+  const [modal, setModal] = useState({ main: true, clientes: false, finalizar: false });
 
   const [cantidad, setCantidad] = useState(1);
   const [loadingAddProducto, setLoadingAddProducto] = useState(false);
@@ -115,36 +115,33 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
     [index, set]
   );
 
-  const cancelar = useCallback(
-    (indice?: number) => {
-      //const indiceACambiar = indice === undefined ? index : indice;
+  const cancelar = useCallback(() => {
+    //const indiceACambiar = indice === undefined ? index : indice;
 
-      setPedidos((prevPedidos) => {
-        if (prevPedidos.length > 1) {
-          const updatedPedidos = prevPedidos.filter((_, i) => i !== index);
-          const newIndex = Math.max(0, index - 1);
-          set(updatedPedidos, newIndex);
-          return updatedPedidos;
-        } else {
-          const resetPedido = new AddPedido({
-            cliente_id: 0,
-            formas_pago_id: 0,
-            tipo: 0,
-            porcentaje_descuento: 0,
-            descuento: 0,
-            total: 0,
-            items: [],
-          });
-          const updatedPedidos = [...prevPedidos];
-          updatedPedidos[index] = resetPedido;
-          set(updatedPedidos, index);
-          return updatedPedidos;
-        }
-      });
-      setIndex((prevIndex) => Math.max(0, prevIndex - 1));
-    },
-    [index, set]
-  );
+    setPedidos((prevPedidos) => {
+      if (prevPedidos.length > 1) {
+        const updatedPedidos = prevPedidos.filter((_, i) => i !== index);
+        const newIndex = Math.max(0, index - 1);
+        set(updatedPedidos, newIndex);
+        return updatedPedidos;
+      } else {
+        const resetPedido = new AddPedido({
+          cliente_id: 0,
+          formas_pago_id: 0,
+          tipo: 0,
+          porcentaje_descuento: 0,
+          descuento: 0,
+          total: 0,
+          items: [],
+        });
+        const updatedPedidos = [...prevPedidos];
+        updatedPedidos[index] = resetPedido;
+        set(updatedPedidos, index);
+        return updatedPedidos;
+      }
+    });
+    setIndex((prevIndex) => Math.max(0, prevIndex - 1));
+  }, [index, set]);
 
   const esperar = useCallback(() => {
     setPedidos((prevPedidos) => {
