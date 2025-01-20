@@ -4,6 +4,7 @@ export class AddProducto {
   impuesto_id: number;
   medida_id: number;
   category_id: number;
+  descripcion: string;
   codigo: string;
   nombre: string;
   costo: number;
@@ -20,6 +21,7 @@ export class AddProducto {
     category_id = 0,
     codigo = "",
     nombre = "",
+    descripcion = "",
     costo = 0,
     precio_normal = 0,
     precio_minimo = 0,
@@ -34,6 +36,7 @@ export class AddProducto {
     this.codigo = codigo;
     this.nombre = nombre;
     this.costo = costo;
+    this.descripcion = descripcion;
     this.precio_normal = precio_normal;
     this.precio_minimo = precio_minimo;
     this.disponible = disponible;
@@ -52,6 +55,7 @@ export class AddProducto {
       medida_id: this.medida_id,
       category_id: this.category_id,
       codigo: this.codigo,
+      descripcion: this.descripcion,
       nombre: this.nombre,
       costo: this.costo,
       precio_normal: this.precio_normal,

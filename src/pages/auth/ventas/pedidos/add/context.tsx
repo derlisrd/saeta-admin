@@ -1,3 +1,4 @@
+import { FormasPagoResults } from "@/services/dto/factura/formaspago";
 import { AddPedido } from "@/services/dto/pedidos/AddPedido";
 import { createContext, Dispatch, RefObject, SetStateAction } from "react";
 
@@ -7,6 +8,8 @@ interface AddPedidoContextProps {
     clientes: boolean;
     finalizar: boolean;
   };
+  loading: boolean;
+  formasPago: FormasPagoResults[];
   esperar: () => void;
   cancelar: () => void;
   removeItem: (id: number) => void;
@@ -29,6 +32,8 @@ interface AddPedidoContextProps {
 
 export const AddPedidoContext = createContext<AddPedidoContextProps>({
   inputCodigoRef: { current: null },
+  loading: false,
+  formasPago: [],
   removeItem: () => {},
   cantidad: 1,
   setCantidad: () => {},

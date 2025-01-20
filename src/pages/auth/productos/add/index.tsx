@@ -109,7 +109,14 @@ function AddProducto() {
             />
           </Grid>
           <Grid size={{ xs: 12, md: 8 }}>
-            <TextField placeholder="Descripción detallada" fullWidth label="Descripción detallada" />
+            <TextField
+              placeholder="Descripción detallada"
+              fullWidth
+              value={form.descripcion}
+              label="Descripción detallada"
+              name="descripcion"
+              onChange={(e) => changeByName(e.target.name, e.target.value)}
+            />
           </Grid>
           <Grid size={{ xs: 12, md: 4 }}>
             <FormControl fullWidth error={error.code === 3}>

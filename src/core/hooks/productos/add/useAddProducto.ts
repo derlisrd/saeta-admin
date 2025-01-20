@@ -132,6 +132,7 @@ function useAddProducto() {
 
   const sendForm = async () => {
     if(!validateForm()) return;
+    console.log(form)
     setLoading(true);
     const res = await apiServiceProductos.add(form, userData && userData.token);
     setLoading(false);

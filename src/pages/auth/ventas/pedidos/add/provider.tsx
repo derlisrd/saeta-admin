@@ -5,6 +5,7 @@ import API from "@/services/api";
 import { useAuth } from "@/providers/AuthProvider";
 import { PedidoStoreType } from "./_types/pedidoStore";
 import useStore from "@/hooks/useStore";
+import { FormasPagoResults } from "@/services/dto/factura/formaspago";
 
 interface AddPedidoProviderProps {
   children: ReactNode;
@@ -18,6 +19,8 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
 
   const [modal, setModal] = useState({ main: true, clientes: false, finalizar: false });
 
+  const [formasPago, setFormasPago] = useState<FormasPagoResults[]>([]);
+  const [loading, setLoading] = useState(false);
   const [cantidad, setCantidad] = useState(1);
   const [loadingAddProducto, setLoadingAddProducto] = useState(false);
   const [selectedDeposito] = useState(1);
@@ -164,6 +167,19 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
     inputCodigoRef.current?.focus();
   }, [set]);
 
+  const getAllDatas = useCallback(async () => {
+    setLoading(true);
+    const res = await API.formasPago.list(userData && userData?.token);
+    setLoading(false);
+    if (res.success && res.results) {
+      setFormasPago(res.results);
+    }
+  }, []);
+
+  useEffect(() => {
+    getAllDatas();
+  }, [getAllDatas]);
+
   useEffect(() => {
     if (store) {
       setPedidos(store.pedidos);
@@ -188,8 +204,10 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
       setIndex,
       esperar,
       cancelar,
+      formasPago,
+      loading,
     }),
-    [modal, handleModal, pedidos, consultarCodigoInsertar, error, clearError, loadingAddProducto, cantidad, removeItem, index, esperar, cancelar]
+    [modal, handleModal, pedidos, consultarCodigoInsertar, error, clearError, loadingAddProducto, cantidad, removeItem, index, esperar, cancelar, formasPago, loading]
   );
   return <AddPedidoContext.Provider value={values}>{children}</AddPedidoContext.Provider>;
 }
