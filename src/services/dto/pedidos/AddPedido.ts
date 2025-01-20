@@ -1,5 +1,6 @@
 export class AddPedido{
     cliente_id : number;
+    cliente : string;
     formas_pago_id : number;
     tipo: number;
     porcentaje_descuento: number;
@@ -10,6 +11,7 @@ export class AddPedido{
     constructor({
         cliente_id = 0,
         formas_pago_id = 0,
+        cliente = "",
         tipo = 0,
         porcentaje_descuento = 0,
         descuento = 0,
@@ -17,6 +19,7 @@ export class AddPedido{
         items = []
     }: Partial<AddPedido>){
         this.cliente_id = cliente_id;
+        this.cliente = cliente;
         this.formas_pago_id = formas_pago_id;
         this.tipo = tipo;
         this.porcentaje_descuento = porcentaje_descuento;

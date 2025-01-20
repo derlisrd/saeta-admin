@@ -106,11 +106,14 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
     [cantidad, index, selectedDeposito, set, userData?.token]
   );
 
-  const changePedido = useCallback((name: string, value: any) => {
-    let pedidosCopy = [...pedidos];
-    pedidosCopy[index][name as keyof AddPedido] = value; //
-    set(pedidosCopy, index);
-  }, []);
+  const changePedido = useCallback(
+    <K extends keyof AddPedido>(name: K, value: AddPedido[K]) => {
+      let pedidosCopy = [...pedidos];
+      pedidosCopy[index][name] = value;
+      set(pedidosCopy, index);
+    },
+    [pedidos, index, set]
+  );
 
   const removeItem = useCallback(
     (id: number) => {

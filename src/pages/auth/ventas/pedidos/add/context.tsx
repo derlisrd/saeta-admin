@@ -9,7 +9,7 @@ interface AddPedidoContextProps {
     finalizar: boolean;
   };
   loading: boolean;
-  changePedido: (name: string, value: any) => void;
+  changePedido: <K extends keyof AddPedido>(name: K, value: AddPedido[K]) => void;
   formasPago: FormasPagoResults[];
   esperar: () => void;
   cancelar: () => void;

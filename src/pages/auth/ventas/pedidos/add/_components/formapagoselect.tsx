@@ -12,7 +12,7 @@ function FormaPagoSelect() {
         labelId="formas-label"
         id="formas-select"
         onChange={({ target }) => {
-          changePedido(target.name, Number(target.value));
+          changePedido("formas_pago_id", Number(target.value));
         }}
         value={pedidos[index].formas_pago_id}
         label="Impuesto"
