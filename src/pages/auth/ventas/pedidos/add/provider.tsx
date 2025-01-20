@@ -106,6 +106,12 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
     [cantidad, index, selectedDeposito, set, userData?.token]
   );
 
+  const changePedido = useCallback((name: string, value: any) => {
+    let pedidosCopy = [...pedidos];
+    pedidosCopy[index][name as keyof AddPedido] = value; //
+    set(pedidosCopy, index);
+  }, []);
+
   const removeItem = useCallback(
     (id: number) => {
       setPedidos((prevPedidos) => {
@@ -206,8 +212,9 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
       cancelar,
       formasPago,
       loading,
+      changePedido,
     }),
-    [modal, handleModal, pedidos, consultarCodigoInsertar, error, clearError, loadingAddProducto, cantidad, removeItem, index, esperar, cancelar, formasPago, loading]
+    [modal, handleModal, pedidos, consultarCodigoInsertar, error, clearError, loadingAddProducto, cantidad, removeItem, index, esperar, cancelar, formasPago, loading, changePedido]
   );
   return <AddPedidoContext.Provider value={values}>{children}</AddPedidoContext.Provider>;
 }

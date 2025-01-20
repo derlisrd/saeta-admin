@@ -9,6 +9,7 @@ interface AddPedidoContextProps {
     finalizar: boolean;
   };
   loading: boolean;
+  changePedido: (name: string, value: any) => void;
   formasPago: FormasPagoResults[];
   esperar: () => void;
   cancelar: () => void;
@@ -32,6 +33,7 @@ interface AddPedidoContextProps {
 
 export const AddPedidoContext = createContext<AddPedidoContextProps>({
   inputCodigoRef: { current: null },
+  changePedido: () => {},
   loading: false,
   formasPago: [],
   removeItem: () => {},

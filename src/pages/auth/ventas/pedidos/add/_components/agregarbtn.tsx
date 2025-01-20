@@ -13,7 +13,7 @@ function AgregarButton() {
   };
 
   return (
-    <Button color="secondary" variant="outlined" size="large" fullWidth sx={{ padding: 2 }} onClick={handleClick}>
+    <Button color="info" variant="outlined" size="large" fullWidth sx={{ padding: 2 }} onClick={handleClick}>
       Agregar item
     </Button>
   );
