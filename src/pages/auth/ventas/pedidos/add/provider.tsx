@@ -193,6 +193,27 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
     }
   }, [store]);
 
+  useEffect(() => {
+    const keyActions: Record<string, () => void> = {
+      F6: () => {
+        handleModal("clientes", true);
+      },
+      F7: () => {
+        inputCodigoRef.current?.focus();
+      },
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (keyActions[event.key]) {
+        event.preventDefault();
+        keyActions[event.key]();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handleModal]);
+
   const values = useMemo(
     () => ({
       modal,

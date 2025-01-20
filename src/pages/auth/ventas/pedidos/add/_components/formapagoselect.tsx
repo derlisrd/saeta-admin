@@ -2,12 +2,22 @@ import { FormControl, FormHelperText, InputLabel, MenuItem, Select } from "@mui/
 import useHook from "../useHook";
 
 function FormaPagoSelect() {
-  const { pedidos, index, formasPago } = useHook();
+  const { pedidos, index, formasPago, changePedido } = useHook();
 
   return (
     <FormControl fullWidth>
       <InputLabel id="formas-select-label">Formas de pago</InputLabel>
-      <Select fullWidth labelId="formas-label" id="formas-select" onChange={() => {}} value={pedidos[index].formas_pago_id} label="Impuesto" name="impuesto_id">
+      <Select
+        fullWidth
+        labelId="formas-label"
+        id="formas-select"
+        onChange={({ target }) => {
+          changePedido(target.name, Number(target.value));
+        }}
+        value={pedidos[index].formas_pago_id}
+        label="Impuesto"
+        name="formas_pago_id"
+      >
         <MenuItem value={0} disabled>
           Seleccionar forma de pago
         </MenuItem>
