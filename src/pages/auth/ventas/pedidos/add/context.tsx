@@ -1,5 +1,5 @@
 import { FormasPagoResults } from "@/services/dto/factura/formaspago";
-import { AddPedido } from "@/services/dto/pedidos/AddPedido";
+import { AddPedido, AddPedidoResponse } from "@/services/dto/pedidos/AddPedido";
 import { createContext, Dispatch, RefObject, SetStateAction } from "react";
 import { modalType } from "./_types/modal";
 
@@ -10,6 +10,7 @@ interface AddPedidoContextProps {
   changePedido: <K extends keyof AddPedido>(name: K, value: AddPedido[K]) => void;
   formasPago: FormasPagoResults[];
   esperar: () => void;
+  setCliente: (id: number, label: string) => void;
   cancelar: () => void;
   removeItem: (id: number) => void;
   cantidad: number;
@@ -22,7 +23,8 @@ interface AddPedidoContextProps {
     code: number;
     message: string;
   };
-
+  result: AddPedidoResponse | null;
+  setResult: Dispatch<SetStateAction<AddPedidoResponse | null>>;
   pedidos: AddPedido[];
   index: number;
   setIndex: Dispatch<SetStateAction<number>>;
@@ -33,9 +35,12 @@ export const AddPedidoContext = createContext<AddPedidoContextProps>({
   inputCodigoRef: { current: null },
   changePedido: () => {},
   loading: false,
+  setCliente: () => {},
   formasPago: [],
   removeItem: () => {},
   cantidad: 1,
+  result: null,
+  setResult: () => {},
   setCantidad: () => {},
   modal: {
     main: true,
@@ -43,6 +48,8 @@ export const AddPedidoContext = createContext<AddPedidoContextProps>({
     clientes: false,
     finalizar: false,
     productos: false,
+    error: false,
+    success: false,
   },
   esperar: () => {},
   cancelar: () => {},

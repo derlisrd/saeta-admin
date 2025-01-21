@@ -20,7 +20,10 @@ function useHook() {
     cancelar,
     formasPago,
     loading,
-    changePedido
+    changePedido,
+    setCliente,
+    result,
+    setResult
   } = useContext(AddPedidoContext);
   return {
     modal,
@@ -40,7 +43,10 @@ function useHook() {
     cancelar,
     formasPago,
     loading,
-    changePedido
+    changePedido,
+    setCliente,
+    result,
+    setResult
   };
 }
 

@@ -1,4 +1,4 @@
-import { AddPedido, AddPedidoItem } from "@/services/dto/pedidos/AddPedido";
+import { AddPedido, AddPedidoItem, AddPedidoResponse } from "@/services/dto/pedidos/AddPedido";
 import { ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AddPedidoContext } from "./context";
 import API from "@/services/api";
@@ -18,26 +18,26 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
   const inputCodigoRef = useRef<HTMLInputElement>(null);
   const { setItemValue: setStore, current: store } = useStore<PedidoStoreType | null>("pedidoStore", null);
 
-  const [modal, setModal] = useState<modalType>({ main: true, clientes: false, finalizar: false, registro: false, productos: false });
+  const [modal, setModal] = useState<modalType>({ main: true, clientes: false, finalizar: false, registro: false, productos: false, error: false, success: false });
+
+  const [result, setResult] = useState<AddPedidoResponse | null>(null);
 
   const [formasPago, setFormasPago] = useState<FormasPagoResults[]>([]);
   const [loading, setLoading] = useState(false);
   const [cantidad, setCantidad] = useState(1);
   const [loadingAddProducto, setLoadingAddProducto] = useState(false);
   const [selectedDeposito] = useState(1);
-  const [pedidos, setPedidos] = useState<Array<AddPedido>>(
-    store?.pedidos || [
-      new AddPedido({
-        cliente_id: 0,
-        formas_pago_id: 0,
-        tipo: 0,
-        porcentaje_descuento: 0,
-        descuento: 0,
-        total: 0,
-        items: [],
-      }),
-    ]
-  );
+  const initialPedido = new AddPedido({
+    cliente_id: 0,
+    aplicar_impuesto: true,
+    formas_pago_id: 0,
+    tipo: 0,
+    porcentaje_descuento: 0,
+    descuento: 0,
+    total: 0,
+    items: [],
+  });
+  const [pedidos, setPedidos] = useState<Array<AddPedido>>(store?.pedidos || [initialPedido]);
 
   const [index, setIndex] = useState<number>(store?.index ?? 0);
   const [error, setError] = useState({ code: 0, message: "", active: false });
@@ -47,6 +47,16 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
   const handleModal = useCallback((name: string, value: boolean) => {
     setModal((prev) => ({ ...prev, [name]: value }));
   }, []);
+
+  const setCliente = useCallback(
+    (id: number, label: string) => {
+      const copyPedidos = [...pedidos];
+      copyPedidos[index].cliente_id = id;
+      copyPedidos[index].cliente = label;
+      set(copyPedidos, index);
+    },
+    [index, pedidos]
+  );
 
   const set = useCallback(
     (updatedPedidos: AddPedido[], newIndex: number) => {
@@ -138,17 +148,8 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
         set(updatedPedidos, newIndex);
         return updatedPedidos;
       } else {
-        const resetPedido = new AddPedido({
-          cliente_id: 0,
-          formas_pago_id: 0,
-          tipo: 0,
-          porcentaje_descuento: 0,
-          descuento: 0,
-          total: 0,
-          items: [],
-        });
         const updatedPedidos = [...prevPedidos];
-        updatedPedidos[index] = resetPedido;
+        updatedPedidos[index] = initialPedido;
         set(updatedPedidos, index);
         return updatedPedidos;
       }
@@ -158,18 +159,7 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
 
   const esperar = useCallback(() => {
     setPedidos((prevPedidos) => {
-      const updatedPedidos = [
-        ...prevPedidos,
-        new AddPedido({
-          cliente_id: 0,
-          formas_pago_id: 0,
-          tipo: 0,
-          porcentaje_descuento: 0,
-          descuento: 0,
-          total: 0,
-          items: [],
-        }),
-      ];
+      const updatedPedidos = [...prevPedidos, initialPedido];
       set(updatedPedidos, updatedPedidos.length - 1);
       return updatedPedidos;
     });
@@ -238,8 +228,30 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
       formasPago,
       loading,
       changePedido,
+      setCliente,
+      result,
+      setResult,
     }),
-    [modal, handleModal, pedidos, consultarCodigoInsertar, error, clearError, loadingAddProducto, cantidad, removeItem, index, esperar, cancelar, formasPago, loading, changePedido]
+    [
+      modal,
+      handleModal,
+      pedidos,
+      consultarCodigoInsertar,
+      error,
+      clearError,
+      loadingAddProducto,
+      cantidad,
+      removeItem,
+      index,
+      esperar,
+      cancelar,
+      formasPago,
+      loading,
+      changePedido,
+      setCliente,
+      result,
+      setResult,
+    ]
   );
   return <AddPedidoContext.Provider value={values}>{children}</AddPedidoContext.Provider>;
 }

@@ -17,7 +17,7 @@ function useBuscarCliente() {
             const res = await apiServiceClientes.search(userData && userData?.token, value);
             if (res.results) {
                 const lista = res.results.map((cliente: SearchClienteResults) => ({
-                    label: `${cliente.nombre} ${cliente.apellido}`,
+                    label: `${cliente.doc} ${cliente.nombres} ${cliente.apellidos}`,
                     id: cliente.id,
                 }));
                 setLista(lista);

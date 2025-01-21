@@ -3,8 +3,13 @@ import useHook from "../_hooks/useHook";
 import useBuscarCliente from "../_hooks/useBuscarCliente";
 
 function ClientesModal() {
-  const { modal, handleModal } = useHook();
+  const { modal, handleModal, setCliente } = useHook();
   const { listaBusqueda, buscarCliente } = useBuscarCliente();
+
+  const setChangeValue = (value: { label: string; id: number }) => {
+    setCliente(value.id, value.label);
+    handleModal("clientes", false);
+  };
 
   return (
     <Dialog fullWidth open={modal.clientes} onClose={() => handleModal("clientes", false)}>
@@ -13,6 +18,9 @@ function ClientesModal() {
         <Grid container spacing={1} pt={1}>
           <Grid size={12}>
             <Autocomplete
+              onChange={(_, value) => {
+                setChangeValue({ label: value?.label || "", id: value?.id || 0 });
+              }}
               options={listaBusqueda}
               renderInput={(params) => <TextField {...params} placeholder="Buscar cliente..." autoFocus onChange={(e) => e.target.value && buscarCliente(e.target.value)} />}
             />

@@ -23,17 +23,17 @@ export class SearchClienteResponse {
 
 export class SearchClienteResults {
     id: number;
-    nombre: string;
-    apellido: string | null;
+    nombres: string;
+    apellidos: string | null;
     doc: string;
     telefono: string | null;
     email: string | null;
     direccion: string | null;
 
-    constructor({ id = 0, nombre = '', apellido = '', doc = '', telefono = '', email = '', direccion = '' }) {
+    constructor({ id = 0, nombres = '', apellidos = '', doc = '', telefono = '', email = '', direccion = '' }) {
         this.id = id;
-        this.nombre = nombre;
-        this.apellido = apellido;
+        this.nombres = nombres;
+        this.apellidos = apellidos;
         this.doc = doc;
         this.telefono = telefono;
         this.email = email;
@@ -43,8 +43,8 @@ export class SearchClienteResults {
     static fromJSON(data: any) {
         return new SearchClienteResults({
             id: data.id,
-            nombre: data.nombre,
-            apellido: data.apellido,
+            nombres: data.nombres,
+            apellidos: data.apellidos,
             doc: data.doc,
             telefono: data.telefono,
             email: data.email,

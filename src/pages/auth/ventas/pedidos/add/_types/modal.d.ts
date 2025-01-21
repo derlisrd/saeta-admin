@@ -4,4 +4,6 @@ export type modalType = {
     finalizar: boolean;
     registro: boolean;
     productos: boolean;
+    error: boolean;
+    success: boolean;
   };
