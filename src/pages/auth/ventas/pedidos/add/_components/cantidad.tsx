@@ -1,5 +1,5 @@
 import { Icon, IconButton, InputAdornment, TextField } from "@mui/material";
-import useHook from "../useHook";
+import useHook from "../_hooks/useHook";
 import { NumericFormat } from "react-number-format";
 
 function InputCantidad() {

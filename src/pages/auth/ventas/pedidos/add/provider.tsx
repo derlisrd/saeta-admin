@@ -6,6 +6,7 @@ import { useAuth } from "@/providers/AuthProvider";
 import { PedidoStoreType } from "./_types/pedidoStore";
 import useStore from "@/hooks/useStore";
 import { FormasPagoResults } from "@/services/dto/factura/formaspago";
+import { modalType } from "./_types/modal";
 
 interface AddPedidoProviderProps {
   children: ReactNode;
@@ -17,7 +18,7 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
   const inputCodigoRef = useRef<HTMLInputElement>(null);
   const { setItemValue: setStore, current: store } = useStore<PedidoStoreType | null>("pedidoStore", null);
 
-  const [modal, setModal] = useState({ main: true, clientes: false, finalizar: false });
+  const [modal, setModal] = useState<modalType>({ main: true, clientes: false, finalizar: false, registro: false, productos: false });
 
   const [formasPago, setFormasPago] = useState<FormasPagoResults[]>([]);
   const [loading, setLoading] = useState(false);

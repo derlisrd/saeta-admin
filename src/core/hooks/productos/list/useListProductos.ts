@@ -9,6 +9,7 @@ function useListProductos() {
   const { userData } = useAuth();
   const [list, setList] = useState<ProductoResults[] | []>([]);
   const [depositos, setDepositos] = useState<DepositoResults[] | []>([]);
+  const [selectDeposito,setSelectDeposito] = useState<number>(0);
   const [loading, setLoading] = useState(true);
 
   const getDatas = useCallback(async () => {
@@ -32,7 +33,7 @@ function useListProductos() {
     getDatas();
   }, []);
 
-  return { list, loading, depositos };
+  return { list, loading, depositos, selectDeposito, setSelectDeposito };
 }
 
 export default useListProductos;

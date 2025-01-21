@@ -1,5 +1,5 @@
 import { DialogTitle, Icon, IconButton, Link, Stack, Tooltip, Typography, Zoom } from "@mui/material";
-import useHook from "../useHook";
+import useHook from "../_hooks/useHook";
 
 function Title() {
   const { handleModal, pedidos, index } = useHook();

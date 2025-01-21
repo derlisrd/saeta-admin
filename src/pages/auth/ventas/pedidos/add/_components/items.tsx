@@ -1,6 +1,6 @@
 import { Box, Paper, Grid2 as Grid } from "@mui/material";
 import Item from "./item";
-import useHook from "../useHook";
+import useHook from "../_hooks/useHook";
 
 function Items() {
   const { pedidos, removeItem, index } = useHook();

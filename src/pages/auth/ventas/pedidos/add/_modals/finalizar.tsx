@@ -1,5 +1,5 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid2 as Grid } from "@mui/material";
-import useHook from "../useHook";
+import useHook from "../_hooks/useHook";
 import FormaPagoSelect from "../_components/formapagoselect";
 
 function FinalizarPedido() {

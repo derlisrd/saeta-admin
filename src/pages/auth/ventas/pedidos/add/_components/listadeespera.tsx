@@ -1,5 +1,5 @@
 import { Icon, IconButton, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
-import useHook from "../useHook";
+import useHook from "../_hooks/useHook";
 
 function ListaDeEspera() {
   const { setIndex, pedidos, index, cancelar } = useHook();

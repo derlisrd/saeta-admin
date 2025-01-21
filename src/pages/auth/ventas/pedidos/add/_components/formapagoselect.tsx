@@ -1,5 +1,5 @@
 import { FormControl, FormHelperText, InputLabel, MenuItem, Select } from "@mui/material";
-import useHook from "../useHook";
+import useHook from "../_hooks/useHook";
 
 function FormaPagoSelect() {
   const { pedidos, index, formasPago, changePedido } = useHook();

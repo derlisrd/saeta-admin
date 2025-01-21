@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-import useHook from "../useHook";
+import useHook from "../_hooks/useHook";
 
 function EsperarButton() {
   const { pedidos, index, esperar } = useHook();

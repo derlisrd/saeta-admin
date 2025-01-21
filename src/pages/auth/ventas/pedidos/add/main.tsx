@@ -3,7 +3,7 @@ import Items from "./_components/items";
 import Error from "./_components/error";
 import InputCodigo from "./_components/codigo";
 import Title from "./_components/title";
-import useHook from "./useHook";
+import useHook from "./_hooks/useHook";
 import InputCantidad from "./_components/cantidad";
 import FinalizarButton from "./_components/finalizarbtn";
 import AgregarButton from "./_components/agregarbtn";

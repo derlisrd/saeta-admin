@@ -1,4 +1,5 @@
 import { apiServiceAuth } from "./auth/auth";
+import { apiServiceClientes } from "./clientes/clientes";
 import { apiSErviceConfig } from "./empresa/config";
 import { apiServiceFormasPago } from "./factura/formaspago";
 import { apiServiceImpuestos } from "./factura/impuesto";
@@ -9,6 +10,7 @@ import { apiServiceProductos } from "./productos/producto";
 
 const API = {
     auth : apiServiceAuth,
+    clientes: apiServiceClientes,
     productos: apiServiceProductos,
     categorias: apiServiceCategorias,
     impuestos: apiServiceImpuestos,

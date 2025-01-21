@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { AddPedidoContext } from "./context";
+import { AddPedidoContext } from "../context";
 
 function useHook() {
   const {

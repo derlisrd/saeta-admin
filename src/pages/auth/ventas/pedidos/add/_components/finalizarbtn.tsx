@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-import useHook from "../useHook";
+import useHook from "../_hooks/useHook";
 
 function FinalizarButton() {
   const { pedidos, index, handleModal } = useHook();

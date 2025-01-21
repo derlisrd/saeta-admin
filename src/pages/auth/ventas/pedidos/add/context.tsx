@@ -1,13 +1,11 @@
 import { FormasPagoResults } from "@/services/dto/factura/formaspago";
 import { AddPedido } from "@/services/dto/pedidos/AddPedido";
 import { createContext, Dispatch, RefObject, SetStateAction } from "react";
+import { modalType } from "./_types/modal";
 
 interface AddPedidoContextProps {
-  modal: {
-    main: boolean;
-    clientes: boolean;
-    finalizar: boolean;
-  };
+  modal: modalType;
+  handleModal: <K extends keyof modalType>(name: K, value: boolean) => void;
   loading: boolean;
   changePedido: <K extends keyof AddPedido>(name: K, value: AddPedido[K]) => void;
   formasPago: FormasPagoResults[];
@@ -24,7 +22,7 @@ interface AddPedidoContextProps {
     code: number;
     message: string;
   };
-  handleModal: (name: string, value: boolean) => void;
+
   pedidos: AddPedido[];
   index: number;
   setIndex: Dispatch<SetStateAction<number>>;
@@ -41,8 +39,10 @@ export const AddPedidoContext = createContext<AddPedidoContextProps>({
   setCantidad: () => {},
   modal: {
     main: true,
+    registro: false,
     clientes: false,
     finalizar: false,
+    productos: false,
   },
   esperar: () => {},
   cancelar: () => {},

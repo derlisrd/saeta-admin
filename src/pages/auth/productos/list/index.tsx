@@ -22,13 +22,19 @@ import {
   MenuItem,
   TableFooter,
   TablePagination,
+  Stack,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 
 function ListaProductos() {
-  const { list, loading, depositos } = useListProductos();
+  const { list, loading, depositos, selectDeposito, setSelectDeposito } = useListProductos();
   return (
     <Container>
-      <h3>Productos o servicios</h3>
+      <Stack direction={{ xs: "row" }} justifyContent="space-between" alignItems="center" padding={2}>
+        <h3>Productos</h3>
+        <Link to="/productos/add">Nuevo</Link>
+      </Stack>
+
       {loading ? (
         <LinearProgress />
       ) : (
@@ -36,13 +42,21 @@ function ListaProductos() {
           <Grid container padding={2} spacing={{ xs: 1 }}>
             <Grid size={{ xs: 12, md: 4 }}>
               <FormControl fullWidth>
-                <InputLabel id="deposito-select-label">Deposito</InputLabel>
-                <Select fullWidth labelId="deposito-label" id="deposito" label="Deposito" name="deposito_id" onChange={({ target }) => {}}>
+                <InputLabel>Deposito</InputLabel>
+                <Select
+                  fullWidth
+                  displayEmpty
+                  value={selectDeposito}
+                  label="Deposito"
+                  onChange={({ target }) => {
+                    setSelectDeposito(Number(target.value));
+                  }}
+                >
                   <MenuItem value={0} disabled>
                     Seleccionar deposito
                   </MenuItem>
-                  {depositos.map((item, index) => (
-                    <MenuItem key={index} value={item.id}>
+                  {depositos.map((item, i) => (
+                    <MenuItem key={i} value={item.id}>
                       {item.nombre}
                     </MenuItem>
                   ))}
@@ -104,7 +118,6 @@ function ListaProductos() {
               <TableFooter></TableFooter>
             </Table>
           </TableContainer>
-          <TablePagination rowsPerPageOptions={[10, 25, 100]} component="div" count={list.length} rowsPerPage={0} page={0} onPageChange={() => {}} onRowsPerPageChange={() => {}} />
         </Box>
       )}
     </Container>
