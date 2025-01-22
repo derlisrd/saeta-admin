@@ -20,9 +20,11 @@ interface AddPedidoContextProps {
   clearError: () => void;
   error: {
     active: boolean;
-    code: number;
+    name: string;
     message: string;
   };
+  limpiarFinalizarPedido: () => void;
+  setError: Dispatch<SetStateAction<{ active: boolean; name: string; message: string }>>;
   result: AddPedidoResponse | null;
   setResult: Dispatch<SetStateAction<AddPedidoResponse | null>>;
   pedidos: AddPedido[];
@@ -33,6 +35,7 @@ interface AddPedidoContextProps {
 
 export const AddPedidoContext = createContext<AddPedidoContextProps>({
   inputCodigoRef: { current: null },
+  limpiarFinalizarPedido: () => {},
   changePedido: () => {},
   loading: false,
   setCliente: () => {},
@@ -57,9 +60,10 @@ export const AddPedidoContext = createContext<AddPedidoContextProps>({
   clearError: () => {},
   error: {
     active: false,
-    code: 0,
+    name: "",
     message: "",
   },
+  setError: () => {},
   handleModal: () => {},
   pedidos: [],
   index: 0,

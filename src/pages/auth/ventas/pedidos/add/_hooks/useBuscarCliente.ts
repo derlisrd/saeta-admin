@@ -1,20 +1,23 @@
 import { useAuth } from "@/providers/AuthProvider";
 import { apiServiceClientes } from "@/services/api/clientes/clientes";
 import { SearchClienteResults } from "@/services/dto/clientes/search";
-import { useState, useRef, useCallback } from "react";
+import { useState,  useEffect } from "react";
 
 function useBuscarCliente() {
     const { userData } = useAuth();
+    const [isLoading, setIsLoading] = useState(false);
+    const [q, setQ] = useState('')
     const [listaBusqueda, setLista] = useState<{ label: string; id: number }[]>([]);
-    const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+        // poner en un usecallback
 
-    const buscarCliente = useCallback((value: string) => {
-        if (timeoutRef.current) {
-            clearTimeout(timeoutRef.current);
-        }
+    useEffect(() => {
 
-        timeoutRef.current = setTimeout(async () => {
-            const res = await apiServiceClientes.search(userData && userData?.token, value);
+        const timer = 
+        setTimeout(async()=>{
+            if(q === '') return setLista([])
+          setIsLoading(true)
+          const res = await apiServiceClientes.search(userData && userData?.token, q);
+            setIsLoading(false);
             if (res.results) {
                 const lista = res.results.map((cliente: SearchClienteResults) => ({
                     label: `${cliente.doc} ${cliente.nombres} ${cliente.apellidos}`,
@@ -22,10 +25,12 @@ function useBuscarCliente() {
                 }));
                 setLista(lista);
             }
-        }, 600); // Espera 500ms antes de ejecutar la búsqueda
-    }, [userData?.token]);
+          setIsLoading(false)
+        },500)
+        return ()=> clearTimeout(timer)
+    }, [q]);
 
-    return { buscarCliente, listaBusqueda };
+    return {  listaBusqueda, isLoading, q, setQ};
 }
 
 export default useBuscarCliente;

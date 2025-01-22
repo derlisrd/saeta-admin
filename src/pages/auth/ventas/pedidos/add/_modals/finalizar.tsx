@@ -2,14 +2,22 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid2 as Gri
 import useHook from "../_hooks/useHook";
 import FormaPagoSelect from "../_components/formapagoselect";
 import useInsertPedido from "../_hooks/useInsertPedido";
+import useValidator from "../_hooks/useValidator";
 
 function FinalizarPedido() {
-  const { modal, handleModal, pedidos, index, setResult } = useHook();
+  const { modal, handleModal, pedidos, index, setResult, setError, error } = useHook();
   const { insertPedido, isLoading } = useInsertPedido();
+  const { validate } = useValidator();
 
   const finalizarPedido = async () => {
+    const error = validate(pedidos[index]);
+    if (error.active) {
+      setError(error);
+      setResult({ success: false, status: 400, message: error.message, results: null });
+      handleModal("error", true);
+      return;
+    }
     const res = await insertPedido(pedidos[index]);
-
     if (!res.success) {
       setResult(res);
       handleModal("error", true);
@@ -30,7 +38,7 @@ function FinalizarPedido() {
         ) : (
           <Grid container spacing={1} pt={1}>
             <Grid size={{ xs: 12, sm: 6 }}>
-              <FormaPagoSelect />
+              <FormaPagoSelect error={error.name === "formas_pago_id"} />
             </Grid>
           </Grid>
         )}

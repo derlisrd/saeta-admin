@@ -26,7 +26,7 @@ function Title() {
             handleModal("clientes", true);
           }}
         >
-          {pedidos[index].cliente_id === 0 ? "Seleccionar Cliente" : "Cambiar Cliente"}
+          {pedidos[index].cliente_id === 0 ? "Seleccionar Cliente" : pedidos[index].cliente}
         </Link>
       </Stack>
     </DialogTitle>

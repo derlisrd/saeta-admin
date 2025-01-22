@@ -18,7 +18,8 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
   const inputCodigoRef = useRef<HTMLInputElement>(null);
   const { setItemValue: setStore, current: store } = useStore<PedidoStoreType | null>("pedidoStore", null);
 
-  const [modal, setModal] = useState<modalType>({ main: true, clientes: false, finalizar: false, registro: false, productos: false, error: false, success: false });
+  const initialModal: modalType = { main: true, clientes: false, finalizar: false, registro: false, productos: false, error: false, success: false };
+  const [modal, setModal] = useState<modalType>(initialModal);
 
   const [result, setResult] = useState<AddPedidoResponse | null>(null);
 
@@ -40,7 +41,7 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
   const [pedidos, setPedidos] = useState<Array<AddPedido>>(store?.pedidos || [initialPedido]);
 
   const [index, setIndex] = useState<number>(store?.index ?? 0);
-  const [error, setError] = useState({ code: 0, message: "", active: false });
+  const [error, setError] = useState({ name: "", message: "", active: false });
 
   const clearError = useCallback(() => setError((prev) => ({ ...prev, active: false })), []);
 
@@ -76,7 +77,7 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
       setLoadingAddProducto(false);
 
       if (!res.success) {
-        setError({ code: res.status, message: res.message, active: true });
+        setError({ name: "producto", message: res.message, active: true });
         return;
       }
 
@@ -137,6 +138,27 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
     },
     [index, set]
   );
+
+  const limpiarFinalizarPedido = useCallback(() => {
+    let copyPedidos = [...pedidos];
+    if (copyPedidos.length > 1) {
+      copyPedidos.splice(index, 1);
+    }
+    if (copyPedidos.length === 1) {
+      copyPedidos[0] = initialPedido;
+    }
+    let nuevoIndex = index - 1;
+    if (nuevoIndex < 0) {
+      nuevoIndex = 0;
+    }
+    setIndex(nuevoIndex);
+    set(copyPedidos, nuevoIndex);
+    setModal(initialModal);
+    clearError();
+    setTimeout(() => {
+      inputCodigoRef.current?.focus();
+    }, 200);
+  }, [index, pedidos, set]);
 
   const cancelar = useCallback(() => {
     //const indiceACambiar = indice === undefined ? index : indice;
@@ -215,6 +237,7 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
       pedidos,
       consultarCodigoInsertar,
       error,
+      setError,
       clearError,
       loadingAddProducto,
       inputCodigoRef,
@@ -231,6 +254,7 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
       setCliente,
       result,
       setResult,
+      limpiarFinalizarPedido,
     }),
     [
       modal,
@@ -238,6 +262,7 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
       pedidos,
       consultarCodigoInsertar,
       error,
+      setError,
       clearError,
       loadingAddProducto,
       cantidad,
@@ -251,6 +276,7 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
       setCliente,
       result,
       setResult,
+      limpiarFinalizarPedido,
     ]
   );
   return <AddPedidoContext.Provider value={values}>{children}</AddPedidoContext.Provider>;

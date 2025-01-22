@@ -1,11 +1,15 @@
 import { FormControl, FormHelperText, InputLabel, MenuItem, Select } from "@mui/material";
 import useHook from "../_hooks/useHook";
 
-function FormaPagoSelect() {
+interface FormasPagosSelectProps {
+  error?: boolean;
+}
+
+function FormaPagoSelect({ error }: FormasPagosSelectProps) {
   const { pedidos, index, formasPago, changePedido } = useHook();
 
   return (
-    <FormControl fullWidth>
+    <FormControl fullWidth error={error}>
       <InputLabel id="formas-select-label">Formas de pago</InputLabel>
       <Select
         fullWidth

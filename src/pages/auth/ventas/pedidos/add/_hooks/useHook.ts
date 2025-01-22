@@ -8,6 +8,7 @@ function useHook() {
     pedidos,
     consultarCodigoInsertar,
     error,
+    setError,
     clearError,
     loadingAddProducto,
     inputCodigoRef,
@@ -23,7 +24,8 @@ function useHook() {
     changePedido,
     setCliente,
     result,
-    setResult
+    setResult,
+    limpiarFinalizarPedido
   } = useContext(AddPedidoContext);
   return {
     modal,
@@ -31,6 +33,7 @@ function useHook() {
     pedidos,
     consultarCodigoInsertar,
     error,
+    setError,
     clearError,
     loadingAddProducto,
     inputCodigoRef,
@@ -46,7 +49,8 @@ function useHook() {
     changePedido,
     setCliente,
     result,
-    setResult
+    setResult,
+    limpiarFinalizarPedido
   };
 }
 

@@ -29,7 +29,7 @@ function InputCodigo() {
               </IconButton>
             </InputAdornment>
           ),
-          endAdornment: <InputAdornment position="end">{loadingAddProducto && <CircularProgress size={20} />}</InputAdornment>,
+          endAdornment: <InputAdornment position="start">{loadingAddProducto && <CircularProgress size={24} />}</InputAdornment>,
         },
       }}
     />

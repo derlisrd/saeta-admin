@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 
 function SuccessModal() {
-  const { modal, handleModal, result: data, index, pedidos } = useHook();
+  const { modal, handleModal, result: data, index, pedidos, limpiarFinalizarPedido } = useHook();
 
   const contentRef = useRef<HTMLDivElement>(null);
   const print = useReactToPrint({ contentRef, ignoreGlobalStyles: true });
@@ -74,7 +74,7 @@ function SuccessModal() {
         <Button variant="contained" color="primary" onClick={() => print()}>
           Imprimir
         </Button>
-        <Button variant="contained" color="primary" onClick={() => handleModal("success", false)}>
+        <Button variant="contained" color="primary" onClick={limpiarFinalizarPedido}>
           Entendido
         </Button>
       </DialogActions>

@@ -4,13 +4,13 @@ import useBuscarCliente from "../_hooks/useBuscarCliente";
 
 function ClientesModal() {
   const { modal, handleModal, setCliente } = useHook();
-  const { listaBusqueda, buscarCliente } = useBuscarCliente();
+  const { listaBusqueda, isLoading, setQ } = useBuscarCliente();
 
   const setChangeValue = (value: { label: string; id: number }) => {
     setCliente(value.id, value.label);
     handleModal("clientes", false);
   };
-
+  console.log({ isLoading });
   return (
     <Dialog fullWidth open={modal.clientes} onClose={() => handleModal("clientes", false)}>
       <DialogTitle>Buscar clientes</DialogTitle>
@@ -22,7 +22,10 @@ function ClientesModal() {
                 setChangeValue({ label: value?.label || "", id: value?.id || 0 });
               }}
               options={listaBusqueda}
-              renderInput={(params) => <TextField {...params} placeholder="Buscar cliente..." autoFocus onChange={(e) => e.target.value && buscarCliente(e.target.value)} />}
+              loading={isLoading}
+              loadingText="Buscando..."
+              noOptionsText="No se encontraron resultados"
+              renderInput={(params) => <TextField {...params} placeholder="Buscar cliente..." autoFocus onChange={(e) => e.target.value && setQ(e.target.value)} />}
             />
           </Grid>
         </Grid>
