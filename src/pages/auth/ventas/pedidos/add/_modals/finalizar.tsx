@@ -3,6 +3,7 @@ import useHook from "../_hooks/useHook";
 import FormaPagoSelect from "../_components/formapagoselect";
 import useInsertPedido from "../_hooks/useInsertPedido";
 import useValidator from "../_hooks/useValidator";
+import EntregadoCheck from "../_components/entregadocheck";
 
 function FinalizarPedido() {
   const { modal, handleModal, pedidos, index, setResult, setError, error } = useHook();
@@ -36,9 +37,12 @@ function FinalizarPedido() {
         {isLoading ? (
           <LinearProgress />
         ) : (
-          <Grid container spacing={1} pt={1}>
+          <Grid container spacing={2} pt={1}>
             <Grid size={{ xs: 12, sm: 6 }}>
               <FormaPagoSelect error={error.name === "formas_pago_id"} />
+            </Grid>
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <EntregadoCheck />
             </Grid>
           </Grid>
         )}

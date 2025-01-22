@@ -28,13 +28,14 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
   const [cantidad, setCantidad] = useState(1);
   const [loadingAddProducto, setLoadingAddProducto] = useState(false);
   const [selectedDeposito] = useState(1);
-  const initialPedido = new AddPedido({
+  const initialPedido: AddPedido = new AddPedido({
     cliente_id: 0,
     aplicar_impuesto: true,
     formas_pago_id: 0,
     tipo: 0,
     porcentaje_descuento: 0,
     descuento: 0,
+    entregado: true,
     total: 0,
     items: [],
   });

@@ -3,6 +3,7 @@ import { FormasPagoResults } from "../factura/formaspago";
 
 export class AddPedido {
   aplicar_impuesto: boolean;
+  entregado: boolean;
   cliente_id: number;
   cliente: string;
   formas_pago_id: number;
@@ -15,6 +16,7 @@ export class AddPedido {
   constructor({
     aplicar_impuesto = true,
     cliente_id = 0,
+    entregado = false,
     formas_pago_id = 0,
     cliente = "",
     tipo = 0,
@@ -23,6 +25,7 @@ export class AddPedido {
     total = 0,
     items = []
   }: Partial<AddPedido>) {
+    this.entregado = entregado;
     this.aplicar_impuesto = aplicar_impuesto;
     this.cliente_id = cliente_id;
     this.cliente = cliente;

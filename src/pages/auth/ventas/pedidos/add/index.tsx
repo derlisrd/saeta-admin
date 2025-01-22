@@ -5,6 +5,7 @@ import RegistroClienteModal from "./_modals/registro";
 import SuccessModal from "./_modals/success";
 import Main from "./main";
 import AddPedidoProvider from "./provider";
+import Root from "./root";
 
 function AddPedido() {
   return (
@@ -15,6 +16,7 @@ function AddPedido() {
       <RegistroClienteModal />
       <FinalizarPedido />
       <Main />
+      <Root />
     </AddPedidoProvider>
   );
 }

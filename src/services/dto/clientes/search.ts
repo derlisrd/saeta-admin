@@ -26,14 +26,16 @@ export class SearchClienteResults {
     nombres: string;
     apellidos: string | null;
     doc: string;
+    razon_social: string | null;
     telefono: string | null;
     email: string | null;
     direccion: string | null;
 
-    constructor({ id = 0, nombres = '', apellidos = '', doc = '', telefono = '', email = '', direccion = '' }) {
+    constructor({ id = 0, razon_social = '', nombres = '', apellidos = '', doc = '', telefono = '', email = '', direccion = '' }) {
         this.id = id;
         this.nombres = nombres;
         this.apellidos = apellidos;
+        this.razon_social = razon_social;
         this.doc = doc;
         this.telefono = telefono;
         this.email = email;
@@ -45,6 +47,7 @@ export class SearchClienteResults {
             id: data.id,
             nombres: data.nombres,
             apellidos: data.apellidos,
+            razon_social: data.razon_social,
             doc: data.doc,
             telefono: data.telefono,
             email: data.email,

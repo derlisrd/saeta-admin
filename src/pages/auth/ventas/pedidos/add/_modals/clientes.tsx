@@ -10,7 +10,6 @@ function ClientesModal() {
     setCliente(value.id, value.label);
     handleModal("clientes", false);
   };
-  console.log({ isLoading });
   return (
     <Dialog fullWidth open={modal.clientes} onClose={() => handleModal("clientes", false)}>
       <DialogTitle>Buscar clientes</DialogTitle>
