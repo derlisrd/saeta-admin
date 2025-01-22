@@ -14,8 +14,9 @@ export class AddProducto {
   tipo: number;
   cantidad_minima: number;
   stock: AddStock[];
-
+  images: [] | null;
   constructor({
+    images = null,
     impuesto_id = 0,
     medida_id = 0,
     category_id = 0,
@@ -30,6 +31,7 @@ export class AddProducto {
     cantidad_minima = 0,
     stock = []
   }: Partial<AddProducto>) {
+    this.images = images;
     this.impuesto_id = impuesto_id;
     this.medida_id = medida_id;
     this.category_id = category_id;

@@ -67,7 +67,23 @@ export const apiServiceProductos = {
   },
   add: async (form: AddProducto, token: string | null): Promise<AddProductoResponse> => {
     try {
-      const { data, status } = await BASE.post("/productos", form, { headers: { Authorization: token } });
+      const formData = new FormData();
+
+        // Agregar imágenes si existen
+        if (form.images) {
+          form.images.forEach((image, index : number) => {
+            formData.append(`images[${index}]`, image);
+          });
+        }
+
+        // Agregar los otros datos del producto
+        Object.entries(form.toJSON()).forEach(([key, value]) => {
+          if (key !== "images") {
+            formData.append(key, String(value)); // Convertir valores a string si es necesario
+          }
+        });
+
+      const { data, status } = await BASE.post("/productos", formData, { headers: { Authorization: token , "Content-Type": "multipart/form-data" } });
       return AddProductoResponse.fromJSON({
         success: data.success,
         status,
