@@ -1,0 +1,71 @@
+import React, { createContext } from "react";
+import { ImpuestoResults } from "@/services/dto/factura/impuesto";
+import { AddProducto } from "@/services/dto/productos/AddProducto";
+import { AddStock } from "@/services/dto/productos/AddStock";
+import { CategoriaResults } from "@/services/dto/productos/categoria";
+import { DepositoResults } from "@/services/dto/productos/deposito";
+import { MedidasResults } from "@/services/dto/productos/medidas";
+
+type errorType = {
+  code: number;
+  message: string;
+};
+
+type successType = {
+  active: boolean;
+  message: string;
+};
+
+interface AddProductoContextTypes {
+  form: AddProducto;
+  setForm: React.Dispatch<React.SetStateAction<AddProducto>>;
+  clearError: () => void;
+  error: errorType;
+  changeByName: (name: string, value: any) => void;
+  sendForm: () => Promise<void>;
+  impuestos: Array<ImpuestoResults>;
+  categorias: Array<CategoriaResults>;
+  depositos: Array<DepositoResults>;
+  loading: boolean;
+  medidas: Array<MedidasResults>;
+  addStock: () => void;
+  stockState: AddStock;
+  setStockState: React.Dispatch<React.SetStateAction<AddStock>>;
+  removeStock: (deposito_id: number) => void;
+  success: successType;
+  clearSuccess: () => void;
+  verificarCodigoDisponible: (codigo: string) => void;
+  generateCode: () => void;
+  inputCodigoRef: React.RefObject<HTMLInputElement>;
+  changeStockState: (name: string, value: number) => void;
+  tabValue: number;
+  setTabValue: React.Dispatch<React.SetStateAction<number>>;
+}
+
+const AddProductoContext = createContext<AddProductoContextTypes>({
+  form: new AddProducto({}),
+  setForm: () => {},
+  clearError: () => {},
+  error: { code: 0, message: "" },
+  changeByName: () => {},
+  sendForm: async () => {},
+  impuestos: [],
+  categorias: [],
+  depositos: [],
+  loading: true,
+  medidas: [],
+  addStock: () => {},
+  stockState: new AddStock({}),
+  setStockState: () => {},
+  removeStock: () => {},
+  success: { active: false, message: "" },
+  clearSuccess: () => {},
+  verificarCodigoDisponible: () => {},
+  generateCode: () => {},
+  inputCodigoRef: { current: null },
+  changeStockState: () => {},
+  tabValue: 0,
+  setTabValue: () => {},
+});
+
+export default AddProductoContext;

@@ -10,11 +10,14 @@ import { AddStock } from "@/services/dto/productos/AddStock";
 import { CategoriaResults } from "@/services/dto/productos/categoria";
 import { DepositoResults } from "@/services/dto/productos/deposito";
 import { MedidasResults } from "@/services/dto/productos/medidas";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import AddProductoContext from "./context";
 
+interface AddProductoProviderProps {
+  children: React.ReactNode;
+}
 
-
-function useAddProducto() {
+function AddProductoProvider({ children }: AddProductoProviderProps) {
   const { userData } = useAuth();
 
   const inputCodigoRef = useRef<HTMLInputElement>(null);
@@ -43,11 +46,11 @@ function useAddProducto() {
     setForm((prev) => new AddProducto({ ...prev, [name]: value }));
   };
 
-  const generateCode = ()=>{
+  const generateCode = () => {
     let code = Math.random().toString(36).slice(2);
     setForm((prev) => new AddProducto({ ...prev, codigo: code }));
     inputCodigoRef.current?.focus();
-  }
+  };
 
   const verificarCodigoDisponible = async (codigo: string) => {
     if (!codigo) return;
@@ -55,24 +58,24 @@ function useAddProducto() {
     if (!res) {
       setError({ code: 1, message: "El código ya está en uso" });
       inputCodigoRef.current?.focus();
-      return
+      return;
     }
     clearError();
-  }
+  };
 
-  const changeStockState = (name : string, value :number)=>{
-      const updatedStockState = new AddStock({...stockState, [name]: value});
-      setStockState(updatedStockState);
-  }
+  const changeStockState = (name: string, value: number) => {
+    const updatedStockState = new AddStock({ ...stockState, [name]: value });
+    setStockState(updatedStockState);
+  };
 
   const addStock = () => {
     const { deposito_id, cantidad } = stockState;
-    
+
     if (deposito_id === 0 || cantidad === 0) {
       setError({ code: 9, message: "Seleccione un depósito y una cantidad" });
       return;
     }
-    const depositoFind =  depositos.find(e=> e.id === deposito_id)
+    const depositoFind = depositos.find((e) => e.id === deposito_id);
 
     const existingStock = form.stock.find((item) => item.deposito_id === deposito_id);
     const updatedStock = existingStock
@@ -88,52 +91,50 @@ function useAddProducto() {
     setForm(new AddProducto({ ...form, stock: updatedStock }));
   };
 
-  
-
   const validateForm = () => {
     const { codigo, nombre, precio_minimo, precio_normal, category_id, impuesto_id, medida_id, costo } = form;
-    if(!codigo){
+    if (!codigo) {
       setError({ code: 1, message: "El código es requerido" });
       return false;
     }
-    if(!nombre){
+    if (!nombre) {
       setError({ code: 2, message: "El nombre es requerido" });
       return false;
     }
-    if(impuesto_id === 0){
+    if (impuesto_id === 0) {
       setError({ code: 3, message: "Seleccione un impuesto" });
       return false;
     }
-    if(category_id === 0){
+    if (category_id === 0) {
       setError({ code: 4, message: "Seleccione una categoría" });
       return false;
     }
-    if(medida_id === 0){
+    if (medida_id === 0) {
       setError({ code: 5, message: "Seleccione una medida" });
       return false;
     }
 
-    if(!costo){
+    if (!costo) {
       setError({ code: 6, message: "El costo es requerido" });
       return false;
     }
-    
-    if(!precio_normal){
+
+    if (!precio_normal) {
       setError({ code: 7, message: "El precio normal es requerido" });
       return false;
     }
-    if(!precio_minimo){
+    if (!precio_minimo) {
       setError({ code: 8, message: "El precio mínimo es requerido" });
       return false;
     }
-    
+
     clearError();
-    return true
-  }
+    return true;
+  };
 
   const sendForm = async () => {
-    if(!validateForm()) return;
-    
+    if (!validateForm()) return;
+
     setLoading(true);
     const res = await apiServiceProductos.add(form, userData && userData.token);
     setLoading(false);
@@ -146,10 +147,10 @@ function useAddProducto() {
   const getDatas = useCallback(async () => {
     setLoading(true);
 
-    const impuestosFromLocalStorage = localStorage.getItem('impuestos');
-    const categoriasFromLocalStorage = localStorage.getItem('categorias');
-    const depositosFromLocalStorage = localStorage.getItem('depositos');
-    const medidasFromLocalStorage = localStorage.getItem('medidas');
+    const impuestosFromLocalStorage = localStorage.getItem("impuestos");
+    const categoriasFromLocalStorage = localStorage.getItem("categorias");
+    const depositosFromLocalStorage = localStorage.getItem("depositos");
+    const medidasFromLocalStorage = localStorage.getItem("medidas");
 
     if (impuestosFromLocalStorage && categoriasFromLocalStorage && depositosFromLocalStorage && medidasFromLocalStorage) {
       setImpuestos(JSON.parse(impuestosFromLocalStorage));
@@ -158,29 +159,28 @@ function useAddProducto() {
       setMedidas(JSON.parse(medidasFromLocalStorage));
       setLoading(false);
     } else {
-      
       const [impuestosRes, categoriasRes, depositosRes, medidasRes] = await Promise.all([
         apiServiceImpuestos.list(userData && userData.token),
         apiServiceCategorias.list(userData && userData.token),
         apiServiceDepositos.list(userData && userData.token),
-        apiServiceMedidas.list(userData && userData.token)
+        apiServiceMedidas.list(userData && userData.token),
       ]);
 
       if (impuestosRes.success) {
         setImpuestos(impuestosRes.results || []);
-        localStorage.setItem('impuestos', JSON.stringify(impuestosRes.results));
+        localStorage.setItem("impuestos", JSON.stringify(impuestosRes.results));
       }
       if (categoriasRes.success) {
         setCategorias(categoriasRes.results || []);
-        localStorage.setItem('categorias', JSON.stringify(categoriasRes.results));
+        localStorage.setItem("categorias", JSON.stringify(categoriasRes.results));
       }
       if (depositosRes.success) {
         setDepositos(depositosRes.results || []);
-        localStorage.setItem('depositos', JSON.stringify(depositosRes.results));
+        localStorage.setItem("depositos", JSON.stringify(depositosRes.results));
       }
       if (medidasRes.success) {
         setMedidas(medidasRes.results || []);
-        localStorage.setItem('medidas', JSON.stringify(medidasRes.results));
+        localStorage.setItem("medidas", JSON.stringify(medidasRes.results));
       }
 
       setLoading(false);
@@ -191,30 +191,57 @@ function useAddProducto() {
     getDatas();
   }, []);
 
-  return {
-    form,
-    setForm,
-    clearError,
-    error,
-    changeByName,
-    sendForm,
-    impuestos,
-    categorias,
-    depositos,
-    loading,
-    medidas,
-    addStock,
-    stockState,
-    setStockState,
-    removeStock,
-    success,
-    clearSuccess,
-    verificarCodigoDisponible,
-    generateCode,
-    inputCodigoRef,
-    changeStockState,
-    tabValue, setTabValue
-  };
+  const values = useMemo(
+    () => ({
+      form,
+      setForm,
+      clearError,
+      error,
+      changeByName,
+      sendForm,
+      impuestos,
+      categorias,
+      depositos,
+      loading,
+      medidas,
+      addStock,
+      stockState,
+      setStockState,
+      removeStock,
+      success,
+      clearSuccess,
+      verificarCodigoDisponible,
+      generateCode,
+      inputCodigoRef,
+      changeStockState,
+      tabValue,
+      setTabValue,
+    }),
+    [
+      form,
+      error,
+      impuestos,
+      categorias,
+      depositos,
+      loading,
+      medidas,
+      stockState,
+      success,
+      tabValue,
+      clearError,
+      changeByName,
+      sendForm,
+      addStock,
+      setStockState,
+      removeStock,
+      clearSuccess,
+      verificarCodigoDisponible,
+      generateCode,
+      changeStockState,
+    ]
+  );
+
+  return <AddProductoContext.Provider value={values}>{children}</AddProductoContext.Provider>;
 }
 
-export default useAddProducto;
+export default AddProductoProvider;
