@@ -33,65 +33,61 @@ function AddProductoProvider({ children }: AddProductoProviderProps) {
   const [error, setError] = useState({ code: 0, message: "" });
   const [success, setSuccess] = useState({ active: false, message: "" });
 
-  const clearSuccess = () => setSuccess({ active: false, message: "" });
-  const clearForm = () => setForm(new AddProducto({}));
-  const clearError = () => setError({ code: 0, message: "" });
+  const clearSuccess = useCallback(() => setSuccess({ active: false, message: "" }), []);
+  const clearForm = useCallback(() => setForm(new AddProducto({})), []);
+  const clearError = useCallback(() => setError({ code: 0, message: "" }), []);
 
-  const clear = () => {
+  const clear = useCallback(() => {
     clearForm();
     clearError();
-  };
+  }, [clearForm, clearError]);
 
-  const changeByName = (name: string, value: any) => {
+  const changeByName = useCallback((name: string, value: number | string) => {
     setForm((prev) => new AddProducto({ ...prev, [name]: value }));
-  };
+  }, []);
 
-  const generateCode = () => {
-    let code = Math.random().toString(36).slice(2);
+  const generateCode = useCallback(() => {
+    const code = Math.random().toString(36).slice(2);
     setForm((prev) => new AddProducto({ ...prev, codigo: code }));
     inputCodigoRef.current?.focus();
-  };
+  }, []);
 
-  const verificarCodigoDisponible = async (codigo: string) => {
-    if (!codigo) return;
-    const res = await apiServiceProductos.verificarCodigoDisponible(codigo, userData && userData.token);
-    if (!res) {
-      setError({ code: 1, message: "El código ya está en uso" });
-      inputCodigoRef.current?.focus();
-      return;
-    }
-    clearError();
-  };
+  const verificarCodigoDisponible = useCallback(
+    async (codigo: string) => {
+      if (!codigo) return;
+      const res = await apiServiceProductos.verificarCodigoDisponible(codigo, userData && userData?.token);
+      if (!res) {
+        setError({ code: 1, message: "El código ya está en uso" });
+        inputCodigoRef.current?.focus();
+        return;
+      }
+      clearError();
+    },
+    [userData, clearError]
+  );
 
-  const changeStockState = (name: string, value: number) => {
-    const updatedStockState = new AddStock({ ...stockState, [name]: value });
-    setStockState(updatedStockState);
-  };
+  const changeStockState = useCallback((name: string, value: number) => {
+    setStockState((prev) => new AddStock({ ...prev, [name]: value }));
+  }, []);
 
-  const addStock = () => {
+  const addStock = useCallback(() => {
     const { deposito_id, cantidad } = stockState;
-
     if (deposito_id === 0 || cantidad === 0) {
       setError({ code: 9, message: "Seleccione un depósito y una cantidad" });
       return;
     }
     const depositoFind = depositos.find((e) => e.id === deposito_id);
-
-    const existingStock = form.stock.find((item) => item.deposito_id === deposito_id);
-    const updatedStock = existingStock
+    const updatedStock = form.stock.some((item) => item.deposito_id === deposito_id)
       ? form.stock.map((item) => (item.deposito_id === deposito_id ? new AddStock({ ...item, cantidad: item.cantidad + cantidad }) : item))
       : [...form.stock, new AddStock({ deposito_id, cantidad, deposito: depositoFind?.nombre })];
     setForm(new AddProducto({ ...form, stock: updatedStock }));
+  }, [stockState, depositos, form]);
 
-    setStockState(new AddStock({ deposito_id, cantidad: 0, deposito: depositoFind?.nombre }));
-  };
+  const removeStock = useCallback((deposito_id: number) => {
+    setForm((prev) => new AddProducto({ ...prev, stock: prev.stock.filter((item) => item.deposito_id !== deposito_id) }));
+  }, []);
 
-  const removeStock = (deposito_id: number) => {
-    const updatedStock = form.stock.filter((item) => item.deposito_id !== deposito_id);
-    setForm(new AddProducto({ ...form, stock: updatedStock }));
-  };
-
-  const validateForm = () => {
+  const validateForm = useCallback(() => {
     const { codigo, nombre, precio_minimo, precio_normal, category_id, impuesto_id, medida_id, costo } = form;
     if (!codigo) {
       setError({ code: 1, message: "El código es requerido" });
@@ -130,11 +126,10 @@ function AddProductoProvider({ children }: AddProductoProviderProps) {
 
     clearError();
     return true;
-  };
+  }, [form, clearError]);
 
-  const sendForm = async () => {
+  const sendForm = useCallback(async () => {
     if (!validateForm()) return;
-
     setLoading(true);
     const res = await apiServiceProductos.add(form, userData && userData.token);
     setLoading(false);
@@ -142,7 +137,7 @@ function AddProductoProvider({ children }: AddProductoProviderProps) {
       setSuccess({ active: true, message: "Producto creado correctamente" });
       clear();
     }
-  };
+  }, [validateForm, form, userData, clear]);
 
   const getDatas = useCallback(async () => {
     setLoading(true);
