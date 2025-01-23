@@ -76,9 +76,16 @@ export const apiServiceProductos = {
           });
         }
 
+        if(form.stock){
+          form.stock.forEach((stock, index : number) => {
+            formData.append(`stock[${index}][deposito_id]`, String(stock.deposito_id));
+            formData.append(`stock[${index}][cantidad]`, String(stock.cantidad));
+          });
+        }
+
         // Agregar los otros datos del producto
         Object.entries(form.toJSON()).forEach(([key, value]) => {
-          if (key !== "images") {
+          if (key !== "images" && key !== "stock") {
             formData.append(key, String(value)); // Convertir valores a string si es necesario
           }
         });
