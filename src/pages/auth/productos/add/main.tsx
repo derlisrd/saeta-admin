@@ -9,7 +9,7 @@ import useAddProducto from "./_hook/useAddProducto";
 
 function AddProductoMain() {
   const { clearSuccess, success, loading, tabValue, sendForm } = useAddProducto();
-  console.log(tabValue);
+  // tab value no cambia console.log(tabValue);
   return (
     <>
       <Snackbar anchorOrigin={{ vertical: "top", horizontal: "right" }} open={success.active} autoHideDuration={6000} onClose={clearSuccess}>
