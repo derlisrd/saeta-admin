@@ -1,18 +1,18 @@
 import { AddProducto } from "@/services/dto/productos/AddProducto";
-import { Container, Grid2 as Grid, Button, Icon, IconButton, Card, CardMedia } from "@mui/material";
+import { Container, Grid2 as Grid, Icon, IconButton, Card, CardMedia, Typography } from "@mui/material";
 import useAddProducto from "../_hook/useAddProducto";
 import imageCompression from "browser-image-compression";
+import { useDropzone } from "react-dropzone";
+import { useCallback } from "react";
 
 function Imagenes() {
   const { setForm, form } = useAddProducto();
 
-  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (!event.target.files) return;
-
-    const selectedImages = Array.from(event.target.files);
+  // Función para comprimir imágenes
+  const compressImages = async (files: File[]) => {
     const compressedImages: File[] = [];
 
-    for (const file of selectedImages) {
+    for (const file of files) {
       const options = {
         maxSizeMB: 0.5, // Máximo 500 KB por imagen
         maxWidthOrHeight: 1280, // Redimensionar si es más grande
@@ -27,22 +27,41 @@ function Imagenes() {
       }
     }
 
-    setForm((prev) => new AddProducto({ ...prev, images: [...(prev.images ?? []), ...compressedImages] }));
+    return compressedImages;
   };
 
+  // Función de subida de imágenes
+  const onDrop = useCallback(
+    async (acceptedFiles: File[]) => {
+      const compressedFiles = await compressImages(acceptedFiles);
+      setForm((prev) => new AddProducto({ ...prev, images: [...(prev.images ?? []), ...compressedFiles] }));
+    },
+    [setForm]
+  );
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    accept: { "image/*": [] }, // Solo acepta imágenes
+    onDrop, // Maneja la subida aquí
+  });
+
+  // Eliminar imagen
   const removeImage = (index: number) => {
-    const copyForm = { ...form };
-    const images = copyForm.images ?? [];
-    const newImages = images.filter((_, i) => i !== index);
-    setForm((prev) => new AddProducto({ ...prev, images: newImages }));
+    setForm((prev) => {
+      const newImages = (prev.images ?? []).filter((_, i) => i !== index);
+      return new AddProducto({ ...prev, images: newImages });
+    });
   };
+
   return (
     <Container>
-      {/* Botón de subida */}
-      <Button variant="contained" component="label" startIcon={<Icon>add</Icon>}>
-        Subir Imágenes
-        <input type="file" multiple accept="image/*" hidden onChange={handleImageUpload} />
-      </Button>
+      {/* Área de subida con Drag & Drop */}
+      <div {...getRootProps()} style={{ border: "2px dashed #1976d2", padding: "20px", textAlign: "center", cursor: "pointer" }}>
+        <input {...getInputProps()} />
+        <Icon>cloud</Icon>
+        <Typography variant="h6" color="textSecondary">
+          {isDragActive ? "Suelta las imágenes aquí..." : "Arrastra y suelta imágenes aquí o haz clic para seleccionar"}
+        </Typography>
+      </div>
 
       {/* Vista previa de imágenes */}
       <Grid container spacing={2} sx={{ mt: 2 }}>
