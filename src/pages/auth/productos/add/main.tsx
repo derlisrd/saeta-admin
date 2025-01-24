@@ -17,8 +17,13 @@ function AddProductoMain() {
           {success.message}
         </Alert>
       </Snackbar>
-      <Title>Agregar producto</Title>
-      <Box boxShadow={4} padding={3} borderRadius={3} component={Paper}>
+      <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-between" my={3}>
+        <Title>Agregar Producto</Title>
+        <Button size="large" onClick={sendForm}>
+          GUARDAR
+        </Button>
+      </Stack>
+      <Box boxShadow={4} padding={{ xs: 0, sm: 1, md: 2 }} borderRadius={3} component={Paper}>
         {loading && <LinearProgress sx={{ margin: "18px" }} />}
         <TabsCustom />
         <TabContainer index={0} tabValue={tabValue}>
@@ -28,16 +33,19 @@ function AddProductoMain() {
           <Imagenes />
         </TabContainer>
       </Box>
+    </>
+  );
+}
 
-      <Box sx={{ position: "fixed", bottom: 24, zIndex: 1000, right: 24 }} bgcolor="background.paper" boxShadow={3} borderRadius={2} p={2}>
+/**
+ * 
+ * <Box sx={{ position: "fixed", bottom: 24, zIndex: 1000, right: 24 }} bgcolor="background.paper" boxShadow={3} borderRadius={2} p={2}>
         <Stack direction="row" spacing={1}>
           <Button size="large" onClick={sendForm}>
             GUARDAR
           </Button>
         </Stack>
       </Box>
-    </>
-  );
-}
+ */
 
 export default AddProductoMain;

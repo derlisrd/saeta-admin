@@ -28,7 +28,7 @@ function Datos() {
     useAddProducto();
   return (
     <Fragment>
-      <Grid container spacing={{ xs: 2, md: 2 }} alignItems="center">
+      <Grid container spacing={{ xs: 2 }} alignItems="center">
         <Grid size={{ xs: 12, md: 6 }}>
           <TextField
             id="codigo"

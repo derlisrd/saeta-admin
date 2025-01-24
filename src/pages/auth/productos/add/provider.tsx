@@ -38,6 +38,7 @@ function AddProductoProvider({ children }: AddProductoProviderProps) {
   const clearError = useCallback(() => setError({ code: 0, message: "" }), []);
 
   const clear = useCallback(() => {
+    setTabValue(0);
     clearForm();
     clearError();
   }, [clearForm, clearError]);
@@ -77,10 +78,12 @@ function AddProductoProvider({ children }: AddProductoProviderProps) {
       return;
     }
     const depositoFind = depositos.find((e) => e.id === deposito_id);
+    if (!depositoFind) return;
     const updatedStock = form.stock.some((item) => item.deposito_id === deposito_id)
       ? form.stock.map((item) => (item.deposito_id === deposito_id ? new AddStock({ ...item, cantidad: item.cantidad + cantidad }) : item))
       : [...form.stock, new AddStock({ deposito_id, cantidad, deposito: depositoFind?.nombre })];
     setForm(new AddProducto({ ...form, stock: updatedStock }));
+    setStockState((prev) => new AddStock({ ...prev, cantidad: 0 }));
   }, [stockState, depositos, form]);
 
   const removeStock = useCallback((deposito_id: number) => {

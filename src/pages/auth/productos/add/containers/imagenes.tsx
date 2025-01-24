@@ -1,15 +1,33 @@
 import { AddProducto } from "@/services/dto/productos/AddProducto";
 import { Container, Grid2 as Grid, Button, Icon, IconButton, Card, CardMedia } from "@mui/material";
 import useAddProducto from "../_hook/useAddProducto";
+import imageCompression from "browser-image-compression";
 
 function Imagenes() {
   const { setForm, form } = useAddProducto();
 
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) return;
-    const selectedImages = Array.from(event.target.files);
 
-    setForm((prev) => new AddProducto({ ...prev, images: [...(prev.images ?? []), ...selectedImages] }));
+    const selectedImages = Array.from(event.target.files);
+    const compressedImages: File[] = [];
+
+    for (const file of selectedImages) {
+      const options = {
+        maxSizeMB: 0.5, // Máximo 500 KB por imagen
+        maxWidthOrHeight: 1280, // Redimensionar si es más grande
+        useWebWorker: true,
+      };
+
+      try {
+        const compressedFile = await imageCompression(file, options);
+        compressedImages.push(new File([compressedFile], file.name, { type: compressedFile.type }));
+      } catch (error) {
+        console.error("Error al comprimir la imagen:", error);
+      }
+    }
+
+    setForm((prev) => new AddProducto({ ...prev, images: [...(prev.images ?? []), ...compressedImages] }));
   };
 
   const removeImage = (index: number) => {
