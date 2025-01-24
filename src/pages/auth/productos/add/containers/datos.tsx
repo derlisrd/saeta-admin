@@ -21,6 +21,7 @@ import {
   Typography,
 } from "@mui/material";
 import useAddProducto from "../_hook/useAddProducto";
+import { NumericFormat } from "react-number-format";
 
 function Datos() {
   const { form, changeByName, impuestos, categorias, depositos, medidas, addStock, stockState, inputCodigoRef, verificarCodigoDisponible, error, generateCode, changeStockState } =
@@ -164,7 +165,11 @@ function Datos() {
           <Typography variant="button">VALORES</Typography>
         </Grid>
         <Grid size={{ xs: 12, md: 3 }}>
-          <TextField
+          <NumericFormat
+            customInput={TextField}
+            allowedDecimalSeparators={["%"]}
+            thousandSeparator=","
+            decimalSeparator="."
             placeholder="Costo"
             name="costo"
             value={form.costo}

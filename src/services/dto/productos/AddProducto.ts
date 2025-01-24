@@ -14,7 +14,7 @@ export class AddProducto {
   tipo: number;
   cantidad_minima: number;
   stock: AddStock[];
-  images: [] | null;
+  images: File[] | null
   constructor({
     images = null,
     impuesto_id = 0,
