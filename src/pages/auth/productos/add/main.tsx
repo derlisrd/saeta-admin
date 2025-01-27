@@ -1,6 +1,6 @@
 import Title from "@/core/components/ui/title";
 
-import { Alert, Box, Button, LinearProgress, Paper, Snackbar, Stack } from "@mui/material";
+import { Alert, Box, Button, Container, LinearProgress, Paper, Snackbar, Stack } from "@mui/material";
 import TabsCustom from "./_components/tabscustom";
 import TabContainer from "./_components/tabcontainer";
 import Datos from "./containers/datos";
@@ -11,7 +11,7 @@ function AddProductoMain() {
   const { clearSuccess, success, loading, tabValue, sendForm } = useAddProducto();
   // tab value no cambia console.log(tabValue);
   return (
-    <>
+    <Container>
       <Snackbar anchorOrigin={{ vertical: "top", horizontal: "right" }} open={success.active} autoHideDuration={6000} onClose={clearSuccess}>
         <Alert onClose={clearSuccess} severity="success" variant="filled" sx={{ width: "100%" }}>
           {success.message}
@@ -33,7 +33,7 @@ function AddProductoMain() {
           <Imagenes />
         </TabContainer>
       </Box>
-    </>
+    </Container>
   );
 }
 

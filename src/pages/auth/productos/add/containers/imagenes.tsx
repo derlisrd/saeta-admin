@@ -67,7 +67,7 @@ function Imagenes() {
       <Grid container spacing={2} sx={{ mt: 2 }}>
         {form.images &&
           form.images.map((image, index) => (
-            <Grid size={{ xs: 12, sm: 4, md: 2, lg: 1 }} key={index}>
+            <Grid size={{ xs: 12, sm: 4, md: 2, lg: 2 }} key={index}>
               <Card sx={{ position: "relative" }}>
                 <CardMedia component="img" height="100" image={URL.createObjectURL(image)} alt={`Imagen ${index}`} />
                 {/* Botón para eliminar */}

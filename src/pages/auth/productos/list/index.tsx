@@ -21,18 +21,19 @@ import {
   Select,
   MenuItem,
   TableFooter,
-  TablePagination,
   Stack,
+  Button,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function ListaProductos() {
   const { list, loading, depositos, selectDeposito, setSelectDeposito } = useListProductos();
+  const navigate = useNavigate();
   return (
     <Container>
       <Stack direction={{ xs: "row" }} justifyContent="space-between" alignItems="center" padding={2}>
         <h3>Productos</h3>
-        <Link to="/productos/add">Nuevo</Link>
+        <Button onClick={() => navigate("/productos/add")}>Agregar nuevo</Button>
       </Stack>
 
       {loading ? (
