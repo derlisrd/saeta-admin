@@ -7,7 +7,7 @@ interface ErrorProps {
 
 function Error({ error, clearError }: ErrorProps) {
   return (
-    <Snackbar TransitionComponent={Slide} anchorOrigin={{ vertical: "bottom", horizontal: "right" }} open={error.active} autoHideDuration={6000} onClose={clearError}>
+    <Snackbar TransitionComponent={Slide} anchorOrigin={{ vertical: "bottom", horizontal: "right" }} open={error.active}>
       <Alert onClose={clearError} severity="error" variant="filled" sx={{ width: "100%" }}>
         {error.message}
       </Alert>

@@ -3,17 +3,18 @@
 export interface availableColorsType {
     name: string;
     color: string;
+    secondary : string;
 }
 
 export const availableColors : Array<availableColorsType> = [
-    { name: "violet", color: "#734ad5" },
-    { name: "green", color: "#59bd5c" },
-    { name: "bluesky", color: "#186dc3" },
-    { name: "orange", color: "#d76a16" },
-    { name: "red",color: "#FF4838"},
-    { name: "bluelight",color: "#2187ab"},
-    { name: "new",color: "#2065D1"},
-    { name: "coral",color: "#3ecf8e"},
+    { name: "violet", color: "#734ad5", secondary : "#d500f9" },
+    { name: "green", color: "#00AB55", secondary : "#3366FF" },
+    { name: "bluelight", color: "#2187ab", secondary : "#f6ab4d" },
+    { name: "bluesky", color: "#2189e4", secondary : "#f6ab4d" },
+    { name: "orange", color: "#d76a16", secondary : "#8298cf" },
+    { name: "red", color: "#FF4838", secondary : "#FF4838" },
+    { name: "new", color: "#2065D1", secondary : "#3366FF" },
+    {name : "black", color: "#000000", secondary : "#444"},
   ];
   
   export const colorsMode = {
@@ -145,4 +146,18 @@ export const availableColors : Array<availableColorsType> = [
         contrastText: "#000",
       },
     },
+    black: {
+      primary: {
+        light: "#0000001f",
+        main: "#000000",
+        dark: "#000000",
+        contrastText: "#fff",
+      },
+      secondary: {
+        light: "#444",
+        main: "#444",
+        dark: "#444",
+        contrastText: "#000",
+      },
+    }
   };

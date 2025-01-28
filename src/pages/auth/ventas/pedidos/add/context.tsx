@@ -3,6 +3,12 @@ import { AddPedido, AddPedidoResponse } from "@/services/dto/pedidos/AddPedido";
 import { createContext, Dispatch, RefObject, SetStateAction } from "react";
 import { modalType } from "./_types/modal";
 
+type ErrorType = {
+  active: boolean;
+  code: number;
+  message: string;
+};
+
 interface AddPedidoContextProps {
   modal: modalType;
   handleModal: <K extends keyof modalType>(name: K, value: boolean) => void;
@@ -18,13 +24,9 @@ interface AddPedidoContextProps {
   inputCodigoRef: RefObject<HTMLInputElement>;
   loadingAddProducto: boolean;
   clearError: () => void;
-  error: {
-    active: boolean;
-    name: string;
-    message: string;
-  };
+  error: ErrorType;
   limpiarFinalizarPedido: () => void;
-  setError: Dispatch<SetStateAction<{ active: boolean; name: string; message: string }>>;
+  setError: Dispatch<SetStateAction<ErrorType>>;
   result: AddPedidoResponse | null;
   setResult: Dispatch<SetStateAction<AddPedidoResponse | null>>;
   pedidos: AddPedido[];
@@ -60,7 +62,7 @@ export const AddPedidoContext = createContext<AddPedidoContextProps>({
   clearError: () => {},
   error: {
     active: false,
-    name: "",
+    code: 0,
     message: "",
   },
   setError: () => {},

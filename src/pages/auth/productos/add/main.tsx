@@ -23,7 +23,7 @@ function AddProductoMain() {
           GUARDAR
         </Button>
       </Stack>
-      <Box boxShadow={4} padding={{ xs: 0, sm: 1, md: 2 }} borderRadius={3} component={Paper}>
+      <Box boxShadow={4} borderRadius={4} component={Paper} padding={{ xs: 0, sm: 1, md: 2 }}>
         {loading && <LinearProgress sx={{ margin: "18px" }} />}
         <TabsCustom />
         <TabContainer index={0} tabValue={tabValue}>

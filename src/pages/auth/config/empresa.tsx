@@ -19,7 +19,7 @@ function Empresa() {
       {loading ? (
         <LinearProgress />
       ) : (
-        <Box boxShadow={4} padding={3} borderRadius={3} component={Paper}>
+        <Box boxShadow={4} padding={3} borderRadius={4} component={Paper}>
           <Grid container spacing={{ xs: 3, md: 2 }}>
             <Grid size={{ xs: 12, md: 6 }}>
               <TextField label="Nombre de empresa" fullWidth name="nombre" onChange={({ target }) => onChange(target.name, target.value)} value={empresa?.nombre} />

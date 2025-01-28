@@ -28,7 +28,7 @@ export const components = {
     MuiFormHelperText:{
       styleOverrides:{
         root:{
-          fontSize:10
+          fontSize:9
         }
       }
     },
@@ -58,7 +58,7 @@ export const components = {
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
-          borderRadius: "8px",
+          borderRadius: "12px",
           borderWidth: 0,
           fontSize: 13,
         },
@@ -77,9 +77,8 @@ export const components = {
       },
       styleOverrides: {
         root: {
-          borderRadius: "8px",
+          borderRadius: "12px",
           "&:hover": {
-            
           },
         },
       },

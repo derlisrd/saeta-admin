@@ -4,13 +4,13 @@ function useValidator() {
     
     const validate = (form : AddPedido) => {
         let error = {
-            name: '',
+            code: 0,
             active: false,
             message: ""
         }
         if(form.items.length <= 0){
             error = {
-                name: 'items',
+                code: 2,
                 active: true,
                 message: "Debe agregar al menos un producto"
             }
@@ -18,7 +18,7 @@ function useValidator() {
         }
         if(form.formas_pago_id === 0){
             error = {
-                name: 'formas_pago_id',
+                code: 3,
                 active: true,
                 message: "Debe seleccionar una forma de pago"
             }

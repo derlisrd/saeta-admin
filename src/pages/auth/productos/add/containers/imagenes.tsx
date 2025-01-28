@@ -1,5 +1,5 @@
 import { AddProducto } from "@/services/dto/productos/AddProducto";
-import { Container, Grid2 as Grid, Icon, IconButton, Card, CardMedia, Typography } from "@mui/material";
+import { Container, Grid2 as Grid, Icon, IconButton, Card, CardMedia, Typography, Box } from "@mui/material";
 import useAddProducto from "../_hook/useAddProducto";
 import imageCompression from "browser-image-compression";
 import { useDropzone } from "react-dropzone";
@@ -55,13 +55,13 @@ function Imagenes() {
   return (
     <Container>
       {/* Área de subida con Drag & Drop */}
-      <div {...getRootProps()} style={{ border: "2px dashed #1976d2", padding: "20px", textAlign: "center", cursor: "pointer" }}>
+      <Box {...getRootProps()} borderRadius={2} border={2} padding={3} sx={{ borderStyle: "dashed", cursor: "pointer" }}>
         <input {...getInputProps()} />
         <Icon>cloud</Icon>
         <Typography variant="h6" color="textSecondary">
           {isDragActive ? "Suelta las imágenes aquí..." : "Arrastra y suelta imágenes aquí o haz clic para seleccionar"}
         </Typography>
-      </div>
+      </Box>
 
       {/* Vista previa de imágenes */}
       <Grid container spacing={2} sx={{ mt: 2 }}>

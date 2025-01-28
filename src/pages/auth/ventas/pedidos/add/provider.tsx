@@ -42,13 +42,12 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
   const [pedidos, setPedidos] = useState<Array<AddPedido>>(store?.pedidos || [initialPedido]);
 
   const [index, setIndex] = useState<number>(store?.index ?? 0);
-  const [error, setError] = useState({ name: "", message: "", active: false });
-
-  const clearError = useCallback(() => setError((prev) => ({ ...prev, active: false })), []);
-
-  const handleModal = useCallback((name: string, value: boolean) => {
+  const initialError = { code: 0, message: "", active: false };
+  const [error, setError] = useState(initialError);
+  const handleModal = (name: string, value: boolean) => {
     setModal((prev) => ({ ...prev, [name]: value }));
-  }, []);
+  };
+  const clearError = () => setError(initialError);
 
   const setCliente = useCallback(
     (id: number, label: string) => {
@@ -78,7 +77,7 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
       setLoadingAddProducto(false);
 
       if (!res.success) {
-        setError({ name: "producto", message: res.message, active: true });
+        setError({ code: 1, message: res.message, active: true });
         return;
       }
 
@@ -226,7 +225,6 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
         keyActions[event.key]();
       }
     };
-
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [handleModal]);

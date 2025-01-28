@@ -11,10 +11,11 @@ function FinalizarPedido() {
   const { validate } = useValidator();
 
   const finalizarPedido = async () => {
-    const error = validate(pedidos[index]);
-    if (error.active) {
-      setError(error);
-      setResult({ success: false, status: 400, message: error.message, results: null });
+    const validateError = validate(pedidos[index]);
+
+    if (validateError.active) {
+      setError(validateError);
+      setResult({ success: false, status: 400, message: validateError.message, results: null });
       handleModal("error", true);
       return;
     }
@@ -39,7 +40,7 @@ function FinalizarPedido() {
         ) : (
           <Grid container spacing={2} pt={1}>
             <Grid size={{ xs: 12, sm: 6 }}>
-              <FormaPagoSelect error={error.name === "formas_pago_id"} />
+              <FormaPagoSelect error={error.code === 3} />
             </Grid>
             <Grid size={{ xs: 12, sm: 6 }}>
               <EntregadoCheck />

@@ -6,10 +6,11 @@ export const apiServicePedidos = {
   insert: async (token: string | null, pedido: AddPedido) => {
     try {
       const { data, status } = await BASE.post("/pedidos", pedido, { headers: { Authorization: token } });
-      return new AddPedidoResponse({ success: data.success as boolean, status, results: data.results, message: "" });
+      return  new AddPedidoResponse({ success: data.success as boolean, status, results: data.results, message: "" });
     } catch (e) {
+      console.log(e)
       if (axios.isAxiosError(e)) {
-        return AddPedidoResponse.fromJSON({
+        return new AddPedidoResponse({
           success: false,
           results: null,
           status: e.response?.status || 500,
@@ -17,16 +18,15 @@ export const apiServicePedidos = {
         });
       }
       if (!navigator.onLine) {
-        return AddPedidoResponse.fromJSON({
+        return new AddPedidoResponse({
           success: false,
           results: null,
           status: 0,
           message: "No hay conexión a Internet."
         });
       }
-      return AddPedidoResponse.fromJSON({
+      return new AddPedidoResponse({
         success: false,
-        id: null,
         results: null,
         status: 500,
         message: "Error de servidor intente más tarde o contacte con Atención al cliente."

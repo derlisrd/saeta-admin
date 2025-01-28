@@ -51,9 +51,10 @@ function ThemeCustomProvider({ children }: ThemeCustomProviderType) {
     }
   };
 
-  const changeColor = (color: string) => {
+  const changeColor = (color: string, secondary: string) => {
     const newModeTheme = { ...customThemeStorage } as Theme;
     newModeTheme.palette.primary.main = color;
+    newModeTheme.palette.secondary.main = secondary;
     setCustomTheme(createTheme(newModeTheme));
     setCustomThemeStorage(newModeTheme);
   };

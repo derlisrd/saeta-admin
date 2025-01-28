@@ -39,7 +39,7 @@ function ListaProductos() {
       {loading ? (
         <LinearProgress />
       ) : (
-        <Box boxShadow={6} borderRadius={3}>
+        <Box boxShadow={6} borderRadius={4} component={Paper} padding={{ xs: 0, sm: 1, md: 2 }}>
           <Grid container padding={2} spacing={{ xs: 1 }}>
             <Grid size={{ xs: 12, md: 4 }}>
               <FormControl fullWidth>
@@ -81,7 +81,7 @@ function ListaProductos() {
             </Grid>
             <Grid size={{ xs: 12, md: 4 }}></Grid>
           </Grid>
-          <TableContainer component={Paper} sx={{ borderRadius: 2 }}>
+          <TableContainer component={Paper} sx={{ borderRadius: 0, border: 0, boxShadow: 0 }}>
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
