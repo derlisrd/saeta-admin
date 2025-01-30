@@ -167,13 +167,14 @@ function Datos() {
         <Grid size={{ xs: 12, md: 3 }}>
           <NumericFormat
             customInput={TextField}
-            allowedDecimalSeparators={["%"]}
-            thousandSeparator=","
-            decimalSeparator="."
+            thousandSeparator="."
+            decimalSeparator=","
             placeholder="Costo"
             name="costo"
             value={form.costo}
-            onChange={(e) => changeByName(e.target.name, Number(e.target.value))}
+            onValueChange={(e) => {
+              changeByName("costo", Number(e.value));
+            }}
             fullWidth
             required
             label="Costo"
@@ -182,11 +183,16 @@ function Datos() {
           />
         </Grid>
         <Grid size={{ xs: 12, md: 3 }}>
-          <TextField
+          <NumericFormat
+            customInput={TextField}
+            thousandSeparator="."
+            decimalSeparator=","
             placeholder="Precio normal"
             name="precio_normal"
             value={form.precio_normal}
-            onChange={(e) => changeByName(e.target.name, Number(e.target.value))}
+            onValueChange={(e) => {
+              changeByName("precio_normal", Number(e.value));
+            }}
             fullWidth
             required
             label="Precio normal"
@@ -195,11 +201,16 @@ function Datos() {
           />
         </Grid>
         <Grid size={{ xs: 12, md: 3 }}>
-          <TextField
+          <NumericFormat
+            customInput={TextField}
+            thousandSeparator="."
+            decimalSeparator=","
             placeholder="Precio mínimo"
             name="precio_minimo"
             value={form.precio_minimo}
-            onChange={(e) => changeByName(e.target.name, Number(e.target.value))}
+            onValueChange={(e) => {
+              changeByName("precio_minimo", Number(e.value));
+            }}
             fullWidth
             required
             label="Precio mínimo"

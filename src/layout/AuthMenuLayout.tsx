@@ -65,6 +65,7 @@ function AuthMenuLayout() {
       </Drawer>
       <Drawer
         variant="temporary"
+        closeAfterTransition
         open={isOpenMobileMenu}
         onClose={toggleMobileMenu}
         ModalProps={{
