@@ -1,0 +1,32 @@
+import { CategoriaResults } from "@/services/dto/productos/categoria";
+import { createContext } from "react";
+
+export type CategoriasModals = {
+  crear: boolean;
+  editar: boolean;
+  eliminar: boolean;
+};
+
+interface CategoriasContextType {
+  lista: CategoriaResults[] | null;
+  isLoading: boolean;
+  error: unknown;
+  refetch: () => void;
+  modals: CategoriasModals;
+  handleModal: (modal: keyof CategoriasModals) => void;
+}
+
+const CategoriasContext = createContext<CategoriasContextType>({
+  lista: null,
+  isLoading: false,
+  error: null,
+  refetch: () => {},
+  modals: {
+    crear: false,
+    editar: false,
+    eliminar: false,
+  },
+  handleModal: () => {},
+});
+
+export default CategoriasContext;

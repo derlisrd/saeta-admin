@@ -4,6 +4,9 @@ import PublicPages from "./public";
 import AutenticatedPages from "./auth";
 import { useAuth } from "@/providers/AuthProvider";
 import useThemeCustom from "@/hooks/useThemeCustom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 function Pages() {
   const { customTheme } = useThemeCustom();
@@ -12,7 +15,7 @@ function Pages() {
   return (
     <ThemeProvider theme={customTheme ?? {}}>
       <CssBaseline />
-      {!isAuth ? <PublicPages /> : <AutenticatedPages />}
+      <QueryClientProvider client={queryClient}>{!isAuth ? <PublicPages /> : <AutenticatedPages />}</QueryClientProvider>
     </ThemeProvider>
   );
 }

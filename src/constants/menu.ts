@@ -67,7 +67,7 @@ export default [
                 title: 'Categorias',
                 icon: 'category',
                 color: '#0066cc',
-                url: '/registros/categorias',
+                url: '/categorias',
                 private: false,
             }
         ]

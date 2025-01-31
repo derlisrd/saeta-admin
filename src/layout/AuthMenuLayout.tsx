@@ -68,9 +68,6 @@ function AuthMenuLayout() {
         closeAfterTransition
         open={isOpenMobileMenu}
         onClose={toggleMobileMenu}
-        ModalProps={{
-          keepMounted: true, // Better open performance on mobile.
-        }}
         sx={{
           display: { xs: "block", md: "none" },
           "& .MuiDrawer-paper": { bosmizing: "border-box", width: 256 },

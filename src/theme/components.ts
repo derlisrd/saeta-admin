@@ -91,5 +91,23 @@ export const components = {
         }
       }
     },
+    MuiDialogActions:{
+      styleOverrides:{
+        paper:{
+          padding:8
+        }
+      }
+    },
+
+    MuiDialog:{
+      defaultProps:{
+        fullWidth:true
+      },
+      styleOverrides:{
+        paper:{
+          borderRadius:"12px"
+        }
+      }
+    }
     
   } as Components<Omit<Theme, 'components' | 'palette'> & CssVarsTheme>
