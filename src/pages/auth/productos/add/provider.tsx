@@ -7,7 +7,7 @@ import { apiServiceProductos } from "@/services/api/productos/producto";
 import { AddProducto } from "@/services/dto/productos/AddProducto";
 import { AddStock } from "@/services/dto/productos/AddStock";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import AddProductoContext from "./context";
+import AddProductoContext, { modalType } from "./context";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 interface AddProductoProviderProps {
@@ -46,6 +46,15 @@ function AddProductoProvider({ children }: AddProductoProviderProps) {
   const [error, setError] = useState({ code: 0, message: "" });
   const [success, setSuccess] = useState({ active: false, message: "" });
 
+  const [modal, setModal] = useState<modalType>({
+    categorias: false,
+    unidad: false,
+  });
+
+  const handleModal = useCallback((key: keyof modalType) => {
+    setModal((prev) => ({ ...prev, [key]: !prev[key] }));
+  }, []);
+
   const {
     data,
     isLoading,
@@ -59,10 +68,10 @@ function AddProductoProvider({ children }: AddProductoProviderProps) {
 
   useEffect(() => {
     if (data) {
-      localStorage.setItem("impuestos", JSON.stringify(data.impuestos));
-      localStorage.setItem("categorias", JSON.stringify(data.categorias));
-      localStorage.setItem("depositos", JSON.stringify(data.depositos));
-      localStorage.setItem("medidas", JSON.stringify(data.medidas));
+      localStorage.setItem("impuestosAddProducto", JSON.stringify(data.impuestos));
+      localStorage.setItem("categoriasAddProducto", JSON.stringify(data.categorias));
+      localStorage.setItem("depositosAddProducto", JSON.stringify(data.depositos));
+      localStorage.setItem("medidasAddProducto", JSON.stringify(data.medidas));
     }
   }, [data]);
 
@@ -212,6 +221,8 @@ function AddProductoProvider({ children }: AddProductoProviderProps) {
       changeStockState,
       tabValue,
       setTabValue,
+      modal,
+      handleModal,
     }),
     [
       form,
@@ -236,6 +247,8 @@ function AddProductoProvider({ children }: AddProductoProviderProps) {
       verificarCodigoDisponible,
       generateCode,
       changeStockState,
+      modal,
+      handleModal,
     ]
   );
 

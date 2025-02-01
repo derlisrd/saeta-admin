@@ -24,8 +24,22 @@ import useAddProducto from "../_hook/useAddProducto";
 import { NumericFormat } from "react-number-format";
 
 function Datos() {
-  const { form, changeByName, impuestos, categorias, depositos, medidas, addStock, stockState, inputCodigoRef, verificarCodigoDisponible, error, generateCode, changeStockState } =
-    useAddProducto();
+  const {
+    form,
+    handleModal,
+    changeByName,
+    impuestos,
+    categorias,
+    depositos,
+    medidas,
+    addStock,
+    stockState,
+    inputCodigoRef,
+    verificarCodigoDisponible,
+    error,
+    generateCode,
+    changeStockState,
+  } = useAddProducto();
   return (
     <Fragment>
       <Grid container spacing={{ xs: 2 }} alignItems="center">
@@ -127,11 +141,20 @@ function Datos() {
               <MenuItem value={0} disabled>
                 Seleccionar categoria
               </MenuItem>
+
               {categorias.map((item, index) => (
                 <MenuItem key={index} value={item.id}>
                   {item.nombre}
                 </MenuItem>
               ))}
+              <List>
+                <ListItemButton onClick={() => handleModal("categorias")}>
+                  <ListItemIcon>
+                    <Icon>add</Icon>
+                  </ListItemIcon>
+                  <ListItemText primary="Agregar categoria" />
+                </ListItemButton>
+              </List>
             </Select>
             <FormHelperText>Categoría</FormHelperText>
           </FormControl>

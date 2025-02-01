@@ -26,6 +26,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const updateUserData = (data: LoginResults) => {
     setUserData(data);
+    setSessionUserData(data);
   };
 
   // Función para iniciar sesión

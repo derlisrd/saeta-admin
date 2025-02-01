@@ -25,7 +25,9 @@ const useAddProducto = () => {
     inputCodigoRef,
     changeStockState,
     tabValue,
-    setTabValue
+    setTabValue,
+    modal,
+    handleModal
   } = useContext(AddProductoContext);
   return {
     form,
@@ -50,7 +52,9 @@ const useAddProducto = () => {
     inputCodigoRef,
     changeStockState,
     tabValue,
-    setTabValue
+    setTabValue,
+    modal,
+    handleModal
   };
 };
 

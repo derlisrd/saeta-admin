@@ -16,8 +16,15 @@ type successType = {
   message: string;
 };
 
+export type modalType = {
+  categorias: boolean;
+  unidad: boolean;
+};
+
 interface AddProductoContextTypes {
   form: AddProducto;
+  modal: modalType;
+  handleModal: (modal: keyof modalType) => void;
   setForm: React.Dispatch<React.SetStateAction<AddProducto>>;
   clearError: () => void;
   error: errorType;
@@ -66,6 +73,11 @@ const AddProductoContext = createContext<AddProductoContextTypes>({
   changeStockState: () => {},
   tabValue: 0,
   setTabValue: () => {},
+  modal: {
+    categorias: false,
+    unidad: false,
+  },
+  handleModal: () => {},
 });
 
 export default AddProductoContext;
