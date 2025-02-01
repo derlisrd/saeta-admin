@@ -60,7 +60,7 @@ function AddProductoProvider({ children }: AddProductoProviderProps) {
     isLoading,
     error: dataError,
   } = useQuery({
-    queryKey: ["allData", userData?.token],
+    queryKey: ["allData", userData && userData?.token],
     queryFn: () => fetchData(userData && userData?.token),
     enabled: !!(userData && userData?.token),
     staleTime: 1000 * 60 * 5, // Cache for 5 minutes
