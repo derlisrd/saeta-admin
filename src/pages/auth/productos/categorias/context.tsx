@@ -1,3 +1,4 @@
+import { AddCategoria } from "@/services/dto/productos/AddCategoria";
 import { CategoriaResults } from "@/services/dto/productos/categoria";
 import { createContext } from "react";
 
@@ -14,6 +15,8 @@ interface CategoriasContextType {
   refetch: () => void;
   modals: CategoriasModals;
   handleModal: (modal: keyof CategoriasModals) => void;
+  addCategoria: (form: AddCategoria) => void;
+  isPendingAdd: boolean;
 }
 
 const CategoriasContext = createContext<CategoriasContextType>({
@@ -27,6 +30,8 @@ const CategoriasContext = createContext<CategoriasContextType>({
     eliminar: false,
   },
   handleModal: () => {},
+  addCategoria: () => {},
+  isPendingAdd: false,
 });
 
 export default CategoriasContext;

@@ -24,7 +24,7 @@ import useCategoria from "./useCategoria";
 function CategoriaList() {
   const { lista, isLoading, handleModal } = useCategoria();
   return (
-    <Container>
+    <Container sx={{ paddingBottom: 4 }}>
       <Stack direction={{ xs: "row" }} justifyContent="space-between" alignItems="center" padding={2}>
         <h3>Categorías</h3>
         <Button

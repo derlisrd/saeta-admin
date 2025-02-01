@@ -30,7 +30,7 @@ function ListaProductos() {
   const { list, loading, depositos, selectDeposito, setSelectDeposito } = useListProductos();
   const navigate = useNavigate();
   return (
-    <Container sx={{ paddingBottom: { xs: 6, md: 0 } }}>
+    <Container sx={{ paddingBottom: 6 }}>
       <Stack direction={{ xs: "row" }} justifyContent="space-between" alignItems="center" padding={2}>
         <h3>Productos</h3>
         <Button onClick={() => navigate("/productos/add")}>Agregar nuevo</Button>

@@ -1,7 +1,7 @@
 export class AddCategoria {
     nombre: string;
     descripcion: string | null;
-    publicado: boolean;
+    publicado: number;
 
     constructor({
         nombre,
@@ -10,7 +10,7 @@ export class AddCategoria {
     }:{
         nombre: string,
         descripcion: string | null,
-        publicado: boolean
+        publicado: number
     }){
         this.nombre = nombre;
         this.descripcion = descripcion;

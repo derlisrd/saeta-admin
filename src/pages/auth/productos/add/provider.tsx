@@ -4,34 +4,67 @@ import { apiServiceCategorias } from "@/services/api/productos/categoria";
 import { apiServiceDepositos } from "@/services/api/productos/deposito";
 import { apiServiceMedidas } from "@/services/api/productos/medidas";
 import { apiServiceProductos } from "@/services/api/productos/producto";
-import { ImpuestoResults } from "@/services/dto/factura/impuesto";
 import { AddProducto } from "@/services/dto/productos/AddProducto";
 import { AddStock } from "@/services/dto/productos/AddStock";
-import { CategoriaResults } from "@/services/dto/productos/categoria";
-import { DepositoResults } from "@/services/dto/productos/deposito";
-import { MedidasResults } from "@/services/dto/productos/medidas";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import AddProductoContext from "./context";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 interface AddProductoProviderProps {
   children: React.ReactNode;
 }
 
+const fetchData = async (token: string | null) => {
+  const [impuestosRes, categoriasRes, depositosRes, medidasRes] = await Promise.all([
+    apiServiceImpuestos.list(token),
+    apiServiceCategorias.list(token),
+    apiServiceDepositos.list(token),
+    apiServiceMedidas.list(token),
+  ]);
+
+  if (!impuestosRes.success) throw new Error("Error fetching impuestos");
+  if (!categoriasRes.success) throw new Error("Error fetching categorias");
+  if (!depositosRes.success) throw new Error("Error fetching depositos");
+  if (!medidasRes.success) throw new Error("Error fetching medidas");
+
+  return {
+    impuestos: impuestosRes.results || [],
+    categorias: categoriasRes.results || [],
+    depositos: depositosRes.results || [],
+    medidas: medidasRes.results || [],
+  };
+};
+
 function AddProductoProvider({ children }: AddProductoProviderProps) {
   const { userData } = useAuth();
 
   const inputCodigoRef = useRef<HTMLInputElement>(null);
-
   const [tabValue, setTabValue] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [categorias, setCategorias] = useState<CategoriaResults[]>([]);
-  const [impuestos, setImpuestos] = useState<ImpuestoResults[]>([]);
-  const [depositos, setDepositos] = useState<DepositoResults[]>([]);
-  const [medidas, setMedidas] = useState<MedidasResults[]>([]);
+
   const [form, setForm] = useState<AddProducto>(new AddProducto({}));
   const [stockState, setStockState] = useState<AddStock>(new AddStock({}));
   const [error, setError] = useState({ code: 0, message: "" });
   const [success, setSuccess] = useState({ active: false, message: "" });
+
+  const {
+    data,
+    isLoading,
+    error: dataError,
+  } = useQuery({
+    queryKey: ["allData", userData?.token],
+    queryFn: () => fetchData(userData && userData?.token),
+    enabled: !!(userData && userData?.token),
+    staleTime: 1000 * 60 * 5, // Cache for 5 minutes
+  });
+
+  useEffect(() => {
+    if (data) {
+      localStorage.setItem("impuestos", JSON.stringify(data.impuestos));
+      localStorage.setItem("categorias", JSON.stringify(data.categorias));
+      localStorage.setItem("depositos", JSON.stringify(data.depositos));
+      localStorage.setItem("medidas", JSON.stringify(data.medidas));
+    }
+  }, [data]);
 
   const clearSuccess = useCallback(() => setSuccess({ active: false, message: "" }), []);
   const clearForm = useCallback(() => setForm(new AddProducto({})), []);
@@ -77,14 +110,16 @@ function AddProductoProvider({ children }: AddProductoProviderProps) {
       setError({ code: 9, message: "Seleccione un depósito y una cantidad" });
       return;
     }
-    const depositoFind = depositos.find((e) => e.id === deposito_id);
-    if (!depositoFind) return;
-    const updatedStock = form.stock.some((item) => item.deposito_id === deposito_id)
-      ? form.stock.map((item) => (item.deposito_id === deposito_id ? new AddStock({ ...item, cantidad: item.cantidad + cantidad }) : item))
-      : [...form.stock, new AddStock({ deposito_id, cantidad, deposito: depositoFind?.nombre })];
-    setForm(new AddProducto({ ...form, stock: updatedStock }));
-    setStockState((prev) => new AddStock({ ...prev, cantidad: 0 }));
-  }, [stockState, depositos, form]);
+    if (data) {
+      const depositoFind = data.depositos.find((e) => e.id === deposito_id);
+      if (!depositoFind) return;
+      const updatedStock = form.stock.some((item) => item.deposito_id === deposito_id)
+        ? form.stock.map((item) => (item.deposito_id === deposito_id ? new AddStock({ ...item, cantidad: item.cantidad + cantidad }) : item))
+        : [...form.stock, new AddStock({ deposito_id, cantidad, deposito: depositoFind?.nombre })];
+      setForm(new AddProducto({ ...form, stock: updatedStock }));
+      setStockState((prev) => new AddStock({ ...prev, cantidad: 0 }));
+    }
+  }, [stockState, form]);
 
   const removeStock = useCallback((deposito_id: number) => {
     setForm((prev) => new AddProducto({ ...prev, stock: prev.stock.filter((item) => item.deposito_id !== deposito_id) }));
@@ -131,63 +166,26 @@ function AddProductoProvider({ children }: AddProductoProviderProps) {
     return true;
   }, [form, clearError]);
 
+  const mutateCaller = useMutation({
+    mutationFn: async () => {
+      return apiServiceProductos.add(form, userData && userData?.token);
+    },
+    onSuccess: (res) => {
+      if (res.success) {
+        setSuccess({ active: true, message: "Producto creado correctamente" });
+        clear();
+      } else {
+        setError({ code: 10, message: res.message || "Error al crear el producto" });
+      }
+    },
+    onError: () => {
+      setError({ code: 500, message: "Ocurrió un error inesperado" });
+    },
+  });
   const sendForm = useCallback(async () => {
-    if (!validateForm()) return;
-    setLoading(true);
-    const res = await apiServiceProductos.add(form, userData && userData.token);
-    setLoading(false);
-    if (res.success) {
-      setSuccess({ active: true, message: "Producto creado correctamente" });
-      clear();
-    }
+    if (!validateForm()) throw new Error("Formulario inválido");
+    mutateCaller.mutate();
   }, [validateForm, form, userData, clear]);
-
-  const getDatas = useCallback(async () => {
-    setLoading(true);
-
-    const impuestosFromLocalStorage = localStorage.getItem("impuestos");
-    const categoriasFromLocalStorage = localStorage.getItem("categorias");
-    const depositosFromLocalStorage = localStorage.getItem("depositos");
-    const medidasFromLocalStorage = localStorage.getItem("medidas");
-
-    if (impuestosFromLocalStorage && categoriasFromLocalStorage && depositosFromLocalStorage && medidasFromLocalStorage) {
-      setImpuestos(JSON.parse(impuestosFromLocalStorage));
-      setCategorias(JSON.parse(categoriasFromLocalStorage));
-      setDepositos(JSON.parse(depositosFromLocalStorage));
-      setMedidas(JSON.parse(medidasFromLocalStorage));
-      setLoading(false);
-    } else {
-      const [impuestosRes, categoriasRes, depositosRes, medidasRes] = await Promise.all([
-        apiServiceImpuestos.list(userData && userData.token),
-        apiServiceCategorias.list(userData && userData.token),
-        apiServiceDepositos.list(userData && userData.token),
-        apiServiceMedidas.list(userData && userData.token),
-      ]);
-
-      if (impuestosRes.success) {
-        setImpuestos(impuestosRes.results || []);
-        localStorage.setItem("impuestos", JSON.stringify(impuestosRes.results));
-      }
-      if (categoriasRes.success) {
-        setCategorias(categoriasRes.results || []);
-        localStorage.setItem("categorias", JSON.stringify(categoriasRes.results));
-      }
-      if (depositosRes.success) {
-        setDepositos(depositosRes.results || []);
-        localStorage.setItem("depositos", JSON.stringify(depositosRes.results));
-      }
-      if (medidasRes.success) {
-        setMedidas(medidasRes.results || []);
-        localStorage.setItem("medidas", JSON.stringify(medidasRes.results));
-      }
-
-      setLoading(false);
-    }
-  }, [userData]);
-
-  useEffect(() => {
-    getDatas();
-  }, []);
 
   const values = useMemo(
     () => ({
@@ -197,11 +195,11 @@ function AddProductoProvider({ children }: AddProductoProviderProps) {
       error,
       changeByName,
       sendForm,
-      impuestos,
-      categorias,
-      depositos,
-      loading,
-      medidas,
+      impuestos: data?.impuestos || [], // Access data.impuestos, handle loading state
+      categorias: data?.categorias || [],
+      depositos: data?.depositos || [],
+      medidas: data?.medidas || [],
+      loading: isLoading || mutateCaller.isPending,
       addStock,
       stockState,
       setStockState,
@@ -218,11 +216,13 @@ function AddProductoProvider({ children }: AddProductoProviderProps) {
     [
       form,
       error,
-      impuestos,
-      categorias,
-      depositos,
-      loading,
-      medidas,
+      data?.impuestos,
+      data?.categorias,
+      data?.depositos,
+      data?.medidas,
+      isLoading,
+      dataError,
+      data,
       stockState,
       success,
       tabValue,

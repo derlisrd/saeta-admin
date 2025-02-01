@@ -11,13 +11,19 @@ function useCategoria() {
       error,
       refetch,
       handleModal,
-      modals} = context
+      modals,
+      addCategoria,
+      isPendingAdd
+    } = context
     return {lista,
       isLoading,
       error,
       refetch,
       handleModal,
-      modals,}
+      modals,
+      addCategoria,
+      isPendingAdd
+    }
 }
 
 export default useCategoria;
