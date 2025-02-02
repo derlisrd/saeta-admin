@@ -6,15 +6,16 @@ import { apiServiceMedidas } from "@/services/api/productos/medidas";
 import { apiServiceProductos } from "@/services/api/productos/producto";
 import { AddProducto } from "@/services/dto/productos/AddProducto";
 import { AddStock } from "@/services/dto/productos/AddStock";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import AddProductoContext, { modalType } from "./context";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import AllData from "./_types/allData";
 
 interface AddProductoProviderProps {
   children: React.ReactNode;
 }
 
-const fetchData = async (token: string | null) => {
+const fetchData = async (token: string | null): Promise<AllData> => {
   const [impuestosRes, categoriasRes, depositosRes, medidasRes] = await Promise.all([
     apiServiceImpuestos.list(token),
     apiServiceCategorias.list(token),
@@ -50,7 +51,6 @@ function AddProductoProvider({ children }: AddProductoProviderProps) {
     categorias: false,
     unidad: false,
   });
-
   const handleModal = useCallback((key: keyof modalType) => {
     setModal((prev) => ({ ...prev, [key]: !prev[key] }));
   }, []);
@@ -59,21 +59,12 @@ function AddProductoProvider({ children }: AddProductoProviderProps) {
     data,
     isLoading,
     error: dataError,
-  } = useQuery({
+  } = useQuery<AllData>({
     queryKey: ["allData", userData && userData?.token],
     queryFn: () => fetchData(userData && userData?.token),
     enabled: !!(userData && userData?.token),
     staleTime: 1000 * 60 * 5, // Cache for 5 minutes
   });
-
-  useEffect(() => {
-    if (data) {
-      localStorage.setItem("impuestosAddProducto", JSON.stringify(data.impuestos));
-      localStorage.setItem("categoriasAddProducto", JSON.stringify(data.categorias));
-      localStorage.setItem("depositosAddProducto", JSON.stringify(data.depositos));
-      localStorage.setItem("medidasAddProducto", JSON.stringify(data.medidas));
-    }
-  }, [data]);
 
   const clearSuccess = useCallback(() => setSuccess({ active: false, message: "" }), []);
   const clearForm = useCallback(() => setForm(new AddProducto({})), []);

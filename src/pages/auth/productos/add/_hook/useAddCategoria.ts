@@ -1,9 +1,9 @@
 import { useAuth } from "@/providers/AuthProvider";
 import API from "@/services/api";
 import { AddCategoria, AddCategoriaResponse } from "@/services/dto/productos/AddCategoria";
-import { CategoriaResponse } from "@/services/dto/productos/categoria";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+import AllData from "../_types/allData";
 
 function useAddCategoria() {
 
@@ -17,48 +17,30 @@ function useAddCategoria() {
     })
 
 
-    const { mutate, isPending } = useMutation<AddCategoriaResponse, Error, AddCategoria>({
+    const { mutate, isPending } = useMutation<AddCategoriaResponse,Error,AddCategoria>({
         mutationFn: async (form: AddCategoria) => {
           return API.categorias.create(userData && userData?.token, form);
         },
-        onMutate: async (data) => {
-          await queryClient.cancelQueries({ queryKey: ["categorias", userData && userData?.token] });
-    
-          const previousCategorias = queryClient.getQueryData(["categorias", userData && userData?.token]);
-    
-          return { data, previousCategorias };
+        onMutate: async () => {
+          await queryClient.cancelQueries({ queryKey: ["allData",userData && userData?.token] });
         },
-        onError: (context, error) => {
-          console.log(context, error);
-          // Si la mutación falla, revierte la lista de categorías al estado anterior
-          /* if (context?.previousCategorias) {
-            queryClient.setQueryData(['categorias', userData?.token], context.previousCategorias);
-          } */
+        onError: () => {
         },
-        onSuccess: (data) => {
+        onSuccess: (data: AddCategoriaResponse) => {
           if (data.success && data.results) {
-            queryClient.setQueryData<CategoriaResponse>(["categoriasAddProducto", userData && userData?.token], (old) => {
-              if (old) {
-                let oldData = old.results || [];
-                oldData.push({
-                  id: data.results?.id || 0,
-                  nombre: data.results?.nombre || "",
-                  publicado: data.results?.publicado || 0,
-                  descripcion: data.results?.descripcion || "",
-                });
-                return {
-                  ...old,
-                  results: oldData,
-                };
-              }
-              return old;
+            queryClient.setQueryData(["allData", userData && userData?.token], (oldData: AllData | undefined) => {
+              if (!oldData) return oldData;
+      
+              return {
+                ...oldData,
+                categorias: [...oldData.categorias, data.results], // Se agrega la nueva categoría
+              };
             });
           }
         },
-        onSettled: (data) => {
-          console.log(data?.results);
-          // Recarga los datos para asegurarte de que estén sincronizados con el servidor
-          // queryClient.invalidateQueries({ queryKey: ["categorias", userData?.token] });
+        onSettled: () => {
+          // Invalida la consulta para asegurarse de que los datos estén sincronizados
+          queryClient.cancelQueries({ queryKey: ["allData",userData && userData?.token] });
         },
       });
     
