@@ -73,7 +73,7 @@ export const components = {
     },
     MuiButton: {
       defaultProps:{
-        variant:'contained'
+        variant:'contained',
       },
       styleOverrides: {
         root: {

@@ -74,7 +74,7 @@ export default [
     },
     {
         id: 3,
-        title: 'Config.',
+        title: 'Configuracion',
         icon: 'settings',
         color: '#0066cc',
         url: null,
