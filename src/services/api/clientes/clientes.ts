@@ -1,6 +1,7 @@
 import { SearchClienteResponse } from "@/services/dto/clientes/search";
 import { BASE } from "../base"
 import { PorDocumentoResponse } from "@/services/dto/clientes/pordocumento";
+import { RegistroCliente, RegistroClienteResponse } from "@/services/dto/clientes/registro";
 
 export const apiServiceClientes = {
     search: async(token : string | null, q : string)  =>  {
@@ -11,8 +12,13 @@ export const apiServiceClientes = {
             return new SearchClienteResponse({ success : false, status : 500, results: [], message: 'Error de servidor'});
         }
     },
-    registro: async() => {
-
+    registro: async(token : string | null, form : RegistroCliente) => {
+        try {
+            const {data, status} = await BASE.post('/clientes',form,{headers: {Authorization : token}})
+            return new RegistroClienteResponse({ success : data.success as boolean, status, results: data.results, message: '' });
+        } catch (e) {
+            return new RegistroClienteResponse({ success : false, status : 500, results: null, message: 'Error de servidor'});
+        }
     },
     porDocumento: async(token : string | null, documento : string) => {
         try {

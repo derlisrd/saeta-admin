@@ -9,6 +9,10 @@ function useRegistroCliente() {
     const [loading, setLoading] = useState(false);
     const [form,setForm] = useState<RegistroCliente>(new RegistroCliente({}));
 
+    const clearFormRegistroCliente = () => {
+        setForm(new RegistroCliente({}));
+    }
+
     const handleForm = (key: string, value: string) => {
         setForm({
             ...form,
@@ -19,11 +23,28 @@ function useRegistroCliente() {
     const verificarPorDocumento = async (documento : string) => {
         setLoading(true)
         const res = await API.clientes.porDocumento(userData && userData.token,documento);
-        console.log(res);
+        setLoading(false)
+        if(!res.success && res.results){
+            setForm({
+                ...form,
+                doc: res.results.ruc,
+                nombres: res.results.nombre
+            })
+        }
+    }
+
+    const handleRegistro = async () => {
+        setLoading(true);
+        const res = await API.clientes.registro(userData && userData.token,form);
+        setLoading(false);
+        if(!res.success){
+            return null
+        }
+        return res && res.results
     }
 
 
-    return {form, handleForm, verificarPorDocumento, loading};
+    return {form, handleForm, verificarPorDocumento, loading, handleRegistro, clearFormRegistroCliente};
 }
 
 export default useRegistroCliente;

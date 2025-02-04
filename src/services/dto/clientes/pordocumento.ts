@@ -16,12 +16,14 @@ export class PorDocumentoResponse{
 
 export class PorDocumentoResults{
     doc: string;
-    nombres: string;
+    ruc: string;
+    nombre: string;
     razon_social: string;
 
-    constructor({ doc = '', nombres = '', razon_social = '' }) {
+    constructor({ doc = '', ruc = '', nombre = '', razon_social = '' }) {
         this.doc = doc;
-        this.nombres = nombres;
+        this.ruc = ruc;
+        this.nombre = nombre;
         this.razon_social = razon_social;
     }
 

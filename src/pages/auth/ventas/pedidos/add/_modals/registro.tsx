@@ -1,11 +1,20 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid2 as Grid, TextField } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid2 as Grid, LinearProgress, TextField } from "@mui/material";
 import useHook from "../_hooks/useHook";
 import useRegistroCliente from "../_hooks/useRegistroCliente";
 
 function RegistroClienteModal() {
-  const { modal, handleModal } = useHook();
+  const { modal, handleModal, setCliente } = useHook();
 
-  const { form, handleForm, verificarPorDocumento } = useRegistroCliente();
+  const { form, handleForm, verificarPorDocumento, loading, handleRegistro, clearFormRegistroCliente } = useRegistroCliente();
+
+  const registar = async () => {
+    const res = await handleRegistro();
+    if (res) {
+      setCliente(res.id, res.razon_social || `${res.nombres} ${res.apellidos}`);
+      handleModal("registro");
+      clearFormRegistroCliente();
+    }
+  };
 
   const cerrar = () => {
     handleModal("registro");
@@ -15,6 +24,7 @@ function RegistroClienteModal() {
     <Dialog fullWidth open={modal.registro} onClose={cerrar}>
       <DialogTitle>Registrar cliente</DialogTitle>
       <DialogContent>
+        {loading && <LinearProgress />}
         <Grid container spacing={{ xs: 2 }} mt={2}>
           <Grid size={{ xs: 12, md: 12 }}>
             <TextField
@@ -38,6 +48,7 @@ function RegistroClienteModal() {
               onChange={(e) => {
                 handleForm("nombres", e.target.value);
               }}
+              disabled={loading}
             />
           </Grid>
           <Grid size={{ xs: 12, md: 6 }}>
@@ -48,6 +59,7 @@ function RegistroClienteModal() {
               onChange={(e) => {
                 handleForm("apellidos", e.target.value);
               }}
+              disabled={loading}
             />
           </Grid>
           <Grid size={{ xs: 12, md: 12 }}>
@@ -58,15 +70,16 @@ function RegistroClienteModal() {
               onChange={(e) => {
                 handleForm("email", e.target.value);
               }}
+              disabled={loading}
             />
           </Grid>
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button variant="contained" onClick={() => handleModal("registro")}>
+        <Button variant="contained" onClick={registar} disabled={loading}>
           Registrar
         </Button>
-        <Button variant="outlined" onClick={cerrar}>
+        <Button variant="outlined" onClick={cerrar} disabled={loading}>
           Cancelar
         </Button>
       </DialogActions>
