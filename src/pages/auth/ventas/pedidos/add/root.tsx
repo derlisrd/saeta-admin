@@ -10,7 +10,7 @@ function Root() {
           <h3>Pedidos</h3>
         </Grid>
         <Grid size={12}>
-          <Button onClick={() => handleModal("main", true)}>Continuar pedidos</Button>
+          <Button onClick={() => handleModal("main")}>Continuar pedidos</Button>
         </Grid>
         <Grid size={12}>
           <h4>Pedidos en espera</h4>

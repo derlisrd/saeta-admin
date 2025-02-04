@@ -14,6 +14,7 @@ function AddPedido() {
       <SuccessModal />
       <ClientesModal />
       <RegistroClienteModal />
+      <RegistroClienteModal />
       <FinalizarPedido />
       <Main />
       <Root />

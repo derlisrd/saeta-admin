@@ -5,7 +5,7 @@ function ErrorModal() {
   const { modal, handleModal, result: data } = useHook();
 
   return (
-    <Dialog open={modal.error} onClose={() => handleModal("error", false)} TransitionComponent={Zoom}>
+    <Dialog open={modal.error} onClose={() => handleModal("error")} TransitionComponent={Zoom}>
       <DialogTitle>Error al crear pedido</DialogTitle>
       <DialogContent>
         <div>
@@ -13,7 +13,7 @@ function ErrorModal() {
         </div>
       </DialogContent>
       <DialogActions>
-        <Button variant="contained" color="primary" onClick={() => handleModal("error", false)}>
+        <Button variant="contained" color="primary" onClick={() => handleModal("error")}>
           Entendido
         </Button>
       </DialogActions>

@@ -16,23 +16,23 @@ function FinalizarPedido() {
     if (validateError.active) {
       setError(validateError);
       setResult({ success: false, status: 400, message: validateError.message, results: null });
-      handleModal("error", true);
+      handleModal("error");
       return;
     }
     const res = await insertPedido(pedidos[index]);
     if (!res.success) {
       setResult(res);
-      handleModal("error", true);
+      handleModal("error");
     }
 
     if (res.success && res.results) {
       setResult(res);
-      handleModal("success", true);
+      handleModal("success");
     }
   };
 
   return (
-    <Dialog open={modal.finalizar} fullScreen onClose={() => handleModal("finalizar", false)}>
+    <Dialog open={modal.finalizar} fullScreen onClose={() => handleModal("finalizar")}>
       <DialogTitle>Finalizar Pedido</DialogTitle>
       <DialogContent>
         {isLoading ? (
@@ -52,7 +52,7 @@ function FinalizarPedido() {
         <Button variant="contained" disabled={isLoading} color="primary" sx={{ p: 2 }} onClick={finalizarPedido}>
           Finalizar pedido
         </Button>
-        <Button variant="outlined" disabled={isLoading} color="warning" sx={{ p: 2 }} onClick={() => handleModal("finalizar", false)}>
+        <Button variant="outlined" disabled={isLoading} color="warning" sx={{ p: 2 }} onClick={() => handleModal("finalizar")}>
           Cancelar
         </Button>
       </DialogActions>

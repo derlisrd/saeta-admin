@@ -44,8 +44,8 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
   const [index, setIndex] = useState<number>(store?.index ?? 0);
   const initialError = { code: 0, message: "", active: false };
   const [error, setError] = useState(initialError);
-  const handleModal = (name: string, value: boolean) => {
-    setModal((prev) => ({ ...prev, [name]: value }));
+  const handleModal = (name: keyof modalType) => {
+    setModal((prev) => ({ ...prev, [name]: !prev[name] }));
   };
   const clearError = () => setError(initialError);
 
@@ -212,7 +212,7 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
   useEffect(() => {
     const keyActions: Record<string, () => void> = {
       F6: () => {
-        handleModal("clientes", true);
+        handleModal("clientes");
       },
       F7: () => {
         inputCodigoRef.current?.focus();

@@ -8,10 +8,10 @@ function ClientesModal() {
 
   const setChangeValue = (value: { label: string; id: number }) => {
     setCliente(value.id, value.label);
-    handleModal("clientes", false);
+    handleModal("clientes");
   };
   return (
-    <Dialog fullWidth open={modal.clientes} onClose={() => handleModal("clientes", false)}>
+    <Dialog fullWidth open={modal.clientes} onClose={() => handleModal("clientes")}>
       <DialogTitle>Buscar clientes</DialogTitle>
       <DialogContent>
         <Grid container spacing={1} pt={1}>
@@ -30,10 +30,16 @@ function ClientesModal() {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button variant="outlined" onClick={() => handleModal("registro", false)}>
+        <Button
+          variant="outlined"
+          onClick={() => {
+            handleModal("clientes");
+            handleModal("registro");
+          }}
+        >
           Registrar nuevo
         </Button>
-        <Button variant="outlined" onClick={() => handleModal("clientes", false)}>
+        <Button variant="outlined" onClick={() => handleModal("clientes")}>
           Cancelar
         </Button>
       </DialogActions>

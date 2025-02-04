@@ -11,7 +11,7 @@ type ErrorType = {
 
 interface AddPedidoContextProps {
   modal: modalType;
-  handleModal: <K extends keyof modalType>(name: K, value: boolean) => void;
+  handleModal: (name: keyof modalType) => void;
   loading: boolean;
   changePedido: <K extends keyof AddPedido>(name: K, value: AddPedido[K]) => void;
   formasPago: FormasPagoResults[];
