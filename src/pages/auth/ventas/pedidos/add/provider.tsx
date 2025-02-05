@@ -7,6 +7,7 @@ import { PedidoStoreType } from "./_types/pedidoStore";
 import useStore from "@/hooks/useStore";
 import { FormasPagoResults } from "@/services/dto/factura/formaspago";
 import { modalType } from "./_types/modal";
+import { MonedaResults } from "@/services/dto/factura/moneda";
 
 interface AddPedidoProviderProps {
   children: ReactNode;
@@ -24,6 +25,7 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
   const [result, setResult] = useState<AddPedidoResponse | null>(null);
 
   const [formasPago, setFormasPago] = useState<FormasPagoResults[]>([]);
+  const [monedas, setMonedas] = useState<MonedaResults[]>([]);
   const [loading, setLoading] = useState(false);
   const [cantidad, setCantidad] = useState(1);
   const [loadingAddProducto, setLoadingAddProducto] = useState(false);
@@ -191,10 +193,13 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
 
   const getAllDatas = useCallback(async () => {
     setLoading(true);
-    const res = await API.formasPago.list(userData && userData?.token);
+    const [formasPagoRes, monedasRes] = await Promise.all([API.formasPago.list(userData && userData?.token), API.monedas.list(userData && userData?.token)]);
     setLoading(false);
-    if (res.success && res.results) {
-      setFormasPago(res.results);
+    if (formasPagoRes.success && formasPagoRes.results) {
+      setFormasPago(formasPagoRes.results);
+    }
+    if (monedasRes.success && monedasRes.results) {
+      setMonedas(monedasRes.results);
     }
   }, []);
 
@@ -254,6 +259,7 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
       result,
       setResult,
       limpiarFinalizarPedido,
+      monedas,
     }),
     [
       modal,
@@ -276,6 +282,7 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
       result,
       setResult,
       limpiarFinalizarPedido,
+      monedas,
     ]
   );
   return <AddPedidoContext.Provider value={values}>{children}</AddPedidoContext.Provider>;

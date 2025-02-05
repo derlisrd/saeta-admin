@@ -7,6 +7,7 @@ export class AddPedido {
   cliente_id: number;
   cliente: string;
   formas_pago_id: number;
+  moneda_id: number;
   tipo: number;
   porcentaje_descuento: number;
   descuento: number;
@@ -18,6 +19,7 @@ export class AddPedido {
     cliente_id = 0,
     entregado = false,
     formas_pago_id = 0,
+    moneda_id = 0,
     cliente = "",
     tipo = 0,
     porcentaje_descuento = 0,
@@ -26,6 +28,7 @@ export class AddPedido {
     items = []
   }: Partial<AddPedido>) {
     this.entregado = entregado;
+    this.moneda_id = moneda_id;
     this.aplicar_impuesto = aplicar_impuesto;
     this.cliente_id = cliente_id;
     this.cliente = cliente;

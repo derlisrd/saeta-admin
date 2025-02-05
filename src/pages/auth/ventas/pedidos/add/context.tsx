@@ -2,6 +2,7 @@ import { FormasPagoResults } from "@/services/dto/factura/formaspago";
 import { AddPedido, AddPedidoResponse } from "@/services/dto/pedidos/AddPedido";
 import { createContext, Dispatch, RefObject, SetStateAction } from "react";
 import { modalType } from "./_types/modal";
+import { MonedaResults } from "@/services/dto/factura/moneda";
 
 type ErrorType = {
   active: boolean;
@@ -15,6 +16,7 @@ interface AddPedidoContextProps {
   loading: boolean;
   changePedido: <K extends keyof AddPedido>(name: K, value: AddPedido[K]) => void;
   formasPago: FormasPagoResults[];
+  monedas: MonedaResults[];
   esperar: () => void;
   setCliente: (id: number, label: string) => void;
   cancelar: () => void;
@@ -42,6 +44,7 @@ export const AddPedidoContext = createContext<AddPedidoContextProps>({
   loading: false,
   setCliente: () => {},
   formasPago: [],
+  monedas: [],
   removeItem: () => {},
   cantidad: 1,
   result: null,

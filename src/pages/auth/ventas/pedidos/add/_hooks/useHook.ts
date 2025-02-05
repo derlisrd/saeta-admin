@@ -25,7 +25,8 @@ function useHook() {
     setCliente,
     result,
     setResult,
-    limpiarFinalizarPedido
+    limpiarFinalizarPedido,
+    monedas
   } = useContext(AddPedidoContext);
   return {
     modal,
@@ -50,7 +51,8 @@ function useHook() {
     setCliente,
     result,
     setResult,
-    limpiarFinalizarPedido
+    limpiarFinalizarPedido,
+    monedas
   };
 }
 
