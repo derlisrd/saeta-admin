@@ -1,8 +1,10 @@
 import { Button, Container, Grid2 as Grid, Icon, IconButton, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import useHook from "./_hooks/useHook";
+import useModal from "./_hooks/useModal";
 
 function Root() {
-  const { handleModal, pedidos } = useHook();
+  const { pedidos } = useHook();
+  const { handleModal } = useModal();
   return (
     <Container>
       <Grid container>

@@ -7,13 +7,13 @@ import useModal from "../_hooks/useModal";
 function SuccessModal() {
   const { result: data, index, pedidos, limpiarFinalizarPedido } = useHook();
 
-  const { modal, handleModal } = useModal();
+  const { modal, clearAllModals } = useModal();
 
   const contentRef = useRef<HTMLDivElement>(null);
   const print = useReactToPrint({ contentRef, ignoreGlobalStyles: true });
 
   const cerrar = () => {
-    handleModal("success");
+    clearAllModals();
     limpiarFinalizarPedido();
   };
 

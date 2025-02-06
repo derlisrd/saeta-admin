@@ -9,6 +9,10 @@ function ModalProvider({ children }: { children: ReactNode }) {
     setModal((prev) => ({ ...prev, [name]: !prev[name] }));
   };
 
+  const clearAllModals = () => {
+    setModal(initialModal);
+  };
+
   useEffect(() => {
     const keyActions: Record<string, () => void> = {
       F6: () => {
@@ -29,7 +33,7 @@ function ModalProvider({ children }: { children: ReactNode }) {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [handleModal]);
 
-  const values = { modal, handleModal };
+  const values = { modal, handleModal, clearAllModals };
   return <ModalContext.Provider value={values}>{children}</ModalContext.Provider>;
 }
 

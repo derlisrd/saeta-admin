@@ -1,8 +1,10 @@
 import { DialogTitle, Icon, IconButton, Link, Stack, Tooltip, Typography, Zoom } from "@mui/material";
 import useHook from "../_hooks/useHook";
+import useModal from "../_hooks/useModal";
 
 function Title() {
-  const { handleModal, pedidos, index } = useHook();
+  const { pedidos, index } = useHook();
+  const { handleModal } = useModal();
   return (
     <DialogTitle>
       <Stack direction="row" justifyContent="space-between" alignItems="center">
@@ -10,7 +12,7 @@ function Title() {
           <Tooltip title="Volver" slots={{ transition: Zoom }} arrow placement="right-start">
             <IconButton
               onClick={() => {
-                handleModal("main", false);
+                handleModal("main");
               }}
               color="primary"
             >
@@ -23,7 +25,7 @@ function Title() {
           component="button"
           variant="overline"
           onClick={() => {
-            handleModal("clientes", true);
+            handleModal("clientes");
           }}
         >
           {pedidos[index].cliente_id === 0 ? "Seleccionar Cliente" : pedidos[index].cliente}

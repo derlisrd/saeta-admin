@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid2 as Grid, LinearProgress, TextField } from "@mui/material";
+import { Alert, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid2 as Grid, LinearProgress, TextField } from "@mui/material";
 import useHook from "../_hooks/useHook";
 import useRegistroCliente from "../_hooks/useRegistroCliente";
 import useModal from "../_hooks/useModal";
@@ -6,15 +6,16 @@ import useModal from "../_hooks/useModal";
 function RegistroClienteModal() {
   const { setCliente } = useHook();
   const { modal, handleModal } = useModal();
-  const { form, handleForm, verificarPorDocumento, loading, handleRegistro, clearFormRegistroCliente } = useRegistroCliente();
+  const { form, handleForm, verificarPorDocumento, loading, handleRegistro, clearFormRegistroCliente, error } = useRegistroCliente();
 
   const registar = async () => {
     const res = await handleRegistro();
-    if (res) {
-      setCliente(res.id, res.razon_social || `${res.nombres} ${res.apellidos}`);
-      handleModal("registro");
-      clearFormRegistroCliente();
+    if (res == null) {
+      return;
     }
+    setCliente(res.id, res.razon_social || `${res.nombres} ${res.apellidos}`);
+    handleModal("registro");
+    clearFormRegistroCliente();
   };
 
   const cerrar = () => {
@@ -27,6 +28,7 @@ function RegistroClienteModal() {
       <DialogContent>
         {loading && <LinearProgress />}
         <Grid container spacing={{ xs: 2 }} mt={2}>
+          <Grid size={{ xs: 12, md: 12 }}>{error.code > 0 && <Alert severity="error">{error.message}</Alert>}</Grid>
           <Grid size={{ xs: 12, md: 12 }}>
             <TextField
               label="Documento o RUC"

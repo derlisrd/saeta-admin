@@ -10,10 +10,11 @@ import AgregarButton from "./_components/agregarbtn";
 import CancelarButton from "./_components/cancelarbtn";
 import EsperarButton from "./_components/esperarbtn";
 import ListaDeEspera from "./_components/listadeespera";
+import useModal from "./_hooks/useModal";
 
 function Main() {
-  const { modal, error, clearError } = useHook();
-
+  const { error, clearError } = useHook();
+  const { modal } = useModal();
   return (
     <Dialog open={modal.main} fullScreen TransitionComponent={Fade}>
       <Error error={error} clearError={clearError} />

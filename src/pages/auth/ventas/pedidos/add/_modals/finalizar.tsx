@@ -21,6 +21,7 @@ function FinalizarPedido() {
       handleModal("error");
       return;
     }
+    setError({ active: false, message: "", code: 0 });
     const res = await insertPedido(pedidos[index]);
     if (!res.success) {
       setResult(res);
