@@ -110,6 +110,7 @@ function AddProductoProvider({ children }: AddProductoProviderProps) {
       setError({ code: 9, message: "Seleccione un depósito y una cantidad" });
       return;
     }
+    setError({ code: 0, message: "" });
     if (data) {
       const depositoFind = data.depositos.find((e) => e.id === deposito_id);
       if (!depositoFind) return;

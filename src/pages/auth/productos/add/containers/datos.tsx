@@ -9,7 +9,6 @@ import {
   Icon,
   InputLabel,
   List,
-  ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
@@ -22,24 +21,10 @@ import {
 } from "@mui/material";
 import useAddProducto from "../_hook/useAddProducto";
 import { NumericFormat } from "react-number-format";
+import Stock from "./stock";
 
 function Datos() {
-  const {
-    form,
-    handleModal,
-    changeByName,
-    impuestos,
-    categorias,
-    depositos,
-    medidas,
-    addStock,
-    stockState,
-    inputCodigoRef,
-    verificarCodigoDisponible,
-    error,
-    generateCode,
-    changeStockState,
-  } = useAddProducto();
+  const { form, handleModal, changeByName, impuestos, categorias, medidas, inputCodigoRef, verificarCodigoDisponible, error, generateCode } = useAddProducto();
   return (
     <Fragment>
       <Grid container spacing={{ xs: 2 }} alignItems="center">
@@ -244,71 +229,7 @@ function Datos() {
         <Grid size={{ xs: 12, md: 3 }}>
           <TextField placeholder="Generar precios por %" fullWidth label="Generar precios por %" helperText="Generar precios por %" />
         </Grid>
-        {form.tipo === 1 && (
-          <>
-            <Grid size={12}>
-              <Typography variant="button">STOCK</Typography>
-            </Grid>
-            <Grid size={{ xs: 12, md: 4 }}>
-              <TextField
-                placeholder="Cantidad"
-                fullWidth
-                label="Cantidad"
-                name="cantidad"
-                value={stockState.cantidad}
-                autoComplete="off"
-                onChange={({ target }) => {
-                  changeStockState(target.name, Number(target.value));
-                }}
-                error={error.code === 9}
-              />
-            </Grid>
-            <Grid size={{ xs: 12, md: 4 }}>
-              <FormControl fullWidth error={error.code === 9}>
-                <InputLabel id="deposito-select-label">Deposito</InputLabel>
-                <Select
-                  fullWidth
-                  labelId="deposito-label"
-                  id="deposito"
-                  value={stockState.deposito_id}
-                  label="Deposito"
-                  name="deposito_id"
-                  onChange={({ target }) => {
-                    changeStockState(target.name, Number(target.value));
-                  }}
-                >
-                  <MenuItem value={0} disabled>
-                    Seleccionar deposito
-                  </MenuItem>
-                  {depositos.map((item, index) => (
-                    <MenuItem key={index} value={item.id}>
-                      {item.nombre}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid size={{ xs: 12, md: 4 }}>
-              <Button variant="outlined" size="large" onClick={addStock}>
-                AGREGAR
-              </Button>
-            </Grid>
-            <Grid size={12}>
-              <List>
-                {form.stock.map((e, i) => (
-                  <ListItem disablePadding key={i}>
-                    <ListItemButton>
-                      <ListItemIcon>
-                        <Icon>delete</Icon>
-                      </ListItemIcon>
-                      <ListItemText primary={`Deposito: ${e.deposito}`} secondary={`Cantidad: ${e.cantidad}`} />
-                    </ListItemButton>
-                  </ListItem>
-                ))}
-              </List>
-            </Grid>
-          </>
-        )}
+        {form.tipo === 1 && <Stock />}
       </Grid>
     </Fragment>
   );
