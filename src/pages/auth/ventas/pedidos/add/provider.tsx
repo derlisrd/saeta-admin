@@ -33,6 +33,7 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
   const initialPedido: AddPedido = new AddPedido({
     cliente_id: 0,
     aplicar_impuesto: true,
+    moneda_id: 1,
     formas_pago_id: 0,
     tipo: 0,
     porcentaje_descuento: 0,
@@ -193,15 +194,18 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
 
   const getAllDatas = useCallback(async () => {
     setLoading(true);
-    const [formasPagoRes, monedasRes] = await Promise.all([API.formasPago.list(userData && userData?.token), API.monedas.list(userData && userData?.token)]);
-    setLoading(false);
-    if (formasPagoRes.success && formasPagoRes.results) {
-      setFormasPago(formasPagoRes.results);
+    try {
+      const [formasPagoRes, monedasRes] = await Promise.all([API.formasPago.list(userData && userData?.token), API.monedas.list(userData && userData?.token)]);
+      if (formasPagoRes.success && formasPagoRes.results) {
+        setFormasPago(formasPagoRes.results);
+      }
+      if (monedasRes.success && monedasRes.results) {
+        setMonedas(monedasRes.results);
+      }
+    } finally {
+      setLoading(false);
     }
-    if (monedasRes.success && monedasRes.results) {
-      setMonedas(monedasRes.results);
-    }
-  }, []);
+  }, [userData?.token]);
 
   useEffect(() => {
     getAllDatas();
