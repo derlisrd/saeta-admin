@@ -1,10 +1,11 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid2 as Grid, LinearProgress, TextField } from "@mui/material";
 import useHook from "../_hooks/useHook";
 import useRegistroCliente from "../_hooks/useRegistroCliente";
+import useModal from "../_hooks/useModal";
 
 function RegistroClienteModal() {
-  const { modal, handleModal, setCliente } = useHook();
-
+  const { setCliente } = useHook();
+  const { modal, handleModal } = useModal();
   const { form, handleForm, verificarPorDocumento, loading, handleRegistro, clearFormRegistroCliente } = useRegistroCliente();
 
   const registar = async () => {

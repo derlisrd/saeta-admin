@@ -1,10 +1,12 @@
 import { Autocomplete, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid2 as Grid, TextField } from "@mui/material";
 import useHook from "../_hooks/useHook";
 import useBuscarCliente from "../_hooks/useBuscarCliente";
+import useModal from "../_hooks/useModal";
 
 function ClientesModal() {
-  const { modal, handleModal, setCliente } = useHook();
+  const { setCliente } = useHook();
   const { listaBusqueda, isLoading, setQ } = useBuscarCliente();
+  const { modal, handleModal } = useModal();
 
   const setChangeValue = (value: { label: string; id: number }) => {
     setCliente(value.id, value.label);

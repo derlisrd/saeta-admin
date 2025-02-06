@@ -6,21 +6,13 @@ import { useAuth } from "@/providers/AuthProvider";
 import { PedidoStoreType } from "./_types/pedidoStore";
 import useStore from "@/hooks/useStore";
 import { FormasPagoResults } from "@/services/dto/factura/formaspago";
-import { modalType } from "./_types/modal";
 import { MonedaResults } from "@/services/dto/factura/moneda";
 
-interface AddPedidoProviderProps {
-  children: ReactNode;
-}
-
-function AddPedidoProvider({ children }: AddPedidoProviderProps) {
+function AddPedidoProvider({ children }: { children: ReactNode }) {
   const { userData } = useAuth();
 
   const inputCodigoRef = useRef<HTMLInputElement>(null);
   const { setItemValue: setStore, current: store } = useStore<PedidoStoreType | null>("pedidoStore", null);
-
-  const initialModal: modalType = { main: true, clientes: false, finalizar: false, registro: false, productos: false, error: false, success: false };
-  const [modal, setModal] = useState<modalType>(initialModal);
 
   const [result, setResult] = useState<AddPedidoResponse | null>(null);
 
@@ -47,9 +39,7 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
   const [index, setIndex] = useState<number>(store?.index ?? 0);
   const initialError = { code: 0, message: "", active: false };
   const [error, setError] = useState(initialError);
-  const handleModal = (name: keyof modalType) => {
-    setModal((prev) => ({ ...prev, [name]: !prev[name] }));
-  };
+
   const clearError = () => setError(initialError);
 
   const setCliente = useCallback(
@@ -156,7 +146,6 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
     }
     setIndex(nuevoIndex);
     set(copyPedidos, nuevoIndex);
-    setModal(initialModal);
     clearError();
     setTimeout(() => {
       inputCodigoRef.current?.focus();
@@ -218,30 +207,8 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
     }
   }, [store]);
 
-  useEffect(() => {
-    const keyActions: Record<string, () => void> = {
-      F6: () => {
-        handleModal("clientes");
-      },
-      F7: () => {
-        inputCodigoRef.current?.focus();
-      },
-    };
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (keyActions[event.key]) {
-        event.preventDefault();
-        keyActions[event.key]();
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [handleModal]);
-
   const values = useMemo(
     () => ({
-      modal,
-      handleModal,
       pedidos,
       consultarCodigoInsertar,
       error,
@@ -266,8 +233,6 @@ function AddPedidoProvider({ children }: AddPedidoProviderProps) {
       monedas,
     }),
     [
-      modal,
-      handleModal,
       pedidos,
       consultarCodigoInsertar,
       error,

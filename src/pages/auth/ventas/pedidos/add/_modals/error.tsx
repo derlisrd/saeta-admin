@@ -1,9 +1,10 @@
 import useHook from "../_hooks/useHook";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Zoom } from "@mui/material";
+import useModal from "../_hooks/useModal";
 
 function ErrorModal() {
-  const { modal, handleModal, result: data } = useHook();
-
+  const { result: data } = useHook();
+  const { modal, handleModal } = useModal();
   return (
     <Dialog open={modal.error} onClose={() => handleModal("error")} TransitionComponent={Zoom}>
       <DialogTitle>Error al crear pedido</DialogTitle>

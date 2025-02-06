@@ -2,15 +2,23 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Slide } from
 import useHook from "../_hooks/useHook";
 import { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
+import useModal from "../_hooks/useModal";
 
 function SuccessModal() {
-  const { modal, handleModal, result: data, index, pedidos, limpiarFinalizarPedido } = useHook();
+  const { result: data, index, pedidos, limpiarFinalizarPedido } = useHook();
+
+  const { modal, handleModal } = useModal();
 
   const contentRef = useRef<HTMLDivElement>(null);
   const print = useReactToPrint({ contentRef, ignoreGlobalStyles: true });
 
+  const cerrar = () => {
+    handleModal("success");
+    limpiarFinalizarPedido();
+  };
+
   return (
-    <Dialog open={modal.success} maxWidth="xs" fullWidth onClose={() => handleModal("success", false)} TransitionComponent={Slide}>
+    <Dialog open={modal.success} maxWidth="xs" fullWidth onClose={cerrar} TransitionComponent={Slide}>
       <DialogTitle>Detalles de pedido</DialogTitle>
       <DialogContent>
         {data?.results && (
@@ -74,7 +82,7 @@ function SuccessModal() {
         <Button variant="contained" color="primary" onClick={() => print()}>
           Imprimir
         </Button>
-        <Button variant="contained" color="primary" onClick={limpiarFinalizarPedido}>
+        <Button variant="contained" color="primary" onClick={cerrar}>
           Entendido
         </Button>
       </DialogActions>

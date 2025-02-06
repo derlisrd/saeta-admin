@@ -4,9 +4,11 @@ import FormaPagoSelect from "../_components/formapagoselect";
 import useInsertPedido from "../_hooks/useInsertPedido";
 import useValidator from "../_hooks/useValidator";
 import EntregadoCheck from "../_components/entregadocheck";
+import useModal from "../_hooks/useModal";
 
 function FinalizarPedido() {
-  const { modal, handleModal, pedidos, index, setResult, setError, error } = useHook();
+  const { pedidos, index, setResult, setError, error } = useHook();
+  const { modal, handleModal } = useModal();
   const { insertPedido, isLoading } = useInsertPedido();
   const { validate } = useValidator();
 

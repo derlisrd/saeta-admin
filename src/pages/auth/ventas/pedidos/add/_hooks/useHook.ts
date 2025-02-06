@@ -3,8 +3,6 @@ import { AddPedidoContext } from "../context";
 
 function useHook() {
   const {
-    modal,
-    handleModal,
     pedidos,
     consultarCodigoInsertar,
     error,
@@ -29,8 +27,6 @@ function useHook() {
     monedas
   } = useContext(AddPedidoContext);
   return {
-    modal,
-    handleModal,
     pedidos,
     consultarCodigoInsertar,
     error,
