@@ -49,7 +49,7 @@ function Empresa() {
                   onChange(target.name, target.value);
                 }}
                 fullWidth
-                value={empresa?.propietario}
+                value={empresa?.propietario ?? ""}
               />
             </Grid>
             <Grid size={{ xs: 12 }}>

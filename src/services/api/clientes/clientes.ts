@@ -40,5 +40,14 @@ export const apiServiceClientes = {
         } catch (e) {
             return new PorDocumentoResponse({ success : false, status : 500, results: null, message: 'Error de servidor'});
         }
+    },
+    list: async(token: string | null) => {
+        try {
+            const {data, status} = await BASE.get('/clientes',{headers: {Authorization : token}})
+            return new PorDocumentoResponse({ success : data.success as boolean, status, results: data.results, message: '' });
+        } catch (e) {
+            return new PorDocumentoResponse({ success : false, status : 500, results: null, message: 'Error de servidor'});
+        }
+
     }
 }
