@@ -1,0 +1,17 @@
+/* Definir la fuente ContiSans (normal) */
+@font-face {
+    font-family: 'ContiSans';
+    src: url('./ContiSans.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap; /* Opcional: controla cómo se muestra la fuente mientras se carga */
+  }
+  
+  /* Definir la fuente ContiSans (bold) */
+  @font-face {
+    font-family: 'ContiSans';
+    src: url('./ContiSansBold.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+  }
