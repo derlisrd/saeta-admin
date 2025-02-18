@@ -14,13 +14,15 @@ const MenuNav = ({ isMobile = false, navegar }: { isMobile?: boolean; navegar: F
       borderRadius: "0 18px 18px 0",
       margin: "0",
       borderLeftStyle: "solid",
-      borderLeftWidth: "1px",
+      background: "primary.main",
+      borderLeftWidth: "4px",
       borderLeftColor: "primary.main",
       div: { color: "primary.main" },
       span: { fontWeight: "bold" },
     },
     ":hover": {
       borderRadius: "0 18px 18px 0",
+      background: "primary.main",
     },
   } as ListItemButtonBaseProps["sx"];
 
