@@ -1,3 +1,11 @@
+@font-face {
+  font-family: 'ContiSans';
+  src: url('./ContiSansLight.otf') format('opentype');
+  font-weight: 300; /* Peso típico para Light */
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Definir la fuente ContiSans (normal) */
 @font-face {
     font-family: 'ContiSans';
