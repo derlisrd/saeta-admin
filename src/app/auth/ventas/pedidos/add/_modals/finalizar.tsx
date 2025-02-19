@@ -35,7 +35,7 @@ function FinalizarPedido() {
   };
 
   return (
-    <Dialog open={modal.finalizar} fullScreen onClose={() => handleModal("finalizar")}>
+    <Dialog open={modal.finalizar} onClose={() => handleModal("finalizar")}>
       <DialogTitle>Finalizar Pedido</DialogTitle>
       <DialogContent>
         {isLoading ? (

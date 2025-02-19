@@ -2,7 +2,7 @@ export default [
     {
         id: 1,
         title: 'Inicio',
-        icon: 'other_houses',
+        icon: 'apps',
         color: '#0066cc',
         url: '/',
         private: false,

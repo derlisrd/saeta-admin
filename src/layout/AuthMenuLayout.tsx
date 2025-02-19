@@ -9,7 +9,7 @@ function AuthMenuLayout() {
   const navigate = useNavigate();
   const { isOpenMenu, toggleMenu, isOpenMobileMenu, toggleMobileMenu, DRAWER_WIDTH } = useDrawerMenu();
 
-  const { toggleModeDark } = useThemTypeMode();
+  const { toggleModeDark, modeDark } = useThemTypeMode();
 
   let margin_left = isOpenMenu ? `${DRAWER_WIDTH}px` : "0";
   let width_main = isOpenMenu ? `calc(100% - ${DRAWER_WIDTH}px)` : "100%";
@@ -31,11 +31,11 @@ function AuthMenuLayout() {
             <Icon>menu</Icon>
           </IconButton>
           <IconButton onClick={toggleMenu} sx={{ minWidth: "50px", marginLeft: margin_left, display: { xs: "none", md: "block", transition: "all 0.2s" } }}>
-            <Icon>menu</Icon>
+            <Icon>{isOpenMenu ? "arrow_forward_ios" : "arrow_back_ios"}</Icon>
           </IconButton>
           <Stack flexDirection="row">
             <IconButton onClick={toggleModeDark}>
-              <Icon>light_mode</Icon>
+              <Icon>{modeDark ? "toggle_on" : "toggle_off"}</Icon>
             </IconButton>
             <IconButton onClick={signOut}>
               <Icon>exit_to_app</Icon>
