@@ -2,7 +2,7 @@ import { Shadows } from "@mui/material";
 import { alpha } from "@mui/material";
 import { grey } from "@mui/material/colors";
 
-const transparentLight1 = alpha(grey[600], 0.2);
+const transparentLight1 = alpha(grey[200], 0.2);
 const transparentLight2 = alpha(grey[600], 0.14);
 const transparentLight3 = alpha(grey[600], 0.12);
 

@@ -2,7 +2,7 @@ import MenuNav from "./components/MenuNav";
 import useDrawerMenu from "@/hooks/useDrawerMenu";
 import useThemTypeMode from "@/hooks/useThemeCustom";
 
-import { Drawer, Box, Toolbar, Stack, Icon, IconButton } from "@mui/material";
+import { Drawer, Box, Toolbar, Stack, Icon, IconButton, Tooltip } from "@mui/material";
 import { NavigateOptions, Outlet, To, useNavigate } from "react-router-dom";
 
 function AuthMenuLayout() {
@@ -28,17 +28,21 @@ function AuthMenuLayout() {
       >
         <Stack justifyContent="space-between" flexDirection="row" width="100%" alignItems="center">
           <IconButton onClick={toggleMobileMenu} sx={{ minWidth: "50px", display: { xs: "block", md: "none" } }}>
-            <Icon>menu</Icon>
+            <Icon>arrow_forward_ios</Icon>
           </IconButton>
           <IconButton onClick={toggleMenu} sx={{ minWidth: "50px", marginLeft: margin_left, display: { xs: "none", md: "block", transition: "all 0.2s" } }}>
             <Icon>{isOpenMenu ? "arrow_forward_ios" : "arrow_back_ios"}</Icon>
           </IconButton>
           <Stack flexDirection="row">
             <IconButton onClick={toggleModeDark}>
-              <Icon>{modeDark ? "toggle_on" : "toggle_off"}</Icon>
+              <Tooltip placement="bottom" arrow title="Cambiar tema">
+                <Icon>{modeDark ? "toggle_on" : "toggle_off"}</Icon>
+              </Tooltip>
             </IconButton>
             <IconButton onClick={signOut}>
-              <Icon>exit_to_app</Icon>
+              <Tooltip placement="bottom" arrow title="Cerrar sesión">
+                <Icon>exit_to_app</Icon>
+              </Tooltip>
             </IconButton>
           </Stack>
         </Stack>

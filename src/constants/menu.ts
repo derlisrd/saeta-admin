@@ -33,8 +33,25 @@ export default [
                 color: '#0066cc',
                 url: '/ventas/pedidos/add',
                 private: false,
+            },
+            {
+                id: 343,
+                title: 'Lista de pedidos',
+                icon: 'list',
+                color: '#0066cc',
+                url: '/ventas/pedidos/lista',
+                private: false,
+            },
+            {
+                id: 1425,
+                title: 'Formas de pagos',
+                icon: 'payments',
+                color: '#0066cc',
+                url: '/ventas/formas-de-pago',
+                private: false,
             }
-        ]
+        ],
+
     },
     {
         id: 34,
@@ -47,7 +64,7 @@ export default [
         submenu: [
             {
                 id: 142325,
-                title: 'Agregar',
+                title: 'Agregar producto',
                 icon: 'add',
                 color: '#0066cc',
                 url: '/productos/add',
@@ -55,7 +72,7 @@ export default [
             },
             {
                 id: 343,
-                title: 'Lista',
+                title: 'Lista de productos',
                 icon: 'list',
                 color: '#0066cc',
                 url: '/productos/lista',

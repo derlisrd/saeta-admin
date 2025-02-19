@@ -18,7 +18,7 @@ const MenuNav = ({ isMobile = false, navegar }: { isMobile?: boolean; navegar: F
       borderLeftWidth: "4px",
       borderLeftColor: "primary.main",
       div: { color: "primary.main" },
-      span: { fontWeight: "bold" },
+      span: { fontWeight: "normal" },
     },
     ":hover": {
       borderRadius: "0 18px 18px 0",
