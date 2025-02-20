@@ -23,9 +23,12 @@ function AutenticatedPages() {
         <Route path="/productos/lista" element={<ProductosLista />} />
         <Route path="/config/tema" element={<Tema />} />
         <Route path="/config/empresa" element={<ConfigEmpresa />} />
+        <Route path="/config/parametros" element={<Parametros />} />
+
         <Route path="/productos/add" element={<ProductosAdd />} />
         <Route path="/categorias" element={<Categorias />} />
         <Route path="/ventas/pedidos/add" element={<PedidosAdd />} />
+
         <Route path="/logout" element={<LogOut />} />
       </Route>
       <Route path="*" element={<Page404 />} />
@@ -33,6 +36,7 @@ function AutenticatedPages() {
   );
 }
 
+const Parametros = Loadable(lazy(() => import("./config/parametros")));
 const Categorias = Loadable(lazy(() => import("./productos/categorias")));
 const Home = Loadable(lazy(() => import("./home")));
 const Page404 = Loadable(lazy(() => import("../common/page404")));

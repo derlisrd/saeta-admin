@@ -10,7 +10,21 @@ const queryClient = new QueryClient();
 
 function Pages() {
   const { customTheme } = useThemeCustom();
-  const { isAuth } = useAuth();
+  const { isAuth, cerrarSesion } = useAuth();
+
+  queryClient.setQueryDefaults(["default"], {
+    queryFn: async ({ queryKey }) => {
+      try {
+        const response = await fetch(queryKey[0] as string);
+        if (response.status === 401) {
+          cerrarSesion(); // Cierra la sesión si la API responde con 401
+        }
+        return response.json();
+      } catch (error) {
+        throw error;
+      }
+    },
+  });
 
   return (
     <ThemeProvider theme={customTheme ?? {}}>

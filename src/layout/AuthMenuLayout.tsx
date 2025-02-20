@@ -1,4 +1,4 @@
-import MenuNav from "./components/MenuNav";
+import MenuNavList from "./components/MenuNavList";
 import useDrawerMenu from "@/hooks/useDrawerMenu";
 import useThemTypeMode from "@/hooks/useThemeCustom";
 
@@ -28,10 +28,10 @@ function AuthMenuLayout() {
       >
         <Stack justifyContent="space-between" flexDirection="row" width="100%" alignItems="center">
           <IconButton onClick={toggleMobileMenu} sx={{ minWidth: "50px", display: { xs: "block", md: "none" } }}>
-            <Icon>arrow_forward_ios</Icon>
+            <Icon color="primary">arrow_forward_ios</Icon>
           </IconButton>
           <IconButton onClick={toggleMenu} sx={{ minWidth: "50px", marginLeft: margin_left, display: { xs: "none", md: "block", transition: "all 0.2s" } }}>
-            <Icon>{isOpenMenu ? "arrow_forward_ios" : "arrow_back_ios"}</Icon>
+            <Icon color="primary">{isOpenMenu ? "arrow_forward_ios" : "arrow_back_ios"}</Icon>
           </IconButton>
           <Stack flexDirection="row">
             <IconButton onClick={toggleModeDark}>
@@ -65,7 +65,7 @@ function AuthMenuLayout() {
           },
         }}
       >
-        <MenuNav navegar={navegar} />
+        <MenuNavList navegar={navegar} />
       </Drawer>
       <Drawer
         variant="temporary"
@@ -77,7 +77,7 @@ function AuthMenuLayout() {
           "& .MuiDrawer-paper": { bosmizing: "border-box", width: 256 },
         }}
       >
-        <MenuNav navegar={navegar} isMobile />
+        <MenuNavList navegar={navegar} isMobile />
       </Drawer>
       <TopBar />
       <Box sx={{ paddingTop: "48px", paddingLeft: 2, paddingRight: 2, width: { md: width_main }, marginLeft: { md: margin_left }, transition: "all 0.2s" }}>

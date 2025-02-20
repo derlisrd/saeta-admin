@@ -30,20 +30,20 @@ function AddModal() {
       <DialogTitle>Registrar nuevo cliente</DialogTitle>
       <DialogContent>
         {isPendingAdd && <LinearProgress />}
-        <Grid container gridTemplateColumns={{ xs: 12, md: 12 }} rowGap={2} pt={2}>
-          <Grid size={{ xs: 12, md: 6 }} px={1}>
+        <Grid container spacing={{ xs: 1, md: 2 }} pt={1}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <TextField disabled={isPendingAdd} fullWidth label="Nombre o Empresa" onChange={handleChange} name="nombres" value={form.nombres} autoFocus autoComplete="off" />
           </Grid>
-          <Grid size={{ xs: 12, md: 6 }} px={1}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <TextField disabled={isPendingAdd} fullWidth label="Apellido o Razón social" onChange={handleChange} name="apellidos" value={form.apellidos} autoComplete="off" />
           </Grid>
-          <Grid size={{ xs: 12, md: 12 }} px={1}>
+          <Grid size={{ xs: 12, md: 12 }}>
             <TextField disabled={isPendingAdd} fullWidth label="Documento" onChange={handleChange} name="doc" value={form.doc} autoComplete="off" />
           </Grid>
-          <Grid size={{ xs: 12, md: 6 }} px={1}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <TextField disabled={isPendingAdd} fullWidth label="Tel" onChange={handleChange} name="telefono" value={form.telefono} autoComplete="off" />
           </Grid>
-          <Grid size={{ xs: 12, md: 6 }} px={1}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <TextField disabled={isPendingAdd} fullWidth label="Correo" onChange={handleChange} name="email" value={form.email} autoComplete="off" />
           </Grid>
         </Grid>

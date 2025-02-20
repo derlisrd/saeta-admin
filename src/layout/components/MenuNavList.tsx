@@ -5,7 +5,7 @@ import { Toolbar, List, ListItem, ListItemButton, ListItemText, ListItemIcon, Co
 import menu from "@/constants/menu";
 import { useLocation } from "react-router-dom";
 
-const MenuNav = ({ isMobile = false, navegar }: { isMobile?: boolean; navegar: Function }) => {
+const MenuNavList = ({ isMobile = false, navegar }: { isMobile?: boolean; navegar: Function }) => {
   const { pathname } = useLocation();
   const [lista, setLista] = useState(menu);
 
@@ -84,4 +84,4 @@ const MenuNav = ({ isMobile = false, navegar }: { isMobile?: boolean; navegar: F
   );
 };
 
-export default MenuNav;
+export default MenuNavList;
