@@ -1,34 +1,38 @@
-import API from "@/services/api";
-import CategoriasContext, { CategoriasModals } from "./context";
-import { useAuth } from "@/providers/AuthProvider";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { AddCategoria, AddCategoriaResponse } from "@/services/dto/productos/AddCategoria";
-import { CategoriaResponse } from "@/services/dto/productos/categoria";
+import ClientesContext from "./context";
+import { ClientesModals } from "./types/clientesmodals";
+import API from "@/services/api";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useAuth } from "@/providers/AuthProvider";
+import { AddCliente } from "@/services/dto/clientes/AddCliente";
+import { AddClienteRensponse } from "@/services/dto/clientes/AddClienteResponse";
+import { ClientesResponse } from "@/services/dto/clientes/clientes";
 
-function CategoriasProvider({ children }: { children: React.ReactNode }) {
-  const { userData } = useAuth();
+function ClientesProvider({ children }: { children: React.ReactNode }) {
   const queryClient = useQueryClient();
-  const [modals, setModals] = useState<CategoriasModals>({
+
+  const { userData } = useAuth();
+
+  const [modals, setModals] = useState<ClientesModals>({
     crear: false,
     editar: false,
     eliminar: false,
   });
 
-  const handleModal = (modal: keyof CategoriasModals) => {
-    setModals((prev) => ({ ...prev, [modal]: !prev[modal] }));
+  const handleModal = (key: keyof ClientesModals) => {
+    setModals((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
-  const { mutate, isPending } = useMutation<AddCategoriaResponse, Error, AddCategoria>({
-    mutationFn: async (form: AddCategoria) => {
-      return API.categorias.create(userData && userData?.token, form);
+  const { mutate, isPending } = useMutation<AddClienteRensponse, Error, AddCliente>({
+    mutationFn: async (form: AddCliente) => {
+      return API.clientes.create(userData && userData?.token, form);
     },
     onMutate: async (data) => {
-      await queryClient.cancelQueries({ queryKey: ["categorias", userData && userData?.token] });
+      await queryClient.cancelQueries({ queryKey: ["clientes", userData && userData?.token] });
 
-      const previousCategorias = queryClient.getQueryData(["categorias", userData && userData?.token]);
+      const prevClientes = queryClient.getQueryData(["clientes", userData && userData?.token]);
 
-      return { data, previousCategorias };
+      return { data, prevClientes };
     },
     onError: (context, error) => {
       console.log(context, error);
@@ -40,15 +44,21 @@ function CategoriasProvider({ children }: { children: React.ReactNode }) {
     onSuccess: (data) => {
       if (data.success && data.results) {
         handleModal("crear");
-        queryClient.setQueryData<CategoriaResponse>(["categorias", userData && userData?.token], (old) => {
+        queryClient.setQueryData<ClientesResponse>(["clientes", userData && userData?.token], (old) => {
           if (old) {
             let oldData = old.results || [];
-            oldData.push({
-              id: data.results?.id || 0,
-              nombre: data.results?.nombre || "",
-              publicado: data.results?.publicado || 0,
-              descripcion: data.results?.descripcion || "",
-            });
+            let newData = data.results;
+            if (newData && newData !== null) {
+              oldData.push({
+                id: newData.id,
+                razon_social: newData.razon_social,
+                nombres: newData.nombres,
+                apellidos: newData.apellidos,
+                doc: newData.doc,
+                extranjero: newData.extranjero,
+                telefono: newData.telefono,
+              });
+            }
             return {
               ...old,
               results: oldData,
@@ -60,33 +70,29 @@ function CategoriasProvider({ children }: { children: React.ReactNode }) {
     },
     onSettled: (data) => {
       console.log(data?.results);
-      // Recarga los datos para asegurarte de que estén sincronizados con el servidor
-      // queryClient.invalidateQueries({ queryKey: ["categorias", userData?.token] });
     },
   });
 
-  const addCategoria = async (form: AddCategoria) => {
-    mutate(form);
-  };
-
-  const { data, isLoading, error, refetch } = useQuery({
-    queryKey: ["categorias", userData && userData.token],
-    queryFn: () => API.categorias.list(userData && userData.token),
+  const { data, isLoading } = useQuery({
+    queryKey: ["clientes", userData && userData.token],
+    queryFn: () => API.clientes.list(userData && userData.token),
     enabled: !!(userData && userData.token),
     staleTime: 1000 * 60 * 5,
   });
 
-  const values = {
-    lista: data?.results ?? null,
-    isLoading,
-    error,
-    refetch,
-    handleModal,
-    modals,
-    addCategoria,
-    isPendingAdd: isPending,
+  const addSubmit = async (form: AddCliente) => {
+    mutate(form);
   };
-  return <CategoriasContext.Provider value={values}>{children}</CategoriasContext.Provider>;
+
+  const values = {
+    modals,
+    lista: data ? data.results : [],
+    handleModal,
+    isLoading,
+    isPendingAdd: isPending,
+    addSubmit,
+  };
+  return <ClientesContext.Provider value={values}>{children}</ClientesContext.Provider>;
 }
 
-export default CategoriasProvider;
+export default ClientesProvider;

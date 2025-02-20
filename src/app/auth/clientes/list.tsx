@@ -19,14 +19,14 @@ import {
   IconButton,
   TableFooter,
 } from "@mui/material";
-import useCategoria from "./useCategoria";
+import useCliente from "./useCliente";
 
-function CategoriaList() {
-  const { lista, isLoading, handleModal } = useCategoria();
+function ClientesList() {
+  const { lista, isLoading, handleModal } = useCliente();
   return (
     <Container sx={{ paddingBottom: 4 }}>
       <Stack direction={{ xs: "row" }} justifyContent="space-between" alignItems="center" padding={2}>
-        <h3>Categorías</h3>
+        <h3>Clientes</h3>
         <Button
           onClick={() => {
             handleModal("crear");
@@ -65,10 +65,9 @@ function CategoriaList() {
                   <TableCell>
                     <Checkbox />
                   </TableCell>
-                  <TableCell>COD.</TableCell>
-                  <TableCell>NOMBRE</TableCell>
-                  <TableCell>DESC</TableCell>
-                  <TableCell>PUBLICADO</TableCell>
+                  <TableCell>ID.</TableCell>
+                  <TableCell>Doc.</TableCell>
+                  <TableCell>Nombre o razon social</TableCell>
                   <TableCell>
                     <span></span>
                   </TableCell>
@@ -82,9 +81,8 @@ function CategoriaList() {
                         <Checkbox />
                       </TableCell>
                       <TableCell>{item.id}</TableCell>
-                      <TableCell>{item.nombre}</TableCell>
-                      <TableCell>{item.descripcion}</TableCell>
-                      <TableCell>{item.publicado}</TableCell>
+                      <TableCell>{item.doc}</TableCell>
+                      <TableCell>{item.razon_social}</TableCell>
                       <TableCell>
                         <IconButton>
                           <Icon>more_vert</Icon>
@@ -103,4 +101,4 @@ function CategoriaList() {
   );
 }
 
-export default CategoriaList;
+export default ClientesList;

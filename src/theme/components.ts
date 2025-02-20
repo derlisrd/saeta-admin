@@ -60,7 +60,7 @@ export const components = {
         root: {
           borderRadius: "12px",
           borderWidth: 0,
-          fontSize: 13,
+          fontSize: 13
         },
       },
     },

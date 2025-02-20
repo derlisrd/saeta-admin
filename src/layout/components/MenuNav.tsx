@@ -46,7 +46,7 @@ const MenuNav = ({ isMobile = false, navegar }: { isMobile?: boolean; navegar: F
                 <ListItem disablePadding>
                   <ListItemButton onClick={() => openCollapseMenu(e.open, e.id)} sx={SELECTED}>
                     <ListItemIcon>
-                      <Icon>{e.icon}</Icon>
+                      <Icon color="primary">{e.icon}</Icon>
                     </ListItemIcon>
                     <ListItemText primary={e.title} />
                     <Icon>{e.open ? `expand_less` : `expand_more`} </Icon>
@@ -58,7 +58,7 @@ const MenuNav = ({ isMobile = false, navegar }: { isMobile?: boolean; navegar: F
                       <ListItem disablePadding key={elem.id}>
                         <ListItemButton sx={SELECTED} selected={pathname === elem.url} onClick={() => navegar(elem.url ?? "#", isMobile)}>
                           <ListItemIcon>
-                            <Icon>{elem.icon}</Icon>
+                            <Icon> {pathname === elem.url ? "arrow_drop_down" : "arrow_right"}</Icon>
                           </ListItemIcon>
                           <ListItemText primary={elem.title} />
                         </ListItemButton>
@@ -71,7 +71,7 @@ const MenuNav = ({ isMobile = false, navegar }: { isMobile?: boolean; navegar: F
               <ListItem disablePadding>
                 <ListItemButton selected={pathname === e.url} onClick={() => navegar(e.url ?? "#", isMobile)} sx={SELECTED}>
                   <ListItemIcon>
-                    <Icon>{e.icon}</Icon>
+                    <Icon color="primary">{e.icon}</Icon>
                   </ListItemIcon>
                   <ListItemText>{e.title}</ListItemText>
                 </ListItemButton>

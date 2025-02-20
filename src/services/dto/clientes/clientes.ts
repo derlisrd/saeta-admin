@@ -3,17 +3,12 @@ import { ClienteResults } from "./cliente";
 export class ClientesResponse{
     success : boolean;
     status : number;
-    results : any;
-    message : ClienteResults[];
-    constructor(){
-
+    message : string
+    results : ClienteResults[] | null;
+    constructor( { success = false, status = 500, results = [], message = ''} : Partial<ClientesResponse>) {
+        this.success = success;
+        this.status = status;
+        this.results = results;
+        this.message = message;
     }
 }
-
-export class ClientesResults{
-    id : string;
-    nombre : string;
-    documento : string;
-    telefono : string;
-    direccion : string;
-    constructor(){}

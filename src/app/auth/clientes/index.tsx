@@ -1,13 +1,13 @@
-import { Button, Container, Stack } from "@mui/material";
+import ClientesList from "./list";
+import AddModal from "./modals/add";
+import ClientesProvider from "./provider";
 
 function Clientes() {
   return (
-    <Container sx={{ paddingBottom: 6 }}>
-      <Stack direction={{ xs: "row" }} justifyContent="space-between" alignItems="center" padding={2}>
-        <h3>Clientes</h3>
-        <Button onClick={() => {}}>Agregar nuevo</Button>
-      </Stack>
-    </Container>
+    <ClientesProvider>
+      <AddModal />
+      <ClientesList />
+    </ClientesProvider>
   );
 }
 

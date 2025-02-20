@@ -1,56 +1,62 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid2 as Grid, LinearProgress, TextField } from "@mui/material";
-import useCategoria from "../useCategoria";
+
 import { useState } from "react";
-import { AddCategoria } from "@/services/dto/productos/AddCategoria";
+
+import useCliente from "../useCliente";
+import { AddCliente } from "@/services/dto/clientes/AddCliente";
 
 function AddModal() {
-  const { handleModal, modals, isPendingAdd, addCategoria } = useCategoria();
-  const [form, setForm] = useState<AddCategoria>(
-    new AddCategoria({
-      nombre: "",
-      descripcion: "",
-      publicado: 1,
-    })
-  );
+  const { handleModal, modals, isPendingAdd, addSubmit } = useCliente();
 
-  const createNewCategoria = () => {
-    addCategoria(form);
+  const [form, setForm] = useState<AddCliente>({
+    nombres: "",
+    apellidos: "",
+    razon_social: "",
+    doc: "",
+    extranjero: 0,
+    telefono: "",
+    email: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
   };
 
   return (
     <Dialog open={modals.crear} onClose={() => handleModal("crear")}>
-      <DialogTitle>Crear categoría</DialogTitle>
+      <DialogTitle>Registrar nuevo cliente</DialogTitle>
       <DialogContent>
         {isPendingAdd && <LinearProgress />}
-        <Grid container gap={3} pt={2}>
-          <Grid size={{ xs: 12 }}>
-            <TextField
-              disabled={isPendingAdd}
-              label="Nombre"
-              onChange={({ target }) => {
-                setForm({ ...form, nombre: target.value });
-              }}
-              fullWidth
-              autoFocus
-              autoComplete="off"
-            />
+        <Grid container gridTemplateColumns={{ xs: 12, md: 12 }} rowGap={2} pt={2}>
+          <Grid size={{ xs: 12, md: 6 }} px={1}>
+            <TextField disabled={isPendingAdd} fullWidth label="Nombre o Empresa" onChange={handleChange} name="nombres" value={form.nombres} autoFocus autoComplete="off" />
           </Grid>
-          <Grid size={{ xs: 12 }}>
-            <TextField
-              disabled={isPendingAdd}
-              label="Descripción"
-              onChange={({ target }) => {
-                setForm({ ...form, descripcion: target.value });
-              }}
-              fullWidth
-              autoComplete="off"
-            />
+          <Grid size={{ xs: 12, md: 6 }} px={1}>
+            <TextField disabled={isPendingAdd} fullWidth label="Apellido o Razón social" onChange={handleChange} name="apellidos" value={form.apellidos} autoComplete="off" />
+          </Grid>
+          <Grid size={{ xs: 12, md: 12 }} px={1}>
+            <TextField disabled={isPendingAdd} fullWidth label="Documento" onChange={handleChange} name="doc" value={form.doc} autoComplete="off" />
+          </Grid>
+          <Grid size={{ xs: 12, md: 6 }} px={1}>
+            <TextField disabled={isPendingAdd} fullWidth label="Tel" onChange={handleChange} name="telefono" value={form.telefono} autoComplete="off" />
+          </Grid>
+          <Grid size={{ xs: 12, md: 6 }} px={1}>
+            <TextField disabled={isPendingAdd} fullWidth label="Correo" onChange={handleChange} name="email" value={form.email} autoComplete="off" />
           </Grid>
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button disabled={isPendingAdd} onClick={createNewCategoria} variant="contained">
-          Crear
+        <Button
+          disabled={isPendingAdd}
+          onClick={() => {
+            addSubmit(form);
+          }}
+          variant="contained"
+        >
+          Registrar
         </Button>
         <Button disabled={isPendingAdd} onClick={() => handleModal("crear")} variant="outlined">
           Cancelar

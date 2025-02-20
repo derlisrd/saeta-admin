@@ -11,7 +11,7 @@ export default [
     {
         id: 2,
         title: 'Clientes',
-        icon: 'people',
+        icon: 'person_outline',
         color: '#0066cc',
         url: '/clientes',
         private: false,
@@ -40,14 +40,6 @@ export default [
                 icon: 'list',
                 color: '#0066cc',
                 url: '/ventas/pedidos/lista',
-                private: false,
-            },
-            {
-                id: 1425,
-                title: 'Formas de pagos',
-                icon: 'payments',
-                color: '#0066cc',
-                url: '/ventas/formas-de-pago',
                 private: false,
             }
         ],
@@ -101,13 +93,22 @@ export default [
             {
                 id: 122342,
                 title: 'Empresa',
-                icon: 'admin_panel_settings',
+                icon: 'store_mall_directory',
                 color: '#0066cc',
                 url: '/config/empresa',
                 private: false,
             },
             {
                 id: 122322342,
+                title: 'Parámetros',
+                icon: 'tune',
+                color: '#0066cc',
+                url: '/config/parametros',
+                private: false,
+            }
+            ,
+            {
+                id: 12232342,
                 title: 'Tema',
                 icon: 'brush',
                 color: '#0066cc',

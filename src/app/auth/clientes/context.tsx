@@ -1,37 +1,26 @@
-import { AddCategoria } from "@/services/dto/productos/AddCategoria";
-import { CategoriaResults } from "@/services/dto/productos/categoria";
 import { createContext } from "react";
+import { ClientesModals } from "./types/clientesmodals";
+import { ClienteResults } from "@/services/dto/clientes/cliente";
+import { AddCliente } from "@/services/dto/clientes/AddCliente";
 
-export type CategoriasModals = {
-  crear: boolean;
-  editar: boolean;
-  eliminar: boolean;
-};
-
-interface CategoriasContextType {
-  lista: CategoriaResults[] | null;
-  isLoading: boolean;
-  error: unknown;
-  refetch: () => void;
-  modals: CategoriasModals;
-  handleModal: (modal: keyof CategoriasModals) => void;
-  addCategoria: (form: AddCategoria) => void;
+const ClientesContext = createContext<{
+  modals: ClientesModals;
+  handleModal: (modal: keyof ClientesModals) => void;
   isPendingAdd: boolean;
-}
-
-const CategoriasContext = createContext<CategoriasContextType>({
-  lista: null,
-  isLoading: false,
-  error: null,
-  refetch: () => {},
+  isLoading: boolean;
+  lista: ClienteResults[] | null;
+  addSubmit: (form: AddCliente) => Promise<void>;
+}>({
   modals: {
     crear: false,
     editar: false,
     eliminar: false,
   },
   handleModal: () => {},
-  addCategoria: () => {},
   isPendingAdd: false,
+  isLoading: false,
+  lista: [],
+  addSubmit: async () => {},
 });
 
-export default CategoriasContext;
+export default ClientesContext;
