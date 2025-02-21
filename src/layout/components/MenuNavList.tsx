@@ -1,13 +1,15 @@
 import "simplebar-react/dist/simplebar.min.css";
 import { Fragment, useState } from "react";
 import SimpleBar from "simplebar-react";
-import { Toolbar, List, ListItem, ListItemButton, ListItemText, ListItemIcon, Collapse, Icon, Typography, ListItemButtonBaseProps } from "@mui/material";
+import { Toolbar, List, ListItem, ListItemButton, ListItemText, ListItemIcon, Collapse, Icon, Typography, ListItemButtonBaseProps, Stack, Box, Avatar } from "@mui/material";
 import menu from "@/constants/menu";
 import { useLocation } from "react-router-dom";
+import { useAuth } from "@/providers/AuthProvider";
 
 const MenuNavList = ({ isMobile = false, navegar }: { isMobile?: boolean; navegar: Function }) => {
   const { pathname } = useLocation();
   const [lista, setLista] = useState(menu);
+  const { userData } = useAuth();
 
   const SELECTED = {
     "&.Mui-selected": {
@@ -36,7 +38,15 @@ const MenuNavList = ({ isMobile = false, navegar }: { isMobile?: boolean; navega
   return (
     <SimpleBar forceVisible="y" autoHide={true} style={{ maxHeight: "100vh" }}>
       <Toolbar>
-        <Typography variant="button">SGA</Typography>
+        <Stack gap={1} mt={1} direction="column" alignItems="center" justifyContent="center" width="100%">
+          <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+            SGA
+          </Typography>
+          <Stack direction="column" justifyContent="center" alignItems="center" gap={1}>
+            <Avatar sx={{ bgcolor: "primary.main", width: 48, height: 48 }} />
+            <Typography variant="caption">{userData && userData.user.name}</Typography>
+          </Stack>
+        </Stack>
       </Toolbar>
       <List>
         {menu.map((e) => (
