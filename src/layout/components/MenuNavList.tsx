@@ -1,7 +1,7 @@
 import "simplebar-react/dist/simplebar.min.css";
 import { Fragment, useState } from "react";
 import SimpleBar from "simplebar-react";
-import { Toolbar, List, ListItem, ListItemButton, ListItemText, ListItemIcon, Collapse, Icon, Typography, ListItemButtonBaseProps, Stack, Box, Avatar } from "@mui/material";
+import { Toolbar, List, ListItem, ListItemButton, ListItemText, ListItemIcon, Collapse, Icon, Typography, ListItemButtonBaseProps, Stack, Avatar } from "@mui/material";
 import menu from "@/constants/menu";
 import { useLocation } from "react-router-dom";
 import { useAuth } from "@/providers/AuthProvider";
@@ -59,7 +59,7 @@ const MenuNavList = ({ isMobile = false, navegar }: { isMobile?: boolean; navega
                       <Icon color="primary">{e.icon}</Icon>
                     </ListItemIcon>
                     <ListItemText primary={e.title} />
-                    <Icon>{e.open ? `expand_less` : `expand_more`} </Icon>
+                    <Icon>{e.open ? `expand_less` : `keyboard_arrow_right`} </Icon>
                   </ListItemButton>
                 </ListItem>
                 <Collapse in={e.open} timeout="auto" unmountOnExit>

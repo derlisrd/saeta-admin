@@ -12,7 +12,7 @@ function Parametros() {
 
       <Grid container spacing={2}>
         {parametros.map((e, i) => (
-          <Grid size={{ xs: 12, sm: 4 }} key={i}>
+          <Grid size={{ xs: 12, sm: 6, md: 4 }} key={i}>
             <Link to={e.url} style={{ textDecoration: "none" }}>
               <Card>
                 <CardContent>

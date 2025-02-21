@@ -39,7 +39,7 @@ function CategoriaList() {
       {isLoading ? (
         <LinearProgress />
       ) : (
-        <Box boxShadow={6} borderRadius={4} component={Paper} padding={{ xs: 0, sm: 1, md: 2 }}>
+        <Box boxShadow={6} borderRadius={4} component={Paper} py={{ xs: 0, sm: 1, md: 2 }}>
           <Grid container padding={2} spacing={{ xs: 1 }}>
             <Grid size={{ xs: 12, md: 4 }}>
               <TextField

@@ -11,7 +11,7 @@ export default [
     {
         id: 2,
         title: 'Clientes',
-        icon: 'person_outline',
+        icon: 'person',
         color: '#0066cc',
         url: '/clientes',
         private: false,
