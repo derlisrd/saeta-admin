@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid2 as Grid, LinearProgress, TextField } from "@mui/material";
+import { Alert, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid2 as Grid, LinearProgress, TextField } from "@mui/material";
 
 import { useState } from "react";
 
@@ -6,9 +6,8 @@ import useCliente from "../useCliente";
 import { AddCliente } from "@/services/dto/clientes/AddCliente";
 
 function AddModal() {
-  const { handleModal, modals, isPendingAdd, addSubmit } = useCliente();
-
-  const [form, setForm] = useState<AddCliente>({
+  const { handleModal, modals, isPendingAdd, addSubmit, error } = useCliente();
+  const initialForm: AddCliente = {
     nombres: "",
     apellidos: "",
     razon_social: "",
@@ -16,7 +15,11 @@ function AddModal() {
     extranjero: 0,
     telefono: "",
     email: "",
-  });
+  };
+  const [form, setForm] = useState<AddCliente>(initialForm);
+  const clear = () => {
+    setForm(initialForm);
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({
@@ -30,6 +33,7 @@ function AddModal() {
       <DialogTitle>Registrar nuevo cliente</DialogTitle>
       <DialogContent>
         {isPendingAdd && <LinearProgress />}
+        {error && <Alert severity="error">{error.message}</Alert>}
         <Grid container spacing={{ xs: 1, md: 2 }} pt={1}>
           <Grid size={{ xs: 12, md: 6 }}>
             <TextField disabled={isPendingAdd} fullWidth label="Nombre o Empresa" onChange={handleChange} name="nombres" value={form.nombres} autoFocus autoComplete="off" />
@@ -49,6 +53,9 @@ function AddModal() {
         </Grid>
       </DialogContent>
       <DialogActions>
+        <Button onClick={clear} variant="outlined">
+          Limpiar
+        </Button>
         <Button
           disabled={isPendingAdd}
           onClick={() => {

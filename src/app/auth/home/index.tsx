@@ -1,6 +1,5 @@
-import IconTwoTones from "@/components/mui/icontwotones";
 import { homeMock } from "@/mocks/home";
-import { Box, Card, CardContent, Container, Grid2 as Grid, Stack, Typography } from "@mui/material";
+import { Box, Card, CardContent, Container, Grid2 as Grid, Icon, Stack, Typography } from "@mui/material";
 
 function Home() {
   return (
@@ -16,7 +15,7 @@ function Home() {
                     <Typography variant="h5">{e.value}</Typography>
                     <Typography variant="caption">{e.label}</Typography>
                   </Box>
-                  <IconTwoTones sx={{ fontSize: 32 }}>{e.icon}</IconTwoTones>
+                  <Icon sx={{ fontSize: 32 }}>{e.icon}</Icon>
                 </Stack>
               </CardContent>
             </Card>

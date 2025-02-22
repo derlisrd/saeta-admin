@@ -10,6 +10,7 @@ const ClientesContext = createContext<{
   isLoading: boolean;
   lista: ClienteResults[] | null;
   addSubmit: (form: AddCliente) => Promise<void>;
+  error: Error | null;
 }>({
   modals: {
     crear: false,
@@ -21,6 +22,7 @@ const ClientesContext = createContext<{
   isLoading: false,
   lista: [],
   addSubmit: async () => {},
+  error: null,
 });
 
 export default ClientesContext;

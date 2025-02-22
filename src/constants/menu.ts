@@ -46,6 +46,49 @@ export default [
 
     },
     {
+        id: 1334,
+        title: 'Caja',
+        icon: 'savings',
+        color: '#0066cc',
+        url: null,
+        private: false,
+        open: false,
+        submenu: [
+            {
+                id: 14232,
+                title: 'Abrir caja',
+                icon: 'add',
+                color: '#0066cc',
+                url: '/caja/add',
+                private: false,
+                },
+                {
+                id: 343,
+                title: 'Lista de cajas',
+                icon: 'list',
+                color: '#0066cc',
+                url: '/caja/lista',
+                private: false 
+            },
+            {
+                id: 14232,
+                title: 'Movimientos',
+                icon: 'add',
+                color: '#0066cc',
+                url: '/productos/add',
+                private: false,
+            },
+        {
+                id: 14232,
+                title: 'Cerrar caja',
+                icon: 'close',
+                color: '#0066cc',
+                url: '/caja/cerrar',
+                private: false,
+            },
+        ],
+    },
+    {
         id: 34,
         title: 'Productos',
         icon: 'inventory_2',
@@ -80,6 +123,33 @@ export default [
                 private: false,
             }
         ]
+    },
+    {
+        id: 3565,
+        title: 'Compras',
+        icon: 'shopping_cart',
+        color: '#0066cc',
+        url: null,
+        private: false,
+        open: false,
+        submenu: [
+            {
+                id: 14232,
+                title: 'Generar compra',
+                icon: 'receipt_long',
+                color: '#0066cc',
+                url: '/compras/add',
+                private: false,
+            },
+            {
+                id: 343,
+                title: 'Lista de compras',
+                icon: 'list',
+                color: '#0066cc',
+                url: '/compras/lista',
+                private: false,
+            }
+        ],
     },
     {
         id: 3,

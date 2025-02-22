@@ -13,7 +13,8 @@ function useCliente() {
       lista,
       isLoading,
       isPendingAdd,
-      addSubmit
+      addSubmit,
+      error
     } = context
     return {
       modals,
@@ -21,7 +22,8 @@ function useCliente() {
       lista,
       isLoading,
       isPendingAdd,
-      addSubmit
+      addSubmit,
+      error
     }
 }
 

@@ -13,6 +13,8 @@ function ClientesProvider({ children }: { children: React.ReactNode }) {
 
   const { userData } = useAuth();
 
+  const [error, setError] = useState<Error | null>(null);
+
   const [modals, setModals] = useState<ClientesModals>({
     crear: false,
     editar: false,
@@ -69,7 +71,11 @@ function ClientesProvider({ children }: { children: React.ReactNode }) {
       }
     },
     onSettled: (data) => {
-      console.log(data?.results);
+      if (data && !data.success) {
+        setError({ name: "error_add", message: data.message });
+        return;
+      }
+      setError(null);
     },
   });
 
@@ -91,6 +97,7 @@ function ClientesProvider({ children }: { children: React.ReactNode }) {
     isLoading,
     isPendingAdd: isPending,
     addSubmit,
+    error,
   };
   return <ClientesContext.Provider value={values}>{children}</ClientesContext.Provider>;
 }
