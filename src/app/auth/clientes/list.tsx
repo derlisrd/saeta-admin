@@ -8,7 +8,6 @@ import {
   Grid2 as Grid,
   TextField,
   InputAdornment,
-  Icon,
   TableContainer,
   Table,
   TableHead,
@@ -20,6 +19,7 @@ import {
   TableFooter,
 } from "@mui/material";
 import useCliente from "./useCliente";
+import Icon from "@/components/ui/icon";
 
 function ClientesList() {
   const { lista, isLoading, handleModal } = useCliente();
@@ -47,7 +47,7 @@ function ClientesList() {
                   input: {
                     startAdornment: (
                       <InputAdornment position="start">
-                        <Icon>search</Icon>
+                        <Icon size={18}>search</Icon>
                       </InputAdornment>
                     ),
                   },
@@ -85,7 +85,7 @@ function ClientesList() {
                       <TableCell>{item.razon_social}</TableCell>
                       <TableCell>
                         <IconButton>
-                          <Icon>more_vert</Icon>
+                          <Icon>caret-down</Icon>
                         </IconButton>
                       </TableCell>
                     </TableRow>

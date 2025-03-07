@@ -1,6 +1,7 @@
-import { Icon, IconButton, InputAdornment, TextField } from "@mui/material";
+import { IconButton, InputAdornment, TextField } from "@mui/material";
 import useHook from "../_hooks/useHook";
 import { NumericFormat } from "react-number-format";
+import Icon from "@/components/ui/icon";
 
 function InputCantidad() {
   const { cantidad, setCantidad } = useHook();
@@ -28,14 +29,14 @@ function InputCantidad() {
           startAdornment: (
             <InputAdornment position="start">
               <IconButton onClick={menos}>
-                <Icon>remove</Icon>
+                <Icon>minus</Icon>
               </IconButton>
             </InputAdornment>
           ),
           endAdornment: (
             <InputAdornment position="end">
               <IconButton onClick={() => setCantidad(cantidad + 1)}>
-                <Icon>add_circle</Icon>
+                <Icon>plus</Icon>
               </IconButton>
             </InputAdornment>
           ),

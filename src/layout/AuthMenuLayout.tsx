@@ -1,8 +1,9 @@
+import Icon from "@/components/ui/icon";
 import MenuNavList from "./components/MenuNavList";
 import useDrawerMenu from "@/hooks/useDrawerMenu";
 import useThemTypeMode from "@/hooks/useThemeCustom";
 
-import { Drawer, Box, Toolbar, Stack, Icon, IconButton, Tooltip } from "@mui/material";
+import { Drawer, Box, Toolbar, Stack, IconButton, Tooltip } from "@mui/material";
 import { NavigateOptions, Outlet, To, useNavigate } from "react-router-dom";
 
 function AuthMenuLayout() {
@@ -28,22 +29,22 @@ function AuthMenuLayout() {
       >
         <Stack justifyContent="space-between" flexDirection="row" width="100%" alignItems="center">
           <IconButton onClick={toggleMobileMenu} sx={{ minWidth: "50px", display: { xs: "block", md: "none" } }}>
-            <Icon color="primary">arrow_forward_ios</Icon>
+            <Icon color="primary">menu-2</Icon>
           </IconButton>
           <IconButton onClick={toggleMenu} sx={{ minWidth: "50px", marginLeft: margin_left, display: { xs: "none", md: "block", transition: "all 0.2s" } }}>
-            <Icon color="primary">{isOpenMenu ? "arrow_forward_ios" : "arrow_back_ios"}</Icon>
+            <Icon color="primary">{isOpenMenu ? "chevron-left" : "chevron-right"}</Icon>
           </IconButton>
           <Stack flexDirection="row">
-            <IconButton onClick={toggleModeDark}>
-              <Tooltip placement="bottom" arrow title="Cambiar tema">
-                <Icon>{modeDark ? "toggle_on" : "toggle_off"}</Icon>
-              </Tooltip>
-            </IconButton>
-            <IconButton onClick={signOut}>
-              <Tooltip placement="bottom" arrow title="Cerrar sesión">
-                <Icon>exit_to_app</Icon>
-              </Tooltip>
-            </IconButton>
+            <Tooltip placement="bottom" arrow title="Cambiar tema">
+              <IconButton onClick={toggleModeDark}>
+                <Icon>{modeDark ? "moon-stars" : "sun"}</Icon>
+              </IconButton>
+            </Tooltip>
+            <Tooltip placement="bottom" arrow title="Cerrar sesión">
+              <IconButton onClick={signOut}>
+                <Icon>door-exit</Icon>
+              </IconButton>
+            </Tooltip>
           </Stack>
         </Stack>
       </Toolbar>

@@ -1,10 +1,11 @@
 import "simplebar-react/dist/simplebar.min.css";
 import { Fragment, useState } from "react";
 import SimpleBar from "simplebar-react";
-import { Toolbar, List, ListItem, ListItemButton, ListItemText, ListItemIcon, Collapse, Icon, Typography, ListItemButtonBaseProps, Stack, Avatar } from "@mui/material";
+import { Toolbar, List, ListItem, ListItemButton, ListItemText, ListItemIcon, Collapse, Typography, ListItemButtonBaseProps, Stack, Avatar } from "@mui/material";
 import menu from "@/constants/menu";
 import { useLocation } from "react-router-dom";
 import { useAuth } from "@/providers/AuthProvider";
+import Icon from "@/components/ui/icon";
 
 const MenuNavList = ({ isMobile = false, navegar }: { isMobile?: boolean; navegar: Function }) => {
   const { pathname } = useLocation();
@@ -56,10 +57,12 @@ const MenuNavList = ({ isMobile = false, navegar }: { isMobile?: boolean; navega
                 <ListItem disablePadding>
                   <ListItemButton onClick={() => openCollapseMenu(e.open, e.id)} sx={SELECTED}>
                     <ListItemIcon>
-                      <Icon color="primary">{e.icon}</Icon>
+                      <Icon size={18} color="primary">
+                        {e.icon}
+                      </Icon>
                     </ListItemIcon>
                     <ListItemText primary={e.title} />
-                    <Icon>{e.open ? `expand_less` : `keyboard_arrow_right`} </Icon>
+                    <Icon>{e.open ? `chevron-right` : `chevron-down`}</Icon>
                   </ListItemButton>
                 </ListItem>
                 <Collapse in={e.open} timeout="auto" unmountOnExit>
@@ -68,7 +71,7 @@ const MenuNavList = ({ isMobile = false, navegar }: { isMobile?: boolean; navega
                       <ListItem disablePadding key={elem.id}>
                         <ListItemButton sx={SELECTED} selected={pathname === elem.url} onClick={() => navegar(elem.url ?? "#", isMobile)}>
                           <ListItemIcon>
-                            <Icon> {pathname === elem.url ? "arrow_drop_down" : "arrow_right"}</Icon>
+                            <Icon>circle</Icon>
                           </ListItemIcon>
                           <ListItemText primary={elem.title} />
                         </ListItemButton>
@@ -81,7 +84,9 @@ const MenuNavList = ({ isMobile = false, navegar }: { isMobile?: boolean; navega
               <ListItem disablePadding>
                 <ListItemButton selected={pathname === e.url} onClick={() => navegar(e.url ?? "#", isMobile)} sx={SELECTED}>
                   <ListItemIcon>
-                    <Icon color="primary">{e.icon}</Icon>
+                    <Icon size={18} color="primary">
+                      {e.icon}
+                    </Icon>
                   </ListItemIcon>
                   <ListItemText>{e.title}</ListItemText>
                 </ListItemButton>

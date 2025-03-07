@@ -1,5 +1,6 @@
-import { Icon, IconButton, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
+import { IconButton, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import useHook from "../_hooks/useHook";
+import Icon from "@/components/ui/icon";
 
 function ListaDeEspera() {
   const { setIndex, pedidos, index, cancelar } = useHook();
@@ -11,7 +12,7 @@ function ListaDeEspera() {
             key={i}
             secondaryAction={
               <IconButton edge="end" onClick={cancelar}>
-                <Icon>delete</Icon>
+                <Icon>check</Icon>
               </IconButton>
             }
           >

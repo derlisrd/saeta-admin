@@ -1,6 +1,7 @@
-import { Button, Container, Grid2 as Grid, Icon, IconButton, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
+import { Button, Container, Grid2 as Grid, IconButton, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import useHook from "./_hooks/useHook";
 import useModal from "./_hooks/useModal";
+import Icon from "@/components/ui/icon";
 
 function Root() {
   const { pedidos } = useHook();
@@ -24,7 +25,7 @@ function Root() {
                 key={i}
                 secondaryAction={
                   <IconButton edge="end" onClick={() => {}}>
-                    <Icon>right</Icon>
+                    <Icon size={22}>check</Icon>
                   </IconButton>
                 }
               >

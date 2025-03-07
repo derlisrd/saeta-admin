@@ -2,7 +2,7 @@ export default [
     {
         id: 1,
         title: 'Inicio',
-        icon: 'apps',
+        icon: 'home',
         color: '#0066cc',
         url: '/',
         private: false,
@@ -11,7 +11,7 @@ export default [
     {
         id: 2,
         title: 'Clientes',
-        icon: 'person',
+        icon: 'users',
         color: '#0066cc',
         url: '/clientes',
         private: false,
@@ -20,7 +20,7 @@ export default [
     {
         id: 345,
         title: 'Ventas',
-        icon: 'store',
+        icon: 'building-store',
         color: '#0066cc',
         url: null,
         private: false,
@@ -48,14 +48,14 @@ export default [
     {
         id: 1334,
         title: 'Caja',
-        icon: 'savings',
+        icon: 'cash-register',
         color: '#0066cc',
         url: null,
         private: false,
         open: false,
         submenu: [
             {
-                id: 14232,
+                id: 1432,
                 title: 'Abrir caja',
                 icon: 'add',
                 color: '#0066cc',
@@ -79,7 +79,7 @@ export default [
                 private: false,
             },
         {
-                id: 14232,
+                id: 142,
                 title: 'Cerrar caja',
                 icon: 'close',
                 color: '#0066cc',
@@ -91,14 +91,14 @@ export default [
     {
         id: 34,
         title: 'Productos',
-        icon: 'inventory_2',
+        icon: 'packages',
         color: '#0066cc',
         url: null,
         private: false,
         open: false,
         submenu: [
             {
-                id: 142325,
+                id: 145,
                 title: 'Agregar producto',
                 icon: 'add',
                 color: '#0066cc',
@@ -127,7 +127,7 @@ export default [
     {
         id: 3565,
         title: 'Compras',
-        icon: 'shopping_cart',
+        icon: 'shopping-cart',
         color: '#0066cc',
         url: null,
         private: false,
@@ -142,7 +142,7 @@ export default [
                 private: false,
             },
             {
-                id: 343,
+                id: 34,
                 title: 'Lista de compras',
                 icon: 'list',
                 color: '#0066cc',
@@ -169,7 +169,7 @@ export default [
                 private: false,
             },
             {
-                id: 122322342,
+                id: 1222,
                 title: 'Parámetros',
                 icon: 'tune',
                 color: '#0066cc',
@@ -178,7 +178,7 @@ export default [
             }
             ,
             {
-                id: 12232342,
+                id: 22342,
                 title: 'Tema',
                 icon: 'brush',
                 color: '#0066cc',

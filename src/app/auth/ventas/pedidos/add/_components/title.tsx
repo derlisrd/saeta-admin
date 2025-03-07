@@ -1,6 +1,7 @@
-import { DialogTitle, Icon, IconButton, Link, Stack, Tooltip, Typography, Zoom } from "@mui/material";
+import { DialogTitle, IconButton, Link, Stack, Tooltip, Typography, Zoom } from "@mui/material";
 import useHook from "../_hooks/useHook";
 import useModal from "../_hooks/useModal";
+import Icon from "@/components/ui/icon";
 
 function Title() {
   const { pedidos, index } = useHook();
@@ -16,7 +17,7 @@ function Title() {
               }}
               color="primary"
             >
-              <Icon>arrow_back_ios_new</Icon>
+              <Icon size={24}>arrow-left-dashed</Icon>
             </IconButton>
           </Tooltip>
           <Typography variant="body1">Pedido | Total: {pedidos[index].total} Gs</Typography>

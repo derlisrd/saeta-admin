@@ -1,6 +1,7 @@
 import { Fragment } from "react";
-import { Grid2 as Grid, Icon, IconButton } from "@mui/material";
+import { Grid2 as Grid, IconButton } from "@mui/material";
 import { AddPedidoItem } from "@/services/dto/pedidos/AddPedido";
+import Icon from "@/components/ui/icon";
 
 interface ItemProps {
   item: AddPedidoItem;
@@ -16,7 +17,7 @@ function Item({ item, removeItem }: ItemProps) {
       <Grid size={{ xs: 12, sm: 2 }}>{item.total}</Grid>
       <Grid size={{ xs: 12, sm: 2 }}>
         <IconButton onClick={removeItem} size="small">
-          <Icon fontSize="small">delete</Icon>
+          <Icon>trash</Icon>
         </IconButton>
       </Grid>
     </Fragment>

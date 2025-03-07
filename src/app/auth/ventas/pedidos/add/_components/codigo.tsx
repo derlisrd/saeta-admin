@@ -1,5 +1,6 @@
-import { CircularProgress, Icon, IconButton, InputAdornment, TextField } from "@mui/material";
+import { CircularProgress, IconButton, InputAdornment, TextField } from "@mui/material";
 import useHook from "../_hooks/useHook";
+import Icon from "@/components/ui/icon";
 
 function InputCodigo() {
   const { inputCodigoRef, consultarCodigoInsertar, loadingAddProducto } = useHook();
