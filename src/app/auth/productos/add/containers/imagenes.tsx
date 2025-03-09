@@ -1,9 +1,10 @@
 import { AddProducto } from "@/services/dto/productos/AddProducto";
-import { Container, Grid2 as Grid, Icon, IconButton, Card, CardMedia, Typography, Box } from "@mui/material";
+import { Container, Grid2 as Grid, IconButton, Card, CardMedia, Typography, Box } from "@mui/material";
 import useAddProducto from "../_hook/useAddProducto";
 import imageCompression from "browser-image-compression";
 import { useDropzone } from "react-dropzone";
 import { useCallback } from "react";
+import Icon from "@/components/ui/icon";
 
 function Imagenes() {
   const { setForm, form } = useAddProducto();
@@ -57,7 +58,7 @@ function Imagenes() {
       {/* Área de subida con Drag & Drop */}
       <Box {...getRootProps()} borderRadius={2} border={2} padding={3} sx={{ borderStyle: "dashed", cursor: "pointer" }}>
         <input {...getInputProps()} />
-        <Icon>cloud</Icon>
+        <Icon size={24}>photo-up</Icon>
         <Typography variant="h6" color="textSecondary">
           {isDragActive ? "Suelta las imágenes aquí..." : "Arrastra y suelta imágenes aquí o haz clic para seleccionar"}
         </Typography>
@@ -82,7 +83,7 @@ function Imagenes() {
                   size="small"
                   onClick={() => removeImage(index)}
                 >
-                  <Icon>delete</Icon>
+                  <Icon>trash</Icon>
                 </IconButton>
               </Card>
             </Grid>

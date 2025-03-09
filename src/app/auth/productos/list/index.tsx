@@ -1,3 +1,4 @@
+import Icon from "@/components/ui/icon";
 import useListProductos from "@/core/hooks/productos/list/useListProductos";
 import {
   Box,
@@ -8,7 +9,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Icon,
   Checkbox,
   IconButton,
   LinearProgress,
@@ -109,7 +109,7 @@ function ListaProductos() {
                     <TableCell>{item.precio_minimo}</TableCell>
                     <TableCell>
                       <IconButton>
-                        <Icon>more_vert</Icon>
+                        <Icon>chevron-down</Icon>
                       </IconButton>
                     </TableCell>
                   </TableRow>

@@ -1,20 +1,6 @@
-import {
-  TextField,
-  Grid2 as Grid,
-  Typography,
-  Select,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Button,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  Icon,
-  ListItemText,
-} from "@mui/material";
+import { TextField, Grid2 as Grid, Typography, Select, FormControl, InputLabel, MenuItem, Button, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import useAddProducto from "../_hook/useAddProducto";
+import Icon from "@/components/ui/icon";
 
 function Stock() {
   const { form, depositos, addStock, stockState, error, changeStockState } = useAddProducto();
@@ -73,7 +59,7 @@ function Stock() {
             <ListItem disablePadding key={i}>
               <ListItemButton>
                 <ListItemIcon>
-                  <Icon>delete</Icon>
+                  <Icon>trash</Icon>
                 </ListItemIcon>
                 <ListItemText primary={`Deposito: ${e.deposito}`} secondary={`Cantidad: ${e.cantidad}`} />
               </ListItemButton>
