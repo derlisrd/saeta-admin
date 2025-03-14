@@ -1,4 +1,4 @@
-import { useSessionStorage } from "@/hooks/useSessionStorage";
+/* import { useSessionStorage } from "@/hooks/useSessionStorage";
 import { apiServiceAuth } from "@/services/api/auth/auth";
 import { LoginResults } from "@/services/dto/login";
 import { useCallback, useEffect, useState } from "react";
@@ -63,4 +63,4 @@ const useAuthStore = ()=>{
     return {isAuth, userData, iniciarSesion, cerrarSesion, loading}
 }
 
-export default useAuthStore
+export default useAuthStore */

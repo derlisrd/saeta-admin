@@ -15,19 +15,16 @@ export default defineConfig({
     } as AliasOptions
   },
   build:{
-    outDir: './site',
+    outDir: './dist',
     emptyOutDir: true,
     rollupOptions: {
       output: {
         manualChunks: {
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          "react-virtualized": ["react-virtualized"],
           'utils-vendor': [
             'axios',
             'browser-image-compression', 
-            'react-csv',
             'react-dropzone',
-            'sweetalert',
             '@tanstack/react-query',
             '@formkit/tempo'
           ]
