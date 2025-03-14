@@ -1,5 +1,5 @@
 function TableBody() {
-    return (  );
+  return <></>;
 }
 
 export default TableBody;
