@@ -75,7 +75,7 @@ export default [
                 title: 'Movimientos',
                 icon: 'add',
                 color: '#0066cc',
-                url: '/productos/add',
+                url: '/caja/movimientos',
                 private: false,
             },
         {

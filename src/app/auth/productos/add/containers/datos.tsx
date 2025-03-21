@@ -6,7 +6,6 @@ import {
   FormHelperText,
   FormLabel,
   Grid2 as Grid,
-  Icon,
   InputLabel,
   List,
   ListItemButton,
@@ -22,6 +21,7 @@ import {
 import useAddProducto from "../_hook/useAddProducto";
 import { NumericFormat } from "react-number-format";
 import Stock from "./stock";
+import Icon from "@/components/ui/icon";
 
 function Datos() {
   const { form, handleModal, changeByName, impuestos, categorias, medidas, inputCodigoRef, verificarCodigoDisponible, error, generateCode } = useAddProducto();
@@ -135,7 +135,7 @@ function Datos() {
               <List>
                 <ListItemButton onClick={() => handleModal("categorias")}>
                   <ListItemIcon>
-                    <Icon>add</Icon>
+                    <Icon>circle-plus</Icon>
                   </ListItemIcon>
                   <ListItemText primary="Agregar categoria" />
                 </ListItemButton>

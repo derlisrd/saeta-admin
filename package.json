@@ -24,6 +24,8 @@
     "react-number-format": "5.4.3",
     "react-router-dom": "7.0.1",
     "react-to-print": "3.0.4",
+    "react-virtualized": "9.22.6",
+    "react-virtualized-auto-sizer": "1.0.25",
     "simplebar-react": "3.3.0"
   },
   "devDependencies": {

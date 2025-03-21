@@ -33,14 +33,14 @@ export const apiServicePedidos = {
       });
     }
   },
-  pedidosDelDia: async (token: string | null) => {
+  lista: async (token: string | null, desde?: string | null, hasta?: string | null) => {
     try {
-      const { data, status } = await BASE.get("/pedidos/del-dia", { headers: { Authorization: token } });
-      return new AddPedidoResponse({ success: data.success as boolean, status, results: data.results, message: "" });
+      const { data, status } = await BASE.get(`/pedidos`, { headers: { Authorization: token } });
+      return ({ success: data.success as boolean, status, results: data.results, message: "" });
     } catch (e) {
       console.log(e);
       if (axios.isAxiosError(e)) {
-        return new AddPedidoResponse({
+        return ({
           success: false,
           results: null,
           status: e.response?.status || 500,
@@ -48,14 +48,14 @@ export const apiServicePedidos = {
         });
       }
       if (!navigator.onLine) {
-        return new AddPedidoResponse({
+        return ({
           success: false,
           results: null,
           status: 0,
           message: "No hay conexión a Internet."
         });
       }
-      return new AddPedidoResponse({
+      return ({
         success: false,
         results: null,
         status: 500,
