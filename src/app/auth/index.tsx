@@ -28,6 +28,7 @@ function AutenticatedPages() {
         <Route path="/productos/add" element={<ProductosAdd />} />
         <Route path="/categorias" element={<Categorias />} />
         <Route path="/ventas/pedidos/add" element={<PedidosAdd />} />
+        <Route path="/ventas/pedidos/lista" element={<PedidosLista />} />
 
         <Route path="/logout" element={<LogOut />} />
       </Route>
@@ -44,6 +45,7 @@ const Clientes = Loadable(lazy(() => import("./clientes")));
 const ConfigEmpresa = Loadable(lazy(() => import("./config/empresa")));
 const Tema = Loadable(lazy(() => import("./config/tema")));
 const ProductosLista = Loadable(lazy(() => import("./productos/list")));
+const PedidosLista = Loadable(lazy(() => import("./ventas/pedidos/lista")));
 const ProductosAdd = Loadable(lazy(() => import("./productos/add")));
 const PedidosAdd = Loadable(lazy(() => import("./ventas/pedidos/add")));
 

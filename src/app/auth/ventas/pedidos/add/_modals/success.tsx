@@ -3,6 +3,7 @@ import useHook from "../_hooks/useHook";
 import { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 import useModal from "../_hooks/useModal";
+import Icon from "@/components/ui/icon";
 
 function SuccessModal() {
   const { result: data, index, pedidos, limpiarFinalizarPedido } = useHook();
@@ -79,11 +80,11 @@ function SuccessModal() {
         )}
       </DialogContent>
       <DialogActions>
-        <Button variant="contained" color="primary" onClick={() => print()}>
+        <Button variant="outlined" startIcon={<Icon>printer</Icon>} color="primary" onClick={() => print()}>
           Imprimir
         </Button>
-        <Button variant="contained" color="primary" onClick={cerrar}>
-          Entendido
+        <Button variant="outlined" endIcon={<Icon>check</Icon>} color="primary" onClick={cerrar}>
+          Listo
         </Button>
       </DialogActions>
     </Dialog>

@@ -4,26 +4,29 @@ import PublicPages from "./public";
 import AutenticatedPages from "./auth";
 import { useAuth } from "@/providers/AuthProvider";
 import useThemeCustom from "@/hooks/useThemeCustom";
-import { QueryCache, QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useEffect } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 
-function Pages() {
+function AppPages() {
   const { customTheme } = useThemeCustom();
   const { isAuth, cerrarSesion } = useAuth();
+  const queryClient = useQueryClient();
 
-  const queryClient = new QueryClient({
-    queryCache: new QueryCache({
-      onError: (error, query) => {
-        console.log(error, query.queryKey);
-        cerrarSesion();
-      },
-    }),
-  });
+  useEffect(() => {
+    const unsubscribe = queryClient.getQueryCache().subscribe((event) => {
+      console.log(event.query);
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, [queryClient, cerrarSesion]);
+
   return (
     <ThemeProvider theme={customTheme ?? {}}>
       <CssBaseline />
-      <QueryClientProvider client={queryClient}>{!isAuth ? <PublicPages /> : <AutenticatedPages />}</QueryClientProvider>
+      {!isAuth ? <PublicPages /> : <AutenticatedPages />}
     </ThemeProvider>
   );
 }
 
-export default Pages;
+export default AppPages;
