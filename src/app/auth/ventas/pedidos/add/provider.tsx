@@ -26,7 +26,7 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
     cliente_id: 0,
     aplicar_impuesto: true,
     moneda_id: 1,
-    formas_pago_id: 0,
+    formas_pagos: [],
     tipo: 0,
     porcentaje_descuento: 0,
     descuento: 0,

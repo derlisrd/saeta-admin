@@ -11,17 +11,7 @@ function FormaPagoSelect({ error }: FormasPagosSelectProps) {
   return (
     <FormControl fullWidth error={error}>
       <InputLabel id="formas-select-label">Formas de pago</InputLabel>
-      <Select
-        fullWidth
-        labelId="formas-label"
-        id="formas-select"
-        onChange={({ target }) => {
-          changePedido("formas_pago_id", Number(target.value));
-        }}
-        value={pedidos[index].formas_pago_id}
-        label="Impuesto"
-        name="formas_pago_id"
-      >
+      <Select fullWidth labelId="formas-label" id="formas-select" onChange={({ target }) => {}} label="Forma de pago" name="formas_pago_id">
         <MenuItem value={0} disabled>
           Seleccionar forma de pago
         </MenuItem>

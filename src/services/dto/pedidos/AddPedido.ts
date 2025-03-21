@@ -6,7 +6,7 @@ export class AddPedido {
   entregado: boolean;
   cliente_id: number;
   cliente: string;
-  formas_pago_id: number;
+  formas_pagos: FormasPago[];
   moneda_id: number;
   tipo: number;
   porcentaje_descuento: number;
@@ -18,7 +18,7 @@ export class AddPedido {
     aplicar_impuesto = true,
     cliente_id = 0,
     entregado = false,
-    formas_pago_id = 0,
+    formas_pagos = [],
     moneda_id = 0,
     cliente = "",
     tipo = 0,
@@ -32,7 +32,7 @@ export class AddPedido {
     this.aplicar_impuesto = aplicar_impuesto;
     this.cliente_id = cliente_id;
     this.cliente = cliente;
-    this.formas_pago_id = formas_pago_id;
+    this.formas_pagos = formas_pagos;
     this.tipo = tipo;
     this.porcentaje_descuento = porcentaje_descuento;
     this.descuento = descuento;
@@ -75,6 +75,17 @@ export class AddPedidoItem {
     this.observacion = observacion;
     this.codigo = codigo;
     this.nombre = nombre;
+  }
+}
+
+export class FormasPago{
+  id: number;
+  abreviatura: string;
+  monto: number;
+  constructor({ id = 0, abreviatura = "", monto = 0 }: Partial<FormasPago>) {
+    this.id = id;
+    this.abreviatura = abreviatura;
+    this.monto = monto;
   }
 }
 

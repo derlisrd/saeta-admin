@@ -6,8 +6,9 @@ export class ClienteResults{
     doc: string;
     extranjero: boolean;
     telefono: string | null;
+    email : string | null;
 
-    constructor({ razon_social = '', id = 0, nombres = '', apellidos = '', doc ='', extranjero =false, telefono =''  } : Partial<ClienteResults>)  {
+    constructor({ razon_social = '', id = 0, nombres = '', apellidos = '', doc ='', extranjero =false, telefono ='' , email='' } : Partial<ClienteResults>)  {
         this.id = id;
         this.razon_social = razon_social;
         this.nombres = nombres;
@@ -15,6 +16,7 @@ export class ClienteResults{
         this.doc = doc;
         this.extranjero = extranjero;
         this.telefono = telefono;
+        this.email = email;
     }
 
     static fromJSON(data: any) {
@@ -25,7 +27,8 @@ export class ClienteResults{
             apellidos: data.apellidos,
             doc: data.doc,
             extranjero: data.extranjero,
-            telefono: data.telefono
+            telefono: data.telefono,
+            email: data.email
         });
     }
 }
