@@ -118,17 +118,17 @@ export class AddPedidoResults{
     descuento: number;
     cliente: ClienteResults;
     estado: number;
-    forma_pago:FormasPagoResults;
+    formas_pago_pedido: FormasPagoPedido[];
     fecha : string;
 
 
-    constructor({ created_at = '', id = 0, total = 0, estado = 1, descuento = 0, cliente = new ClienteResults({}), forma_pago = new FormasPagoResults({}) }) {
+    constructor({ created_at = '', id = 0, total = 0, estado = 1, descuento = 0, cliente = new ClienteResults({}), formas_pago_pedido = [] }) {
         this.total = total;
         this.id = id;
         this.estado = estado;
         this.descuento = descuento;
         this.cliente = cliente;
-        this.forma_pago =  forma_pago;
+        this.formas_pago_pedido =  formas_pago_pedido;
         this.fecha = this.formatFecha(created_at);
       }
   
@@ -138,7 +138,7 @@ export class AddPedidoResults{
           total: data.total as number,
           descuento: data.descuento as number,
           cliente: ClienteResults.fromJSON(data.cliente),
-          forma_pago: FormasPagoResults.fromJSON(data.forma_pago),
+          formas_pago_pedido:  data.formas_pago_pedido.map((item: FormasPagoPedido) => new FormasPagoPedido(item)),
           created_at: data.created_at as string
         });
       }
@@ -149,4 +149,23 @@ export class AddPedidoResults{
           return date.toLocaleDateString('es-ES'); // Formato DD/MM/YYYY
       }
 }
-
+export class FormasPagoPedido{
+  id: number;
+  forma_pago_id: number;
+  monto: number;
+  abreviatura: string;
+  constructor({ id = 0, forma_pago_id = 0, monto = 0, abreviatura='' }: Partial<FormasPagoPedido>) {
+    this.id = id;
+    this.forma_pago_id = forma_pago_id;
+    this.monto = monto;
+    this.abreviatura = abreviatura
+  }
+  static fromJSON(data: any) {
+    return new FormasPagoPedido({
+      id: data.id,
+      forma_pago_id: data.forma_pago_id,
+      monto: data.monto,
+      abreviatura: data.abreviatura
+    });
+  }
+}

@@ -24,7 +24,8 @@ function useHook() {
     result,
     setResult,
     limpiarFinalizarPedido,
-    monedas
+    monedas,
+    handleFormasPago
   } = useContext(AddPedidoContext);
   return {
     pedidos,
@@ -48,7 +49,8 @@ function useHook() {
     result,
     setResult,
     limpiarFinalizarPedido,
-    monedas
+    monedas,
+    handleFormasPago
   };
 }
 

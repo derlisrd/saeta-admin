@@ -27,6 +27,7 @@ interface AddPedidoContextProps {
   index: number;
   setIndex: Dispatch<SetStateAction<number>>;
   consultarCodigoInsertar: (codigo: string) => void;
+  handleFormasPago: (monto: number, id: number, type: "add" | "remove") => void;
 }
 
 export const AddPedidoContext = createContext<AddPedidoContextProps>({
@@ -42,7 +43,7 @@ export const AddPedidoContext = createContext<AddPedidoContextProps>({
   result: null,
   setResult: () => {},
   setCantidad: () => {},
-
+  handleFormasPago: () => {},
   esperar: () => {},
   cancelar: () => {},
   loadingAddProducto: false,

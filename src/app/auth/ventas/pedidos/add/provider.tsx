@@ -196,6 +196,28 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
     }
   }, [userData?.token]);
 
+  const handleFormasPago = useCallback(
+    (monto: number, id: number, type: "add" | "remove") => {
+      if (type === "add") {
+        const formaPago = formasPago.find((formaPago) => formaPago.id === id);
+        if (!formaPago) return;
+        const copiaPedidos = [...pedidos];
+        const findIndexPago = copiaPedidos[index].formas_pagos.findIndex((e) => e.id === id);
+        if (findIndexPago !== -1) {
+          copiaPedidos[index].formas_pagos[findIndexPago].monto += monto;
+        } else {
+          copiaPedidos[index].formas_pagos.push({
+            id: id,
+            monto: monto,
+            abreviatura: formaPago.descripcion,
+          });
+        }
+        set(copiaPedidos, index);
+      }
+    },
+    [formasPago]
+  );
+
   useEffect(() => {
     getAllDatas();
   }, [getAllDatas]);
@@ -231,6 +253,7 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
       setResult,
       limpiarFinalizarPedido,
       monedas,
+      handleFormasPago,
     }),
     [
       pedidos,
@@ -252,6 +275,7 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
       setResult,
       limpiarFinalizarPedido,
       monedas,
+      handleFormasPago,
     ]
   );
   return <AddPedidoContext.Provider value={values}>{children}</AddPedidoContext.Provider>;
