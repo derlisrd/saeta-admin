@@ -18,6 +18,8 @@ function FinalizarPedido() {
   const [monto, setMonto] = useState(0);
 
   const agregarFormaPago = () => {
+    if (selectedFormaPago === 0) return setError({ active: true, message: "Seleccione una forma de pago", code: 43 });
+    setError({ active: false, message: "", code: 0 });
     handleFormasPago(monto, selectedFormaPago, "add");
     setMonto(0);
     setSelectedFormaPago(0);
@@ -54,7 +56,7 @@ function FinalizarPedido() {
         ) : (
           <Grid container spacing={2} pt={1} alignItems="center">
             <Grid size={{ xs: 12, sm: 4 }}>
-              <FormaPagoSelect selectedFormaPago={selectedFormaPago} setSelectedFormaPago={setSelectedFormaPago} error={error.code === 3} />
+              <FormaPagoSelect selectedFormaPago={selectedFormaPago} setSelectedFormaPago={setSelectedFormaPago} error={error.code === 43} />
             </Grid>
             <Grid size={{ xs: 12, sm: 4 }}>
               <NumericFormat
