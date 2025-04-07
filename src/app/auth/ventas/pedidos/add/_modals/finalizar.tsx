@@ -8,6 +8,7 @@ import useModal from "../_hooks/useModal";
 import { useState } from "react";
 import { NumericFormat } from "react-number-format";
 import ListaFormaPago from "../_components/listaformapago";
+import Teclado from "../_components/teclado";
 
 function FinalizarPedido() {
   const { pedidos, index, setResult, setError, error, handleFormasPago } = useHook();
@@ -16,6 +17,7 @@ function FinalizarPedido() {
   const { validate } = useValidator();
   const [selectedFormaPago, setSelectedFormaPago] = useState<number>(0);
   const [monto, setMonto] = useState(0);
+  const [inputValue, setInputValue] = useState("");
 
   const agregarFormaPago = () => {
     if (selectedFormaPago === 0) return setError({ active: true, message: "Seleccione una forma de pago", code: 43 });
@@ -23,6 +25,28 @@ function FinalizarPedido() {
     handleFormasPago(monto, selectedFormaPago, "add");
     setMonto(0);
     setSelectedFormaPago(0);
+  };
+
+  const handleNumberClick = (value: string) => {
+    const newValue = inputValue + value;
+    setInputValue(newValue);
+    // Convertir el valor a número y actualizar el estado monto
+    setMonto(parseFloat(newValue.replace(/\./g, "")));
+  };
+  const handleBackspace = () => {
+    if (inputValue.length > 0) {
+      // Eliminar el último carácter del inputValue
+      const newValue = inputValue.slice(0, -1);
+      setInputValue(newValue);
+
+      // Actualizar también el valor numérico
+      if (newValue === "") {
+        setMonto(0);
+      } else {
+        const numericValue = newValue.replace(/\./g, "");
+        setMonto(parseFloat(numericValue) || 0);
+      }
+    }
   };
 
   const finalizarPedido = async () => {
@@ -48,17 +72,17 @@ function FinalizarPedido() {
   };
 
   return (
-    <Dialog maxWidth="lg" open={modal.finalizar} onClose={() => handleModal("finalizar")}>
+    <Dialog maxWidth="sm" open={modal.finalizar} onClose={() => handleModal("finalizar")}>
       <DialogTitle>Finalizar Pedido</DialogTitle>
       <DialogContent>
         {isLoading ? (
           <LinearProgress />
         ) : (
           <Grid container spacing={2} pt={1} alignItems="center">
-            <Grid size={{ xs: 12, sm: 4 }}>
+            <Grid size={{ xs: 12, sm: 12 }}>
               <FormaPagoSelect selectedFormaPago={selectedFormaPago} setSelectedFormaPago={setSelectedFormaPago} error={error.code === 43} />
             </Grid>
-            <Grid size={{ xs: 12, sm: 4 }}>
+            <Grid size={{ xs: 12, sm: 12 }}>
               <NumericFormat
                 customInput={TextField}
                 thousandSeparator="."
@@ -67,6 +91,7 @@ function FinalizarPedido() {
                 name="monto"
                 onValueChange={(e) => {
                   setMonto(Number(e.value));
+                  setInputValue(e.formattedValue);
                 }}
                 value={monto}
                 fullWidth
@@ -75,13 +100,14 @@ function FinalizarPedido() {
                 error={error.code === 7}
               />
             </Grid>
-            <Grid size={{ xs: 12, sm: 4 }}>
-              <Button onClick={agregarFormaPago}>Agregar</Button>
+            <Grid size={{ xs: 12, sm: 12 }}>
+              <Teclado onEnter={agregarFormaPago} onNumberClick={handleNumberClick} onBackspace={handleBackspace} />
             </Grid>
-            <Grid size={{ xs: 12, sm: 6 }}>
+
+            <Grid size={{ xs: 12, sm: 12 }}>
               <ListaFormaPago />
             </Grid>
-            <Grid size={{ xs: 12, sm: 6 }}>
+            <Grid size={{ xs: 12, sm: 12 }}>
               <EntregadoCheck />
             </Grid>
           </Grid>
