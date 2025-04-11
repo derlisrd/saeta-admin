@@ -66,6 +66,35 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
   const consultarCodigoInsertar = useCallback(
     async (codigo: string) => {
       setLoadingAddProducto(true);
+
+      // Verificar primero si el producto ya existe en el pedido actual
+      const existingItemIndex = pedidos[index].items.findIndex((item) => item.codigo === codigo);
+
+      if (existingItemIndex !== -1) {
+        // Si el producto ya existe, solo actualizamos la cantidad sin consultar a la API
+        setPedidos((prevPedidos) => {
+          const updatedPedidos = [...prevPedidos];
+          const item = updatedPedidos[index].items[existingItemIndex];
+          const cantidadNueva = item.cantidad + cantidad;
+          if (cantidadNueva > item.cantidad_disponible) {
+            setError({ code: 2, message: "La cantidad solicitada es mayor al stock disponible", active: true });
+            return prevPedidos;
+          }
+          updatedPedidos[index].items[existingItemIndex] = new AddPedidoItem({
+            ...item,
+            cantidad: cantidadNueva,
+            total: item.precio * (item.cantidad + cantidad),
+          });
+
+          set(updatedPedidos, index);
+          return updatedPedidos;
+        });
+
+        setLoadingAddProducto(false);
+        return;
+      }
+
+      // Si el producto no existe, entonces hacemos la consulta a la API
       const res = await API.productos.consultarCodigoPorDeposito(userData && userData?.token, codigo, selectedDeposito, cantidad);
       setLoadingAddProducto(false);
 
@@ -76,39 +105,30 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
 
       setPedidos((prevPedidos) => {
         const updatedPedidos = [...prevPedidos];
-        const existingItemIndex = updatedPedidos[index].items.findIndex((item) => item.codigo === codigo);
 
-        if (existingItemIndex !== -1) {
-          const item = updatedPedidos[index].items[existingItemIndex];
-          updatedPedidos[index].items[existingItemIndex] = new AddPedidoItem({
-            ...item,
-            cantidad: item.cantidad + cantidad,
-            total: item.precio * (item.cantidad + cantidad),
-          });
-        } else {
-          if (res.results) {
-            updatedPedidos[index].items.push(
-              new AddPedidoItem({
-                producto_id: res.results.id,
-                deposito_id: selectedDeposito,
-                impuesto_id: res.results.impuesto_id,
-                cantidad,
-                precio: res.results.precio_normal,
-                descuento: 0,
-                total: res.results.precio_normal * cantidad,
-                observacion: "",
-                codigo: res.results.codigo,
-                nombre: res.results.nombre,
-              })
-            );
-          }
+        if (res.results) {
+          updatedPedidos[index].items.push(
+            new AddPedidoItem({
+              producto_id: res.results.id,
+              deposito_id: selectedDeposito,
+              impuesto_id: res.results.impuesto_id,
+              cantidad,
+              precio: res.results.precio_normal,
+              descuento: 0,
+              total: res.results.precio_normal * cantidad,
+              observacion: "",
+              codigo: res.results.codigo,
+              nombre: res.results.nombre,
+              cantidad_disponible: res.results.cantidad,
+            })
+          );
         }
 
         set(updatedPedidos, index);
         return updatedPedidos;
       });
     },
-    [cantidad, index, selectedDeposito, set, userData?.token]
+    [cantidad, index, selectedDeposito, set, userData?.token, pedidos]
   );
 
   const changePedido = useCallback(

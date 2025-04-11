@@ -1,5 +1,6 @@
 import Icon from "@/components/ui/icon";
 import { Button, Grid2 as Grid } from "@mui/material";
+import { useEffect } from "react";
 
 interface TecladoProps {
   onEnter: () => void;
@@ -12,6 +13,36 @@ function Teclado({ onEnter, onNumberClick, onBackspace }: TecladoProps) {
   const handleNumberClick = (value: string) => {
     onNumberClick(value);
   };
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      const { key } = event;
+      // Verifica si la tecla presionada es un número del 0-9
+      if (/^[0-9]$/.test(key)) {
+        handleNumberClick(key);
+      }
+      // Verifica si es la tecla Enter
+      else if (key === "Enter") {
+        onEnter();
+      }
+      // Verifica si es la tecla de retroceso (Backspace)
+      else if (key === "Backspace") {
+        onBackspace();
+      }
+      // Para el punto decimal
+      else if (key === ".") {
+        handleNumberClick(".");
+      }
+    };
+
+    // Agrega el event listener al montar el componente
+    window.addEventListener("keydown", handleKeyDown);
+    console.log("Teclado montado");
+    // Limpia el event listener al desmontar el componente
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [onEnter, onBackspace, onNumberClick]);
 
   return (
     <Grid container spacing={1}>

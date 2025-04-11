@@ -1,5 +1,5 @@
 import Icon from "@/components/ui/icon";
-import { List, ListItem, IconButton, ListItemButton, ListItemText } from "@mui/material";
+import { List, ListItem, IconButton, ListItemText } from "@mui/material";
 import useHook from "../_hooks/useHook";
 
 function ListaFormaPago() {
@@ -11,13 +11,11 @@ function ListaFormaPago() {
           key={i}
           secondaryAction={
             <IconButton edge="end">
-              <Icon>delete</Icon>
+              <Icon>trash</Icon>
             </IconButton>
           }
         >
-          <ListItemButton>
-            <ListItemText primary={formaPago.abreviatura} secondary={formaPago.monto} />
-          </ListItemButton>
+          <ListItemText primary={formaPago.abreviatura} secondary={formaPago.monto} />
         </ListItem>
       ))}
     </List>

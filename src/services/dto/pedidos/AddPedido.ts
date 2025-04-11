@@ -52,6 +52,7 @@ export class AddPedidoItem {
   descuento: number;
   total: number;
   observacion: string;
+  cantidad_disponible: number;
 
   constructor({
     producto_id = 0,
@@ -63,7 +64,8 @@ export class AddPedidoItem {
     total = 0,
     observacion = "",
     codigo = "",
-    nombre = ""
+    nombre = "",
+    cantidad_disponible = 0
   }: Partial<AddPedidoItem>) {
     this.producto_id = producto_id;
     this.deposito_id = deposito_id;
@@ -75,6 +77,7 @@ export class AddPedidoItem {
     this.observacion = observacion;
     this.codigo = codigo;
     this.nombre = nombre;
+    this.cantidad_disponible = cantidad_disponible;
   }
 }
 
