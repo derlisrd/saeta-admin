@@ -2,10 +2,11 @@ import useAddClientes from "@/core/hooks/clientes/useAddCliente";
 import { AddCliente } from "@/services/dto/clientes/AddCliente";
 import { Alert, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid2 as Grid, LinearProgress, TextField } from "@mui/material";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function ClientesAdd() {
   const { isLoading, error, addNewCliente } = useAddClientes();
-
+  const navigate = useNavigate();
   const initialForm: AddCliente = {
     nombres: "",
     apellidos: "",
@@ -20,7 +21,7 @@ function ClientesAdd() {
   const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => setForm({ ...form, [target.name]: target.value });
 
   return (
-    <Dialog open={true} onClose={() => {}}>
+    <Dialog open={true} onClose={() => navigate(-1)}>
       <DialogTitle>Registrar nuevo cliente</DialogTitle>
       <DialogContent>
         {error && <Alert severity="error">{error.message}</Alert>}
@@ -50,7 +51,7 @@ function ClientesAdd() {
         <Button disabled={isLoading} onClick={() => addNewCliente(form)} variant="contained">
           Registrar
         </Button>
-        <Button disabled={isLoading} onClick={() => {}} variant="outlined">
+        <Button disabled={isLoading} onClick={() => navigate(-1)} variant="outlined">
           Cancelar
         </Button>
       </DialogActions>
