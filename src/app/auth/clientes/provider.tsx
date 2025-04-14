@@ -59,6 +59,7 @@ function ClientesProvider({ children }: { children: React.ReactNode }) {
                 doc: newData.doc,
                 extranjero: newData.extranjero,
                 telefono: newData.telefono,
+                email: newData.email,
               });
             }
             return {

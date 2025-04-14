@@ -18,46 +18,45 @@ export class PedidosDelDiaResults {
   created_at: string;
   total: number;
   estado: number;
-  cliente: ClientePedidoResults;
+  razon_social: string;
+  doc: string;
+  items: ItemsPedidoResults[];
 
   constructor({ id = 0, fecha = "", total = 0, estado = 0, created_at='',
-    cliente = new ClientePedidoResults({})
+    razon_social ='', doc = '', items = []
    }: Partial<PedidosDelDiaResults>) {
     this.id = id;
     this.fecha = fecha;
     this.total = total;
     this.estado = estado;
     this.created_at = created_at;
-    this.cliente = cliente;
+    this.razon_social = razon_social;
+    this.doc = doc;
+    this.items = items;
   }
 
   static fromJson(json: any): PedidosDelDiaResults {
     return new PedidosDelDiaResults({
       ...json,
-      fecha: json.created_at,
-      created_at: (json.created_at),
+      fecha: json.created_at
     });
   }
 }
 
-export class ClientePedidoResults {
-  id: number;
-  doc: string;
-  email: string | null;
-  tipo: number;
-  razon_social: string;
-  telefono: string | null;
 
-constructor({ id = 0, doc = "", email = "", tipo = 0, razon_social = "", telefono = "" }: Partial<ClientePedidoResults>) {
-    this.id = id;
-    this.doc = doc;
-    this.email = email;
-    this.tipo = tipo;
-    this.razon_social = razon_social;
-    this.telefono = telefono;
-  }
-}
 
 export class ItemsPedidoResults {
-    
+    codigo_producto: string;
+    cantidad: number;
+    nombre_prooducto: string;
+    precio: number;
+    total: number;
+
+    constructor({ codigo_producto = "", cantidad = 0, nombre_prooducto = "", precio = 0, total = 0 }: Partial<ItemsPedidoResults>) {
+        this.codigo_producto = codigo_producto;
+        this.cantidad = cantidad;
+        this.nombre_prooducto = nombre_prooducto;
+        this.precio = precio;
+        this.total = total;
+    }
 }

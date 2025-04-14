@@ -17,24 +17,17 @@ function AddModal() {
     email: "",
   };
   const [form, setForm] = useState<AddCliente>(initialForm);
-  const clear = () => {
-    setForm(initialForm);
-  };
+  const clear = () => setForm(initialForm);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => setForm({ ...form, [target.name]: target.value });
 
   return (
     <Dialog open={modals.crear} onClose={() => handleModal("crear")}>
       <DialogTitle>Registrar nuevo cliente</DialogTitle>
       <DialogContent>
-        {isPendingAdd && <LinearProgress />}
         {error && <Alert severity="error">{error.message}</Alert>}
         <Grid container spacing={{ xs: 1, md: 2 }} pt={1}>
+          <Grid size={12}>{isPendingAdd && <LinearProgress />}</Grid>
           <Grid size={{ xs: 12, md: 6 }}>
             <TextField disabled={isPendingAdd} fullWidth label="Nombre o Empresa" onChange={handleChange} name="nombres" value={form.nombres} autoFocus autoComplete="off" />
           </Grid>
