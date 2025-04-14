@@ -22,13 +22,16 @@ function useListaPedidos() {
                 return []; // Retornar array vacío si no hay token
             }
             const res = await API.pedidos.lista(userData.token)
-            if(res && res.success) {setLista (res.results)}
+            if(res && res.success) {
+                setLista (res.results)
+                return res.results
+            }
             return []
         },
-        staleTime: 1000 * 60 * 5, // 5 minutos
-        refetchOnMount: false,
-        refetchOnWindowFocus: false, // Evita recargar cuando la ventana recupera el foco
+        enabled: Boolean(userData && userData?.token), 
+        staleTime: 1000 * 60 * 5
     })
+    
     
     return {lista, isLoading, refetch, setSearch, search, buscar}
 }
