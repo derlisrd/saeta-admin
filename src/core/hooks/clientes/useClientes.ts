@@ -13,7 +13,7 @@ function useClientes() {
 
 
     const { isLoading, data } = useQuery({
-        queryKey:['listaPedidos'],
+        queryKey:['listaClientes'],
         queryFn: async() =>{
             const res = await API.clientes.list(userData && userData.token)
             if(res && res.success && res.results) {

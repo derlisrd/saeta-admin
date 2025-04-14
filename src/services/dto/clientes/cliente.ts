@@ -2,7 +2,7 @@ export class ClienteResults{
     id: number;
     nombres: string;
     apellidos: string | null;
-    razon_social: string | null;
+    razon_social: string;
     doc: string;
     extranjero: boolean;
     telefono: string | null;

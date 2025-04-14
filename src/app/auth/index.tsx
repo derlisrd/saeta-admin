@@ -1,3 +1,4 @@
+import "@/styles/tables/virtualized.css";
 import { Route, Routes } from "react-router-dom";
 import AuthMenuLayout from "@/layout/AuthMenuLayout";
 import { Suspense, lazy, LazyExoticComponent } from "react";

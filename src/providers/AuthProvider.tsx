@@ -74,6 +74,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     },
     staleTime: 5 * 60 * 1000, // Evita reconsultas innecesarias por 5 minutos
     refetchOnWindowFocus: true,
+    refetchInterval: 5 * 60 * 1000, // Refresca cada 5 minutos
   });
 
   const isTokenExpired = (token: string): boolean => {

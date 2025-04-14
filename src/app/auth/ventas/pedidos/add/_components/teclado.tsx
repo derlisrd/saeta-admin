@@ -37,7 +37,6 @@ function Teclado({ onEnter, onNumberClick, onBackspace }: TecladoProps) {
 
     // Agrega el event listener al montar el componente
     window.addEventListener("keydown", handleKeyDown);
-    console.log("Teclado montado");
     // Limpia el event listener al desmontar el componente
     return () => {
       window.removeEventListener("keydown", handleKeyDown);

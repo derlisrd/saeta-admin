@@ -2,13 +2,13 @@ export const parametros = [
     {
         title: 'Formas de pagos',
         subtitle: 'Configuración de las formas de pago',
-        icon: 'payments',
+        icon: 'cash-register',
         url: '/config/parametros/formas-pago'
     },
     {
         title: 'Unidades de medida',
         subtitle: 'Configuración de las unidades de medida',
-        icon: 'device_thermostat',
+        icon: 'meter-square',
         url: '/config/parametros/unidades-medida'
     }
 ]

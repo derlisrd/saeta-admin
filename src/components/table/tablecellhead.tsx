@@ -12,7 +12,7 @@ export default function TableCellHead({ children }: { children: React.ReactNode 
         height: 48,
         bgcolor: "primary.main",
         color: "white",
-        paddingLeft: 1,
+        padding: "0 0 0 14px",
       }}
     >
       {children}

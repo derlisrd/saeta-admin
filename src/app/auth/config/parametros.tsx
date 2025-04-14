@@ -1,5 +1,6 @@
+import Icon from "@/components/ui/icon";
 import { parametros } from "@/constants/parametros";
-import { Avatar, Box, Breadcrumbs, Card, CardContent, Container, Grid2 as Grid, Icon, Stack, Typography } from "@mui/material";
+import { Avatar, Box, Breadcrumbs, Card, CardContent, Container, Grid2 as Grid, Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
 function Parametros() {
@@ -19,7 +20,7 @@ function Parametros() {
                   <Stack direction="row" spacing={2} alignItems="center">
                     <Box>
                       <Avatar sx={{ width: 48, height: 48, bgcolor: "primary.light" }}>
-                        <Icon fontSize="large">{e.icon}</Icon>
+                        <Icon size={24}>{e.icon}</Icon>
                       </Avatar>
                     </Box>
                     <Box>

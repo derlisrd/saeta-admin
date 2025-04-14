@@ -15,6 +15,7 @@ import useModal from "./_hooks/useModal";
 function Main() {
   const { error, clearError } = useHook();
   const { modal } = useModal();
+
   return (
     <Dialog open={modal.main} fullScreen TransitionComponent={Fade} PaperProps={{ sx: { borderRadius: "0" } }}>
       <Error error={error} clearError={clearError} />

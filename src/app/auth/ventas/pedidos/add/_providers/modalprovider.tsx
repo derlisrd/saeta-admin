@@ -14,26 +14,39 @@ function ModalProvider({ children }: { children: ReactNode }) {
   };
 
   useEffect(() => {
-    const keyActions: Record<string, () => void> = {
-      F6: () => {
-        handleModal("clientes");
-      },
-      F7: () => {
-        handleModal("productos");
-      },
-    };
-
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (keyActions[event.key]) {
-        event.preventDefault();
-        keyActions[event.key]();
+      // Mapeo de teclas a acciones usando un objeto
+      const keyActions: Record<string, () => void> = {
+        F5: () => handleModal("productos"),
+        F6: () => handleModal("registro"),
+        F7: () => handleModal("clientes"),
+        F8: () => handleModal("finalizar"),
+        Escape: clearAllModals,
+      };
+      console.log(event.key);
+
+      const action = keyActions[event.key];
+
+      // Si existe una acción para esta tecla
+      if (action) {
+        // Prevenir comportamiento por defecto para F5-F10
+        if (event.key.startsWith("F")) {
+          event.preventDefault();
+        }
+
+        // Ejecutar la acción
+        action();
       }
     };
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [handleModal]);
 
-  const values = { modal, handleModal, clearAllModals };
+    // Limpieza al desmontar
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [modal, handleModal, clearAllModals]);
+
+  const values = { modal, handleModal, clearAllModals, setModal };
   return <ModalContext.Provider value={values}>{children}</ModalContext.Provider>;
 }
 

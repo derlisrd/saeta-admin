@@ -1,47 +1,13 @@
 import useListaPedidos from "@/core/hooks/ventas/pedidos/useListaPedidos";
 import { ColumnConfigPedidosType } from "@/core/types/columnconfigpedidos";
-import { Container, Box, Paper, TableContainer, LinearProgress } from "@mui/material";
+import { Container, Box, TableContainer, LinearProgress, Stack, Tooltip, IconButton } from "@mui/material";
 import { Column, Table, TableCellProps, TableHeaderProps } from "react-virtualized";
 import AutoSizer from "react-virtualized-auto-sizer";
 import { format } from "@formkit/tempo";
-
-const TableCellHead = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <Box
-      sx={{
-        flex: 1,
-        display: "flex",
-        alignItems: "center",
-        boxSizing: "border-box",
-        cursor: "pointer",
-        height: 48,
-        bgcolor: "primary.main",
-        color: "white",
-        paddingLeft: 1,
-      }}
-    >
-      {children}
-    </Box>
-  );
-};
-
-const TableCell = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <Box
-      sx={{
-        flex: 1,
-        display: "flex",
-        alignItems: "center",
-        boxSizing: "border-box",
-        height: 48,
-        fontSize: 13,
-        paddingLeft: 1,
-      }}
-    >
-      {children}
-    </Box>
-  );
-};
+import TableCellHead from "@/components/table/tablecellhead";
+import TableCell from "@/components/table/tablecell";
+import Icon from "@/components/ui/icon";
+import Filtros from "./_components/filtros";
 
 const headerRenderer = ({ label }: TableHeaderProps) => <TableCellHead>{label}</TableCellHead>;
 const cellRenderer = ({ cellData }: TableCellProps) => <TableCell>{cellData}</TableCell>;
@@ -53,10 +19,30 @@ const getColumnConfig = (width: number): ColumnConfigPedidosType[] => [
   { dataKey: "estado", label: "Estado", width: width * 0.1 },
   { dataKey: "total", label: "Total", width: width * 0.18 },
   { dataKey: "created_at", label: "Fecha", width: width * 0.18, cellRenderer: ({ rowData }: TableCellProps) => format(rowData.created_at, "DD-MM-YY HH:mm") },
-  { dataKey: "_", label: "Acciones", width: width * 0.18 },
+  {
+    dataKey: "_",
+    label: "Acciones",
+    width: width * 0.18,
+    cellRenderer: ({ rowData }: TableCellProps) => (
+      <Stack direction="row">
+        <Tooltip title="Imprimir" placement="left" arrow>
+          <IconButton onClick={() => console.log("Imprimir")}>
+            <Icon>printer</Icon>
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Cancelar" placement="bottom" arrow>
+          <IconButton onClick={() => console.log("Imprimir")}>
+            <Icon>x</Icon>
+          </IconButton>
+        </Tooltip>
+      </Stack>
+    ),
+  },
 ];
 function ListaPedidos() {
-  const { lista, isLoading } = useListaPedidos();
+  const { lista, isLoading, refetch, search, setSearch, buscar } = useListaPedidos();
+
+  const listado = lista?.filter((item) => item?.razon_social.toLowerCase().includes(search.toLowerCase()) || item?.doc.toLowerCase().includes(search.toLowerCase()) || []);
 
   return (
     <Container>
@@ -64,9 +50,10 @@ function ListaPedidos() {
       {isLoading ? (
         <LinearProgress />
       ) : (
-        <Box boxShadow={3} borderRadius={4} component={Paper}>
-          <TableContainer component={Paper} sx={{ borderRadius: 1, border: 0, boxShadow: 0, minHeight: `calc(100% - 140px)` }}>
-            {lista && (
+        <Box>
+          <Filtros setSearch={setSearch} buscar={buscar} search={search} refresh={refetch} />
+          <TableContainer sx={{ borderRadius: 1, border: 0, boxShadow: 0, minHeight: `calc(100% - 140px)` }}>
+            {listado && (
               <AutoSizer>
                 {({ height, width }) => (
                   <Table
@@ -75,8 +62,8 @@ function ListaPedidos() {
                     rowHeight={48!}
                     headerHeight={48!}
                     rowStyle={{ display: "flex", alignItems: "center" }}
-                    rowCount={lista.length}
-                    rowGetter={({ index }) => lista[index]}
+                    rowCount={listado.length}
+                    rowGetter={({ index }) => listado[index]}
                   >
                     {getColumnConfig(width).map((column) => (
                       <Column

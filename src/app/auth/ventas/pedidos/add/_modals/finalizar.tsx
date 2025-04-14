@@ -9,10 +9,12 @@ import { useState } from "react";
 import { NumericFormat } from "react-number-format";
 import ListaFormaPago from "../_components/listaformapago";
 import Teclado from "../_components/teclado";
+import useFinalizarPedido from "../_hooks/useFinalizarPedido";
 
 function FinalizarPedido() {
-  const { pedidos, index, setResult, setError, error, handleFormasPago } = useHook();
-  const { modal, handleModal } = useModal();
+  const { pedidos, index, setResult, handleFormasPago } = useHook();
+  const { setError, error } = useFinalizarPedido();
+  const { modal, handleModal, setModal } = useModal();
   const { insertPedido, isLoading } = useInsertPedido();
   const { validate } = useValidator();
   const [selectedFormaPago, setSelectedFormaPago] = useState<number>(0);
@@ -67,7 +69,7 @@ function FinalizarPedido() {
 
     if (res.success && res.results) {
       setResult(res);
-      handleModal("success");
+      setModal({ ...modal, finalizar: false, main: false, success: true });
     }
   };
 

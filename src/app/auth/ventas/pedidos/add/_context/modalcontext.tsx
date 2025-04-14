@@ -5,6 +5,7 @@ interface ModalContextProps {
   modal: modalType;
   handleModal: (name: keyof modalType) => void;
   clearAllModals: () => void;
+  setModal: React.Dispatch<React.SetStateAction<modalType>>;
 }
 
 const ModalContext = createContext<ModalContextProps>({
@@ -17,6 +18,7 @@ const ModalContext = createContext<ModalContextProps>({
     error: false,
     success: false,
   },
+  setModal: () => {},
   handleModal: () => {},
   clearAllModals: () => {},
 });

@@ -16,9 +16,9 @@ function useValidator() {
             }
             return error
         }
-        if(form.formas_pago_id === 0){
+        if(form.formas_pagos.length === 0){
             error = {
-                code: 3,
+                code: 43,
                 active: true,
                 message: "Debe seleccionar una forma de pago"
             }
