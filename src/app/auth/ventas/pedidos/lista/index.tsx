@@ -1,6 +1,6 @@
 import useListaPedidos from "@/core/hooks/ventas/pedidos/useListaPedidos";
 import { ColumnConfigPedidosType } from "@/core/types/columnconfigpedidos";
-import { Container, Box, TableContainer, LinearProgress, Stack, Tooltip, IconButton } from "@mui/material";
+import { Container, Box, LinearProgress, Stack, Tooltip, IconButton } from "@mui/material";
 import { Column, Table, TableCellProps, TableHeaderProps } from "react-virtualized";
 import AutoSizer from "react-virtualized-auto-sizer";
 import { format } from "@formkit/tempo";
@@ -8,6 +8,8 @@ import TableCellHead from "@/components/table/tablecellhead";
 import TableCell from "@/components/table/tablecell";
 import Icon from "@/components/ui/icon";
 import Filtros from "./_components/filtros";
+import { PedidosDelDiaResults } from "@/services/dto/pedidos/pedidosDelDia";
+import StyledTableContainer from "@/components/table/styledtable";
 
 const headerRenderer = ({ label }: TableHeaderProps) => <TableCellHead>{label}</TableCellHead>;
 const cellRenderer = ({ cellData }: TableCellProps) => <TableCell>{cellData}</TableCell>;
@@ -42,17 +44,16 @@ const getColumnConfig = (width: number): ColumnConfigPedidosType[] => [
 function ListaPedidos() {
   const { lista, isLoading, refetch, search, setSearch, buscar } = useListaPedidos();
 
-  const listado = lista?.filter((item) => item?.razon_social.toLowerCase().includes(search.toLowerCase()) || item?.doc.toLowerCase().includes(search.toLowerCase()) || []);
+  const listado = lista && lista.filter((item: PedidosDelDiaResults) => item.razon_social.toLowerCase().includes(search.toLowerCase()) || item.doc.includes(search));
 
   return (
     <Container>
-      <h3>Lista de pedidos</h3>
       {isLoading ? (
         <LinearProgress />
       ) : (
         <Box>
           <Filtros setSearch={setSearch} buscar={buscar} search={search} refresh={refetch} />
-          <TableContainer sx={{ borderRadius: 1, border: 0, boxShadow: 0, minHeight: `calc(100% - 140px)` }}>
+          <StyledTableContainer sx={{ borderRadius: 1, border: 0, boxShadow: 0, minHeight: `calc(100% - 180px)` }}>
             {listado && (
               <AutoSizer>
                 {({ height, width }) => (
@@ -79,7 +80,7 @@ function ListaPedidos() {
                 )}
               </AutoSizer>
             )}
-          </TableContainer>
+          </StyledTableContainer>
         </Box>
       )}
     </Container>

@@ -9,15 +9,17 @@ interface FiltrosProps {
 }
 
 function Filtros({ setSearch, buscar, search, refresh }: FiltrosProps) {
+  console.log(search);
+
   return (
-    <Grid container p={1.5} spacing={0.5} alignItems="center">
+    <Grid container p={1} spacing={1} alignItems="center">
       <Grid size={{ xs: 12, md: 4 }}>
         <TextField
           slotProps={{
             input: {
               startAdornment: (
                 <InputAdornment position="start">
-                  <Icon size={18}>user-search</Icon>
+                  <Icon size={18}>search</Icon>
                 </InputAdornment>
               ),
             },
@@ -29,7 +31,7 @@ function Filtros({ setSearch, buscar, search, refresh }: FiltrosProps) {
           }}
           value={search}
           placeholder="Buscar..."
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={({ target }) => setSearch(target.value)}
           fullWidth
         />
       </Grid>

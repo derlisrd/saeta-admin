@@ -81,7 +81,7 @@ function AuthMenuLayout() {
         <MenuNavList navegar={navegar} isMobile />
       </Drawer>
       <TopBar />
-      <Box sx={{ paddingTop: "48px", paddingLeft: 2, paddingRight: 2, width: { md: width_main }, marginLeft: { md: margin_left }, transition: "all 0.2s" }}>
+      <Box sx={{ paddingTop: 8, paddingLeft: 2, paddingRight: 2, width: { md: width_main }, marginLeft: { md: margin_left }, transition: "all 0.2s" }}>
         <Outlet />
       </Box>
     </div>

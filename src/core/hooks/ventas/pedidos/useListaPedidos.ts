@@ -1,6 +1,6 @@
 import { useAuth } from "@/providers/AuthProvider"
 import API from "@/services/api"
-import { PedidosDelDiaResults } from "@/services/dto/pedidos/pedidosDelDia"
+//import { PedidosDelDiaResults } from "@/services/dto/pedidos/pedidosDelDia"
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
 
@@ -9,13 +9,13 @@ function useListaPedidos() {
     const {userData} = useAuth()
 
     const [search, setSearch] = useState("")
-    const [lista,setLista] = useState<PedidosDelDiaResults[]>([])
+    // const [lista,setLista] = useState<PedidosDelDiaResults[]>([])
 
     const buscar = ()=>{
 
     }
 
-    const {isLoading, refetch} = useQuery({
+    const {isLoading, refetch, isFetching, data} = useQuery({
         queryKey:['listaPedidos'],
         queryFn: async () => {
             if (!userData || !userData.token) {
@@ -23,7 +23,6 @@ function useListaPedidos() {
             }
             const res = await API.pedidos.lista(userData.token)
             if(res && res.success) {
-                setLista (res.results)
                 return res.results
             }
             return []
@@ -33,7 +32,7 @@ function useListaPedidos() {
     })
     
     
-    return {lista, isLoading, refetch, setSearch, search, buscar}
+    return {lista : data, isLoading : isFetching || isLoading, refetch, setSearch, search, buscar}
 }
 
 export default useListaPedidos

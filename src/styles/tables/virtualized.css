@@ -2,30 +2,27 @@
     border-radius: 12px;
     text-transform : uppercase;
 }
-@media (max-width: 900px) {
-
-}
-
 .ReactVirtualized__Table__row{
-    border-bottom-width: 1px;
     padding: 0 14px;
-    border-bottom: 1px solid #e0e0e0;
+    cursor: pointer;
 }
 .ReactVirtualized__Table__row:hover{
-    background-color: red;
+    background-color: #e0e0e0;
     cursor: pointer;
 }
 .ReactVirtualized__Table__row:nth-child(even){
-    border-bottom: 1px solid #e0e0e0;
-    background-color: #f5f5f5;
+    background-color: #ddd;
 }
 /* Estilos para tema oscuro */
 @media (prefers-color-scheme: dark) {
+    .ReactVirtualized__Table__row{
+        padding: 0 14px;
+    }
+
     .ReactVirtualized__Table__row:nth-child(even){
-        background: none;
+        background-color: #ddd;
     }
     .ReactVirtualized__Table__row:hover{
-        background:none;
-        cursor: pointer;
+        background-color: #2D3748;
     }
 }
