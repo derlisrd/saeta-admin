@@ -10,5 +10,11 @@ export const parametros = [
         subtitle: 'Configuración de las unidades de medida',
         icon: 'meter-square',
         url: '/config/parametros/unidades-medida'
+    },
+    {
+        title: 'Configuración de impresoras',
+        subtitle: 'Configuración de las impresoras',
+        icon: 'printer',
+        url: '/config/parametros/unidades-medida'
     }
 ]
