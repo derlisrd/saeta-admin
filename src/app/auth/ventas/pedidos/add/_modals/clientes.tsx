@@ -13,7 +13,7 @@ function ClientesModal() {
     handleModal("clientes");
   };
   return (
-    <Dialog fullWidth open={modal.clientes} onClose={() => handleModal("clientes")}>
+    <Dialog fullWidth open={modal.clientes} onClose={() => handleModal("clientes")} disableRestoreFocus>
       <DialogTitle>Buscar clientes</DialogTitle>
       <DialogContent>
         <Grid container spacing={1} pt={1}>

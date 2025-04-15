@@ -10,9 +10,11 @@ import { NumericFormat } from "react-number-format";
 import ListaFormaPago from "../_components/listaformapago";
 import Teclado from "../_components/teclado";
 import useFinalizarPedido from "../_hooks/useFinalizarPedido";
+import useResponsive from "@/hooks/useResponsive";
 
 function FinalizarPedido() {
   const { pedidos, index, setResult, handleFormasPago } = useHook();
+  const { isSmDown } = useResponsive();
   const { setError, error } = useFinalizarPedido();
   const { modal, handleModal, setModal } = useModal();
   const { insertPedido, isLoading } = useInsertPedido();
@@ -74,7 +76,7 @@ function FinalizarPedido() {
   };
 
   return (
-    <Dialog maxWidth="sm" open={modal.finalizar} onClose={() => handleModal("finalizar")}>
+    <Dialog maxWidth="sm" disableRestoreFocus fullScreen={isSmDown} open={modal.finalizar} onClose={() => handleModal("finalizar")}>
       <DialogTitle>
         <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
           <Typography variant="button" sx={{ display: { xs: "none", sm: "block" } }}>

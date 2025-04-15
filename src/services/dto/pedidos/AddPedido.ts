@@ -1,5 +1,4 @@
 import { ClienteResults } from "../clientes/cliente";
-import { FormasPagoResults } from "../factura/formaspago";
 
 export class AddPedido {
   aplicar_impuesto: boolean;

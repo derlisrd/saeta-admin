@@ -10,12 +10,12 @@ const StyledTableContainer = styled(Box)(({ theme }) => ({
   "& .ReactVirtualized__Table__row": {
     padding: "0 14px",
     cursor: "pointer",
-    transition: "background-color 0.2s ease",
+    transition: "background-color 0.1s ease",
     "&:nth-of-type(even)": {
-      backgroundColor: theme.palette.mode === "light" ? theme.palette.grey[100] : theme.palette.grey[800],
+      backgroundColor: theme.palette.background.paper,
     },
     "&:hover": {
-      backgroundColor: theme.palette.mode === "light" ? theme.palette.grey[200] : theme.palette.grey[700],
+      backgroundColor: theme.palette.mode === "light" ? theme.palette.grey[300] : theme.palette.grey[700],
     },
   },
 }));

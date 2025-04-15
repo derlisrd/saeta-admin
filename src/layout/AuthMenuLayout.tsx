@@ -30,7 +30,7 @@ function AuthMenuLayout() {
       >
         <Stack justifyContent="space-between" flexDirection="row" width="100%" alignItems="center">
           <Stack flexDirection="row" alignItems="center" justifyContent="center" gap={1}>
-            <IconButton onClick={toggleMobileMenu} sx={{ minWidth: "50px", display: { xs: "block", md: "none" } }}>
+            <IconButton onClick={toggleMobileMenu} sx={{ width: "50px", height: "50px", display: { xs: "block", md: "none" } }}>
               <Icon>menu-2</Icon>
             </IconButton>
             <Tooltip placement="bottom" arrow title={isOpenMenu ? "Cerrar menú" : "Abrir menú"}>

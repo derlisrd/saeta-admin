@@ -24,6 +24,15 @@ function useValidator() {
             }
             return error
         }
+        let sumaFormasPago = form.formas_pagos.reduce((sum, formaPago) => sum + formaPago.monto, 0);
+        if(form.total > sumaFormasPago ){
+            error = {
+                code: 7,
+                active: true,
+                message: "El monto abonado no es suficiente"
+            }
+            return error
+        }
 
         return error
     }

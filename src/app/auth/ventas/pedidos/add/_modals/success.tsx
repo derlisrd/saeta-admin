@@ -4,10 +4,11 @@ import { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 import useModal from "../_hooks/useModal";
 import Icon from "@/components/ui/icon";
+import useResponsive from "@/hooks/useResponsive";
 
 function SuccessModal() {
   const { result: data, index, pedidos, limpiarFinalizarPedido } = useHook();
-
+  const { isSmDown } = useResponsive();
   const { modal, clearAllModals } = useModal();
 
   const contentRef = useRef<HTMLDivElement>(null);
@@ -19,7 +20,7 @@ function SuccessModal() {
   };
 
   return (
-    <Dialog open={modal.success} maxWidth="xs" fullWidth onClose={cerrar} TransitionComponent={Slide}>
+    <Dialog open={modal.success} maxWidth="sm" fullScreen={isSmDown} fullWidth onClose={cerrar} TransitionComponent={Slide}>
       <DialogTitle>Detalles de pedido</DialogTitle>
       <DialogContent>
         {data?.results && (

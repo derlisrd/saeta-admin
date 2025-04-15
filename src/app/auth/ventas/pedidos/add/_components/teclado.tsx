@@ -1,5 +1,5 @@
 import Icon from "@/components/ui/icon";
-import { Button, Grid2 as Grid } from "@mui/material";
+import { Button, Box } from "@mui/material";
 import { useEffect } from "react";
 
 interface TecladoProps {
@@ -44,76 +44,102 @@ function Teclado({ onEnter, onNumberClick, onBackspace }: TecladoProps) {
   }, [onEnter, onBackspace, onNumberClick]);
 
   return (
-    <Grid container spacing={1}>
-      <Grid size={{ xs: 3 }}>
-        <Button size="large" fullWidth sx={{ fontSize: { xs: 16, sm: 24 } }} onClick={() => handleNumberClick("1")}>
+    <Box
+      sx={{
+        display: "grid",
+        gridTemplateColumns: "repeat(4, 1fr)",
+        gridTemplateRows: "repeat(4, 1fr)",
+        gap: { xs: 0.5, sm: 2 },
+      }}
+    >
+      {/* Primera fila */}
+      <Box>
+        <Button size="large" fullWidth sx={{ fontSize: { xs: 12, sm: 24 }, height: "100%" }} onClick={() => handleNumberClick("1")}>
           1
         </Button>
-      </Grid>
-      <Grid size={{ xs: 3 }}>
-        <Button size="large" fullWidth sx={{ fontSize: { xs: 16, sm: 24 } }} onClick={() => handleNumberClick("2")}>
+      </Box>
+      <Box>
+        <Button size="large" fullWidth sx={{ fontSize: { xs: 12, sm: 24 }, height: "100%" }} onClick={() => handleNumberClick("2")}>
           2
         </Button>
-      </Grid>
-      <Grid size={{ xs: 3 }}>
-        <Button size="large" fullWidth sx={{ fontSize: { xs: 16, sm: 24 } }} onClick={() => handleNumberClick("3")}>
+      </Box>
+      <Box>
+        <Button size="large" fullWidth sx={{ fontSize: { xs: 12, sm: 24 }, height: "100%" }} onClick={() => handleNumberClick("3")}>
           3
         </Button>
-      </Grid>
-      <Grid size={{ xs: 3 }}>
-        <Button size="large" variant="outlined" fullWidth onClick={onBackspace} startIcon={<Icon size={42}>arrow-narrow-left-dashed</Icon>} />
-      </Grid>
-      <Grid size={{ xs: 3 }}>
-        <Button size="large" fullWidth sx={{ fontSize: { xs: 16, sm: 24 } }} onClick={() => handleNumberClick("4")}>
+      </Box>
+      <Box>
+        <Button size="large" variant="outlined" fullWidth sx={{ height: "100%" }} onClick={onBackspace} startIcon={<Icon size={24}>arrow-narrow-left-dashed</Icon>} />
+      </Box>
+
+      {/* Segunda fila */}
+      <Box>
+        <Button size="large" fullWidth sx={{ fontSize: { xs: 12, sm: 24 }, height: "100%" }} onClick={() => handleNumberClick("4")}>
           4
         </Button>
-      </Grid>
-      <Grid size={{ xs: 3 }}>
-        <Button size="large" fullWidth sx={{ fontSize: { xs: 16, sm: 24 } }} onClick={() => handleNumberClick("5")}>
+      </Box>
+      <Box>
+        <Button size="large" fullWidth sx={{ fontSize: { xs: 12, sm: 24 }, height: "100%" }} onClick={() => handleNumberClick("5")}>
           5
         </Button>
-      </Grid>
-      <Grid size={{ xs: 3 }}>
-        <Button size="large" fullWidth sx={{ fontSize: { xs: 16, sm: 24 } }} onClick={() => handleNumberClick("6")}>
+      </Box>
+      <Box>
+        <Button size="large" fullWidth sx={{ fontSize: { xs: 12, sm: 24 }, height: "100%" }} onClick={() => handleNumberClick("6")}>
           6
         </Button>
-      </Grid>
-      <Grid size={{ xs: 3 }}></Grid>
-      <Grid size={{ xs: 3 }}>
-        <Button size="large" fullWidth sx={{ fontSize: { xs: 16, sm: 24 } }} onClick={() => handleNumberClick("7")}>
+      </Box>
+
+      {/* Botón Enter que ocupa 2 filas */}
+      <Box sx={{ gridRow: "span 2" }}>
+        <Button
+          variant="outlined"
+          sx={{
+            fontSize: { xs: 12, sm: 24 },
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+          fullWidth
+          onClick={onEnter}
+          startIcon={<Icon size={36}>corner-down-left</Icon>}
+        />
+      </Box>
+
+      {/* Tercera fila */}
+      <Box>
+        <Button size="large" fullWidth sx={{ fontSize: { xs: 12, sm: 24 }, height: "100%" }} onClick={() => handleNumberClick("7")}>
           7
         </Button>
-      </Grid>
-      <Grid size={{ xs: 3 }}>
-        <Button size="large" fullWidth sx={{ fontSize: { xs: 16, sm: 24 } }} onClick={() => handleNumberClick("8")}>
+      </Box>
+      <Box>
+        <Button size="large" fullWidth sx={{ fontSize: { xs: 12, sm: 24 }, height: "100%" }} onClick={() => handleNumberClick("8")}>
           8
         </Button>
-      </Grid>
-      <Grid size={{ xs: 3 }}>
-        <Button size="large" fullWidth sx={{ fontSize: { xs: 16, sm: 24 } }} onClick={() => handleNumberClick("9")}>
+      </Box>
+      <Box>
+        <Button size="large" fullWidth sx={{ fontSize: { xs: 12, sm: 24 }, height: "100%" }} onClick={() => handleNumberClick("9")}>
           9
         </Button>
-      </Grid>
-      <Grid size={{ xs: 3 }}></Grid>
-      <Grid size={{ xs: 3 }}>
-        <Button size="large" fullWidth sx={{ fontSize: { xs: 16, sm: 24 } }} variant="outlined" onClick={() => handleNumberClick("000")}>
+      </Box>
+
+      {/* Cuarta fila */}
+      <Box>
+        <Button size="large" fullWidth sx={{ fontSize: { xs: 12, sm: 24 }, height: "100%" }} variant="outlined" onClick={() => handleNumberClick("000")}>
           000
         </Button>
-      </Grid>
-      <Grid size={{ xs: 3 }}>
-        <Button size="large" fullWidth sx={{ fontSize: { xs: 16, sm: 24 } }} onClick={() => handleNumberClick("0")}>
+      </Box>
+      <Box>
+        <Button size="large" fullWidth sx={{ fontSize: { xs: 12, sm: 24 }, height: "100%" }} onClick={() => handleNumberClick("0")}>
           0
         </Button>
-      </Grid>
-      <Grid size={{ xs: 3 }}>
-        <Button size="large" variant="outlined" fullWidth sx={{ fontSize: { xs: 16, sm: 24 } }} onClick={() => handleNumberClick("0")}>
+      </Box>
+      <Box>
+        <Button size="large" variant="outlined" fullWidth sx={{ fontSize: { xs: 12, sm: 24 }, height: "100%" }} onClick={() => handleNumberClick(".")}>
           .
         </Button>
-      </Grid>
-      <Grid size={{ xs: 3 }}>
-        <Button size="large" variant="outlined" sx={{ fontSize: { xs: 16, sm: 24 } }} fullWidth onClick={onEnter} startIcon={<Icon size={42}>corner-down-left</Icon>} />
-      </Grid>
-    </Grid>
+      </Box>
+    </Box>
   );
 }
 
