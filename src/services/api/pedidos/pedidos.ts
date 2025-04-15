@@ -35,7 +35,7 @@ export const apiServicePedidos = {
   },
   lista: async (token: string | null, desde?: string | null, hasta?: string | null) => {
     try {
-      const { data, status } = await BASE.get(`/pedidos`, { headers: { Authorization: token } });
+      const { data, status } = await BASE.get(`/pedidos?desde=${desde}&hasta=${hasta}`, { headers: { Authorization: token } });
       return ({ success: data.success as boolean, status, results: data.results, message: "" });
     } catch (e) {
       console.log(e);

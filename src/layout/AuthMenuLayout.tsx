@@ -3,11 +3,12 @@ import MenuNavList from "./components/MenuNavList";
 import useDrawerMenu from "@/hooks/useDrawerMenu";
 import useThemTypeMode from "@/hooks/useThemeCustom";
 
-import { Drawer, Box, Toolbar, Stack, IconButton, Tooltip } from "@mui/material";
-import { NavigateOptions, Outlet, To, useNavigate } from "react-router-dom";
+import { Drawer, Box, Toolbar, Stack, IconButton, Tooltip, Typography } from "@mui/material";
+import { NavigateOptions, Outlet, To, useLocation, useNavigate } from "react-router-dom";
 
 function AuthMenuLayout() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { isOpenMenu, toggleMenu, isOpenMobileMenu, toggleMobileMenu, DRAWER_WIDTH } = useDrawerMenu();
 
   const { toggleModeDark, modeDark } = useThemTypeMode();
@@ -28,12 +29,20 @@ function AuthMenuLayout() {
         sx={{ position: "fixed", display: "flex", width: "100%", zIndex: 1100, backdropFilter: "blur(5px)", alignItems: "center", padding: "0 !important" }}
       >
         <Stack justifyContent="space-between" flexDirection="row" width="100%" alignItems="center">
-          <IconButton onClick={toggleMobileMenu} sx={{ minWidth: "50px", display: { xs: "block", md: "none" } }}>
-            <Icon color="primary">menu-2</Icon>
-          </IconButton>
-          <IconButton onClick={toggleMenu} sx={{ minWidth: "50px", marginLeft: margin_left, display: { xs: "none", md: "block", transition: "all 0.2s" } }}>
-            <Icon color="primary">{isOpenMenu ? "chevron-left" : "chevron-right"}</Icon>
-          </IconButton>
+          <Stack flexDirection="row" alignItems="center" justifyContent="center" gap={1}>
+            <IconButton onClick={toggleMobileMenu} sx={{ minWidth: "50px", display: { xs: "block", md: "none" } }}>
+              <Icon>menu-2</Icon>
+            </IconButton>
+            <Tooltip placement="bottom" arrow title={isOpenMenu ? "Cerrar menú" : "Abrir menú"}>
+              <IconButton onClick={toggleMenu} sx={{ width: "50px", height: "50px", marginLeft: margin_left, display: { xs: "none", md: "block", transition: "all 0.2s" } }}>
+                <Icon size={24}>{isOpenMenu ? "chevron-left" : "arrow-narrow-right"}</Icon>
+              </IconButton>
+            </Tooltip>
+            <Typography variant="body1" sx={{ fontWeight: "bold" }}>
+              {location.state?.descripcion || ""}
+            </Typography>
+          </Stack>
+
           <Stack flexDirection="row">
             <Tooltip placement="bottom" arrow title="Cambiar tema">
               <IconButton onClick={toggleModeDark}>

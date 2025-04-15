@@ -35,6 +35,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (data !== null) {
         setIsAuth(true);
         setUserData(data);
+        localStorage.removeItem("pedidoStore");
         if (mantener) setSessionUserData(data);
       }
     },

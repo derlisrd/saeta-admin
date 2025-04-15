@@ -3,6 +3,8 @@ import AuthMenuLayout from "@/layout/AuthMenuLayout";
 import { Suspense, lazy, LazyExoticComponent } from "react";
 import LoadingPage from "@/core/components/ui/loading";
 import LogOut from "./logout";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 const Loadable =
   <T extends object>(Component: LazyExoticComponent<() => JSX.Element>) =>
@@ -16,25 +18,28 @@ const Loadable =
 
 function AutenticatedPages() {
   return (
-    <Routes>
-      <Route path="/" element={<AuthMenuLayout />}>
-        <Route index element={<Home />} />
-        <Route path="/clientes" element={<Clientes />} />
-        <Route path="/clientes/add" element={<ClientesAdd />} />
-        <Route path="/productos/lista" element={<ProductosLista />} />
-        <Route path="/config/tema" element={<Tema />} />
-        <Route path="/config/empresa" element={<ConfigEmpresa />} />
-        <Route path="/config/parametros" element={<Parametros />} />
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <Routes>
+        <Route path="/" element={<AuthMenuLayout />}>
+          <Route index element={<Home />} />
+          <Route path="/clientes" element={<Clientes />} />
+          <Route path="/clientes/add" element={<ClientesAdd />} />
+          <Route path="/productos/lista" element={<ProductosLista />} />
+          <Route path="/config/tema" element={<Tema />} />
+          <Route path="/config/empresa" element={<ConfigEmpresa />} />
+          <Route path="/config/parametros" element={<Parametros />} />
 
-        <Route path="/productos/add" element={<ProductosAdd />} />
-        <Route path="/categorias" element={<Categorias />} />
-        <Route path="/ventas/pedidos/add" element={<PedidosAdd />} />
-        <Route path="/ventas/pedidos/lista" element={<PedidosLista />} />
+          <Route path="/productos/add" element={<ProductosAdd />} />
+          <Route path="/productos/carga-stock" element={<ProductosCargaStock />} />
+          <Route path="/categorias" element={<Categorias />} />
+          <Route path="/ventas/pedidos/add" element={<PedidosAdd />} />
+          <Route path="/ventas/pedidos/lista" element={<PedidosLista />} />
 
-        <Route path="/logout" element={<LogOut />} />
-      </Route>
-      <Route path="*" element={<Page404 />} />
-    </Routes>
+          <Route path="/logout" element={<LogOut />} />
+        </Route>
+        <Route path="*" element={<Page404 />} />
+      </Routes>
+    </LocalizationProvider>
   );
 }
 
@@ -49,6 +54,8 @@ const Tema = Loadable(lazy(() => import("./config/tema")));
 const ProductosLista = Loadable(lazy(() => import("./productos/list")));
 const PedidosLista = Loadable(lazy(() => import("./ventas/pedidos/lista")));
 const ProductosAdd = Loadable(lazy(() => import("./productos/add")));
+const ProductosCargaStock = Loadable(lazy(() => import("./productos/carga-stock")));
+
 const PedidosAdd = Loadable(lazy(() => import("./ventas/pedidos/add")));
 
 export default AutenticatedPages;

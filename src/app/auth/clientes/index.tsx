@@ -7,6 +7,7 @@ import { Container, LinearProgress, Box, TableContainer, Paper, Stack, Button } 
 import { Column, Table, TableCellProps, TableHeaderProps } from "react-virtualized";
 import { format } from "@formkit/tempo";
 import { useNavigate } from "react-router-dom";
+import StyledTableContainer from "@/components/table/styledtable";
 
 const getColumnConfig = (width: number): ColumnConfigType[] => [
   { dataKey: "id", label: "ID", width: width * 0.1 },
@@ -36,7 +37,7 @@ function Clientes() {
         <LinearProgress />
       ) : (
         <Box boxShadow={3} borderRadius={4} component={Paper}>
-          <TableContainer component={Paper} sx={{ borderRadius: 1, border: 0, boxShadow: 0, minHeight: `calc(100% - 140px)` }}>
+          <StyledTableContainer sx={{ borderRadius: 1, border: 0, boxShadow: 0, minHeight: `calc(100% - 140px)` }}>
             {lista && (
               <AutoSizer>
                 {({ height, width }) => (
@@ -63,7 +64,7 @@ function Clientes() {
                 )}
               </AutoSizer>
             )}
-          </TableContainer>
+          </StyledTableContainer>
         </Box>
       )}
     </Container>

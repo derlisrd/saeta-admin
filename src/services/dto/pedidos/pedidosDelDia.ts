@@ -46,17 +46,22 @@ export class PedidosDelDiaResults {
 
 
 export class ItemsPedidoResults {
-    codigo_producto: string;
+    codigo: string;
     cantidad: number;
-    nombre_prooducto: string;
+    nombre: string;
     precio: number;
     total: number;
+    impuesto_descripcion: string;
+    impuesto_valor: number;
+   
 
-    constructor({ codigo_producto = "", cantidad = 0, nombre_prooducto = "", precio = 0, total = 0 }: Partial<ItemsPedidoResults>) {
-        this.codigo_producto = codigo_producto;
+    constructor({ codigo = "", cantidad = 0, nombre = "", precio = 0, total = 0, impuesto_descripcion='', impuesto_valor=0 }: Partial<ItemsPedidoResults>) {
+        this.codigo = codigo;
         this.cantidad = cantidad;
-        this.nombre_prooducto = nombre_prooducto;
+        this.nombre = nombre;
         this.precio = precio;
         this.total = total;
+        this.impuesto_descripcion = impuesto_descripcion;
+        this.impuesto_valor = impuesto_valor;
     }
 }

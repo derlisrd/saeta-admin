@@ -1,6 +1,6 @@
 import { useAuth } from "@/providers/AuthProvider"
 import API from "@/services/api"
-//import { PedidosDelDiaResults } from "@/services/dto/pedidos/pedidosDelDia"
+import { PedidosDelDiaResults } from "@/services/dto/pedidos/pedidosDelDia"
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
 
@@ -9,7 +9,10 @@ function useListaPedidos() {
     const {userData} = useAuth()
 
     const [search, setSearch] = useState("")
-    // const [lista,setLista] = useState<PedidosDelDiaResults[]>([])
+    const [desde, setDesde] = useState("")
+    const [hasta, setHasta] = useState("")
+
+    const [selectedRow, setSelectedRow] = useState<PedidosDelDiaResults | null>(null)
 
     const buscar = ()=>{
 
@@ -21,7 +24,7 @@ function useListaPedidos() {
             if (!userData || !userData.token) {
                 return []; // Retornar array vacío si no hay token
             }
-            const res = await API.pedidos.lista(userData.token)
+            const res = await API.pedidos.lista(userData.token, desde, hasta)
             if(res && res.success) {
                 return res.results
             }
@@ -31,8 +34,11 @@ function useListaPedidos() {
         staleTime: 1000 * 60 * 5
     })
     
+    const filtrar = ()=>{
+
+    }
     
-    return {lista : data, isLoading : isFetching || isLoading, refetch, setSearch, search, buscar}
+    return {lista : data, isLoading : isFetching || isLoading, refetch, setSearch, search, buscar, filtrar, desde, hasta, setDesde, setHasta, selectedRow, setSelectedRow}
 }
 
 export default useListaPedidos

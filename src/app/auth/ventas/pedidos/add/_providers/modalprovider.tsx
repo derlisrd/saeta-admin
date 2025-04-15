@@ -23,8 +23,6 @@ function ModalProvider({ children }: { children: ReactNode }) {
         F8: () => handleModal("finalizar"),
         Escape: clearAllModals,
       };
-      console.log(event.key);
-
       const action = keyActions[event.key];
 
       // Si existe una acción para esta tecla

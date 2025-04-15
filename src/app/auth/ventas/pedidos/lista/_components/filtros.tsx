@@ -1,6 +1,6 @@
 import Icon from "@/components/ui/icon";
-import { Grid2 as Grid, TextField, InputAdornment, Button } from "@mui/material";
-
+import { Grid2 as Grid, TextField, InputAdornment, Tooltip, IconButton } from "@mui/material";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 interface FiltrosProps {
   setSearch: React.Dispatch<React.SetStateAction<string>>;
   buscar: (q: string) => void;
@@ -9,8 +9,6 @@ interface FiltrosProps {
 }
 
 function Filtros({ setSearch, buscar, search, refresh }: FiltrosProps) {
-  console.log(search);
-
   return (
     <Grid container p={1} spacing={1} alignItems="center">
       <Grid size={{ xs: 12, md: 4 }}>
@@ -36,15 +34,23 @@ function Filtros({ setSearch, buscar, search, refresh }: FiltrosProps) {
         />
       </Grid>
       <Grid size={{ xs: 12, md: 4 }}>
-        <Button
-          variant="contained"
-          onClick={() => {
-            refresh && refresh();
-            setSearch("");
+        <DatePicker
+          onChange={(e) => {
+            console.log(e && e.format("YYYY-MM-DD"));
           }}
-        >
-          Refrescar lista
-        </Button>
+          slotProps={{
+            textField: {
+              fullWidth: true,
+            },
+          }}
+        />
+      </Grid>
+      <Grid size={{ xs: 12, md: 4 }}>
+        <Tooltip title="Actualizar" color="primary" placement="top" arrow>
+          <IconButton onClick={refresh}>
+            <Icon>refresh</Icon>
+          </IconButton>
+        </Tooltip>
       </Grid>
     </Grid>
   );

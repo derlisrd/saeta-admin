@@ -1,5 +1,3 @@
-import Title from "@/core/components/ui/title";
-
 import { Alert, Box, Button, Container, LinearProgress, Paper, Snackbar, Stack } from "@mui/material";
 import TabsCustom from "./_components/tabscustom";
 import TabContainer from "./_components/tabcontainer";
@@ -18,7 +16,6 @@ function AddProductoMain() {
         </Alert>
       </Snackbar>
       <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-between" my={3}>
-        <Title>Agregar Producto</Title>
         <Button size="large" onClick={sendForm}>
           GUARDAR
         </Button>

@@ -6,7 +6,8 @@ export default [
         color: '#0066cc',
         url: '/',
         private: false,
-        submenu: null
+        submenu: null,
+        descripcion: null
     },
     {
         id: 2,
@@ -15,7 +16,8 @@ export default [
         color: '#0066cc',
         url: '/clientes',
         private: false,
-        submenu: null
+        submenu: null,
+        descripcion: 'Clientes'
     },
     {
         id: 345,
@@ -25,6 +27,7 @@ export default [
         url: null,
         private: false,
         open: false,
+        descripcion: null,
         submenu: [
             {
                 id: 14232,
@@ -33,6 +36,7 @@ export default [
                 color: '#0066cc',
                 url: '/ventas/pedidos/add',
                 private: false,
+                descripcion: null
             },
             {
                 id: 343,
@@ -41,6 +45,7 @@ export default [
                 color: '#0066cc',
                 url: '/ventas/pedidos/lista',
                 private: false,
+                descripcion: 'Lista de pedidos'
             }
         ],
 
@@ -53,6 +58,7 @@ export default [
         url: null,
         private: false,
         open: false,
+        descripcion: null,
         submenu: [
             {
                 id: 1432,
@@ -68,7 +74,8 @@ export default [
                 icon: 'list',
                 color: '#0066cc',
                 url: '/caja/lista',
-                private: false 
+                private: false,
+                descripcion: 'Abrir o habilitar caja' 
             },
             {
                 id: 14232,
@@ -77,6 +84,7 @@ export default [
                 color: '#0066cc',
                 url: '/caja/movimientos',
                 private: false,
+                descripcion: 'Lista de movimientos'
             },
         {
                 id: 142,
@@ -85,6 +93,7 @@ export default [
                 color: '#0066cc',
                 url: '/caja/cerrar',
                 private: false,
+                descripcion: 'Cerrar caja'
             },
         ],
     },
@@ -96,6 +105,7 @@ export default [
         url: null,
         private: false,
         open: false,
+        descripcion: null,
         submenu: [
             {
                 id: 145,
@@ -104,6 +114,7 @@ export default [
                 color: '#0066cc',
                 url: '/productos/add',
                 private: false,
+                descripcion: 'Agregar producto'
             },
             {
                 id: 343,
@@ -112,6 +123,16 @@ export default [
                 color: '#0066cc',
                 url: '/productos/lista',
                 private: false,
+                descripcion: 'Lista de productos'
+            },
+            {
+                id: 3431,
+                title: 'Reposición',
+                icon: 'list',
+                color: '#0066cc',
+                url: '/productos/carga-stock',
+                private: false,
+                descripcion: 'Reposición de stock de productos'
             },
             
             {
@@ -121,6 +142,7 @@ export default [
                 color: '#0066cc',
                 url: '/categorias',
                 private: false,
+                descripcion: 'Lista de categorias'
             }
         ]
     },
@@ -132,6 +154,7 @@ export default [
         url: null,
         private: false,
         open: false,
+        descripcion: null,
         submenu: [
             {
                 id: 14232,
@@ -140,6 +163,7 @@ export default [
                 color: '#0066cc',
                 url: '/compras/add',
                 private: false,
+                descripcion: null
             },
             {
                 id: 34,
@@ -148,6 +172,7 @@ export default [
                 color: '#0066cc',
                 url: '/compras/lista',
                 private: false,
+                descripcion: 'Lista de compras'
             }
         ],
     },
@@ -159,6 +184,7 @@ export default [
         url: null,
         private: false,
         open: false,
+        descripcion: null,
         submenu: [
             {
                 id: 122342,
@@ -167,6 +193,7 @@ export default [
                 color: '#0066cc',
                 url: '/config/empresa',
                 private: false,
+                descripcion: null
             },
             {
                 id: 1222,
@@ -175,6 +202,7 @@ export default [
                 color: '#0066cc',
                 url: '/config/parametros',
                 private: false,
+                descripcion: 'Parámetros'
             }
             ,
             {
@@ -184,6 +212,7 @@ export default [
                 color: '#0066cc',
                 url: '/config/tema',
                 private: false,
+                descripcion: 'Tema'
             }
         ]
     },

@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid2 as Grid, LinearProgress, TextField } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid2 as Grid, LinearProgress, Stack, TextField, Typography } from "@mui/material";
 import useHook from "../_hooks/useHook";
 import FormaPagoSelect from "../_components/formapagoselect";
 import useInsertPedido from "../_hooks/useInsertPedido";
@@ -75,7 +75,14 @@ function FinalizarPedido() {
 
   return (
     <Dialog maxWidth="sm" open={modal.finalizar} onClose={() => handleModal("finalizar")}>
-      <DialogTitle>Finalizar Pedido</DialogTitle>
+      <DialogTitle>
+        <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
+          <Typography variant="button" sx={{ display: { xs: "none", sm: "block" } }}>
+            Forma de pago
+          </Typography>
+          <Typography variant="h6">Total: {pedidos[index].total.toLocaleString("es-PY")}</Typography>
+        </Stack>
+      </DialogTitle>
       <DialogContent>
         {isLoading ? (
           <LinearProgress />
