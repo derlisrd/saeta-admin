@@ -1,6 +1,7 @@
 import Icon from "@/components/ui/icon";
 import { PedidosDelDiaResults } from "@/services/dto/pedidos/pedidosDelDia";
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton } from "@mui/material";
+import { format } from "@formkit/tempo";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Typography } from "@mui/material";
 
 interface ImprimirModalProps {
   open: boolean;
@@ -10,7 +11,6 @@ interface ImprimirModalProps {
 
 function ImprimirModal({ open, selectedRow, onClose }: ImprimirModalProps) {
   if (!selectedRow) return null;
-  console.log(selectedRow);
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="md">
@@ -29,7 +29,16 @@ function ImprimirModal({ open, selectedRow, onClose }: ImprimirModalProps) {
       >
         <Icon>x</Icon>
       </IconButton>
-      <DialogContent></DialogContent>
+      <DialogContent>
+        <div>
+          <Typography variant="body1" color="gray">
+            {format(selectedRow.created_at, "DD-MM-YYYY")}
+          </Typography>
+          <Typography variant="h6" fontWeight="bold">
+            {selectedRow.razon_social}
+          </Typography>
+        </div>
+      </DialogContent>
       <DialogActions>
         <Button>Imprimir</Button>
         <Button onClick={onClose}>Cancelar</Button>
