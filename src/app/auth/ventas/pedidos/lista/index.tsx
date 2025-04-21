@@ -2,13 +2,13 @@ import useListaPedidos from "@/core/hooks/ventas/pedidos/useListaPedidos";
 import { Container, Box, LinearProgress } from "@mui/material";
 import Filtros from "./_components/filtros";
 import { PedidosDelDiaResults } from "@/services/dto/pedidos/pedidosDelDia";
-import TableHeaderRender from "./_components/tableheaderrender";
-import TableCellRender from "./_components/tablecellrender";
 import { useState } from "react";
 import ImprimirModal from "./_modal/imprimir";
 import GenericTable from "@/components/table/GenericTable";
 import { ColumnConfigType } from "@/core/types/columnconfig";
 import { pedidosColumnConfig } from "./_components/pedidosColumnConfig";
+import TableHeadRender from "@/components/table/tableHeadRender";
+import TableCellRender from "@/components/table/tableCellRender";
 
 function ListaPedidos() {
   const { lista, isLoading, refetch, search, setSearch, buscar, setSelectedRow, selectedRow, setDesde, setHasta } = useListaPedidos();
@@ -25,7 +25,7 @@ function ListaPedidos() {
   const columns = (width: number): ColumnConfigType[] =>
     pedidosColumnConfig(width, handleImprimir).map((config) => ({
       ...config,
-      headerRenderer: TableHeaderRender,
+      headerRenderer: TableHeadRender,
       cellRenderer: config.cellRenderer || TableCellRender,
     }));
 

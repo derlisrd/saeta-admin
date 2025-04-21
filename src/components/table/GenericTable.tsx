@@ -5,7 +5,7 @@ import AutoSizer from "react-virtualized-auto-sizer";
 import TableCellHead from "@/components/table/tablecellhead";
 import TableCell from "@/components/table/tablecell";
 import StyledTableContainer from "@/components/table/styledtable";
-import { Box, SxProps, Theme } from "@mui/material";
+import { SxProps, Theme } from "@mui/material";
 
 interface GenericTableProps<T> {
   data: T[];

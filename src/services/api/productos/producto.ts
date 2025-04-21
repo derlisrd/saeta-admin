@@ -65,6 +65,25 @@ export const apiServiceProductos = {
     try {
     } catch (e) {}
   },
+  search : async (token: string | null, q: string): Promise<ProductoResponse> => {
+    try {
+      const { data, status } = await BASE.get(`/productos/search?q=${q}`, { headers: { Authorization: token } });
+      return ProductoResponse.fromJSON({
+        success: data.success,
+        status,
+        results: data.results,
+        message: ""
+      });
+    } catch (e) {
+      return ProductoResponse.fromJSON({
+        success: false,
+        status: 500,
+        results: null,
+        message: "Error al obtener productos"
+      });
+    }
+  },
+
   add: async (form: AddProducto, token: string | null): Promise<AddProductoResponse> => {
     try {
       const formData = new FormData();

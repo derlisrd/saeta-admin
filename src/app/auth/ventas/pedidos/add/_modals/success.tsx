@@ -5,8 +5,13 @@ import { useReactToPrint } from "react-to-print";
 import useModal from "../_hooks/useModal";
 import Icon from "@/components/ui/icon";
 import useResponsive from "@/hooks/useResponsive";
+import { useAuth } from "@/providers/AuthProvider";
 
 function SuccessModal() {
+  const { userData } = useAuth();
+
+  const impresoraWidth = userData?.impresoras?.[0]?.mm ? `${userData.impresoras[0].mm}mm` : "100%";
+
   const { result: data, index, pedidos, limpiarFinalizarPedido } = useHook();
   const { isSmDown } = useResponsive();
   const { modal, clearAllModals } = useModal();
@@ -24,7 +29,7 @@ function SuccessModal() {
       <DialogTitle>Detalles de pedido</DialogTitle>
       <DialogContent>
         {data?.results && (
-          <div ref={contentRef} style={{ fontFamily: "monospace", color: "#000 !important" }}>
+          <div ref={contentRef} style={{ fontFamily: "monospace", color: "#000 !important", width: impresoraWidth, maxWidth: impresoraWidth }}>
             <table border={1} style={{ borderCollapse: "collapse" }} cellPadding="2" cellSpacing="4" width="100%" align="right">
               <tbody>
                 <tr>

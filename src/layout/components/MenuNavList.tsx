@@ -15,7 +15,7 @@ const MenuNavList = ({ isMobile = false, navegar, isOpenMenu = true }: { isMobil
   const SELECTED = {
     "&.Mui-selected": {
       borderRadius: isOpenMenu ? "0 18px 18px 0" : "10px",
-      margin: "4px",
+      margin: "0px",
       borderLeftStyle: isOpenMenu ? "solid" : "none",
       background: "primary.main",
       borderLeftWidth: isOpenMenu ? "2px" : "0",

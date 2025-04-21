@@ -16,6 +16,7 @@ const StyledTableContainer = styled(Box)(({ theme }) => ({
     },
     "&:hover": {
       backgroundColor: theme.palette.mode === "light" ? theme.palette.grey[300] : theme.palette.grey[700],
+      borderRadius: "12px",
     },
   },
 }));

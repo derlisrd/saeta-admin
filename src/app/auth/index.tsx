@@ -32,6 +32,7 @@ function AutenticatedPages() {
 
           <Route path="/productos/add" element={<ProductosAdd />} />
           <Route path="/productos/carga-stock" element={<ProductosCargaStock />} />
+          <Route path="/productos/codigo-barra" element={<PrintCodigoBarra />} />
           <Route path="/categorias" element={<Categorias />} />
           <Route path="/ventas/pedidos/add" element={<PedidosAdd />} />
           <Route path="/ventas/pedidos/lista" element={<PedidosLista />} />
@@ -43,7 +44,7 @@ function AutenticatedPages() {
     </LocalizationProvider>
   );
 }
-
+const PrintCodigoBarra = Loadable(lazy(() => import("./productos/print-codigo-barra")));
 const Parametros = Loadable(lazy(() => import("./config/parametros")));
 const Impresoras = Loadable(lazy(() => import("./config/impresoras")));
 const Categorias = Loadable(lazy(() => import("./productos/categorias")));

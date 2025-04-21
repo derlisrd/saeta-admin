@@ -1,124 +1,34 @@
-import Icon from "@/components/ui/icon";
+import GenericTable from "@/components/table/GenericTable";
+import TableCellRender from "@/components/table/tableCellRender";
 import useListProductos from "@/core/hooks/productos/list/useListProductos";
-import {
-  Box,
-  Container,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Checkbox,
-  IconButton,
-  LinearProgress,
-  Paper,
-  Grid2 as Grid,
-  TextField,
-  InputAdornment,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  TableFooter,
-  Stack,
-  Button,
-} from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { ColumnConfigType } from "@/core/types/columnconfig";
+import { Box, Container, LinearProgress } from "@mui/material";
+
+import { productosColumnConfig } from "./_components/productosColumnConfig";
+import TableHeadRender from "@/components/table/tableHeadRender";
 
 function ListaProductos() {
-  const { list, loading, depositos, selectDeposito, setSelectDeposito } = useListProductos();
-  const navigate = useNavigate();
+  const { list, loading } = useListProductos();
+
+  const columns = (width: number): ColumnConfigType[] =>
+    productosColumnConfig(width).map((config) => ({
+      ...config,
+      headerRenderer: TableHeadRender,
+      cellRenderer: config.cellRenderer || TableCellRender,
+    }));
+
   return (
     <Container sx={{ paddingBottom: 6 }}>
-      <Stack direction={{ xs: "row" }} justifyContent="space-between" alignItems="center" padding={2}>
-        <h3>Productos</h3>
-        <Button onClick={() => navigate("/productos/add")}>Agregar nuevo</Button>
-      </Stack>
-
       {loading ? (
         <LinearProgress />
       ) : (
-        <Box boxShadow={6} borderRadius={4} component={Paper} py={{ xs: 0, sm: 1, md: 2 }}>
-          <Grid container padding={2} spacing={{ xs: 1 }}>
-            <Grid size={{ xs: 12, md: 4 }}>
-              <FormControl fullWidth>
-                <InputLabel>Deposito</InputLabel>
-                <Select
-                  fullWidth
-                  displayEmpty
-                  value={selectDeposito}
-                  label="Deposito"
-                  onChange={({ target }) => {
-                    setSelectDeposito(Number(target.value));
-                  }}
-                >
-                  <MenuItem value={0} disabled>
-                    Seleccionar deposito
-                  </MenuItem>
-                  {depositos.map((item, i) => (
-                    <MenuItem key={i} value={item.id}>
-                      {item.nombre}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid size={{ xs: 12, md: 4 }}>
-              <TextField
-                slotProps={{
-                  input: {
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <Icon>search</Icon>
-                      </InputAdornment>
-                    ),
-                  },
-                }}
-                placeholder="Buscar..."
-                fullWidth
-              />
-            </Grid>
-            <Grid size={{ xs: 12, md: 4 }}></Grid>
-          </Grid>
-          <TableContainer component={Paper} sx={{ borderRadius: 0, border: 0, boxShadow: 0 }}>
-            <Table stickyHeader aria-label="sticky table">
-              <TableHead>
-                <TableRow>
-                  <TableCell>
-                    <Checkbox />
-                  </TableCell>
-                  <TableCell>COD.</TableCell>
-                  <TableCell>NOMBRE</TableCell>
-                  <TableCell>PRECIO</TableCell>
-                  <TableCell>MINIMO</TableCell>
-                  <TableCell>
-                    <span></span>
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {list.map((item, index) => (
-                  <TableRow key={index}>
-                    <TableCell>
-                      <Checkbox />
-                    </TableCell>
-                    <TableCell>{item.codigo}</TableCell>
-                    <TableCell>{item.nombre}</TableCell>
-                    <TableCell>{item.precio_normal}</TableCell>
-                    <TableCell>{item.precio_minimo}</TableCell>
-                    <TableCell>
-                      <IconButton>
-                        <Icon>chevron-down</Icon>
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-
-              <TableFooter></TableFooter>
-            </Table>
-          </TableContainer>
+        <Box>
+          <GenericTable
+            data={list}
+            columns={columns(window.innerWidth)} // Pasa el ancho inicial
+            rowHeight={40}
+            headerHeight={36}
+          />
         </Box>
       )}
     </Container>
