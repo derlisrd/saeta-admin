@@ -74,10 +74,21 @@ export class LoginResults {
 }
 
 export class LoginResponse {
-  constructor(public success: boolean, public results: LoginResults | null, public status: number, public message: string) {}
+  public success: boolean
+   public results: LoginResults | null
+   public status: number
+   public message: string
+
+  constructor({ success, results, status, message }: { success: boolean, results: LoginResults | null, status: number, message: string }) {
+    this.success = success;
+    this.results = results;
+    this.status = status;
+    this.message = message;
+
+  }
 
   static fromJSON(data: any): LoginResponse {
     const results = data.results === null ? null : LoginResults.fromJSON(data.results);
-    return new LoginResponse(data.success, results, data.status, data.message);
+    return new LoginResponse({ success: data.success, results, status: data.status, message: data.message });
   }
 }
