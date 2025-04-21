@@ -6,9 +6,11 @@ interface FiltrosProps {
   buscar: (q: string) => void;
   search: string;
   refresh?: () => void;
+  setDesde: React.Dispatch<React.SetStateAction<string>>;
+  setHasta: React.Dispatch<React.SetStateAction<string>>;
 }
 
-function Filtros({ setSearch, buscar, search, refresh }: FiltrosProps) {
+function Filtros({ setSearch, buscar, search, refresh, setDesde, setHasta }: FiltrosProps) {
   return (
     <Grid container p={1} spacing={1} alignItems="center">
       <Grid size={{ xs: 12, md: 4 }}>
@@ -36,7 +38,8 @@ function Filtros({ setSearch, buscar, search, refresh }: FiltrosProps) {
       <Grid size={{ xs: 12, md: 4 }}>
         <DatePicker
           onChange={(e) => {
-            console.log(e && e.format("YYYY-MM-DD"));
+            setDesde(e ? e.format("YYYY-MM-DD") : "");
+            setHasta(e ? e.format("YYYY-MM-DD") : "");
           }}
           slotProps={{
             textField: {

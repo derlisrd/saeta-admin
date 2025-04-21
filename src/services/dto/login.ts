@@ -77,9 +77,7 @@ export class LoginResponse {
   constructor(public success: boolean, public results: LoginResults | null, public status: number, public message: string) {}
 
   static fromJSON(data: any): LoginResponse {
-    const results = data.results === null ? null :  LoginResults.fromJSON(data.results)
-    return new LoginResponse(data.success, 
-      results, 
-      data.status, data.message);
+    const results = data.results === null ? null : LoginResults.fromJSON(data.results);
+    return new LoginResponse(data.success, results, data.status, data.message);
   }
 }

@@ -11,7 +11,7 @@ import { ColumnConfigType } from "@/core/types/columnconfig";
 import { pedidosColumnConfig } from "./_components/pedidosColumnConfig";
 
 function ListaPedidos() {
-  const { lista, isLoading, refetch, search, setSearch, buscar, setSelectedRow, selectedRow } = useListaPedidos();
+  const { lista, isLoading, refetch, search, setSearch, buscar, setSelectedRow, selectedRow, setDesde, setHasta } = useListaPedidos();
   const [modals, setModals] = useState({
     imprimir: false,
   });
@@ -35,7 +35,7 @@ function ListaPedidos() {
         <LinearProgress />
       ) : (
         <Box>
-          <Filtros setSearch={setSearch} buscar={buscar} search={search} refresh={refetch} />
+          <Filtros setSearch={setSearch} buscar={buscar} search={search} refresh={refetch} setDesde={setDesde} setHasta={setHasta} />
           <Box>
             <GenericTable
               data={listado}

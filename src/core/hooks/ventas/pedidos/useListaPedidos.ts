@@ -14,9 +14,7 @@ function useListaPedidos() {
 
     const [selectedRow, setSelectedRow] = useState<PedidosDelDiaResults | null>(null)
 
-    const buscar = ()=>{
-
-    }
+    const buscar = ()=>refetch()
 
     const {isLoading, refetch, isFetching, data} = useQuery({
         queryKey:['listaPedidos'],

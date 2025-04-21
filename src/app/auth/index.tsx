@@ -28,6 +28,7 @@ function AutenticatedPages() {
           <Route path="/config/tema" element={<Tema />} />
           <Route path="/config/empresa" element={<ConfigEmpresa />} />
           <Route path="/config/parametros" element={<Parametros />} />
+          <Route path="/config/impresoras" element={<Impresoras />} />
 
           <Route path="/productos/add" element={<ProductosAdd />} />
           <Route path="/productos/carga-stock" element={<ProductosCargaStock />} />
@@ -44,6 +45,7 @@ function AutenticatedPages() {
 }
 
 const Parametros = Loadable(lazy(() => import("./config/parametros")));
+const Impresoras = Loadable(lazy(() => import("./config/impresoras")));
 const Categorias = Loadable(lazy(() => import("./productos/categorias")));
 const Home = Loadable(lazy(() => import("./home")));
 const Page404 = Loadable(lazy(() => import("../common/page404")));
