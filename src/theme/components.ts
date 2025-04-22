@@ -101,7 +101,8 @@ export const components = {
 
     MuiDialog:{
       defaultProps:{
-        fullWidth:true
+        fullWidth:true,
+        disableRestoreFocus:true,
       },
       styleOverrides:{
         paper:{

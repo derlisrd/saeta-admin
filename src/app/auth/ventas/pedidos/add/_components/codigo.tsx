@@ -1,9 +1,11 @@
 import { CircularProgress, IconButton, InputAdornment, TextField } from "@mui/material";
 import useHook from "../_hooks/useHook";
 import Icon from "@/components/ui/icon";
+import useModal from "../_hooks/useModal";
 
 function InputCodigo() {
   const { inputCodigoRef, consultarCodigoInsertar, loadingAddProducto } = useHook();
+  const { handleModal } = useModal();
   return (
     <TextField
       placeholder="Código"
@@ -24,8 +26,8 @@ function InputCodigo() {
         input: {
           sx: { padding: 0, fontSize: 15 },
           startAdornment: (
-            <InputAdornment position="start">
-              <IconButton>
+            <InputAdornment position="end">
+              <IconButton onClick={() => handleModal("productos")}>
                 <Icon>search</Icon>
               </IconButton>
             </InputAdornment>

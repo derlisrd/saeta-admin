@@ -6,12 +6,25 @@ import { Box, Container, LinearProgress } from "@mui/material";
 
 import { productosColumnConfig } from "./_components/productosColumnConfig";
 import TableHeadRender from "@/components/table/tableHeadRender";
+import PrintCodigoModal from "./_modal/codigo";
+import { useState } from "react";
+import { ProductoResults } from "@/services/dto/productos/producto";
 
 function ListaProductos() {
-  const { list, loading } = useListProductos();
+  const { list, loading, setSelectedProducto, selectedProducto } = useListProductos();
+  const [modalOpen, setModalOpen] = useState({ codigo: false, imagenes: false });
+
+  const handleSelectProducto = (producto: ProductoResults) => {
+    setSelectedProducto(producto);
+    setModalOpen({ codigo: true, imagenes: false });
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen({ codigo: false, imagenes: false });
+  };
 
   const columns = (width: number): ColumnConfigType[] =>
-    productosColumnConfig(width).map((config) => ({
+    productosColumnConfig(width, handleSelectProducto).map((config) => ({
       ...config,
       headerRenderer: TableHeadRender,
       cellRenderer: config.cellRenderer || TableCellRender,
@@ -31,6 +44,7 @@ function ListaProductos() {
           />
         </Box>
       )}
+      <PrintCodigoModal open={modalOpen.codigo} onClose={handleCloseModal} selectedProducto={selectedProducto} />
     </Container>
   );
 }

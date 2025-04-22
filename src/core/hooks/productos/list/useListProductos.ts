@@ -1,5 +1,6 @@
 import { useAuth } from "@/providers/AuthProvider";
 import API from "@/services/api";
+import { ProductoResults } from "@/services/dto/productos/producto";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
@@ -7,7 +8,7 @@ import { useState } from "react";
 function useListProductos() {
   const { userData } = useAuth();
   const [selectDeposito, setSelectDeposito] = useState<number>(0);
-
+  const [selectedProducto, setSelectedProducto] = useState<ProductoResults | null>(null);
   // Fetch productos
   const { data: productosData, isLoading: productosLoading, error: productosError } = useQuery({
     queryKey: ["productos", userData?.token],
@@ -31,6 +32,8 @@ function useListProductos() {
     error: productosError || depositosError,
     selectDeposito,
     setSelectDeposito,
+    selectedProducto,
+    setSelectedProducto,
   };
   
 }

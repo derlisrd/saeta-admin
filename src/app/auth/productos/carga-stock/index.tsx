@@ -7,7 +7,7 @@ import { useState, useDeferredValue } from "react";
 
 function CargaStock() {
   const { depositos } = useCargaStock();
-
+  const [selectedDeposito, setSelectedDeposito] = useState<number>(0);
   const [search, setSearch] = useState<string>("");
   const deferredSearch = useDeferredValue(search);
   const { loadingBusqueda, listaBusqueda } = useBuscaProducto(deferredSearch);
@@ -19,14 +19,14 @@ function CargaStock() {
           <h4>Seleccione el depósito y ingrese la cantidad del producto</h4>
         </Grid>
         <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-          <FormControl fullWidth error={true}>
+          <FormControl fullWidth>
             <InputLabel id="deposito-select-label">Depósito</InputLabel>
             <Select
               fullWidth
               labelId="impuesto-label"
               id="impuesto"
-              onChange={(e) => console.log(e.target.name, Number(e.target.value))}
-              /* value={form.deposito_id} */
+              onChange={(e) => setSelectedDeposito(Number(e.target.value))}
+              value={selectedDeposito}
               label="Deposito"
               name="deposito_id"
             >

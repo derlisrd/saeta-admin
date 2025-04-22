@@ -1,30 +1,29 @@
 import { useAuth } from "@/providers/AuthProvider";
 import API from "@/services/api";
-import { SearchClienteResults } from "@/services/dto/clientes/search";
+import { ProductoResults } from "@/services/dto/productos/producto";
 import { useState, useEffect, useCallback, useDeferredValue } from "react";
 
-function useBuscarCliente() {
+function useBuscarProducto(deposito_id: number) {
     const { userData } = useAuth();
     const [isLoading, setIsLoading] = useState(false);
     const [q, setQ] = useState("");
-    const [listaBusqueda, setLista] = useState<{ label: string; id: number }[]>([]);
-const deferredQ = useDeferredValue(q); 
+    const [listaBusqueda, setLista] = useState<ProductoResults[]>([]);
+    const deferredQ = useDeferredValue(q); 
     // Función optimizada con useCallback
     const buscar = useCallback(async () => {
         if (!deferredQ.trim()) {
             setLista([]);
             return;
         }
+        
         setIsLoading(true);
         try {
-            const res = await API.clientes.search(userData && userData.token, deferredQ);
+            const res = await API.productos.searchPorDeposito(userData && userData?.token, deferredQ, deposito_id);
             
-            if (res.results) {
-                const lista = res.results.map((cliente: SearchClienteResults) => ({
-                    label: `${cliente.doc} ${cliente.razon_social}`,
-                    id: cliente.id,
-                }));
-                setLista(lista);
+            if (res && res.results) {
+                setLista(res.results);
+            } else {
+                setLista([]);
             }
         } catch (error) {
             console.error("Error al buscar productos:", error);
@@ -32,9 +31,7 @@ const deferredQ = useDeferredValue(q);
         } finally {
             setIsLoading(false);
         }
-
-
-    }, [deferredQ, userData?.token]);// Se ejecutará solo si q o userData?.token cambian
+    }, [deferredQ, userData?.token]);
 
     useEffect(() => {
         // Solo realizamos la búsqueda si hay un valor diferido
@@ -45,9 +42,9 @@ const deferredQ = useDeferredValue(q);
             
             return () => clearTimeout(timer);
         }
-    }, [deferredQ, buscar]);// Ahora el useEffect depende de buscarClientes
+    }, [deferredQ, buscar]);
 
     return { listaBusqueda, isLoading, q, setQ };
 }
 
-export default useBuscarCliente;
+export default useBuscarProducto;

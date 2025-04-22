@@ -1,4 +1,3 @@
-// core/config/pedidos/columnConfig.ts
 import { ColumnConfigType } from "@/core/types/columnconfig";
 import { TableCellProps } from "react-virtualized";
 import { format } from "@formkit/tempo";
@@ -9,11 +8,11 @@ import { useNavigate } from "react-router-dom"; // Si necesitas la navegación a
 
 interface AccionesCellProps extends TableCellProps {
   rowData: ProductoResults;
-  onImprimir: (pedido: ProductoResults) => void;
+  onSelectProducto: (producto: ProductoResults) => void;
   // onCancelar: (pedido: PedidosDelDiaResults) => void; // Ejemplo si implementas cancelar
 }
 
-const AccionesCell = ({ rowData }: AccionesCellProps) => {
+const AccionesCell = ({ rowData, onSelectProducto }: AccionesCellProps) => {
   const nav = useNavigate(); // Si la lógica de acciones necesita navegación
 
   // const handleCancelar = () => {
@@ -24,7 +23,7 @@ const AccionesCell = ({ rowData }: AccionesCellProps) => {
   return (
     <Stack direction="row">
       <Tooltip title="Código de barra" placement="top" arrow>
-        <IconButton onClick={() => nav(`/productos/codigo-barra?codigo=${rowData.id}`)}>
+        <IconButton onClick={() => onSelectProducto(rowData)}>
           <Icon>printer</Icon>
         </IconButton>
       </Tooltip>
@@ -37,7 +36,7 @@ const AccionesCell = ({ rowData }: AccionesCellProps) => {
   );
 };
 
-export const productosColumnConfig = (width: number): ColumnConfigType[] => [
+export const productosColumnConfig = (width: number, onSelectProducto?: (producto: ProductoResults) => void): ColumnConfigType[] => [
   { dataKey: "id", label: "Código", width: width * 0.1 },
   { dataKey: "nombre", label: "Nombre", width: width * 0.2 },
   {
@@ -63,6 +62,6 @@ export const productosColumnConfig = (width: number): ColumnConfigType[] => [
     dataKey: "_",
     label: "Acciones",
     width: width * 0.18,
-    cellRenderer: (props: TableCellProps) => <AccionesCell {...props} onImprimir={() => {}} />,
+    cellRenderer: (props: TableCellProps) => <AccionesCell {...props} onSelectProducto={onSelectProducto || (() => {})} />,
   },
 ];
