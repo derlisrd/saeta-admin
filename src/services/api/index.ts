@@ -9,11 +9,13 @@ import { apiServiceCategorias } from "./productos/categoria";
 import { apiServiceDepositos } from "./productos/deposito";
 import { apiServiceMedidas } from "./productos/medidas";
 import { apiServiceProductos } from "./productos/producto";
+import { apiServiceStock } from "./productos/stock";
 
 const API = {
     auth : apiServiceAuth,
     clientes: apiServiceClientes,
     productos: apiServiceProductos,
+    stock : apiServiceStock,
     pedidos: apiServicePedidos,
     categorias: apiServiceCategorias,
     impuestos: apiServiceImpuestos,
