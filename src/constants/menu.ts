@@ -55,7 +55,16 @@ export default [
                 url: '/ventas/pedidos/devoluciones',
                 private: false,
                 descripcion: 'Devoluciones'
-            }
+            },
+            {
+                id: 345,
+                title: 'Facturación',
+                icon: 'list',
+                color: '#0066cc',
+                url: '/ventas/facturacion',
+                private: false,
+                descripcion: 'Facturación'
+            },
         ],
 
     },

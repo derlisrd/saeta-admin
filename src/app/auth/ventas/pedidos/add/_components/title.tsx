@@ -24,6 +24,7 @@ function Title() {
         </Stack>
         <Link
           component="button"
+          color="secondary"
           variant="overline"
           onClick={() => {
             handleModal("clientes");
