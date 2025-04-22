@@ -45,7 +45,7 @@ function CargaStock() {
         <Grid size={{ xs: 12, sm: 6, md: 4 }}>
           <Autocomplete
             onChange={(_, value) => {
-              //setChangeValue({ label: value?.label || "", id: value?.id || 0 });
+              console.log(value);
             }}
             // Agregamos esta función para convertir cada opción a texto
             getOptionLabel={(option: ProductoResults) => `${option.codigo} - ${option.nombre}`}
