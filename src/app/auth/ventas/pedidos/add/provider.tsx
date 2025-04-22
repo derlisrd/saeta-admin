@@ -7,6 +7,7 @@ import { PedidoStoreType } from "./_types/pedidoStore";
 import useStore from "@/hooks/useStore";
 import { FormasPagoResults } from "@/services/dto/factura/formaspago";
 import { MonedaResults } from "@/services/dto/factura/moneda";
+import { DepositoResults } from "@/services/dto/productos/deposito";
 
 function AddPedidoProvider({ children }: { children: ReactNode }) {
   const { userData } = useAuth();
@@ -18,10 +19,11 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
 
   const [formasPago, setFormasPago] = useState<FormasPagoResults[]>([]);
   const [monedas, setMonedas] = useState<MonedaResults[]>([]);
+  const [depositos, setDepositos] = useState<DepositoResults[]>([]);
+  const [selectedDeposito, setSelectedDeposito] = useState(1);
   const [loading, setLoading] = useState(false);
   const [cantidad, setCantidad] = useState(1);
   const [loadingAddProducto, setLoadingAddProducto] = useState(false);
-  const [selectedDeposito] = useState(1);
   const initialPedido: AddPedido = new AddPedido({
     cliente_id: 0,
     aplicar_impuesto: true,
@@ -202,14 +204,21 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
   }, [set]);
 
   const getAllDatas = useCallback(async () => {
-    setLoading(true);
     try {
-      const [formasPagoRes, monedasRes] = await Promise.all([API.formasPago.list(userData && userData?.token), API.monedas.list(userData && userData?.token)]);
+      setLoading(true);
+      const [formasPagoRes, monedasRes, depositosRes] = await Promise.all([
+        API.formasPago.list(userData && userData?.token),
+        API.monedas.list(userData && userData?.token),
+        API.depositos.list(userData && userData?.token),
+      ]);
       if (formasPagoRes.success && formasPagoRes.results) {
         setFormasPago(formasPagoRes.results);
       }
       if (monedasRes.success && monedasRes.results) {
         setMonedas(monedasRes.results);
+      }
+      if (depositosRes.success && depositosRes.results) {
+        setDepositos(depositosRes.results);
       }
     } finally {
       setLoading(false);
@@ -274,6 +283,9 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
       limpiarFinalizarPedido,
       monedas,
       handleFormasPago,
+      selectedDeposito,
+      setSelectedDeposito,
+      depositos,
     }),
     [
       pedidos,
@@ -296,6 +308,9 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
       limpiarFinalizarPedido,
       monedas,
       handleFormasPago,
+      selectedDeposito,
+      setSelectedDeposito,
+      depositos,
     ]
   );
   return <AddPedidoContext.Provider value={values}>{children}</AddPedidoContext.Provider>;

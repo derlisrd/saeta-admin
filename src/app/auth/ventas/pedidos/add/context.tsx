@@ -3,6 +3,7 @@ import { AddPedido, AddPedidoResponse } from "@/services/dto/pedidos/AddPedido";
 import { createContext, Dispatch, RefObject, SetStateAction } from "react";
 import { MonedaResults } from "@/services/dto/factura/moneda";
 import { ErrorType } from "./_types/error";
+import { DepositoResults } from "@/services/dto/productos/deposito";
 
 interface AddPedidoContextProps {
   loading: boolean;
@@ -28,6 +29,9 @@ interface AddPedidoContextProps {
   setIndex: Dispatch<SetStateAction<number>>;
   consultarCodigoInsertar: (codigo: string) => void;
   handleFormasPago: (monto: number, id: number, type: "add" | "remove") => void;
+  selectedDeposito: number;
+  setSelectedDeposito: Dispatch<SetStateAction<number>>;
+  depositos: DepositoResults[];
 }
 
 export const AddPedidoContext = createContext<AddPedidoContextProps>({
@@ -58,4 +62,7 @@ export const AddPedidoContext = createContext<AddPedidoContextProps>({
   index: 0,
   setIndex: () => {},
   consultarCodigoInsertar: () => {},
+  selectedDeposito: 1,
+  setSelectedDeposito: () => {},
+  depositos: [],
 });

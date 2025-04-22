@@ -46,6 +46,15 @@ export default [
                 url: '/ventas/pedidos/lista',
                 private: false,
                 descripcion: 'Lista de pedidos'
+            },
+            {
+                id: 344,
+                title: 'Devoluciones',
+                icon: 'list',
+                color: '#0066cc',
+                url: '/ventas/pedidos/devoluciones',
+                private: false,
+                descripcion: 'Devoluciones'
             }
         ],
 

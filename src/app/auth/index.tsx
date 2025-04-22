@@ -36,6 +36,7 @@ function AutenticatedPages() {
           <Route path="/categorias" element={<Categorias />} />
           <Route path="/ventas/pedidos/add" element={<PedidosAdd />} />
           <Route path="/ventas/pedidos/lista" element={<PedidosLista />} />
+          <Route path="/ventas/pedidos/devoluciones" element={<Devoluciones />} />
 
           <Route path="/logout" element={<LogOut />} />
         </Route>
@@ -44,7 +45,6 @@ function AutenticatedPages() {
     </LocalizationProvider>
   );
 }
-const PrintCodigoBarra = Loadable(lazy(() => import("./productos/print-codigo-barra")));
 const Parametros = Loadable(lazy(() => import("./config/parametros")));
 const Impresoras = Loadable(lazy(() => import("./config/impresoras")));
 const Categorias = Loadable(lazy(() => import("./productos/categorias")));
@@ -54,11 +54,14 @@ const Clientes = Loadable(lazy(() => import("./clientes/lista")));
 const ClientesAdd = Loadable(lazy(() => import("./clientes/add")));
 const ConfigEmpresa = Loadable(lazy(() => import("./config/empresa")));
 const Tema = Loadable(lazy(() => import("./config/tema")));
-const ProductosLista = Loadable(lazy(() => import("./productos/list")));
+
 const PedidosLista = Loadable(lazy(() => import("./ventas/pedidos/lista")));
+const Devoluciones = Loadable(lazy(() => import("./ventas/pedidos/devoluciones")));
+const PedidosAdd = Loadable(lazy(() => import("./ventas/pedidos/add")));
+
+const PrintCodigoBarra = Loadable(lazy(() => import("./productos/print-codigo-barra")));
+const ProductosLista = Loadable(lazy(() => import("./productos/list")));
 const ProductosAdd = Loadable(lazy(() => import("./productos/add")));
 const ProductosCargaStock = Loadable(lazy(() => import("./productos/carga-stock")));
-
-const PedidosAdd = Loadable(lazy(() => import("./ventas/pedidos/add")));
 
 export default AutenticatedPages;

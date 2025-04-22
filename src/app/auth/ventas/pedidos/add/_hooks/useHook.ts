@@ -25,7 +25,10 @@ function useHook() {
     setResult,
     limpiarFinalizarPedido,
     monedas,
-    handleFormasPago
+    handleFormasPago,
+    depositos,
+    selectedDeposito,
+    setSelectedDeposito,
   } = useContext(AddPedidoContext);
   return {
     pedidos,
@@ -50,7 +53,10 @@ function useHook() {
     setResult,
     limpiarFinalizarPedido,
     monedas,
-    handleFormasPago
+    handleFormasPago,
+    depositos,
+    selectedDeposito,
+    setSelectedDeposito,
   };
 }
 
