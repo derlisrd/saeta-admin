@@ -20,8 +20,6 @@ function useCargaStock() {
       mutationFn: ({deposito, producto} : {deposito: number, producto: number}) => API.stock.consultarStock(userData && userData.token, deposito, producto),
         onSettled(data) {
           if(data && data.success){
-            console.log(data.results);
-            
             setResults(data.results);
           }
         },
@@ -32,7 +30,7 @@ function useCargaStock() {
     }
 
 
-    return {depositos: data?.results ?? [], isLoading : isLoading || consultarStockMutate.isPending, consultarStock, results}
+    return {depositos: data?.results ?? [], isLoading : isLoading || consultarStockMutate.isPending, consultarStock, results, setResults}
 }
 
 export default useCargaStock;

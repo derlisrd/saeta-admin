@@ -20,4 +20,20 @@ export const apiServiceStock = {
             });
         }
     },
+    corregiRoReponer: async (token: string | null, deposito: number, producto: number, cantidad: number) => {
+        try {
+            const { data, status } = await BASE.put(`/stock/corregir`, { deposito_id: deposito, producto_id: producto, cantidad }, { headers: { Authorization: token } });
+            return {
+                success: data.success,
+                status,
+                message: data.message
+            }
+        } catch (e) {
+            return {
+                success: false,
+                status: 500,
+                message: "Error al obtener productos"
+            }
+        }
+    }
 }

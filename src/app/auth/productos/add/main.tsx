@@ -1,25 +1,23 @@
-import { Alert, Box, Button, Container, LinearProgress, Paper, Snackbar, Stack } from "@mui/material";
+import { Box, Container, LinearProgress, Paper } from "@mui/material";
 import TabsCustom from "./_components/tabscustom";
 import TabContainer from "./_components/tabcontainer";
 import Datos from "./containers/datos";
 import Imagenes from "./containers/imagenes";
 import useAddProducto from "./_hook/useAddProducto";
+import NotificacionSnack from "@/components/common/NotificacionSnack";
+import LargeButtonStyled from "@/components/ui/LargeButton";
 
 function AddProductoMain() {
   const { clearSuccess, success, loading, tabValue, sendForm } = useAddProducto();
   // tab value no cambia console.log(tabValue);
   return (
     <Container>
-      <Snackbar anchorOrigin={{ vertical: "top", horizontal: "right" }} open={success.active} autoHideDuration={6000} onClose={clearSuccess}>
-        <Alert onClose={clearSuccess} severity="success" variant="filled" sx={{ width: "100%" }}>
-          {success.message}
-        </Alert>
-      </Snackbar>
-      <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-between" my={3}>
-        <Button size="large" onClick={sendForm}>
-          GUARDAR
-        </Button>
-      </Stack>
+      <Box sx={{ position: "absolute", bottom: 32, right: 32 }}>
+        <LargeButtonStyled onClick={sendForm}>Guardar</LargeButtonStyled>
+      </Box>
+
+      <NotificacionSnack open={success.active} onClose={clearSuccess} message={success.message} severity="info" />
+
       <Box boxShadow={4} borderRadius={4} component={Paper} mb={6} padding={{ xs: 0, sm: 1, md: 2 }}>
         {loading && <LinearProgress sx={{ margin: "18px" }} />}
         <TabsCustom />

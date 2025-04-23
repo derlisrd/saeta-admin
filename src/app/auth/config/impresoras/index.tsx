@@ -1,7 +1,9 @@
 import useImpresoras from "@/core/hooks/config/useImpresoras";
-import { Box, Button, Container, LinearProgress, Paper, Table, TableContainer, TableHead, Typography, TableRow, TableCell, TableBody } from "@mui/material";
+import { Box, Button, Container, LinearProgress, Stack } from "@mui/material";
 import AddModalImpresora from "./_modal/add";
 import { useState } from "react";
+import GenericTable from "@/components/table/GenericTable";
+import columnsImpresoras from "./_components/columnsImpresoras";
 
 function Impresoras() {
   const { lista, isLoading } = useImpresoras();
@@ -11,46 +13,22 @@ function Impresoras() {
 
   return (
     <Container>
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 3 }}>
+      <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ marginBottom: 2 }}>
         <h3>Impresoras</h3>
-        <Button variant="contained" color="primary" onClick={handleModal}>
-          Agregar Impresora
-        </Button>
-      </Box>
-
+        <Button onClick={handleModal}>Agregar</Button>
+      </Stack>
       {isLoading ? (
-        <Box sx={{ display: "flex", justifyContent: "center", my: 4 }}>
-          <LinearProgress />
-        </Box>
-      ) : !lista || lista.length === 0 ? (
-        <Paper sx={{ p: 3, textAlign: "center" }}>
-          <Typography variant="body1">No hay impresoras registradas</Typography>
-        </Paper>
+        <LinearProgress />
       ) : (
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>ID</TableCell>
-                <TableCell>Nombre</TableCell>
-                <TableCell>Milímetros</TableCell>
-                <TableCell>Estado</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {lista.map((impresora) => (
-                <TableRow key={impresora.id}>
-                  <TableCell>{impresora.id}</TableCell>
-                  <TableCell>{impresora.nombre}</TableCell>
-                  <TableCell>{impresora.mm}</TableCell>
-                  <TableCell>{impresora.activo ? "Activo" : "Inactivo"}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <Box>
+          <GenericTable
+            data={lista || []}
+            columns={columnsImpresoras({ width: window.innerWidth })} // Pasa el ancho inicial
+            rowHeight={40}
+            headerHeight={36}
+          />
+        </Box>
       )}
-
       <AddModalImpresora open={modalOpen} onClose={handleModal} />
     </Container>
   );

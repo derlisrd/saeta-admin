@@ -1,82 +1,110 @@
 import useBuscaProducto from "@/core/hooks/productos/stock/useBuscaProducto";
 import useCargaStock from "@/core/hooks/productos/stock/useCargaStock";
-import { DepositoResults } from "@/services/dto/productos/deposito";
-import { ProductoResults } from "@/services/dto/productos/producto";
-import { Autocomplete, Button, Container, FormControl, Grid2 as Grid, InputLabel, LinearProgress, MenuItem, Select, TextField } from "@mui/material";
+import useNotificacionSnack from "@/hooks/useNotificacionSnack";
+import { Container, Grid2 as Grid, LinearProgress } from "@mui/material";
 import { useState, useDeferredValue } from "react";
+import StockForm from "./_containers/stock";
 import Reponer from "./_containers/reponer";
-import Agregar from "./_containers/agregar";
+import AgregarStock from "./_containers/agregar";
+import NotificacionSnack from "@/components/common/NotificacionSnack";
+import { validarFormularioStock } from "@/core/utils/stock/validatorCorregirStock";
+import { ProductoResults } from "@/services/dto/productos/producto";
 
 function CargaStock() {
   const [selectedDeposito, setSelectedDeposito] = useState<number>(0);
-  const [selectedProducto, setSelectedProducto] = useState<number>(0);
+  const [selectedProducto, setSelectedProducto] = useState<ProductoResults | null>(null);
   const [search, setSearch] = useState<string>("");
 
   const deferredSearch = useDeferredValue(search);
 
-  const { depositos, consultarStock, isLoading, results } = useCargaStock();
+  const { depositos, consultarStock, isLoading, results, setResults } = useCargaStock();
   const { loadingBusqueda, listaBusqueda } = useBuscaProducto(deferredSearch);
+  const { snackbarOpen, snackbarMessage, snackbarSeverity, mostrarNotificacion, cerrarNotificacion } = useNotificacionSnack();
+
+  // Función para resetear el formulario
+  const resetForm = () => {
+    setSelectedProducto(null);
+    setSearch("");
+    setResults(undefined);
+  };
+
+  const handleProductoChange = (producto: ProductoResults | null) => setSelectedProducto(producto);
+
+  // Validación de formulario
+  const validarFormulario = () => {
+    if (selectedProducto && !validarFormularioStock(selectedDeposito, selectedProducto.id)) {
+      mostrarNotificacion("Debe seleccionar un depósito y un producto", "warning");
+      return false;
+    }
+    return true;
+  };
+
+  const handleConsultar = () => {
+    if (selectedProducto && validarFormulario()) {
+      consultarStock(selectedDeposito, selectedProducto.id);
+    }
+  };
 
   return (
     <Container>
-      <Grid container spacing={2} alignItems="center">
+      <Grid container spacing={1} alignItems="center">
         <Grid size={12}>
           <h4>Seleccione el depósito y ingrese la cantidad del producto</h4>
         </Grid>
-        <Grid size={12}>{isLoading && <LinearProgress />}</Grid>
-        <Grid size={{ xs: 12, sm: 4, md: 4 }}>
-          <FormControl fullWidth>
-            <InputLabel id="deposito-select-label">Depósito</InputLabel>
-            <Select
-              fullWidth
-              labelId="impuesto-label"
-              id="impuesto"
-              onChange={(e) => setSelectedDeposito(Number(e.target.value))}
-              value={selectedDeposito}
-              label="Deposito"
-              name="deposito_id"
-            >
-              <MenuItem value={0} disabled>
-                Seleccionar deposito
-              </MenuItem>
-              {depositos.map((item: DepositoResults, index: number) => (
-                <MenuItem key={index} value={item.id}>
-                  {item.nombre}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Grid>
-        <Grid size={{ xs: 12, sm: 4, md: 4 }}>
-          <Autocomplete
-            onChange={(_, value) => {
-              value && setSelectedProducto(value.id);
-            }}
-            // Agregamos esta función para convertir cada opción a texto
-            getOptionLabel={(option: ProductoResults) => `${option.codigo} - ${option.nombre}`}
-            // Opcional: Clave única para cada opción
-            isOptionEqualToValue={(option, value) => option.id === value.id}
-            options={listaBusqueda}
-            loading={loadingBusqueda}
-            loadingText="Buscando..."
-            noOptionsText="No se encontraron resultados"
-            renderInput={(params) => <TextField {...params} placeholder="Buscar producto..." onChange={(e) => setSearch(e.target.value)} value={search} />}
+        <Grid size={12}>{isLoading && <LinearProgress sx={{ mb: 4 }} />}</Grid>
+
+        {/* Formulario de búsqueda */}
+        <Grid size={12}>
+          <StockForm
+            depositos={depositos}
+            listaBusqueda={listaBusqueda}
+            search={search}
+            selectedDeposito={selectedDeposito}
+            selectedProducto={selectedProducto}
+            loadingBusqueda={loadingBusqueda}
+            isLoading={isLoading}
+            onDepositoChange={setSelectedDeposito}
+            onProductoChange={handleProductoChange}
+            onSearchChange={setSearch}
+            onConsultar={handleConsultar}
+            validarFormulario={validarFormulario}
           />
         </Grid>
-        <Grid size={{ xs: 12, sm: 4, md: 4 }}>
-          <Button
-            onClick={() => {
-              consultarStock(selectedDeposito, selectedProducto);
-            }}
-          >
-            Consultar
-          </Button>
-        </Grid>
+
+        {/* Componentes para reponer o agregar stock */}
         <Grid size={12}>
-          {results && results !== null && <Reponer />}
-          {results == null && results !== undefined && <Agregar />}
+          {selectedProducto && (
+            <h3>
+              {" "}
+              {selectedProducto.nombre} {selectedProducto.codigo}
+            </h3>
+          )}
+          {results && results !== null && (
+            <Reponer
+              results={results}
+              onSuccess={() => {
+                resetForm();
+                mostrarNotificacion("Stock corregido exitosamente", "success");
+              }}
+              onError={(mensaje) => mostrarNotificacion(mensaje, "error")}
+            />
+          )}
+          {results == null && results !== undefined && (
+            <AgregarStock
+              deposito_id={selectedDeposito}
+              producto_id={selectedProducto ? selectedProducto.id : 0}
+              onSuccess={() => {
+                resetForm();
+                mostrarNotificacion("Stock agregado exitosamente", "success");
+              }}
+              onError={(mensaje) => mostrarNotificacion(mensaje, "error")}
+            />
+          )}
         </Grid>
       </Grid>
+
+      {/* Componente de notificación */}
+      <NotificacionSnack open={snackbarOpen} message={snackbarMessage} severity={snackbarSeverity} onClose={cerrarNotificacion} />
     </Container>
   );
 }

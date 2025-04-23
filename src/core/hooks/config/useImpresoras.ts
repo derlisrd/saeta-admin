@@ -21,7 +21,7 @@ function useImpresoras() {
         staleTime: 1000 * 60 * 5
     });
 
-    const insertarMutation = useMutation({
+    const {mutateAsync, isPending} = useMutation({
         mutationFn: async(form: Impresora) => {
             // Asumiendo que existe un método para insertar impresoras en tu API
             const res = await API.config.insertarImpresora(userData && userData.token, form);
@@ -42,10 +42,10 @@ function useImpresoras() {
     });
 
     const insertar = async(form: Impresora) => {
-        return insertarMutation.mutateAsync(form);
+        return mutateAsync(form);
     }
     
-    return {lista: data, isLoading : isLoading || insertarMutation.isPending, insertar}
+    return {lista: data, isLoading, isPending, insertar}
 }
 
 export default useImpresoras;
