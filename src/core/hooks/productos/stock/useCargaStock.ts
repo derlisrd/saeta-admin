@@ -1,11 +1,13 @@
 import { useAuth } from "@/providers/AuthProvider";
 import API from "@/services/api";
+import { ConsultarStockResults } from "@/services/dto/productos/ConsultarStock";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 
 function useCargaStock() {
     
     const { userData } = useAuth();
-    
+    const [results,setResults] = useState<ConsultarStockResults |null | undefined>(undefined)
     const { data, isLoading} = useQuery({
         queryKey: ["depositos", userData?.token],
         queryFn: () => API.depositos.list(userData && userData?.token),
@@ -16,8 +18,12 @@ function useCargaStock() {
   
     const consultarStockMutate = useMutation({
       mutationFn: ({deposito, producto} : {deposito: number, producto: number}) => API.stock.consultarStock(userData && userData.token, deposito, producto),
-        onSettled(data, error, variables, context) {
-          console.log({data,error,variables,context});
+        onSettled(data) {
+          if(data && data.success){
+            console.log(data.results);
+            
+            setResults(data.results);
+          }
         },
     })
     
@@ -26,7 +32,7 @@ function useCargaStock() {
     }
 
 
-    return {depositos: data?.results ?? [], isLoading : isLoading || consultarStockMutate.isPending, consultarStock}
+    return {depositos: data?.results ?? [], isLoading : isLoading || consultarStockMutate.isPending, consultarStock, results}
 }
 
 export default useCargaStock;

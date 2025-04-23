@@ -4,14 +4,17 @@ import { DepositoResults } from "@/services/dto/productos/deposito";
 import { ProductoResults } from "@/services/dto/productos/producto";
 import { Autocomplete, Button, Container, FormControl, Grid2 as Grid, InputLabel, LinearProgress, MenuItem, Select, TextField } from "@mui/material";
 import { useState, useDeferredValue } from "react";
+import Reponer from "./_containers/reponer";
+import Agregar from "./_containers/agregar";
 
 function CargaStock() {
   const [selectedDeposito, setSelectedDeposito] = useState<number>(0);
   const [selectedProducto, setSelectedProducto] = useState<number>(0);
   const [search, setSearch] = useState<string>("");
+
   const deferredSearch = useDeferredValue(search);
 
-  const { depositos, consultarStock, isLoading } = useCargaStock();
+  const { depositos, consultarStock, isLoading, results } = useCargaStock();
   const { loadingBusqueda, listaBusqueda } = useBuscaProducto(deferredSearch);
 
   return (
@@ -68,6 +71,10 @@ function CargaStock() {
           >
             Consultar
           </Button>
+        </Grid>
+        <Grid size={12}>
+          {results && results !== null && <Reponer />}
+          {results == null && results !== undefined && <Agregar />}
         </Grid>
       </Grid>
     </Container>
