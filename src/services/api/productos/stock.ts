@@ -32,7 +32,7 @@ export const apiServiceStock = {
             return {
                 success: false,
                 status: 500,
-                message: "Error al obtener productos"
+                message: "Error al agregar stock"
             }
         }
     }
