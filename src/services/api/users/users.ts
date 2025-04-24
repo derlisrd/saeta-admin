@@ -8,7 +8,7 @@ export const apiServiceUsers = {
     },
     create: async(token : string | null, form : UserCreateForm)=>{
         try {
-            const {data, status} = await BASE.post('/users', form, { headers: { Authorization: token } });
+            const {data, status} = await BASE.post('/users/create', form, { headers: { Authorization: token } });
             return new UserCreateResponse({
                 success: data.success,
                 status,
