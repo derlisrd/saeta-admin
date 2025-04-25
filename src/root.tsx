@@ -9,7 +9,7 @@ function Root() {
   const queryClient = new QueryClient();
   return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
+      <BrowserRouter basename="/admin">
         <ThemeCustomProvider>
           <AuthProvider>
             <App />
