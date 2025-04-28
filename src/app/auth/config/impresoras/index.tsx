@@ -15,7 +15,7 @@ function Impresoras() {
     <Container>
       <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ marginBottom: 2 }}>
         <h3>Impresoras</h3>
-        <Button onClick={handleModal}>Agregar</Button>
+        <Button onClick={handleModal}>Nuevo</Button>
       </Stack>
       {isLoading ? (
         <LinearProgress />

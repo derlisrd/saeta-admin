@@ -9,12 +9,12 @@ export default function ColumnsUsers({ width }: { width: number }) {
     },
     {
       label: "Nombre",
-      dataKey: "nombre",
+      dataKey: "name",
       width: width * 0.2,
     },
     {
-      label: "Milimetros",
-      dataKey: "mm",
+      label: "Usuario",
+      dataKey: "username",
       width: width * 0.2,
     },
     {

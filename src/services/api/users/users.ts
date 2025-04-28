@@ -1,4 +1,4 @@
-import { UserCreateForm, UserCreateResponse } from "@/services/dto/users/user";
+import { UserCreateForm, UserCreateResponse, UserListResponse } from "@/services/dto/users/user";
 import { BASE } from "../base";
 import { isAxiosError } from "axios";
 
@@ -10,28 +10,28 @@ export const apiServiceUsers = {
                     Authorization: token
                 }
             });
-            return {
+            return new UserListResponse( {
                 success: data.success,
                 status,
                 results: data.results,
                 message: data.message
-            }
+            })
         }
         catch (e) {
             if(isAxiosError(e)){
-                return {
+                return new UserListResponse( {
                     success: false,
                     status: e.response?.status || 500,
                     results: null,
                     message: e.response?.data.message || 'Error de servidor'
-                }
+                })
             }
-            return {
+            return new UserListResponse( {
                 success: false,
                 status: 500,
                 results: null,
-                message : 'Error de servidor'
-            }
+                message: 'Error de servidor'
+            })
         }
     },
     create: async(token : string | null, form : UserCreateForm)=>{

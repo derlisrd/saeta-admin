@@ -41,3 +41,35 @@ export class UserCreateResults{
         this.email = email;
     }
 }
+
+export class UserListResponse{
+    success: boolean;
+    status: number;
+    results: UserListResults[] | null;
+    message: string;
+
+    constructor({ success = false, status = 0, results = null, message = '' } : Partial<UserListResponse>){
+        this.success = success;
+        this.status = status;
+        this.results = results;
+        this.message = message;
+    }
+}
+
+export class UserListResults{
+    id: number;
+    name: string;
+    username: string;
+    email: string;
+    activo: number;
+    sucursal_id: number;
+
+    constructor({ id = 0, name = '', username = '', email='', activo=0, sucursal_id=0 } : Partial<UserListResults> ){
+        this.id = id;
+        this.name = name;
+        this.username = username;
+        this.email = email;
+        this.activo = activo;
+        this.sucursal_id = sucursal_id;
+    }
+}

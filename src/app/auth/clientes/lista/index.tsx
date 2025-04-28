@@ -17,7 +17,12 @@ const getColumnConfig = (width: number): ColumnConfigType[] => [
   { dataKey: "razon_social", label: "Razón social", width: width * 0.3 },
   { dataKey: "telefono", label: "Tel.", width: width * 0.13 },
   { dataKey: "extranjero", label: "Extranjero", width: width * 0.13 },
-  { dataKey: "created_at", label: "Registro", width: width * 0.15, cellRenderer: ({ rowData }: TableCellProps) => format(rowData.created_at, "DD-MM-YY HH:mm") },
+  {
+    dataKey: "created_at",
+    label: "Registro",
+    width: width * 0.15,
+    cellRenderer: ({ rowData }: TableCellProps) => (rowData.created_at ? format(rowData.created_at, "DD-MM-YY HH:mm") : ""),
+  },
   { dataKey: "_", label: "Acciones", width: width * 0.18 },
 ];
 
