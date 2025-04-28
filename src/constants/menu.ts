@@ -205,7 +205,7 @@ export default [
         descripcion: null,
         submenu: [
             {
-                id: 122342,
+                id: 1,
                 title: 'Empresa',
                 icon: 'store_mall_directory',
                 color: '#0066cc',
@@ -214,7 +214,16 @@ export default [
                 descripcion: null
             },
             {
-                id: 1222,
+                id: 2,
+                title: 'Usuarios',
+                icon: 'tune',
+                color: '#0066cc',
+                url: '/config/usuarios',
+                private: false,
+                descripcion: 'Usuarios'
+            },
+            {
+                id: 3,
                 title: 'Parámetros',
                 icon: 'tune',
                 color: '#0066cc',
@@ -224,7 +233,7 @@ export default [
             }
             ,
             {
-                id: 22342,
+                id: 4,
                 title: 'Tema',
                 icon: 'brush',
                 color: '#0066cc',

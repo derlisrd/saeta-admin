@@ -10,6 +10,7 @@ import { apiServiceDepositos } from "./productos/deposito";
 import { apiServiceMedidas } from "./productos/medidas";
 import { apiServiceProductos } from "./productos/producto";
 import { apiServiceStock } from "./productos/stock";
+import { apiServiceUsers } from "./users/users";
 
 const API = {
     auth : apiServiceAuth,
@@ -23,7 +24,8 @@ const API = {
     monedas: apiServiceMonedas,
     depositos: apiServiceDepositos,
     medidas: apiServiceMedidas,
-    config: apiSErviceConfig 
+    config: apiSErviceConfig ,
+    users: apiServiceUsers
 }
 
 export default API
