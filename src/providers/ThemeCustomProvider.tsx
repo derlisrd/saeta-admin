@@ -15,7 +15,7 @@ interface ThemeCustomProviderType {
 function ThemeCustomProvider({ children }: ThemeCustomProviderType) {
   const initialCustomTheme = {
     palette: pallete,
-    components: components,
+    components: components(),
     typography: typography,
     shadows: shadowsDark,
   } as Theme;
@@ -46,11 +46,11 @@ function ThemeCustomProvider({ children }: ThemeCustomProviderType) {
       newModeTheme.palette.text.secondary = colorsMode.dark.textSecondary;
       newModeTheme.palette.divider = colorsMode.dark.divider;
       newModeTheme.shadows = shadowsDark;
+
       setCustomTheme(createTheme({ ...newModeTheme, cssVariables: true }));
       setCustomThemeStorage(newModeTheme);
     }
   };
-
   const changeColor = (color: string, secondary: string) => {
     const newModeTheme = { ...customThemeStorage } as Theme;
     newModeTheme.palette.primary.main = color;

@@ -41,7 +41,7 @@ function Clientes() {
   return (
     <Container>
       <Stack spacing={2} my={2} direction="row">
-        <TextField label="Buscar" sx={{ backgroundColor: "background.paper" }} />
+        <TextField label="Buscar" />
         <Button size="small" startIcon={<Icon>user-plus</Icon>} onClick={() => nav("/clientes/add")}>
           Registrar
         </Button>

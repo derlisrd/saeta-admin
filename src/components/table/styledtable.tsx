@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 
 const StyledTableContainer = styled(Box)(({ theme }) => ({
   "& .ReactVirtualized__Table__headerRow": {
-    borderRadius: "12px",
+    borderRadius: "6px",
     textTransform: "uppercase",
     fontWeight: "bold",
   },
