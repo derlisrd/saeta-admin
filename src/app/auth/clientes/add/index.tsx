@@ -1,12 +1,12 @@
+import NotificacionSnack from "@/components/common/NotificacionSnack";
+import Icon from "@/components/ui/icon";
 import useAddClientes from "@/core/hooks/clientes/useAddCliente";
 import { AddCliente } from "@/services/dto/clientes/AddCliente";
-import { Alert, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid2 as Grid, LinearProgress, TextField } from "@mui/material";
+import { Box, Breadcrumbs, Button, Container, Grid2 as Grid, LinearProgress, Paper, Slide, Stack, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function ClientesAdd() {
-  const { isLoading, error, addNewCliente } = useAddClientes();
-  const navigate = useNavigate();
   const initialForm: AddCliente = {
     nombres: "",
     apellidos: "",
@@ -17,46 +17,65 @@ function ClientesAdd() {
     email: "",
   };
   const [form, setForm] = useState<AddCliente>(initialForm);
-  const clear = () => setForm(initialForm);
+  const clearForm = () => setForm(initialForm);
+  const { isLoading, message, addNewCliente, clearMessage } = useAddClientes(clearForm);
+
+  const navigate = useNavigate();
+
+  const submit = async () => addNewCliente(form);
+
   const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => setForm({ ...form, [target.name]: target.value });
 
   return (
-    <Dialog open={true} onClose={() => navigate(-1)}>
-      <DialogTitle>Registrar nuevo cliente</DialogTitle>
-      <DialogContent>
-        {error && <Alert severity="error">{error.message}</Alert>}
-        <Grid container spacing={{ xs: 1, md: 2 }} pt={1}>
-          <Grid size={12}>{isLoading && <LinearProgress />}</Grid>
-          <Grid size={{ xs: 12, md: 6 }}>
-            <TextField disabled={isLoading} fullWidth label="Nombre o Empresa" onChange={handleChange} name="nombres" value={form.nombres} autoFocus autoComplete="off" />
+    <Container>
+      {message && <NotificacionSnack open message={message.descripcion} title={message.name} severity={message.severity || "info"} onClose={clearMessage} />}
+      <Breadcrumbs separator="›">
+        <Typography variant="overline">Clientes</Typography>
+        <Typography variant="overline">Registrar</Typography>
+      </Breadcrumbs>
+      <Slide direction="up" in={true} mountOnEnter unmountOnExit>
+        <Box component={Paper} elevation={3} p={2} borderRadius={2}>
+          <Grid container spacing={{ xs: 1, md: 2 }} pt={1}>
+            <Grid size={12}>{isLoading && <LinearProgress />}</Grid>
+            <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+              <TextField disabled={isLoading} required fullWidth label="Documento o ruc" autoFocus onChange={handleChange} name="doc" value={form.doc} autoComplete="off" />
+            </Grid>
+            <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+              <TextField disabled={isLoading} required fullWidth label="Nombre o Empresa" onChange={handleChange} name="nombres" value={form.nombres} autoComplete="off" />
+            </Grid>
+            <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+              <TextField
+                disabled={isLoading}
+                required
+                fullWidth
+                label="Apellido o Razón social"
+                onChange={handleChange}
+                name="apellidos"
+                value={form.apellidos}
+                autoComplete="off"
+              />
+            </Grid>
+
+            <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+              <TextField disabled={isLoading} fullWidth label="Tel" onChange={handleChange} name="telefono" value={form.telefono} autoComplete="off" />
+            </Grid>
+            <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+              <TextField disabled={isLoading} fullWidth label="Correo electronico" onChange={handleChange} name="email" value={form.email} autoComplete="off" />
+            </Grid>
+            <Grid size={{ xs: 12, md: 12 }}>
+              <Stack direction="row" spacing={2} justifyContent="flex-end">
+                <Button disabled={isLoading} size="large" startIcon={<Icon>chevrons-left</Icon>} onClick={() => navigate("/clientes")} variant="outlined">
+                  Regresar
+                </Button>
+                <Button disabled={isLoading} size="large" startIcon={<Icon>device-floppy</Icon>} onClick={submit} variant="contained">
+                  Guardar
+                </Button>
+              </Stack>
+            </Grid>
           </Grid>
-          <Grid size={{ xs: 12, md: 6 }}>
-            <TextField disabled={isLoading} fullWidth label="Apellido o Razón social" onChange={handleChange} name="apellidos" value={form.apellidos} autoComplete="off" />
-          </Grid>
-          <Grid size={{ xs: 12, md: 12 }}>
-            <TextField disabled={isLoading} fullWidth label="Documento" onChange={handleChange} name="doc" value={form.doc} autoComplete="off" />
-          </Grid>
-          <Grid size={{ xs: 12, md: 6 }}>
-            <TextField disabled={isLoading} fullWidth label="Tel" onChange={handleChange} name="telefono" value={form.telefono} autoComplete="off" />
-          </Grid>
-          <Grid size={{ xs: 12, md: 6 }}>
-            <TextField disabled={isLoading} fullWidth label="Correo" onChange={handleChange} name="email" value={form.email} autoComplete="off" />
-          </Grid>
-        </Grid>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={clear} variant="outlined">
-          Limpiar
-        </Button>
-        <Button disabled={isLoading} onClick={() => addNewCliente(form)} variant="contained">
-          Registrar
-        </Button>
-        <Button disabled={isLoading} onClick={() => navigate(-1)} variant="outlined">
-          Cancelar
-        </Button>
-      </DialogActions>
-    </Dialog>
+        </Box>
+      </Slide>
+    </Container>
   );
 }
-
 export default ClientesAdd;

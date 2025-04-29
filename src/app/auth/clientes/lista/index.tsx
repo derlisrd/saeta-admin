@@ -1,15 +1,13 @@
 import useClientes from "@/core/hooks/clientes/useClientes";
-
 import { ColumnConfigType } from "@/core/types/columnconfig";
-import { Container, LinearProgress, Stack, Button, Box } from "@mui/material";
-import { TableCellProps } from "react-virtualized";
-import { format } from "@formkit/tempo";
+import { Container, LinearProgress, Stack, Button, Box, Slide, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import GenericTable from "@/components/table/GenericTable";
 import TableCellRender from "./_components/tablecellrender";
 import TableHeaderRender from "./_components/tableheaderrender";
 import { ClienteResults } from "@/services/dto/clientes/cliente";
 import { useState } from "react";
+import Icon from "@/components/ui/icon";
 
 const getColumnConfig = (width: number): ColumnConfigType[] => [
   { dataKey: "id", label: "ID", width: width * 0.1 },
@@ -17,12 +15,12 @@ const getColumnConfig = (width: number): ColumnConfigType[] => [
   { dataKey: "razon_social", label: "Razón social", width: width * 0.3 },
   { dataKey: "telefono", label: "Tel.", width: width * 0.13 },
   { dataKey: "extranjero", label: "Extranjero", width: width * 0.13 },
-  {
+  /*   {
     dataKey: "created_at",
     label: "Registro",
     width: width * 0.15,
     cellRenderer: ({ rowData }: TableCellProps) => (rowData.created_at ? format(rowData.created_at, "DD-MM-YY HH:mm") : ""),
-  },
+  }, */
   { dataKey: "_", label: "Acciones", width: width * 0.18 },
 ];
 
@@ -42,18 +40,20 @@ function Clientes() {
 
   return (
     <Container>
-      <Stack spacing={2} mt={2} py={1} direction="row" justifyContent="space-between">
-        <h3>Clientes</h3>
-        <Button variant="contained" color="primary" onClick={() => nav("/clientes/add")}>
-          Nuevo
+      <Stack spacing={2} my={2} direction="row">
+        <TextField label="Buscar" sx={{ backgroundColor: "background.paper" }} />
+        <Button size="small" startIcon={<Icon>user-plus</Icon>} onClick={() => nav("/clientes/add")}>
+          Registrar
         </Button>
       </Stack>
       {isLoading ? (
         <LinearProgress />
       ) : (
-        <Box>
-          <GenericTable data={listado} columns={columns(window.innerWidth)} rowHeight={40} headerHeight={36} />
-        </Box>
+        <Slide direction="up" in={true} mountOnEnter unmountOnExit>
+          <Box>
+            <GenericTable data={listado} columns={columns(window.innerWidth)} rowHeight={40} headerHeight={36} />
+          </Box>
+        </Slide>
       )}
     </Container>
   );

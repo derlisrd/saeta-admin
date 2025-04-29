@@ -55,7 +55,7 @@ export const apiServiceClientes = {
     create: async(token : string | null, form : AddCliente) => {
         try {
             const {data, status} = await BASE.post('/clientes',form,{headers: {Authorization : token}})
-            return new AddClienteRensponse({ success : data.success as boolean, status, results: data.results, message: '' });
+            return new AddClienteRensponse({ success : data.success as boolean, status, results: data.results, message: data.message });
         } catch (e) {
             if (axios.isAxiosError(e)) {
                 return new AddClienteRensponse({

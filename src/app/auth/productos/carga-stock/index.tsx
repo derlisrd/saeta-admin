@@ -75,7 +75,6 @@ function CargaStock() {
         <Grid size={12}>
           {selectedProducto && (
             <h3>
-              {" "}
               {selectedProducto.nombre} {selectedProducto.codigo}
             </h3>
           )}
@@ -102,8 +101,6 @@ function CargaStock() {
           )}
         </Grid>
       </Grid>
-
-      {/* Componente de notificación */}
       <NotificacionSnack open={snackbarOpen} message={snackbarMessage} severity={snackbarSeverity} onClose={cerrarNotificacion} />
     </Container>
   );

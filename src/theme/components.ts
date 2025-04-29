@@ -58,11 +58,11 @@ export const components = {
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
-          borderRadius: "12px",
-          borderWidth: 0,
-          fontSize: 13
+          backgroundColor: "background.paper",
+          borderRadius: "8px",
+          fontSize: 13,
         },
-      },
+      }
     },
     MuiInputLabel: {
       styleOverrides: {

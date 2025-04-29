@@ -36,7 +36,7 @@ function ThemeCustomProvider({ children }: ThemeCustomProviderType) {
       newModeTheme.palette.text.secondary = colorsMode.light.textSecondary;
       newModeTheme.palette.divider = colorsMode.light.divider;
       newModeTheme.shadows = shadowsLight;
-      setCustomTheme(createTheme(newModeTheme));
+      setCustomTheme(createTheme({ ...newModeTheme, cssVariables: true }));
       setCustomThemeStorage(newModeTheme);
     } else {
       newModeTheme.palette.mode = "dark";
@@ -46,7 +46,7 @@ function ThemeCustomProvider({ children }: ThemeCustomProviderType) {
       newModeTheme.palette.text.secondary = colorsMode.dark.textSecondary;
       newModeTheme.palette.divider = colorsMode.dark.divider;
       newModeTheme.shadows = shadowsDark;
-      setCustomTheme(createTheme(newModeTheme));
+      setCustomTheme(createTheme({ ...newModeTheme, cssVariables: true }));
       setCustomThemeStorage(newModeTheme);
     }
   };
