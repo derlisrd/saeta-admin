@@ -9,7 +9,7 @@ interface AddUsersModalProps {
 
 function AddUsersModal({ open, onClose }: AddUsersModalProps) {
   const [error, setError] = useState<string | null>(null);
-  const { insertar, isPending } = useAddUsers();
+  const { isPending } = useAddUsers();
 
   const handleSubmit = async () => {
     try {
