@@ -69,7 +69,7 @@ function ThemeCustomProvider({ children }: ThemeCustomProviderType) {
       }
       const newModeTheme = { ...initialCustomTheme };
       newModeTheme.palette.mode = temaDark ? "dark" : "light";
-      setCustomTheme(createTheme(newModeTheme));
+      setCustomTheme(createTheme({ ...newModeTheme, cssVariables: true }));
       setCustomThemeStorage(newModeTheme);
     } else {
       setCustomTheme(createTheme(customThemeStorage));

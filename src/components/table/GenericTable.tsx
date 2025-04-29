@@ -20,7 +20,7 @@ const defaultCellRenderer = ({ cellData }: TableCellProps) => <TableCell>{cellDa
 
 function GenericTable<T extends object>({ data, columns, rowHeight = 48, headerHeight = 48, sx }: GenericTableProps<T>) {
   return (
-    <StyledTableContainer sx={{ borderRadius: 1, border: 0, boxShadow: 0, minHeight: `calc(100% - ${headerHeight + 120}px)`, ...sx }}>
+    <StyledTableContainer sx={{ borderRadius: 1, border: 0, boxShadow: 0, minHeight: `calc(100% - ${headerHeight + 128}px)`, ...sx }}>
       {data && (
         <AutoSizer>
           {({ height, width }) => (

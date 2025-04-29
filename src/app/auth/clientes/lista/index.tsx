@@ -1,6 +1,6 @@
 import useClientes from "@/core/hooks/clientes/useClientes";
 import { ColumnConfigType } from "@/core/types/columnconfig";
-import { Container, LinearProgress, Stack, Button, Box, Slide, TextField } from "@mui/material";
+import { Container, LinearProgress, Stack, Button, Box, Slide, TextField, InputAdornment } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import GenericTable from "@/components/table/GenericTable";
 import TableCellRender from "./_components/tablecellrender";
@@ -34,14 +34,27 @@ const columns = (width: number): ColumnConfigType[] =>
 function Clientes() {
   const nav = useNavigate();
   const { isLoading, lista } = useClientes();
-  const [search] = useState("");
+  const [search, setSearch] = useState("");
 
   const listado = lista ? lista.filter((item: ClienteResults) => item.razon_social.toLowerCase().includes(search.toLowerCase()) || item.doc.includes(search)) : [];
 
   return (
     <Container>
       <Stack spacing={2} my={2} direction="row">
-        <TextField label="Buscar" />
+        <TextField
+          label="Buscar"
+          placeholder="Nombre o documento"
+          slotProps={{
+            input: {
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Icon>search</Icon>
+                </InputAdornment>
+              ),
+            },
+          }}
+          onChange={({ target }) => setSearch(target.value)}
+        />
         <Button size="small" startIcon={<Icon>user-plus</Icon>} onClick={() => nav("/clientes/add")}>
           Registrar
         </Button>

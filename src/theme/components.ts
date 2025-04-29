@@ -56,28 +56,46 @@ export const components = (): Components<Omit<Theme, 'components' | 'palette'> &
     },
   },
   MuiTextField:{
+    defaultProps:{
+      sx:{
+        borderRadius:"9px",
+      },
+      variant:"outlined",
+    },
     styleOverrides:{
       root:{
         borderRadius:"8px",
+        "&:hover": {
+          border: 'none',
+          outline: "none",
+        }
       }
     }
   },
   MuiInputBase:{
+    defaultProps:{
+      sx:{
+        backgroundColor: 'background.paper'
+      }
+    },
     styleOverrides:{
       root:{
         borderRadius:"8px",
+        backgroundColor: 'background.paper'
       }
     }
   },
   MuiOutlinedInput: {
+    defaultProps:{
+      sx:{
+        backgroundColor: 'background.paper'
+      }
+    },
     styleOverrides: {
       root: {
-        borderRadius: "12px",
+        borderRadius: "8px",
         borderWidth: 0,
         fontSize: 13,
-        "&:hover": {
-          border: 'none',
-        }
       },
     },
   },

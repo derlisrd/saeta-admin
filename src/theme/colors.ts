@@ -8,7 +8,7 @@ export interface availableColorsType {
 
 export const availableColors : Array<availableColorsType> = [
     { name: "violet", color: "#734ad5", secondary : "#d500f9" },
-    { name: "green", color: "#00AB55", secondary : "#3366FF" },
+    { name: "green", color: "#259965", secondary : "#3366FF" },
     { name: "bluelight", color: "#2187ab", secondary : "#f6ab4d" },
     { name: "bluesky", color: "#2189e4", secondary : "#f6ab4d" },
     { name: "orange", color: "#d76a16", secondary : "#8298cf" },
