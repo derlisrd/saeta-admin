@@ -28,14 +28,16 @@ function PrintCodigoModal({ open, onClose, selectedProducto }: PrintCodigoModalP
           style={{
             fontFamily: "monospace",
             textAlign: "center",
-            border: "1px solid black",
+            border: "none",
             color: "#000 !important",
             width: impresoraWidth,
             maxWidth: impresoraWidth,
             marginTop: "10px",
+            background: "#fff",
           }}
         >
-          <Barcode value={selectedProducto.codigo} font="monospace" background="#ffffff" format="CODE128" />
+          <Barcode value={selectedProducto.codigo} height={36} fontSize={14} font="monospace" background="#ffffff" margin={0} textMargin={0} format="CODE128" />
+          <span style={{ color: "#000", display: "block", fontFamily: "monospace", fontSize: 12 }}>{selectedProducto.precio_normal.toLocaleString("es-PY")}</span>
         </div>
       </DialogContent>
       <DialogActions>

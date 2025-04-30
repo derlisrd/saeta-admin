@@ -28,7 +28,7 @@ const AccionesCell = ({ rowData, onSelectProducto }: AccionesCellProps) => {
         </IconButton>
       </Tooltip>
       <Tooltip title="Imágenes" placement="top" arrow>
-        <IconButton onClick={() => nav(`/productos/codigo-barra?codigo=${rowData.id}`)}>
+        <IconButton onClick={() => nav(`/productos/codigo-barra?codigo=${rowData.id}&precio=${rowData.precio_normal}`)}>
           <Icon>photo-search</Icon>
         </IconButton>
       </Tooltip>
