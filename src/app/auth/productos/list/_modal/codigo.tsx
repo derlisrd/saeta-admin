@@ -1,6 +1,6 @@
 import Icon from "@/components/ui/icon";
 import Barcode from "react-barcode";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 import { ProductoResults } from "@/services/dto/productos/producto";
 import { Button, Dialog, DialogActions, DialogContent, Grid2 as Grid } from "@mui/material";
