@@ -17,6 +17,7 @@ const ModalContext = createContext<ModalContextProps>({
     productos: false,
     error: false,
     success: false,
+    descuento: false,
   },
   setModal: () => {},
   handleModal: () => {},

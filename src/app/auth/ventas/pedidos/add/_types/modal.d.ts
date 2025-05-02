@@ -6,4 +6,5 @@ export type modalType = {
     productos: boolean;
     error: boolean;
     success: boolean;
+    descuento: boolean;
   };

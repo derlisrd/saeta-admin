@@ -25,7 +25,7 @@ function useValidator() {
             return error
         }
         let sumaFormasPago = form.formas_pagos.reduce((sum, formaPago) => sum + formaPago.monto, 0);
-        if(form.total > sumaFormasPago ){
+        if((form.total - form.descuento) > sumaFormasPago ){
             error = {
                 code: 7,
                 active: true,
