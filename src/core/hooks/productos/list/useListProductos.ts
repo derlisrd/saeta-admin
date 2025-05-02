@@ -10,7 +10,7 @@ function useListProductos() {
   const [selectDeposito, setSelectDeposito] = useState<number>(0);
   const [selectedProducto, setSelectedProducto] = useState<ProductoResults | null>(null);
   // Fetch productos
-  const { data: productosData, isLoading: productosLoading, error: productosError } = useQuery({
+  const { data: productosData, isLoading: productosLoading, error: productosError, refetch } = useQuery({
     queryKey: ["productos", userData?.token],
     queryFn: () => API.productos.list(userData && userData?.token),
     enabled: !!userData?.token,
@@ -34,6 +34,7 @@ function useListProductos() {
     setSelectDeposito,
     selectedProducto,
     setSelectedProducto,
+    refresh: refetch,
   };
   
 }

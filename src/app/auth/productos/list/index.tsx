@@ -2,7 +2,7 @@ import GenericTable from "@/components/table/GenericTable";
 import TableCellRender from "@/components/table/tableCellRender";
 import useListProductos from "@/core/hooks/productos/list/useListProductos";
 import { ColumnConfigType } from "@/core/types/columnconfig";
-import { Box, Button, Container, InputAdornment, LinearProgress, Stack, TextField } from "@mui/material";
+import { Box, Button, Container, IconButton, InputAdornment, LinearProgress, Stack, TextField, Tooltip } from "@mui/material";
 
 import { productosColumnConfig } from "./_components/productosColumnConfig";
 import TableHeadRender from "@/components/table/tableHeadRender";
@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 
 function ListaProductos() {
   const nav = useNavigate();
-  const { list, loading, setSelectedProducto, selectedProducto } = useListProductos();
+  const { list, loading, setSelectedProducto, selectedProducto, refresh } = useListProductos();
   const [modalOpen, setModalOpen] = useState({ codigo: false, imagenes: false });
   const [search, setSearch] = useState("");
 
@@ -38,7 +38,7 @@ function ListaProductos() {
 
   return (
     <Container sx={{ paddingBottom: 6 }}>
-      <Stack spacing={2} my={2} direction="row">
+      <Stack spacing={2} my={2} direction="row" alignItems="center">
         <TextField
           label="Buscar"
           placeholder="Nombre o codigo"
@@ -53,9 +53,14 @@ function ListaProductos() {
           }}
           onChange={({ target }) => setSearch(target.value)}
         />
-        <Button size="small" startIcon={<Icon>plus</Icon>} onClick={() => nav("/productos/add")}>
+        <Button startIcon={<Icon>plus</Icon>} onClick={() => nav("/productos/add")}>
           Registrar
         </Button>
+        <Tooltip title="Actualizar" placement="top" arrow>
+          <IconButton onClick={() => refresh()} sx={{ borderWidth: 1, borderColor: "primary.main", borderStyle: "solid" }}>
+            <Icon>refresh</Icon>
+          </IconButton>
+        </Tooltip>
       </Stack>
       {loading ? (
         <LinearProgress />
