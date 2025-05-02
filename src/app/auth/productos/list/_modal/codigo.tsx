@@ -16,7 +16,6 @@ function PrintCodigoModal({ open, onClose, selectedProducto }: PrintCodigoModalP
   if (!selectedProducto) return null;
 
   const { userData } = useAuth();
-  const [altura, setAltura] = useState(36);
 
   const contentRef = useRef<HTMLDivElement>(null);
   const print = useReactToPrint({ contentRef, ignoreGlobalStyles: true });
