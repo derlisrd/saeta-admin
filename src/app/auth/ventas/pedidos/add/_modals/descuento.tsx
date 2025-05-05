@@ -12,6 +12,7 @@ function DescuentoModal() {
 
   const close = () => {
     setError({ code: 0, message: "" });
+    setMontoDescuento(0);
     setModal({ ...modal, finalizar: true, descuento: false });
   };
 

@@ -16,7 +16,7 @@ function Printable({ pedido, empresa }: PrintableProps) {
       </div>
     );
   }
-
+  console.log(pedido);
   const dashedBorderStyle = {
     borderTop: "1px dashed #ccc",
   };

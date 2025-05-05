@@ -3,7 +3,8 @@ import { List, ListItem, IconButton, ListItemText } from "@mui/material";
 import useHook from "../_hooks/useHook";
 
 function ListaFormaPago() {
-  const { pedidos, index } = useHook();
+  const { pedidos, index, handleFormasPago } = useHook();
+
   return (
     <List>
       {pedidos[index].formas_pagos.map((formaPago, i) => (
@@ -11,7 +12,11 @@ function ListaFormaPago() {
           key={i}
           sx={{ borderBottom: "1px solid #ccc", borderRadius: 0 }}
           secondaryAction={
-            <IconButton edge="end">
+            <IconButton
+              onClick={() => {
+                handleFormasPago(0, formaPago.id, "remove");
+              }}
+            >
               <Icon>trash</Icon>
             </IconButton>
           }

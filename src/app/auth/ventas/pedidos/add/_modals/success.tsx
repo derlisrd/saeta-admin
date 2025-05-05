@@ -26,7 +26,7 @@ function SuccessModal() {
   };
 
   if (!data || data.results === null) return null;
-
+  console.log(data);
   const pedido = {
     id: data.results.id,
     fecha: data.results.fecha,

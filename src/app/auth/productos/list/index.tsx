@@ -2,7 +2,7 @@ import GenericTable from "@/components/table/GenericTable";
 import TableCellRender from "@/components/table/tableCellRender";
 import useListProductos from "@/core/hooks/productos/list/useListProductos";
 import { ColumnConfigType } from "@/core/types/columnconfig";
-import { Box, Button, Container, IconButton, InputAdornment, LinearProgress, Stack, TextField, Tooltip } from "@mui/material";
+import { Box, Button, Container, IconButton, InputAdornment, LinearProgress, Slide, Stack, TextField, Tooltip } from "@mui/material";
 
 import { productosColumnConfig } from "./_components/productosColumnConfig";
 import TableHeadRender from "@/components/table/tableHeadRender";
@@ -65,14 +65,16 @@ function ListaProductos() {
       {loading ? (
         <LinearProgress />
       ) : (
-        <Box>
-          <GenericTable
-            data={listado}
-            columns={columns(window.innerWidth)} // Pasa el ancho inicial
-            rowHeight={40}
-            headerHeight={36}
-          />
-        </Box>
+        <Slide direction="up" in={true} mountOnEnter unmountOnExit>
+          <Box>
+            <GenericTable
+              data={listado}
+              columns={columns(window.innerWidth)} // Pasa el ancho inicial
+              rowHeight={40}
+              headerHeight={36}
+            />
+          </Box>
+        </Slide>
       )}
       <PrintCodigoModal open={modalOpen.codigo} onClose={handleCloseModal} selectedProducto={selectedProducto} />
     </Container>

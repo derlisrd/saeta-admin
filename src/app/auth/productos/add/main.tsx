@@ -1,4 +1,4 @@
-import { Box, Container, LinearProgress, Paper } from "@mui/material";
+import { Box, Container, LinearProgress, Paper, Slide } from "@mui/material";
 import TabsCustom from "./_components/tabscustom";
 import TabContainer from "./_components/tabcontainer";
 import Datos from "./containers/datos";
@@ -18,16 +18,18 @@ function AddProductoMain() {
 
       <NotificacionSnack open={success.active} onClose={clearSuccess} message={success.message} severity="info" />
 
-      <Box boxShadow={4} borderRadius={4} component={Paper} mb={6} padding={{ xs: 0, sm: 1, md: 2 }}>
-        {loading && <LinearProgress sx={{ margin: "18px" }} />}
-        <TabsCustom />
-        <TabContainer index={0} tabValue={tabValue}>
-          <Datos />
-        </TabContainer>
-        <TabContainer index={1} tabValue={tabValue}>
-          <Imagenes />
-        </TabContainer>
-      </Box>
+      <Slide direction="up" in={true} mountOnEnter unmountOnExit>
+        <Box boxShadow={4} borderRadius={4} component={Paper} mb={6} padding={{ xs: 0, sm: 1, md: 2 }}>
+          {loading && <LinearProgress sx={{ margin: "18px" }} />}
+          <TabsCustom />
+          <TabContainer index={0} tabValue={tabValue}>
+            <Datos />
+          </TabContainer>
+          <TabContainer index={1} tabValue={tabValue}>
+            <Imagenes />
+          </TabContainer>
+        </Box>
+      </Slide>
     </Container>
   );
 }

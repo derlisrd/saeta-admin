@@ -262,6 +262,16 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
         }
         set(copiaPedidos, index);
       }
+      if (type === "remove") {
+        const formaPagoToRemove = formasPago.find((formaPago) => formaPago.id === id);
+        if (!formaPagoToRemove) return;
+        const copiaPedidos = [...pedidos];
+        const findIndexPago = copiaPedidos[index].formas_pagos.findIndex((e) => e.id === id);
+        if (findIndexPago !== -1) {
+          copiaPedidos[index].formas_pagos.splice(findIndexPago, 1);
+          set(copiaPedidos, index);
+        }
+      }
     },
     [formasPago]
   );
