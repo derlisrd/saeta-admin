@@ -12,7 +12,7 @@ function AddProductoMain() {
   // tab value no cambia console.log(tabValue);
   return (
     <Container>
-      <Box sx={{ position: "absolute", bottom: 32, right: 32 }}>
+      <Box sx={{ position: "fixed", bottom: 32, right: 32, zIndex: 100 }}>
         <LargeButtonStyled onClick={sendForm}>Guardar</LargeButtonStyled>
       </Box>
 

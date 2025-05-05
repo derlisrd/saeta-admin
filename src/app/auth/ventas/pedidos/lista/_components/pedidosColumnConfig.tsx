@@ -42,7 +42,7 @@ export const pedidosColumnConfig = (width: number, onImprimir: (pedido: PedidosD
   { dataKey: "doc", label: "Doc", width: width * 0.1 },
   { dataKey: "razon_social", label: "Cliente", width: width * 0.2 },
   { dataKey: "estado", label: "Estado", width: width * 0.1 },
-  { dataKey: "total", label: "Total", width: width * 0.18 },
+  { dataKey: "importe_final", label: "Total", width: width * 0.18, cellRenderer: ({ rowData }: TableCellProps) => rowData.importe_final.toLocaleString("es-PY") },
   {
     dataKey: "created_at",
     label: "Fecha",

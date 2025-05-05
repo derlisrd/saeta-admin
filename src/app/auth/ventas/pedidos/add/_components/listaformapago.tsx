@@ -9,6 +9,7 @@ function ListaFormaPago() {
       {pedidos[index].formas_pagos.map((formaPago, i) => (
         <ListItem
           key={i}
+          sx={{ borderBottom: "1px solid #ccc", borderRadius: 0 }}
           secondaryAction={
             <IconButton edge="end">
               <Icon>trash</Icon>

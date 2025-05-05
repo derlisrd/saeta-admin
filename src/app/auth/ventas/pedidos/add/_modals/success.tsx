@@ -6,6 +6,7 @@ import useModal from "../_hooks/useModal";
 import Icon from "@/components/ui/icon";
 import useResponsive from "@/hooks/useResponsive";
 import { useAuth } from "@/providers/AuthProvider";
+import Printable from "@/core/components/pedidos/printable";
 
 function SuccessModal() {
   const { userData } = useAuth();
@@ -24,69 +25,41 @@ function SuccessModal() {
     limpiarFinalizarPedido();
   };
 
+  if (!data || data.results === null) return null;
+
+  const pedido = {
+    id: data.results.id,
+    fecha: data.results.fecha,
+    created_at: "",
+    total: data.results.total,
+    estado: data.results.estado,
+    razon_social: data.results.cliente.razon_social,
+    doc: data.results.cliente.doc,
+    descuento: data.results.descuento,
+    importe_final: data.results.importe_final,
+    items: pedidos[index].items.map((item) => ({
+      ...item,
+      impuesto_descripcion: "",
+      impuesto_valor: 0,
+    })),
+    formas_pago_pedido: data.results.formas_pago_pedido.map((forma) => ({
+      ...forma,
+      monto: forma.monto.toString(),
+    })),
+  };
+
   return (
     <Dialog open={modal.success} maxWidth="sm" fullScreen={isSmDown} fullWidth onClose={cerrar} TransitionComponent={Slide}>
       <DialogTitle>Detalles de pedido</DialogTitle>
       <DialogContent>
         {data?.results && (
-          <div ref={contentRef} style={{ fontFamily: "monospace", color: "#000 !important", width: impresoraWidth, maxWidth: impresoraWidth }}>
-            <table border={1} style={{ borderCollapse: "collapse" }} cellPadding="2" cellSpacing="4" width="100%" align="right">
-              <tbody>
-                <tr>
-                  <td align="right">
-                    <b>Pedido número:</b>
-                  </td>
-                  <td>
-                    <b>{data.results.id}</b>
-                  </td>
-                </tr>
-                <tr>
-                  <td align="right">
-                    <b>Fecha:</b>
-                  </td>
-                  <td>
-                    <b>{data.results.fecha}</b>
-                  </td>
-                </tr>
-                <tr>
-                  <td align="right">
-                    <b>Cliente:</b>
-                  </td>
-                  <td>
-                    <b>
-                      {data.results.cliente.doc} {data.results.cliente.nombres} {data.results.cliente.apellidos}
-                    </b>
-                  </td>
-                </tr>
-                <tr>
-                  <td colSpan={2}>
-                    <table width="100%">
-                      <tbody>
-                        <tr>
-                          <td>COD.</td>
-                          <td>DESC.</td>
-                          <td>CAN.</td>
-                          <td>SUB.</td>
-                        </tr>
-                        {pedidos[index].items.map((item, i) => (
-                          <tr key={i}>
-                            <td>{item.codigo}</td>
-                            <td>{item.nombre}</td>
-                            <td>{item.cantidad}</td>
-                            <td>{item.total}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          <div ref={contentRef} style={{ fontFamily: "monospace", color: "#000 !important", width: impresoraWidth, maxWidth: impresoraWidth, margin: "0 auto" }}>
+            <Printable empresa={userData && userData.empresa} pedido={pedido} />
           </div>
         )}
       </DialogContent>
       <DialogActions>
-        <Button variant="outlined" startIcon={<Icon>printer</Icon>} color="primary" onClick={() => print()}>
+        <Button startIcon={<Icon>printer</Icon>} color="primary" onClick={() => print()}>
           Imprimir
         </Button>
         <Button variant="outlined" endIcon={<Icon>check</Icon>} color="primary" onClick={cerrar}>
@@ -96,5 +69,4 @@ function SuccessModal() {
     </Dialog>
   );
 }
-
 export default SuccessModal;

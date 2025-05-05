@@ -8,6 +8,8 @@ function useImpresoras() {
     const {userData} = useAuth()
     const queryClient = useQueryClient();
 
+
+
     const {data, isLoading} = useQuery({
         queryKey: ['impresoras'],
         queryFn: async() => {
@@ -21,11 +23,10 @@ function useImpresoras() {
         staleTime: 1000 * 60 * 5
     });
 
-    const {mutateAsync, isPending} = useMutation({
+    const {mutate, isPending} = useMutation({
         mutationFn: async(form: Impresora) => {
             // Asumiendo que existe un método para insertar impresoras en tu API
-            const res = await API.config.insertarImpresora(userData && userData.token, form);
-            return res;
+            return await API.config.insertarImpresora(userData && userData.token, form);
         },
         onSuccess: (data) => {
             // Invalidar y refrescar la caché
@@ -34,15 +35,17 @@ function useImpresoras() {
             // Alternativa: Actualizar la caché manualmente sin hacer una nueva solicitud
             
             queryClient.setQueryData(['impresoras'], (old: Impresora[] | undefined) => {
-                if (!old) return [data.results];
-                return [...old, data.results];
+                if (old) {
+                    return [...old, data.results];
+                }
+                return [data.results];
             });
             
         }
     });
 
     const insertar = async(form: Impresora) => {
-        return mutateAsync(form);
+        return mutate(form);
     }
     
     return {lista: data, isLoading, isPending, insertar}

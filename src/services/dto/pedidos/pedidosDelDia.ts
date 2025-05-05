@@ -21,9 +21,12 @@ export class PedidosDelDiaResults {
   razon_social: string;
   doc: string;
   items: ItemsPedidoResults[];
+  importe_final: number;
+  formas_pago_pedido: FormasPagoPedidoResults[];
+  descuento: number;
 
   constructor({ id = 0, fecha = "", total = 0, estado = 0, created_at='',
-    razon_social ='', doc = '', items = []
+    razon_social ='', doc = '', items = [], importe_final = 0, formas_pago_pedido = [], descuento = 0
    }: Partial<PedidosDelDiaResults>) {
     this.id = id;
     this.fecha = fecha;
@@ -33,6 +36,9 @@ export class PedidosDelDiaResults {
     this.razon_social = razon_social;
     this.doc = doc;
     this.items = items;
+    this.importe_final = importe_final;
+    this.formas_pago_pedido = formas_pago_pedido;
+    this.descuento = descuento;
   }
 
   static fromJson(json: any): PedidosDelDiaResults {
@@ -64,4 +70,16 @@ export class ItemsPedidoResults {
         this.impuesto_descripcion = impuesto_descripcion;
         this.impuesto_valor = impuesto_valor;
     }
+}
+export class FormasPagoPedidoResults {
+    id: number;
+    abreviatura: string;
+    monto: string;
+
+    constructor({ id = 0, abreviatura = "", monto = "" }: Partial<FormasPagoPedidoResults>) {
+        this.id = id;
+        this.abreviatura = abreviatura;
+        this.monto = monto;
+    }
+
 }

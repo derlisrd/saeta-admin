@@ -14,7 +14,7 @@ export const availableColors : Array<availableColorsType> = [
     { name: "orange", color: "#d76a16", secondary : "#8298cf" },
     { name: "red", color: "#FF4838", secondary : "#FF4838" },
     { name: "new", color: "#2065D1", secondary : "#3366FF" },
-    {name : "black", color: "#000000", secondary : "#444"},
+    {name : "black", color: "#000000", secondary : "#f6ab4d"},
   ];
   
   export const colorsMode = {
