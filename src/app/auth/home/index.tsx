@@ -1,27 +1,56 @@
-import { homeMock } from "@/mocks/home";
-import { Box, Card, CardContent, Container, Grid2 as Grid, Icon, Stack, Typography } from "@mui/material";
+import Icon from "@/components/ui/icon";
+import useEstadisticas from "@/core/hooks/home/useEstadisticas";
+import { Box, Card, CardContent, Container, Grid2 as Grid, Stack, Typography } from "@mui/material";
 
 function Home() {
+  const { data, isLoading } = useEstadisticas();
+
   return (
     <Container>
       <h3>Vision general</h3>
-      <Grid spacing={2} container>
-        {homeMock.map((e, i) => (
-          <Grid key={i} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
+      {data && (
+        <Grid spacing={2} container>
+          <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
             <Card sx={{ boxShadow: 4 }}>
               <CardContent>
                 <Stack direction="row" alignItems="center" justifyContent="space-between">
                   <Box>
-                    <Typography variant="h5">{e.value}</Typography>
-                    <Typography variant="caption">{e.label}</Typography>
+                    <Typography variant="h5">{data.hoy.importe.toLocaleString("es-PY")}</Typography>
+                    <Typography variant="caption">Ventas de hoy</Typography>
                   </Box>
-                  <Icon sx={{ fontSize: 32 }}>{e.icon}</Icon>
+                  <Icon size={36}>calendar</Icon>
                 </Stack>
               </CardContent>
             </Card>
           </Grid>
-        ))}
-      </Grid>
+          <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
+            <Card sx={{ boxShadow: 4 }}>
+              <CardContent>
+                <Stack direction="row" alignItems="center" justifyContent="space-between">
+                  <Box>
+                    <Typography variant="h5">{data.semana.importe.toLocaleString("es-PY")}</Typography>
+                    <Typography variant="caption">Ventas de semana</Typography>
+                  </Box>
+                  <Icon size={36}>calendar-week</Icon>
+                </Stack>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
+            <Card sx={{ boxShadow: 4 }}>
+              <CardContent>
+                <Stack direction="row" alignItems="center" justifyContent="space-between">
+                  <Box>
+                    <Typography variant="h5">{data.mes.importe.toLocaleString("es-PY")}</Typography>
+                    <Typography variant="caption">Ventas del mes</Typography>
+                  </Box>
+                  <Icon size={36}>calendar-month</Icon>
+                </Stack>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
+      )}
     </Container>
   );
 }
