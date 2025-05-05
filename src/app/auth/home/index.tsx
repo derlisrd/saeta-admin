@@ -1,6 +1,6 @@
 import Icon from "@/components/ui/icon";
 import useEstadisticas from "@/core/hooks/home/useEstadisticas";
-import { Box, Card, CardContent, Container, Grid2 as Grid, Stack, Typography } from "@mui/material";
+import { Box, Card, CardContent, Container, Grid2 as Grid, LinearProgress, Stack, Typography } from "@mui/material";
 
 function Home() {
   const { data, isLoading } = useEstadisticas();
@@ -10,6 +10,7 @@ function Home() {
       <h3>Vision general</h3>
       {data && (
         <Grid spacing={2} container>
+          <Grid size={12}>{isLoading && <LinearProgress />}</Grid>
           <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
             <Card sx={{ boxShadow: 4 }}>
               <CardContent>
