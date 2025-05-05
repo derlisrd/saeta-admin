@@ -16,7 +16,7 @@ function Home() {
               <CardContent>
                 <Stack direction="row" alignItems="center" justifyContent="space-between">
                   <Box>
-                    <Typography variant="h5">{data.hoy.importe.toLocaleString("es-PY")}</Typography>
+                    <Typography variant="h5">{data.hoy.importe !== null ? data.hoy?.importe.toLocaleString("es-PY") : 0}</Typography>
                     <Typography variant="caption">Ventas de hoy</Typography>
                   </Box>
                   <Icon size={36}>calendar</Icon>
@@ -29,7 +29,7 @@ function Home() {
               <CardContent>
                 <Stack direction="row" alignItems="center" justifyContent="space-between">
                   <Box>
-                    <Typography variant="h5">{data.semana.importe.toLocaleString("es-PY")}</Typography>
+                    <Typography variant="h5">{data.semana.importe !== null ? data.semana?.importe.toLocaleString("es-PY") : 0}</Typography>
                     <Typography variant="caption">Ventas de semana</Typography>
                   </Box>
                   <Icon size={36}>calendar-week</Icon>
@@ -42,7 +42,7 @@ function Home() {
               <CardContent>
                 <Stack direction="row" alignItems="center" justifyContent="space-between">
                   <Box>
-                    <Typography variant="h5">{data.mes.importe.toLocaleString("es-PY")}</Typography>
+                    <Typography variant="h5">{data.mes.importe != null ? data.mes?.importe.toLocaleString("es-PY") : 0}</Typography>
                     <Typography variant="caption">Ventas del mes</Typography>
                   </Box>
                   <Icon size={36}>calendar-month</Icon>
