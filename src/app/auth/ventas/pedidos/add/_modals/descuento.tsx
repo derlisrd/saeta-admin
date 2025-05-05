@@ -38,7 +38,7 @@ function DescuentoModal() {
                 setMontoDescuento(Number(e.value));
                 //setInputValue(e.formattedValue);
               }}
-              onKeyUp={(e) => {
+              onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) => {
                 if (e.key === "Enter") {
                   aplicar();
                 }
