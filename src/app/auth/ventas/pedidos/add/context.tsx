@@ -4,6 +4,7 @@ import { createContext, Dispatch, RefObject, SetStateAction } from "react";
 import { MonedaResults } from "@/services/dto/factura/moneda";
 import { ErrorType } from "./_types/error";
 import { DepositoResults } from "@/services/dto/productos/deposito";
+import { ConfiguracionType } from "./_types/configuracion";
 
 interface AddPedidoContextProps {
   loading: boolean;
@@ -32,6 +33,9 @@ interface AddPedidoContextProps {
   selectedDeposito: number;
   setSelectedDeposito: Dispatch<SetStateAction<number>>;
   depositos: DepositoResults[];
+  config: ConfiguracionType;
+  settingConfig: (config: ConfiguracionType) => void;
+  aplicarDescuento: (descuento: number) => void;
 }
 
 export const AddPedidoContext = createContext<AddPedidoContextProps>({
@@ -65,4 +69,9 @@ export const AddPedidoContext = createContext<AddPedidoContextProps>({
   selectedDeposito: 1,
   setSelectedDeposito: () => {},
   depositos: [],
+  config: {
+    showKeyboard: true,
+  },
+  settingConfig: () => {},
+  aplicarDescuento: () => {},
 });

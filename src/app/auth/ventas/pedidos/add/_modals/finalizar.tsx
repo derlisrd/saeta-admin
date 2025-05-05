@@ -1,8 +1,23 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid2 as Grid, LinearProgress, Stack, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  FormControlLabel,
+  Grid2 as Grid,
+  LinearProgress,
+  Link,
+  Stack,
+  Switch,
+  TextField,
+  Typography,
+  Zoom,
+} from "@mui/material";
 import useHook from "../_hooks/useHook";
 import FormaPagoSelect from "../_components/formapagoselect";
 import useInsertPedido from "../_hooks/useInsertPedido";
-import useValidator from "../_hooks/useValidator";
 import EntregadoCheck from "../_components/entregadocheck";
 import useModal from "../_hooks/useModal";
 import { useState } from "react";
@@ -10,15 +25,14 @@ import { NumericFormat } from "react-number-format";
 import ListaFormaPago from "../_components/listaformapago";
 import Teclado from "../_components/teclado";
 import useFinalizarPedido from "../_hooks/useFinalizarPedido";
-import useResponsive from "@/hooks/useResponsive";
+import Total from "../_components/total";
 
 function FinalizarPedido() {
-  const { pedidos, index, setResult, handleFormasPago } = useHook();
-  const { isSmDown } = useResponsive();
-  const { setError, error } = useFinalizarPedido();
+  const { pedidos, index, setResult, handleFormasPago, config, settingConfig } = useHook();
+  //const { isSmDown } = useResponsive();
+  const { setError, error, validate } = useFinalizarPedido();
   const { modal, handleModal, setModal } = useModal();
   const { insertPedido, isLoading } = useInsertPedido();
-  const { validate } = useValidator();
   const [selectedFormaPago, setSelectedFormaPago] = useState<number>(0);
   const [monto, setMonto] = useState(0);
   const [inputValue, setInputValue] = useState("");
@@ -76,46 +90,80 @@ function FinalizarPedido() {
   };
 
   return (
-    <Dialog maxWidth="sm" disableRestoreFocus fullScreen={isSmDown} open={modal.finalizar} onClose={() => handleModal("finalizar")}>
+    <Dialog disableRestoreFocus fullScreen open={modal.finalizar} onClose={() => handleModal("finalizar")}>
       <DialogTitle>
         <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
           <Typography variant="button" sx={{ display: { xs: "none", sm: "block" } }}>
             Forma de pago
           </Typography>
-          <Typography variant="h6">Total: {pedidos[index].total.toLocaleString("es-PY")}</Typography>
+          <Total />
         </Stack>
       </DialogTitle>
       <DialogContent>
         {isLoading ? (
           <LinearProgress />
         ) : (
-          <Grid container spacing={2} pt={1} alignItems="center">
-            <Grid size={{ xs: 12, sm: 12 }}>
-              <FormaPagoSelect selectedFormaPago={selectedFormaPago} setSelectedFormaPago={setSelectedFormaPago} error={error.code === 43} />
+          <Grid container spacing={2} pt={1}>
+            <Grid size={12}>
+              <Grid container spacing={2} alignItems="center">
+                <Grid size={{ xs: 12, sm: 12, md: 4 }}>
+                  <FormaPagoSelect selectedFormaPago={selectedFormaPago} setSelectedFormaPago={setSelectedFormaPago} error={error.code === 43} />
+                </Grid>
+                <Grid size={{ xs: 12, sm: 12, md: 4 }}>
+                  <NumericFormat
+                    customInput={TextField}
+                    thousandSeparator="."
+                    decimalSeparator=","
+                    placeholder="Monto abonado"
+                    name="monto"
+                    onValueChange={(e) => {
+                      setMonto(Number(e.value));
+                      setInputValue(e.formattedValue);
+                    }}
+                    value={monto}
+                    fullWidth
+                    required
+                    label="Monto abonado"
+                    error={error.code === 7}
+                  />
+                </Grid>
+                <Grid size={{ xs: 12, sm: 12, md: 2 }}>
+                  <Button>Agregar</Button>
+                </Grid>
+                <Grid size={{ xs: 12, sm: 12, md: 2 }}>
+                  <Link
+                    href="#"
+                    onClick={() => {
+                      setModal({ ...modal, finalizar: false, descuento: true });
+                    }}
+                  >
+                    Aplicar descuento
+                  </Link>
+                </Grid>
+              </Grid>
             </Grid>
             <Grid size={{ xs: 12, sm: 12 }}>
-              <NumericFormat
-                customInput={TextField}
-                thousandSeparator="."
-                decimalSeparator=","
-                placeholder="Monto abonado"
-                name="monto"
-                onValueChange={(e) => {
-                  setMonto(Number(e.value));
-                  setInputValue(e.formattedValue);
-                }}
-                value={monto}
-                fullWidth
-                required
-                label="Monto abonado"
-                error={error.code === 7}
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={config.showKeyboard}
+                    onChange={() => {
+                      settingConfig({ ...config, showKeyboard: !config.showKeyboard });
+                    }}
+                  />
+                }
+                label="Mostrar teclado"
               />
             </Grid>
-            <Grid size={{ xs: 12, sm: 12 }}>
-              <Teclado onEnter={agregarFormaPago} onNumberClick={handleNumberClick} onBackspace={handleBackspace} />
+            <Grid size={{ xs: 12, sm: 12, md: 8 }}>
+              <Zoom in={config.showKeyboard} mountOnEnter unmountOnExit>
+                <Box>
+                  <Teclado onEnter={agregarFormaPago} onNumberClick={handleNumberClick} onBackspace={handleBackspace} />
+                </Box>
+              </Zoom>
             </Grid>
 
-            <Grid size={{ xs: 12, sm: 12 }}>
+            <Grid size={{ xs: 12, sm: 12, md: 4 }}>
               <ListaFormaPago />
             </Grid>
             <Grid size={{ xs: 12, sm: 12 }}>

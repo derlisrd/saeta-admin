@@ -29,6 +29,9 @@ function useHook() {
     depositos,
     selectedDeposito,
     setSelectedDeposito,
+    config,
+    settingConfig,
+    aplicarDescuento
   } = useContext(AddPedidoContext);
   return {
     pedidos,
@@ -57,6 +60,9 @@ function useHook() {
     depositos,
     selectedDeposito,
     setSelectedDeposito,
+    config,
+    settingConfig,
+    aplicarDescuento
   };
 }
 

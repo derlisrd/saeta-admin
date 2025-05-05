@@ -5,7 +5,8 @@ import FinalizarPedido from "./_modals/finalizar";
 import RegistroClienteModal from "./_modals/registro";
 import SuccessModal from "./_modals/success";
 import BuscarProductoModal from "./_modals/productos";
+import DescuentoModal from "./_modals/descuento";
 
-const modals = [ErrorModal, SuccessModal, ClientesModal, RegistroClienteModal, FinalizarPedido, BuscarProductoModal];
+const modals = [ErrorModal, SuccessModal, ClientesModal, RegistroClienteModal, FinalizarPedido, BuscarProductoModal, DescuentoModal];
 
 export default modals;

@@ -15,7 +15,7 @@ function ListaFormaPago() {
             </IconButton>
           }
         >
-          <ListItemText primary={formaPago.abreviatura} secondary={formaPago.monto} />
+          <ListItemText primary={formaPago.abreviatura} secondary={formaPago.monto.toLocaleString("es-PY")} />
         </ListItem>
       ))}
     </List>

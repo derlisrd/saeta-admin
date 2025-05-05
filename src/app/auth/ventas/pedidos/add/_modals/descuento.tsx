@@ -1,29 +1,66 @@
-import { DialogTitle, Dialog, Grid2 as Grid, DialogContent, DialogActions, Button } from "@mui/material";
+import { DialogTitle, Dialog, Grid2 as Grid, DialogContent, DialogActions, Button, TextField } from "@mui/material";
 import useHook from "../_hooks/useHook";
 import useModal from "../_hooks/useModal";
+import { useState } from "react";
+import { NumericFormat } from "react-number-format";
 
 function DescuentoModal() {
-  const {} = useHook();
-  const { modal, handleModal } = useModal();
+  const { aplicarDescuento, pedidos, index } = useHook();
+  const { modal, setModal } = useModal();
+  const [montoDescuento, setMontoDescuento] = useState(0);
+  const [error, setError] = useState({ code: 0, message: "" });
+
+  const close = () => {
+    setError({ code: 0, message: "" });
+    setModal({ ...modal, finalizar: true, descuento: false });
+  };
+
+  const aplicar = () => {
+    if (montoDescuento > pedidos[index].total) return setError({ code: 43, message: "El monto no puede ser mayor al total" });
+    aplicarDescuento(montoDescuento);
+    close();
+  };
 
   return (
-    <Dialog fullWidth open={modal.descuento} onClose={() => handleModal("descuento")} disableRestoreFocus>
-      <DialogTitle>Descuento</DialogTitle>
+    <Dialog maxWidth="xs" fullWidth open={modal.descuento} onClose={close} disableRestoreFocus>
+      <DialogTitle>Aplicar Descuento</DialogTitle>
       <DialogContent>
         <Grid container spacing={1} pt={1}>
-          <Grid size={12}></Grid>
+          <Grid size={12}>
+            <NumericFormat
+              autoFocus
+              customInput={TextField}
+              thousandSeparator="."
+              decimalSeparator=","
+              placeholder="Descuento"
+              name="descuento"
+              onValueChange={(e) => {
+                setMontoDescuento(Number(e.value));
+                //setInputValue(e.formattedValue);
+              }}
+              onKeyUp={(e) => {
+                if (e.key === "Enter") {
+                  aplicar();
+                }
+              }}
+              value={montoDescuento}
+              fullWidth
+              required
+              helperText={error.message}
+              error={error.code === 43}
+            />
+          </Grid>
         </Grid>
       </DialogContent>
       <DialogActions>
         <Button
-          variant="outlined"
           onClick={() => {
-            handleModal("descuento");
+            aplicar();
           }}
         >
-          Registrar nuevo
+          Aplicar
         </Button>
-        <Button variant="outlined" onClick={() => handleModal("descuento")}>
+        <Button variant="outlined" onClick={close}>
           Cancelar
         </Button>
       </DialogActions>

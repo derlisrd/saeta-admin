@@ -8,12 +8,14 @@ import useStore from "@/hooks/useStore";
 import { FormasPagoResults } from "@/services/dto/factura/formaspago";
 import { MonedaResults } from "@/services/dto/factura/moneda";
 import { DepositoResults } from "@/services/dto/productos/deposito";
+import { ConfiguracionType } from "./_types/configuracion";
 
 function AddPedidoProvider({ children }: { children: ReactNode }) {
   const { userData } = useAuth();
 
   const inputCodigoRef = useRef<HTMLInputElement>(null);
   const { setItemValue: setStore, current: store } = useStore<PedidoStoreType | null>("pedidoStore", null);
+  const { current: configPedidoStore, setItemValue: setPedidoConfigStore } = useStore<ConfiguracionType | null>("configPedidoStore", null);
 
   const [result, setResult] = useState<AddPedidoResponse | null>(null);
 
@@ -37,6 +39,9 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
     items: [],
   });
   const [pedidos, setPedidos] = useState<Array<AddPedido>>(store?.pedidos || [initialPedido]);
+  const initialConfig: ConfiguracionType = { showKeyboard: false };
+
+  const [config, setConfig] = useState<ConfiguracionType>(configPedidoStore || initialConfig);
 
   const [index, setIndex] = useState<number>(store?.index ?? 0);
   const initialError = { code: 0, message: "", active: false };
@@ -44,11 +49,25 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
 
   const clearError = () => setError(initialError);
 
+  const settingConfig = useCallback((config: ConfiguracionType) => {
+    setConfig(config);
+    setPedidoConfigStore(config);
+  }, []);
+
   const setCliente = useCallback(
     (id: number, label: string) => {
       const copyPedidos = [...pedidos];
       copyPedidos[index].cliente_id = id;
       copyPedidos[index].cliente = label;
+      set(copyPedidos, index);
+    },
+    [index, pedidos]
+  );
+
+  const aplicarDescuento = useCallback(
+    (montoDescuento: number) => {
+      const copyPedidos = [...pedidos];
+      copyPedidos[index].descuento = montoDescuento;
       set(copyPedidos, index);
     },
     [index, pedidos]
@@ -286,6 +305,9 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
       selectedDeposito,
       setSelectedDeposito,
       depositos,
+      config,
+      settingConfig,
+      aplicarDescuento,
     }),
     [
       pedidos,
@@ -311,6 +333,9 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
       selectedDeposito,
       setSelectedDeposito,
       depositos,
+      config,
+      settingConfig,
+      aplicarDescuento,
     ]
   );
   return <AddPedidoContext.Provider value={values}>{children}</AddPedidoContext.Provider>;
