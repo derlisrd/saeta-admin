@@ -1,6 +1,6 @@
-import Icon from "@/components/ui/icon";
 import useEstadisticas from "@/core/hooks/home/useEstadisticas";
-import { Box, Card, CardContent, Container, Grid2 as Grid, LinearProgress, Stack, Typography } from "@mui/material";
+import { Container, Grid2 as Grid, LinearProgress } from "@mui/material";
+import CardHome from "./card";
 
 function Home() {
   const { data, isLoading } = useEstadisticas();
@@ -8,92 +8,44 @@ function Home() {
   return (
     <Container>
       {data && (
-        <Grid spacing={1} container>
+        <Grid spacing={2} container>
+          <Grid size={12}>{isLoading && <LinearProgress />}</Grid>
           <Grid size={12}>
             <h3>Ventas</h3>
           </Grid>
-          <Grid size={12}>{isLoading && <LinearProgress />}</Grid>
 
           <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
-            <Card sx={{ boxShadow: 4 }}>
-              <CardContent>
-                <Stack direction="row" alignItems="center" justifyContent="space-between">
-                  <Box>
-                    <Typography variant="h5">{data.hoy.importe !== null ? data.hoy?.importe.toLocaleString("es-PY") : 0}</Typography>
-                    <Typography variant="caption">Ventas de hoy</Typography>
-                  </Box>
-                  <Icon size={36}>calendar</Icon>
-                </Stack>
-              </CardContent>
-            </Card>
+            <CardHome data={data.hoy.importe.toLocaleString("es-PY")} title="Ventas de hoy" icon="moneybag" />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
-            <Card sx={{ boxShadow: 4 }}>
-              <CardContent>
-                <Stack direction="row" alignItems="center" justifyContent="space-between">
-                  <Box>
-                    <Typography variant="h5">{data.semana.importe !== null ? data.semana?.importe.toLocaleString("es-PY") : 0}</Typography>
-                    <Typography variant="caption">Ventas de semana</Typography>
-                  </Box>
-                  <Icon size={36}>calendar-week</Icon>
-                </Stack>
-              </CardContent>
-            </Card>
+            <CardHome data={data.semana.importe.toLocaleString("es-PY")} title="Ventas de semana" icon="circle-dashed-check" />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
-            <Card sx={{ boxShadow: 4 }}>
-              <CardContent>
-                <Stack direction="row" alignItems="center" justifyContent="space-between">
-                  <Box>
-                    <Typography variant="h5">{data.mes.importe != null ? data.mes?.importe.toLocaleString("es-PY") : 0}</Typography>
-                    <Typography variant="caption">Ventas del mes</Typography>
-                  </Box>
-                  <Icon size={36}>calendar-month</Icon>
-                </Stack>
-              </CardContent>
-            </Card>
+            <CardHome data={data.mes.importe.toLocaleString("es-PY")} title="Ventas del mes" icon="calendar-month" />
           </Grid>
           <Grid size={12}>
             <h3>Lucros</h3>
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
-            <Card sx={{ boxShadow: 4 }}>
-              <CardContent>
-                <Stack direction="row" alignItems="center" justifyContent="space-between">
-                  <Box>
-                    <Typography variant="h5">{data.hoy.lucro !== null ? data.hoy?.lucro.toLocaleString("es-PY") : 0}</Typography>
-                    <Typography variant="caption">Lucro de hoy</Typography>
-                  </Box>
-                  <Icon size={36}>moneybag</Icon>
-                </Stack>
-              </CardContent>
-            </Card>
+            <CardHome data={data.hoy.lucro.toLocaleString("es-PY")} title="Lucro de hoy" icon="chart-histogram" />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
-            <Card sx={{ boxShadow: 4 }}>
-              <CardContent>
-                <Stack direction="row" alignItems="center" justifyContent="space-between">
-                  <Box>
-                    <Typography variant="h5">{data.semana.lucro !== null ? data.semana?.lucro.toLocaleString("es-PY") : 0}</Typography>
-                    <Typography variant="caption">Lucro de semana</Typography>
-                  </Box>
-                  <Icon size={36}>cash-register</Icon>
-                </Stack>
-              </CardContent>
-            </Card>
+            <CardHome data={data.semana.lucro.toLocaleString("es-PY")} title="Lucro de semana" icon="chart-line" />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
-            <Card sx={{ boxShadow: 4 }}>
-              <CardContent>
-                <Stack direction="row" alignItems="center" justifyContent="space-between">
-                  <Box>
-                    <Typography variant="h5">{data.mes.lucro !== null ? data.mes?.lucro.toLocaleString("es-PY") : 0}</Typography>
-                    <Typography variant="caption">Lucro de mes</Typography>
-                  </Box>
-                  <Icon size={36}>calendar-dollar</Icon>
-                </Stack>
-              </CardContent>
-            </Card>
+            <CardHome data={data.mes.lucro.toLocaleString("es-PY")} title="Lucro del mes" icon="chart-pie" />
+          </Grid>
+          <Grid size={12}>
+            <h3>Pedidos</h3>
+          </Grid>
+          <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
+            <CardHome data={data.hoy.cantidad} title="Cantidad pedidos de hoy" icon="forklift" />
+          </Grid>
+          <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
+            <CardHome data={data.semana.cantidad} title="Cantidad pedidos de semana" icon="basket-up" />
+          </Grid>
+          <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
+            <CardHome data={data.mes.cantidad} title="Cantidad pedidos de mes" icon="chart-bar" />
           </Grid>
         </Grid>
       )}
