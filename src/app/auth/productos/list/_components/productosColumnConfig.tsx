@@ -40,16 +40,16 @@ export const productosColumnConfig = (width: number, onSelectProducto?: (product
   { dataKey: "id", label: "Código", width: width * 0.1 },
   { dataKey: "nombre", label: "Nombre", width: width * 0.2 },
   {
+    dataKey: "costo",
+    label: "Costo",
+    width: width * 0.2,
+    cellRenderer: ({ rowData }: TableCellProps) => rowData.costo.toLocaleString("es-PY"),
+  },
+  {
     dataKey: "precio_normal",
     label: "Precio",
     width: width * 0.2,
-    cellRenderer: ({ rowData }: TableCellProps) =>
-      rowData.precio_normal.toLocaleString(
-        "es-PY" /* {
-        style: "currency",
-        currency: "PYG",
-      } */
-      ),
+    cellRenderer: ({ rowData }: TableCellProps) => rowData.precio_normal.toLocaleString("es-PY"),
   },
   { dataKey: "tipo", label: "Tipo", width: width * 0.1 },
   {

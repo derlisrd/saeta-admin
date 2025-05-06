@@ -218,7 +218,7 @@ export default [
                 title: 'Usuarios',
                 icon: 'tune',
                 color: '#0066cc',
-                url: '/config/usuarios',
+                url: '/config/users',
                 private: false,
                 descripcion: 'Usuarios'
             },

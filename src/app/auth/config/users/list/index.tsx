@@ -3,16 +3,14 @@ import useUsers from "@/core/hooks/users/useUsers";
 import { Box, Button, Container, InputAdornment, LinearProgress, Slide, Stack, TextField } from "@mui/material";
 import ColumnsUsers from "./_components/ColumnsUsers";
 import { useState } from "react";
-import AddUsersModal from "./_modals/AddUsersModal";
 import Icon from "@/components/ui/icon";
 import { UserListResults } from "@/services/dto/users/user";
+import { useNavigate } from "react-router-dom";
 
 function Users() {
   const { data, isLoading } = useUsers();
-  const [modalOpen, setModalOpen] = useState(false);
   const [search, setSearch] = useState("");
-
-  const handleModal = () => setModalOpen(!modalOpen);
+  const nav = useNavigate();
 
   const listado = data ? data.filter((item: UserListResults) => item.name.toLowerCase().includes(search.toLowerCase()) || item.username.includes(search)) : [];
 
@@ -33,20 +31,19 @@ function Users() {
           }}
           onChange={({ target }) => setSearch(target.value)}
         />
-        <Button startIcon={<Icon>user-plus</Icon>} onClick={handleModal}>
+        <Button startIcon={<Icon>user-plus</Icon>} onClick={() => nav("/config/users/add")}>
           Registrar
         </Button>
       </Stack>
       {isLoading ? (
         <LinearProgress />
       ) : (
-        <Slide direction="down" in={true} mountOnEnter unmountOnExit>
+        <Slide direction="down" in mountOnEnter unmountOnExit>
           <Box>
             <GenericTable data={listado} columns={ColumnsUsers({ width: window.innerWidth })} rowHeight={40} headerHeight={36} />
           </Box>
         </Slide>
       )}
-      <AddUsersModal open={modalOpen} onClose={handleModal} />
     </Container>
   );
 }
