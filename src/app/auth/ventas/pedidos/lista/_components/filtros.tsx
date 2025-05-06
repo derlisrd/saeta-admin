@@ -1,6 +1,9 @@
 import Icon from "@/components/ui/icon";
-import { Grid2 as Grid, TextField, InputAdornment, Tooltip, IconButton } from "@mui/material";
+import { Grid2 as Grid, TextField, InputAdornment, Tooltip, IconButton, Button } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { useState } from "react";
+import dayjs from "dayjs";
+
 interface FiltrosProps {
   setSearch: React.Dispatch<React.SetStateAction<string>>;
   buscar: (q: string) => void;
@@ -8,12 +11,32 @@ interface FiltrosProps {
   refresh?: () => void;
   setDesde: React.Dispatch<React.SetStateAction<string>>;
   setHasta: React.Dispatch<React.SetStateAction<string>>;
+  desde?: string;
+  hasta?: string;
 }
 
-function Filtros({ setSearch, buscar, search, refresh, setDesde, setHasta }: FiltrosProps) {
+function Filtros({ setSearch, buscar, search, refresh, setDesde, setHasta, desde, hasta }: FiltrosProps) {
+  // Estados temporales para los datepickers
+  const [fechaDesde, setFechaDesde] = useState<dayjs.Dayjs | null>(desde ? dayjs(desde) : null);
+  const [fechaHasta, setFechaHasta] = useState<dayjs.Dayjs | null>(hasta ? dayjs(hasta) : null);
+
+  const handleBuscarClick = () => {
+    // Aplicar filtros y refrescar los datos
+    if (refresh) refresh();
+  };
+
+  const handleLimpiarFiltros = () => {
+    setSearch("");
+    setFechaDesde(null);
+    setFechaHasta(null);
+    setDesde("");
+    setHasta("");
+    if (refresh) refresh();
+  };
+
   return (
     <Grid container p={1} spacing={1} alignItems="center">
-      <Grid size={{ xs: 12, md: 4 }}>
+      <Grid size={{ xs: 12, sm: 4, md: 3 }}>
         <TextField
           slotProps={{
             input: {
@@ -30,30 +53,72 @@ function Filtros({ setSearch, buscar, search, refresh, setDesde, setHasta }: Fil
             }
           }}
           value={search}
-          placeholder="Buscar..."
+          placeholder="Buscar por razón social o documento..."
           onChange={({ target }) => setSearch(target.value)}
           fullWidth
+          size="small"
         />
       </Grid>
-      <Grid size={{ xs: 12, md: 4 }}>
+      <Grid size={{ xs: 12, sm: 4, md: 3 }}>
         <DatePicker
-          onChange={(e) => {
-            setDesde(e ? e.format("YYYY-MM-DD") : "");
-            setHasta(e ? e.format("YYYY-MM-DD") : "");
+          label="Desde"
+          value={fechaDesde}
+          onChange={(date) => {
+            setFechaDesde(date);
+            setDesde(date ? date.format("YYYY-MM-DD") : "");
+            // No hacemos refresh automáticamente para permitir que el usuario seleccione ambas fechas
           }}
+          format="DD-MMM-YYYY"
           slotProps={{
             textField: {
               fullWidth: true,
+              size: "small",
             },
           }}
         />
       </Grid>
-      <Grid size={{ xs: 12, md: 4 }}>
-        <Tooltip title="Actualizar" color="primary" placement="top" arrow>
-          <IconButton onClick={refresh}>
-            <Icon>refresh</Icon>
-          </IconButton>
-        </Tooltip>
+      <Grid size={{ xs: 12, sm: 4, md: 3 }}>
+        <DatePicker
+          label="Hasta"
+          value={fechaHasta}
+          onChange={(date) => {
+            setFechaHasta(date);
+            setHasta(date ? date.format("YYYY-MM-DD") : "");
+            // No hacemos refresh automáticamente para permitir que el usuario seleccione ambas fechas
+          }}
+          format="DD-MMM-YYYY"
+          slotProps={{
+            textField: {
+              fullWidth: true,
+              size: "small",
+            },
+          }}
+        />
+      </Grid>
+      <Grid size={{ xs: 12, sm: 4, md: 3 }}>
+        <Grid container spacing={1} alignItems="center">
+          <Grid size={4}>
+            <Tooltip title="Buscar" placement="top" arrow>
+              <Button fullWidth onClick={handleBuscarClick}>
+                <Icon>search</Icon>
+              </Button>
+            </Tooltip>
+          </Grid>
+          <Grid size={4}>
+            <Tooltip title="Limpiar filtros" placement="top" arrow>
+              <Button fullWidth variant="outlined" onClick={handleLimpiarFiltros}>
+                <Icon>x</Icon>
+              </Button>
+            </Tooltip>
+          </Grid>
+          <Grid size={4}>
+            <Tooltip title="Actualizar" placement="top" arrow>
+              <IconButton onClick={refresh} color="primary">
+                <Icon>refresh</Icon>
+              </IconButton>
+            </Tooltip>
+          </Grid>
+        </Grid>
       </Grid>
     </Grid>
   );
