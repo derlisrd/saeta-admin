@@ -8,7 +8,7 @@ import { UserListResults } from "@/services/dto/users/user";
 import { useNavigate } from "react-router-dom";
 
 function Users() {
-  const { data, isLoading } = useUsers();
+  const { data, isLoading, refetch } = useUsers();
   const [search, setSearch] = useState("");
   const nav = useNavigate();
 
@@ -33,6 +33,9 @@ function Users() {
         />
         <Button startIcon={<Icon>user-plus</Icon>} onClick={() => nav("/config/users/add")}>
           Registrar
+        </Button>
+        <Button onClick={() => refetch()} startIcon={<Icon>refresh</Icon>}>
+          Refrescar
         </Button>
       </Stack>
       {isLoading ? (

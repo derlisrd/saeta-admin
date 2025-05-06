@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 function useUsers() {
     const {userData} = useAuth()
 
-    const {isLoading, data} = useQuery({
+    const {isLoading, data, refetch} = useQuery({
         queryKey: ['users'],
         queryFn: () =>  API.users.list(userData && userData.token),
         enabled: !!userData && !!userData.token,
@@ -15,7 +15,7 @@ function useUsers() {
     
     return {
         isLoading,
-        data: data ? data.results : []
+        data: data ? data.results : [], refetch
     }
 }
 
