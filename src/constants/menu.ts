@@ -211,7 +211,7 @@ export default [
                 color: '#0066cc',
                 url: '/config/empresa',
                 private: false,
-                descripcion: null
+                descripcion: 'Configuracion de empresa'
             },
             {
                 id: 2,

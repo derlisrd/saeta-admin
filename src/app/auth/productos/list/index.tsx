@@ -53,7 +53,7 @@ function ListaProductos() {
           }}
           onChange={({ target }) => setSearch(target.value)}
         />
-        <Button startIcon={<Icon>plus</Icon>} onClick={() => nav("/productos/add")}>
+        <Button startIcon={<Icon>device-ipad-horizontal-plus</Icon>} onClick={() => nav("/productos/add")}>
           Registrar
         </Button>
         <Tooltip title="Actualizar" placement="top" arrow>

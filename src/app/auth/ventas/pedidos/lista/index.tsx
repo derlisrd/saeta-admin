@@ -1,5 +1,5 @@
 import useListaPedidos from "@/core/hooks/ventas/pedidos/useListaPedidos";
-import { Container, Box, LinearProgress } from "@mui/material";
+import { Container, Box, LinearProgress, Slide } from "@mui/material";
 import Filtros from "./_components/filtros";
 import { PedidosDelDiaResults } from "@/services/dto/pedidos/pedidosDelDia";
 import { useState } from "react";
@@ -36,14 +36,16 @@ function ListaPedidos() {
       ) : (
         <Box>
           <Filtros setSearch={setSearch} buscar={buscar} search={search} refresh={refetch} setDesde={setDesde} setHasta={setHasta} />
-          <Box>
-            <GenericTable
-              data={listado}
-              columns={columns(window.innerWidth)} // Pasa el ancho inicial
-              rowHeight={40}
-              headerHeight={36}
-            />
-          </Box>
+          <Slide direction="up" in={true} mountOnEnter unmountOnExit>
+            <Box>
+              <GenericTable
+                data={listado}
+                columns={columns(window.innerWidth)} // Pasa el ancho inicial
+                rowHeight={40}
+                headerHeight={36}
+              />
+            </Box>
+          </Slide>
         </Box>
       )}
       <ImprimirModal open={modals.imprimir} selectedRow={selectedRow} onClose={() => setModals({ ...modals, imprimir: false })} />

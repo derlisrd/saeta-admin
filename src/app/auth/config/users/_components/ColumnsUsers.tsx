@@ -5,7 +5,7 @@ export default function ColumnsUsers({ width }: { width: number }) {
     {
       label: "id",
       dataKey: "id",
-      width: width * 0.2,
+      width: width * 0.04,
     },
     {
       label: "Nombre",

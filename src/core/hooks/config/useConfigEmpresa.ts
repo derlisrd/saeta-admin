@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 function useConfigEmpresa() {
   const { userData, updateUserData } = useAuth();
   const [empresa, setEmpresa] = useState<Empresa | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [isLoading, setLoading] = useState<boolean>(true);
   const [success, setSuccess] = useState({ active: false, message: "" });
   const [error, setError] = useState({ code: 0, message: "" });
   const clearSuccess = () => {
@@ -66,7 +66,7 @@ function useConfigEmpresa() {
 
   return {
     empresa,
-    loading,
+    isLoading,
     clearError,
     error,
     updateEmpresa,

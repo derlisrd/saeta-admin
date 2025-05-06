@@ -1,5 +1,5 @@
 import Icon from "@/components/ui/icon";
-import { Typography, Button, Container, Box } from "@mui/material";
+import { Typography, Button, Container, Box, Slide } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Link as RouterLink } from "react-router-dom"; // Si estás usando React Router
 
@@ -24,28 +24,32 @@ const IconWrapper = styled(Box)(({ theme }) => ({
 function NotFoundPage() {
   return (
     <StyledContainer maxWidth="sm">
-      <IconWrapper>
-        <Icon color="silver" size={64}>
-          carrot
-        </Icon>
-      </IconWrapper>
-      <Typography variant="h4" gutterBottom>
-        Página no encontrada
-      </Typography>
-      <Typography variant="subtitle1" color="textSecondary" paragraph>
-        Lo sentimos, la página que estás buscando no existe.
-      </Typography>
-      <Box mt={3}>
-        <Button
-          startIcon={<Icon>arrow-narrow-left-dashed</Icon>}
-          component={RouterLink} // Usa Link de React Router si estás navegando dentro de la app
-          to="/"
-          variant="contained"
-          color="primary"
-        >
-          Volver al inicio
-        </Button>
-      </Box>
+      <Slide direction="down" in={true} mountOnEnter unmountOnExit>
+        <Box>
+          <IconWrapper>
+            <Icon color="silver" size={64}>
+              carrot
+            </Icon>
+          </IconWrapper>
+          <Typography variant="h4" gutterBottom>
+            Página no encontrada
+          </Typography>
+          <Typography variant="subtitle1" color="textSecondary" paragraph>
+            Lo sentimos, la página que estás buscando no existe.
+          </Typography>
+          <Box mt={3}>
+            <Button
+              startIcon={<Icon>arrow-narrow-left-dashed</Icon>}
+              component={RouterLink} // Usa Link de React Router si estás navegando dentro de la app
+              to="/"
+              variant="contained"
+              color="primary"
+            >
+              Volver al inicio
+            </Button>
+          </Box>
+        </Box>
+      </Slide>
     </StyledContainer>
   );
 }

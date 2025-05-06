@@ -40,7 +40,7 @@ function Clientes() {
 
   return (
     <Container>
-      <Stack spacing={2} my={2} direction="row">
+      <Stack spacing={2} my={2} direction="row" alignItems="center">
         <TextField
           label="Buscar"
           placeholder="Nombre o documento"
@@ -55,7 +55,7 @@ function Clientes() {
           }}
           onChange={({ target }) => setSearch(target.value)}
         />
-        <Button size="small" startIcon={<Icon>user-plus</Icon>} onClick={() => nav("/clientes/add")}>
+        <Button startIcon={<Icon>users-plus</Icon>} onClick={() => nav("/clientes/add")}>
           Registrar
         </Button>
       </Stack>
