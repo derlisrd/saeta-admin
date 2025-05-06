@@ -7,10 +7,13 @@ function Home() {
 
   return (
     <Container>
-      <h3>Vision general</h3>
       {data && (
         <Grid spacing={2} container>
+          <Grid size={12}>
+            <h3>Estadisticas</h3>
+          </Grid>
           <Grid size={12}>{isLoading && <LinearProgress />}</Grid>
+
           <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
             <Card sx={{ boxShadow: 4 }}>
               <CardContent>
@@ -46,6 +49,48 @@ function Home() {
                     <Typography variant="caption">Ventas del mes</Typography>
                   </Box>
                   <Icon size={36}>calendar-month</Icon>
+                </Stack>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid size={12}>
+            <h3>Lucros</h3>
+          </Grid>
+          <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
+            <Card sx={{ boxShadow: 4 }}>
+              <CardContent>
+                <Stack direction="row" alignItems="center" justifyContent="space-between">
+                  <Box>
+                    <Typography variant="h5">{data.hoy.lucro !== null ? data.hoy?.lucro.toLocaleString("es-PY") : 0}</Typography>
+                    <Typography variant="caption">Lucro de hoy</Typography>
+                  </Box>
+                  <Icon size={36}>moneybag</Icon>
+                </Stack>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
+            <Card sx={{ boxShadow: 4 }}>
+              <CardContent>
+                <Stack direction="row" alignItems="center" justifyContent="space-between">
+                  <Box>
+                    <Typography variant="h5">{data.semana.lucro !== null ? data.semana?.lucro.toLocaleString("es-PY") : 0}</Typography>
+                    <Typography variant="caption">Lucro de semana</Typography>
+                  </Box>
+                  <Icon size={36}>cash-register</Icon>
+                </Stack>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
+            <Card sx={{ boxShadow: 4 }}>
+              <CardContent>
+                <Stack direction="row" alignItems="center" justifyContent="space-between">
+                  <Box>
+                    <Typography variant="h5">{data.mes.lucro !== null ? data.mes?.lucro.toLocaleString("es-PY") : 0}</Typography>
+                    <Typography variant="caption">Lucro de mes</Typography>
+                  </Box>
+                  <Icon size={36}>calendar-dollar</Icon>
                 </Stack>
               </CardContent>
             </Card>
