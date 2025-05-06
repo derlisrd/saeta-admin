@@ -31,7 +31,6 @@ function Filtros({ setSearch, buscar, search, refresh, setDesde, setHasta, desde
     setFechaHasta(null);
     setDesde("");
     setHasta("");
-    if (refresh) refresh();
   };
 
   return (
