@@ -16,25 +16,23 @@ function Printable({ pedido, empresa }: PrintableProps) {
       </div>
     );
   }
-  console.log(pedido);
   const dashedBorderStyle = {
     borderTop: "1px dashed #ccc",
-  };
-
-  const clientInfoStyle = {
-    lineHeight: "0.8",
   };
 
   const locale = "es-PY";
 
   return (
-    <div>
-      <div>
-        <h4 style={{ fontWeight: "bold", lineHeight: "0.8" }}>{empresa && empresa.nombre}</h4>
+    <div style={{ fontFamily: "monospace !important" }}>
+      <div style={{ lineHeight: "0.1" }}>
+        <h4 style={{ fontWeight: "bold" }}>{empresa && empresa.nombre}</h4>
+        <h5>
+          {empresa && empresa.direccion} Tel: {empresa && empresa.telefono}
+        </h5>
         <p>Fecha: {format(pedido.created_at, "DD/MM/YYYY")}</p>
       </div>
       <div style={dashedBorderStyle} />
-      <div style={clientInfoStyle}>
+      <div>
         <p>CI/RUC: {pedido.doc || "x"}</p>
         <p>Cliente: {pedido.razon_social || "x"}</p>
       </div>
