@@ -29,12 +29,14 @@ function Printable({ pedido, empresa }: PrintableProps) {
         <h5>
           {empresa && empresa.direccion} Tel: {empresa && empresa.telefono}
         </h5>
-        <p>Fecha: {format(pedido.created_at, "DD/MM/YYYY")}</p>
+        <h5>Fecha: {format(pedido.created_at, "DD/MM/YYYY")}</h5>
+        <h5>Condicion: {pedido.tipo === 1 ? "Credito" : "Contado"}</h5>
       </div>
       <div style={dashedBorderStyle} />
       <div>
-        <p>CI/RUC: {pedido.doc || "x"}</p>
-        <p>Cliente: {pedido.razon_social || "x"}</p>
+        <b>CI/RUC: {pedido.doc || "x"}</b>
+        <br />
+        <b>Cliente: {pedido.razon_social || "x"}</b>
       </div>
       <div style={{ ...dashedBorderStyle, marginBottom: "16px" }} />
 

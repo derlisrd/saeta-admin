@@ -122,8 +122,9 @@ export class AddPedidoResults{
   fecha : string;
   descuento: number;
   importe_final: number;
+  tipo: number;
 
-  constructor({ created_at = '', id = 0, total = 0, estado = 1, descuento = 0, cliente = new ClienteResults({}), formas_pago_pedido = [], importe_final = 0 }) {
+  constructor({ created_at = '',tipo=0, id = 0, total = 0, estado = 1, descuento = 0, cliente = new ClienteResults({}), formas_pago_pedido = [], importe_final = 0 }) {
       this.total = total;
       this.id = id;
       this.estado = estado;
@@ -132,6 +133,7 @@ export class AddPedidoResults{
       this.formas_pago_pedido =  formas_pago_pedido;
       this.fecha = this.formatFecha(created_at);
       this.importe_final = importe_final;
+      this.tipo = tipo;
     }
 
     static fromJSON(data: any) {
