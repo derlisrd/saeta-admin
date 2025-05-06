@@ -1,15 +1,16 @@
 import {
   Box,
   Button,
-  Container,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
   FormControlLabel,
+  FormLabel,
   Grid2 as Grid,
   LinearProgress,
   Link,
+  Radio,
   Stack,
   Switch,
   TextField,
@@ -29,7 +30,7 @@ import useFinalizarPedido from "../_hooks/useFinalizarPedido";
 import Total from "../_components/total";
 
 function FinalizarPedido() {
-  const { pedidos, index, setResult, handleFormasPago, config, settingConfig, aplicarDescuento } = useHook();
+  const { pedidos, index, setResult, handleFormasPago, config, settingConfig, aplicarDescuento, changePedido } = useHook();
   //const { isSmDown } = useResponsive();
   const { setError, error, validate } = useFinalizarPedido();
   const { modal, handleModal, setModal } = useModal();
@@ -92,109 +93,132 @@ function FinalizarPedido() {
 
   return (
     <Dialog disableRestoreFocus fullScreen open={modal.finalizar} onClose={() => handleModal("finalizar")}>
-      <Container>
-        <DialogTitle>
-          <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
-            <Typography variant="button" sx={{ display: { xs: "none", sm: "block" } }}>
-              Forma de pago
-            </Typography>
-            <Total />
-          </Stack>
-        </DialogTitle>
-        <DialogContent>
-          {isLoading ? (
-            <LinearProgress />
-          ) : (
-            <Grid container spacing={2} pt={1}>
-              <Grid size={12}>
-                <Grid container spacing={2} alignItems="center">
-                  <Grid size={{ xs: 12, sm: 12, md: 3 }}>
-                    <FormaPagoSelect selectedFormaPago={selectedFormaPago} setSelectedFormaPago={setSelectedFormaPago} error={error.code === 43} />
-                  </Grid>
-                  <Grid size={{ xs: 12, sm: 12, md: 3 }}>
-                    <NumericFormat
-                      customInput={TextField}
-                      thousandSeparator="."
-                      decimalSeparator=","
-                      placeholder="Monto abonado"
-                      name="monto"
-                      onValueChange={(e) => {
-                        setMonto(Number(e.value));
-                        setInputValue(e.formattedValue);
+      <DialogTitle>
+        <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
+          <Typography variant="button" sx={{ display: { xs: "none", sm: "block" } }}>
+            Forma de pago
+          </Typography>
+          <Total />
+        </Stack>
+      </DialogTitle>
+      <DialogContent>
+        {isLoading ? (
+          <LinearProgress />
+        ) : (
+          <Grid container spacing={2} pt={1}>
+            <Grid size={12}>
+              <Grid container spacing={2} alignItems="center">
+                <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                  <FormaPagoSelect selectedFormaPago={selectedFormaPago} setSelectedFormaPago={setSelectedFormaPago} error={error.code === 43} />
+                </Grid>
+                <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                  <NumericFormat
+                    customInput={TextField}
+                    thousandSeparator="."
+                    decimalSeparator=","
+                    placeholder="Monto abonado"
+                    name="monto"
+                    onValueChange={(e) => {
+                      setMonto(Number(e.value));
+                      setInputValue(e.formattedValue);
+                    }}
+                    value={monto}
+                    fullWidth
+                    required
+                    label="Monto abonado"
+                    error={error.code === 7}
+                  />
+                </Grid>
+                <Grid size={{ xs: 12, sm: 6, md: 2 }}>
+                  <Button fullWidth onClick={agregarFormaPago}>
+                    Agregar
+                  </Button>
+                </Grid>
+                <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+                  <Stack direction="row" spacing={2}>
+                    <Link
+                      href="#"
+                      onClick={() => {
+                        setModal({ ...modal, finalizar: false, descuento: true });
                       }}
-                      value={monto}
-                      fullWidth
-                      required
-                      label="Monto abonado"
-                      error={error.code === 7}
-                    />
-                  </Grid>
-                  <Grid size={{ xs: 12, sm: 12, md: 2 }}>
-                    <Button onClick={agregarFormaPago}>Agregar</Button>
-                  </Grid>
-                  <Grid size={{ xs: 12, sm: 12, md: 4 }}>
-                    <Stack direction="row" spacing={2}>
+                    >
+                      Aplicar descuento
+                    </Link>
+                    {pedidos[index].descuento > 0 && (
                       <Link
                         href="#"
                         onClick={() => {
-                          setModal({ ...modal, finalizar: false, descuento: true });
+                          aplicarDescuento(0);
                         }}
                       >
-                        Aplicar descuento
+                        Remover descuento
                       </Link>
-                      {pedidos[index].descuento > 0 && (
-                        <Link
-                          href="#"
-                          onClick={() => {
-                            aplicarDescuento(0);
-                          }}
-                        >
-                          Remover descuento
-                        </Link>
-                      )}
-                    </Stack>
-                  </Grid>
+                    )}
+                  </Stack>
                 </Grid>
               </Grid>
-              <Grid size={{ xs: 12, sm: 12, md: 12 }}>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={config.showKeyboard}
-                      onChange={() => {
-                        settingConfig({ ...config, showKeyboard: !config.showKeyboard });
-                      }}
-                    />
-                  }
-                  label="Mostrar teclado"
-                />
-              </Grid>
-              <Grid size={{ xs: 12, sm: 12, md: 8 }}>
-                <Zoom in={config.showKeyboard} mountOnEnter unmountOnExit>
-                  <Box>
-                    <Teclado onEnter={agregarFormaPago} onNumberClick={handleNumberClick} onBackspace={handleBackspace} />
-                  </Box>
-                </Zoom>
-              </Grid>
-
-              <Grid size={{ xs: 12, sm: 12, md: 4 }}>
-                <ListaFormaPago />
-              </Grid>
-              <Grid size={{ xs: 12, sm: 12 }}>
-                <EntregadoCheck />
-              </Grid>
             </Grid>
-          )}
-        </DialogContent>
-        <DialogActions>
-          <Button variant="contained" disabled={isLoading} color="primary" sx={{ p: 2 }} onClick={finalizarPedido}>
-            Finalizar pedido
-          </Button>
-          <Button variant="outlined" disabled={isLoading} color="warning" sx={{ p: 2 }} onClick={() => handleModal("finalizar")}>
-            Cancelar
-          </Button>
-        </DialogActions>
-      </Container>
+            <Grid size={{ xs: 12, sm: 12, md: 12 }}>
+              <Stack direction="row" spacing={2} alignItems="center">
+                <FormLabel>Condición de venta: </FormLabel>
+                <FormControlLabel
+                  value={0}
+                  control={<Radio />}
+                  checked={pedidos[index].tipo === 0}
+                  onChange={() => {
+                    changePedido("tipo", 0);
+                  }}
+                  label="Contado"
+                />
+                <FormControlLabel
+                  value={1}
+                  control={<Radio />}
+                  checked={pedidos[index].tipo === 1}
+                  onChange={() => {
+                    changePedido("tipo", 1);
+                  }}
+                  label="Crédito"
+                />
+              </Stack>
+            </Grid>
+            <Grid size={{ xs: 12, sm: 12, md: 12 }}>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={config.showKeyboard}
+                    onChange={() => {
+                      settingConfig({ ...config, showKeyboard: !config.showKeyboard });
+                    }}
+                  />
+                }
+                label="Mostrar teclado"
+              />
+            </Grid>
+            <Grid size={{ xs: 12, sm: 12, md: 8 }}>
+              <Zoom in={config.showKeyboard} mountOnEnter unmountOnExit>
+                <Box>
+                  <Teclado onEnter={agregarFormaPago} onNumberClick={handleNumberClick} onBackspace={handleBackspace} />
+                </Box>
+              </Zoom>
+            </Grid>
+
+            <Grid size={{ xs: 12, sm: 12, md: 4 }}>
+              <ListaFormaPago />
+            </Grid>
+            <Grid size={{ xs: 12, sm: 12 }}>
+              <EntregadoCheck />
+            </Grid>
+          </Grid>
+        )}
+      </DialogContent>
+      <DialogActions>
+        <Button variant="contained" disabled={isLoading} color="primary" sx={{ p: 2 }} onClick={finalizarPedido}>
+          Finalizar pedido
+        </Button>
+        <Button variant="outlined" disabled={isLoading} color="warning" sx={{ p: 2 }} onClick={() => handleModal("finalizar")}>
+          Cancelar
+        </Button>
+      </DialogActions>
     </Dialog>
   );
 }

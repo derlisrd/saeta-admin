@@ -20,7 +20,7 @@ function useFinalizarPedido() {
                 }
                 return error
             }
-            if(form.formas_pagos.length === 0){
+            if(form.formas_pagos.length === 0 && form.tipo === 0){
                 error = {
                     code: 43,
                     active: true,
@@ -29,11 +29,20 @@ function useFinalizarPedido() {
                 return error
             }
             let sumaFormasPago = form.formas_pagos.reduce((sum, formaPago) => sum + formaPago.monto, 0);
-            if((form.total - form.descuento) > sumaFormasPago ){
+            if((form.total - form.descuento) > sumaFormasPago && form.tipo === 0 ){
                 error = {
                     code: 7,
                     active: true,
                     message: "El monto abonado no es suficiente"
+                }
+                return error
+            }
+
+            if(form.tipo ===1 && form.cliente_id === 0){
+                error = {
+                    code: 1,
+                    active: true,
+                    message: "Debe seleccionar un cliente si la condición de venta es crédito"
                 }
                 return error
             }
