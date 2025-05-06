@@ -8,9 +8,9 @@ function Home() {
   return (
     <Container>
       {data && (
-        <Grid spacing={2} container>
+        <Grid spacing={1} container>
           <Grid size={12}>
-            <h3>Estadisticas</h3>
+            <h3>Ventas</h3>
           </Grid>
           <Grid size={12}>{isLoading && <LinearProgress />}</Grid>
 

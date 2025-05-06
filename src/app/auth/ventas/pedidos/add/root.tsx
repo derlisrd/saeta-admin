@@ -15,27 +15,31 @@ function Root() {
         <Grid size={12}>
           <Button onClick={() => handleModal("main")}>Continuar pedidos</Button>
         </Grid>
-        <Grid size={12}>
-          <h4>Pedidos en espera</h4>
-        </Grid>
-        <Grid size={12}>
-          <List>
-            {pedidos.map((pedido, i) => (
-              <ListItem
-                key={i}
-                secondaryAction={
-                  <IconButton edge="end" onClick={() => {}}>
-                    <Icon size={22}>check</Icon>
-                  </IconButton>
-                }
-              >
-                <ListItemButton>
-                  <ListItemText primary={pedido.total} secondary={"Pedido en espera"} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
-        </Grid>
+        {pedidos.length > 1 && (
+          <>
+            <Grid size={12}>
+              <h4>Pedidos en espera</h4>
+            </Grid>
+            <Grid size={12}>
+              <List>
+                {pedidos.map((pedido, i) => (
+                  <ListItem
+                    key={i}
+                    secondaryAction={
+                      <IconButton edge="end" onClick={() => {}}>
+                        <Icon size={22}>check</Icon>
+                      </IconButton>
+                    }
+                  >
+                    <ListItemButton>
+                      <ListItemText primary={pedido.total} secondary={"Pedido en espera"} />
+                    </ListItemButton>
+                  </ListItem>
+                ))}
+              </List>
+            </Grid>
+          </>
+        )}
       </Grid>
     </Container>
   );

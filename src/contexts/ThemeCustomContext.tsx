@@ -1,3 +1,4 @@
+import { availableColorsType } from "@/core/types/availablecolors";
 import { Theme } from "@mui/material";
 import { createContext } from "react";
 
@@ -5,7 +6,7 @@ interface ThemeCustomContextValuesType {
   modeDark: boolean;
   toggleModeDark: () => void;
   customTheme?: Theme;
-  changeColor: (color: string, secondary: string) => void;
+  changeColor: (availablecolors: availableColorsType) => void;
 }
 
 const ThemeCustomContext = createContext<ThemeCustomContextValuesType>({

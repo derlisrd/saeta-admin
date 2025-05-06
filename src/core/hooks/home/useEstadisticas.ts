@@ -48,7 +48,6 @@ function useEstadisticas() {
         },
     };
 
-    console.log(combinedData);
     
 
     return { data: combinedData, isLoading };

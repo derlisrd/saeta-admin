@@ -2,6 +2,7 @@ import { Alert, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid2
 import useHook from "../_hooks/useHook";
 import useRegistroCliente from "../_hooks/useRegistroCliente";
 import useModal from "../_hooks/useModal";
+import Icon from "@/components/ui/icon";
 
 function RegistroClienteModal() {
   const { setCliente } = useHook();
@@ -18,9 +19,7 @@ function RegistroClienteModal() {
     clearFormRegistroCliente();
   };
 
-  const cerrar = () => {
-    handleModal("registro");
-  };
+  const cerrar = () => handleModal("registro");
 
   return (
     <Dialog fullWidth open={modal.registro} onClose={cerrar}>
@@ -33,26 +32,15 @@ function RegistroClienteModal() {
             <TextField
               label="Documento o RUC"
               fullWidth
+              autoFocus
               required
-              onBlur={(e) => {
-                verificarPorDocumento(e.target.value);
-              }}
+              onBlur={(e) => verificarPorDocumento(e.target.value)}
               value={form.doc}
-              onChange={(e) => {
-                handleForm("doc", e.target.value);
-              }}
+              onChange={(e) => handleForm("doc", e.target.value)}
             />
           </Grid>
           <Grid size={{ xs: 12, md: 6 }}>
-            <TextField
-              label="Nombres"
-              fullWidth
-              value={form.nombres}
-              onChange={(e) => {
-                handleForm("nombres", e.target.value);
-              }}
-              disabled={loading}
-            />
+            <TextField label="Nombres" fullWidth value={form.nombres} onChange={(e) => handleForm("nombres", e.target.value)} disabled={loading} />
           </Grid>
           <Grid size={{ xs: 12, md: 6 }}>
             <TextField
@@ -79,8 +67,8 @@ function RegistroClienteModal() {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button variant="contained" onClick={registar} disabled={loading}>
-          Registrar
+        <Button startIcon={<Icon>device-floppy</Icon>} onClick={registar} disabled={loading}>
+          Guardar
         </Button>
         <Button variant="outlined" onClick={cerrar} disabled={loading}>
           Cancelar

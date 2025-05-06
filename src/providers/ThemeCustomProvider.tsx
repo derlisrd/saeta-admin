@@ -7,6 +7,7 @@ import { shadowsDark, shadowsLight } from "@/theme/shadows";
 import { typography } from "@/theme/typography";
 import { createTheme, Theme } from "@mui/material";
 import { ReactNode, useCallback, useEffect, useState } from "react";
+import { availableColorsType } from "@/core/types/availablecolors";
 
 interface ThemeCustomProviderType {
   children: ReactNode;
@@ -51,10 +52,11 @@ function ThemeCustomProvider({ children }: ThemeCustomProviderType) {
       setCustomThemeStorage(newModeTheme);
     }
   };
-  const changeColor = (color: string, secondary: string) => {
+  const changeColor = ({ color, secondary }: availableColorsType) => {
     const newModeTheme = { ...customThemeStorage } as Theme;
     newModeTheme.palette.primary.main = color;
     newModeTheme.palette.secondary.main = secondary;
+
     setCustomTheme(createTheme(newModeTheme));
     setCustomThemeStorage(newModeTheme);
   };

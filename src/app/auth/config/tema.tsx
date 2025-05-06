@@ -16,7 +16,7 @@ function Tema() {
             <Button
               key={i}
               onClick={() => {
-                changeColor(item.color, item.secondary);
+                changeColor(item);
               }}
               sx={{ backgroundColor: item.color, margin: 1 }}
             >

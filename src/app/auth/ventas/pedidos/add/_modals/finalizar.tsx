@@ -28,6 +28,7 @@ import ListaFormaPago from "../_components/listaformapago";
 import Teclado from "../_components/teclado";
 import useFinalizarPedido from "../_hooks/useFinalizarPedido";
 import Total from "../_components/total";
+import Icon from "@/components/ui/icon";
 
 function FinalizarPedido() {
   const { pedidos, index, setResult, handleFormasPago, config, settingConfig, aplicarDescuento, changePedido } = useHook();
@@ -158,7 +159,7 @@ function FinalizarPedido() {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid size={{ xs: 12, sm: 12, md: 12 }}>
+            <Grid size={{ xs: 12, sm: 6, md: 6 }}>
               <Stack direction="row" spacing={2} alignItems="center">
                 <FormLabel>Condición de venta: </FormLabel>
                 <FormControlLabel
@@ -181,7 +182,10 @@ function FinalizarPedido() {
                 />
               </Stack>
             </Grid>
-            <Grid size={{ xs: 12, sm: 12, md: 12 }}>
+            <Grid size={{ xs: 12, sm: 6, md: 6 }}>
+              <EntregadoCheck />
+            </Grid>
+            <Grid size={{ xs: 12 }}>
               <FormControlLabel
                 control={
                   <Switch
@@ -205,18 +209,15 @@ function FinalizarPedido() {
             <Grid size={{ xs: 12, sm: 12, md: 4 }}>
               <ListaFormaPago />
             </Grid>
-            <Grid size={{ xs: 12, sm: 12 }}>
-              <EntregadoCheck />
-            </Grid>
           </Grid>
         )}
       </DialogContent>
       <DialogActions>
-        <Button variant="contained" disabled={isLoading} color="primary" sx={{ p: 2 }} onClick={finalizarPedido}>
-          Finalizar pedido
+        <Button variant="outlined" startIcon={<Icon>arrow-narrow-left-dashed</Icon>} disabled={isLoading} color="secondary" sx={{ p: 2 }} onClick={() => handleModal("finalizar")}>
+          Regresar
         </Button>
-        <Button variant="outlined" disabled={isLoading} color="warning" sx={{ p: 2 }} onClick={() => handleModal("finalizar")}>
-          Cancelar
+        <Button startIcon={<Icon>check</Icon>} disabled={isLoading} sx={{ p: 2 }} onClick={finalizarPedido}>
+          Finalizar
         </Button>
       </DialogActions>
     </Dialog>

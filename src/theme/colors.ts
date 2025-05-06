@@ -1,20 +1,18 @@
+import { availableColorsType } from "@/core/types/availablecolors";
 
 
-export interface availableColorsType {
-    name: string;
-    color: string;
-    secondary : string;
-}
+
 
 export const availableColors : Array<availableColorsType> = [
-    { name: "violet", color: "#734ad5", secondary : "#d500f9" },
-    { name: "green", color: "#259965", secondary : "#ad3128" },
-    { name: "bluelight", color: "#2187ab", secondary : "#f6ab4d" },
-    { name: "bluesky", color: "#2189e4", secondary : "#f6ab4d" },
-    { name: "orange", color: "#d76a16", secondary : "#8298cf" },
-    { name: "red", color: "#FF4838", secondary : "#259965" },
-    { name: "new", color: "#2065D1", secondary : "#3366FF" },
-    {name : "black", color: "#000000", secondary : "#f6ab4d"},
+    { name: "violet", color: "#734ad5", secondary : "#d500f9", mode:'system' },
+    { name: "green", color: "#259965", secondary : "#ad3128", mode:'system' },
+    { name: "bluelight", color: "#2187ab", secondary : "#f6ab4d", mode:'system' },
+    { name: "bluesky", color: "#2189e4", secondary : "#f6ab4d", mode:'light' },
+    { name: "orange", color: "#d76a16", secondary : "#8298cf", mode:'system' },
+    { name: "red", color: "#FF4838", secondary : "#259965", mode:'system' },
+    { name: "new", color: "#2065D1", secondary : "#3366FF", mode:'dark' },
+    {name : "black", color: "#000000", secondary : "#f6ab4d", mode:'light'},
+    {name : "insta", color: "#517fa4", secondary : "#306088", mode:'light'},
   ];
   
   export const colorsMode = {
@@ -157,6 +155,20 @@ export const availableColors : Array<availableColorsType> = [
         light: "#444",
         main: "#444",
         dark: "#444",
+        contrastText: "#000",
+      },
+    },
+    insta: {
+      primary: {
+        light: "#517fa41f",
+        main: "#517fa4",
+        dark: "#306088",
+        contrastText: "#fff",
+      },
+      secondary: {
+        light: "#ffeb8c",
+        main: "#f6ab4d",
+        dark: "#d76a16",
         contrastText: "#000",
       },
     }

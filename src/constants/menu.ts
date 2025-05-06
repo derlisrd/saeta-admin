@@ -7,7 +7,7 @@ export default [
         url: '/',
         private: false,
         submenu: null,
-        descripcion: null
+        descripcion: 'Inicio'
     },
     {
         id: 2,

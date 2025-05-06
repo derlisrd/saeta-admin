@@ -2,6 +2,7 @@ import { Autocomplete, Button, Dialog, DialogActions, DialogContent, DialogTitle
 import useHook from "../_hooks/useHook";
 import useBuscarCliente from "../_hooks/useBuscarCliente";
 import useModal from "../_hooks/useModal";
+import Icon from "@/components/ui/icon";
 
 function ClientesModal() {
   const { setCliente } = useHook();
@@ -33,13 +34,13 @@ function ClientesModal() {
       </DialogContent>
       <DialogActions>
         <Button
-          variant="outlined"
           onClick={() => {
             handleModal("clientes");
             handleModal("registro");
           }}
+          startIcon={<Icon>user-plus</Icon>}
         >
-          Registrar nuevo
+          Registrar
         </Button>
         <Button variant="outlined" onClick={() => handleModal("clientes")}>
           Cancelar

@@ -13,9 +13,9 @@ function Item({ item, removeItem }: ItemProps) {
     <Fragment>
       <Grid size={{ xs: 12, sm: 2 }}>{item.codigo}</Grid>
       <Grid size={{ xs: 12, sm: 5 }}>{item.nombre}</Grid>
-      <Grid size={{ xs: 12, sm: 1 }}>{item.cantidad}</Grid>
-      <Grid size={{ xs: 12, sm: 2 }}>{item.total}</Grid>
-      <Grid size={{ xs: 12, sm: 2 }}>
+      <Grid size={{ xs: 12, sm: 2 }}>{item.cantidad}</Grid>
+      <Grid size={{ xs: 12, sm: 2 }}>{item.total.toLocaleString("es-PY")}</Grid>
+      <Grid size={{ xs: 12, sm: 1 }}>
         <IconButton onClick={removeItem} size="small">
           <Icon>trash</Icon>
         </IconButton>
