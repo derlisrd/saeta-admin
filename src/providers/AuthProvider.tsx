@@ -19,7 +19,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // Proveedor del contexto
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const { setItemValue: setSessionUserData, current: sessionUserData } = useSessionStorage<LoginResults | null>("userData", null);
+  const { setItemValue: setSessionUserData } = useSessionStorage<LoginResults | null>("userData", null);
 
   const [isAuth, setIsAuth] = useState(false);
   const [userData, setUserData] = useState<LoginResults | null>(null);
@@ -74,41 +74,26 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  /* const refreshTokenMutate = useMutation({
-    mutationKey: ["refreshToken"],
-    mutationFn: async () => {
-      const storedUserData = getSessionUserData();
-      if (storedUserData?.refreshToken) {
-        return await API.auth.refreshToken("Bearer " + storedUserData.refreshToken);
-      }
-      return null;
-    },
-    onSettled: (data) => {
-      if (data?.results && userData) {
-        const updatedUserData = { ...userData, token: data.results.token, refreshToken: data.results.refreshToken };
-        updateUserData(updatedUserData);
-        
-      }
-      if (data && data.results == null) {
-        cerrarSesion();
-      }
-    },
-    onError: () => {
-      cerrarSesion();
-    },
-  }) */
+  const refreshTokenFn = async (refreshToken: string) => {
+    const res = await API.auth.refreshToken("Bearer " + refreshToken);
+    if (res && res.success && res.results && userData) {
+      const newUserData = { ...userData, token: res.results.token, refreshToken: res.results.refreshToken };
+      updateUserData(newUserData);
+    }
+  };
+
   const { isLoading } = useQuery({
     queryKey: ["checkAuth"],
     queryFn: async () => {
-      const localStorage = sessionUserData;
+      const localStorage = window.sessionStorage.getItem("userData");
       if (localStorage && localStorage !== "null") {
-        const local = JSON.parse(localStorage);
+        const local = JSON.parse(localStorage) as LoginResults;
         if (!local.token) {
           cerrarSesion();
           return null;
         }
         if (isTokenExpired(local.token)) {
-          cerrarSesion();
+          refreshTokenFn(local.refreshToken);
           return null;
         }
         const res = await API.auth.check(local.token);
