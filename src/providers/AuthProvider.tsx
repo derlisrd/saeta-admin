@@ -1,8 +1,8 @@
 import { createContext, useContext, useState, useCallback, ReactNode } from "react";
 import { useSessionStorage } from "@/hooks/useSessionStorage";
-import { LoginResults } from "@/services/dto/auth/login";
 import API from "@/services/api";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
+import { LoginResults } from "@/services/dto/auth/login";
 
 // Define el tipo para el contexto
 type AuthContextType = {
@@ -12,8 +12,6 @@ type AuthContextType = {
   cerrarSesion: () => void;
   loading: boolean;
   updateUserData: (data: LoginResults) => void;
-  refreshTokenFn: () => Promise<void>; // Modificamos para no recibir el token directamente
-  isRefreshingToken: boolean; // Nuevo estado para indicar si se está refrescando el token
 };
 
 // Contexto inicializado como undefined para ser manejado correctamente por useContext
@@ -21,12 +19,10 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // Proveedor del contexto
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const { current: getSessionUserData, setItemValue: setSessionUserData } = useSessionStorage<LoginResults | null>("userData", null);
-  const queryClient = useQueryClient();
+  const { setItemValue: setSessionUserData, current: sessionUserData } = useSessionStorage<LoginResults | null>("userData", null);
 
   const [isAuth, setIsAuth] = useState(false);
   const [userData, setUserData] = useState<LoginResults | null>(null);
-  const [isRefreshingToken, setIsRefreshingToken] = useState(false); // Nuevo estado
 
   const updateUserData = (data: LoginResults) => {
     setUserData(data);
@@ -51,25 +47,34 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUserData(null);
     setSessionUserData(null);
     localStorage.removeItem("pedidoStore");
-    queryClient.removeQueries({ queryKey: ["checkAuth"] });
-  }, [setSessionUserData, queryClient]);
+  }, [setSessionUserData]);
 
   const isTokenExpired = (token: string): boolean => {
     if (!token) return true;
+
     try {
+      // Dividir el token en sus partes (header, payload, signature)
       const parts = token.split(".");
       if (parts.length !== 3) return true;
+
+      // Decodificar la parte del payload (la segunda parte)
       const payload = JSON.parse(atob(parts[1]));
-      if (!payload.exp) return false;
+
+      // Verificar si el token tiene un claim de expiración
+      if (!payload.exp) return false; // Sin exp, asumimos que no expira
+
+      // Convertir el tiempo actual a segundos (mismo formato que exp)
       const currentTime = Math.floor(Date.now() / 1000);
+
+      // Comparar con el tiempo de expiración
       return payload.exp < currentTime;
     } catch (error) {
       console.error("Error al verificar el token:", error);
-      return true;
+      return true; // Si hay un error al decodificar, asumimos que está expirado
     }
   };
 
-  const refreshTokenMutate = useMutation({
+  /* const refreshTokenMutate = useMutation({
     mutationKey: ["refreshToken"],
     mutationFn: async () => {
       const storedUserData = getSessionUserData();
@@ -78,73 +83,50 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       }
       return null;
     },
-    onMutate: () => {
-      setIsRefreshingToken(true); // Indicar que se está refrescando el token
-    },
     onSettled: (data) => {
-      setIsRefreshingToken(false); // Indicar que la renovación terminó
       if (data?.results && userData) {
         const updatedUserData = { ...userData, token: data.results.token, refreshToken: data.results.refreshToken };
         updateUserData(updatedUserData);
-        // Actualizar la caché de la consulta 'checkAuth' con el nuevo token
-        queryClient.setQueryData(["checkAuth"], updatedUserData);
+        
       }
       if (data && data.results == null) {
         cerrarSesion();
       }
     },
     onError: () => {
-      setIsRefreshingToken(false); // Indicar que la renovación terminó (con error)
       cerrarSesion();
     },
-  });
-
-  const refreshTokenFn = useCallback(async () => {
-    if (!refreshTokenMutate.isPending) {
-      await refreshTokenMutate.mutateAsync();
-    }
-  }, [refreshTokenMutate]);
-
+  }) */
   const { isLoading } = useQuery({
     queryKey: ["checkAuth"],
     queryFn: async () => {
-      const storedUserData = getSessionUserData();
-      if (storedUserData && storedUserData !== null) {
-        if (!storedUserData.token) {
+      const localStorage = sessionUserData;
+      if (localStorage && localStorage !== "null") {
+        const local = JSON.parse(localStorage);
+        if (!local.token) {
           cerrarSesion();
           return null;
         }
-        if (isTokenExpired(storedUserData.token)) {
-          await refreshTokenFn();
-          const updatedStoredUserData = getSessionUserData();
-          return updatedStoredUserData || null; // Retornar el usuario actualizado o null si falla el refresh
+        if (isTokenExpired(local.token)) {
+          cerrarSesion();
+          return null;
         }
-        iniciarSesion(storedUserData);
-        return storedUserData;
+        const res = await API.auth.check(local.token);
+        if (!res) {
+          cerrarSesion();
+          return null;
+        }
+        iniciarSesion(local);
+        return local;
       }
       return null;
     },
-    staleTime: 5 * 60 * 1000,
+    staleTime: 5 * 60 * 1000, // Evita reconsultas innecesarias por 5 minutos
     refetchOnWindowFocus: true,
-    refetchInterval: 5 * 60 * 1000,
+    refetchInterval: 5 * 60 * 1000, // Refresca cada 5 minutos
   });
 
-  return (
-    <AuthContext.Provider
-      value={{
-        refreshTokenFn,
-        isAuth,
-        userData,
-        iniciarSesion,
-        cerrarSesion,
-        loading: isLoading || isRefreshingToken, // Incluir el estado de refresco en el loading general
-        updateUserData,
-        isRefreshingToken,
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={{ isAuth, userData, iniciarSesion, cerrarSesion, loading: isLoading, updateUserData }}>{children}</AuthContext.Provider>;
 };
 
 // Hook personalizado para usar el contexto
@@ -153,6 +135,6 @@ export const useAuth = () => {
   if (context === undefined) {
     throw new Error("useAuth debe ser usado dentro de un AuthProvider");
   }
-  const { isAuth, userData, iniciarSesion, cerrarSesion, loading, updateUserData, refreshTokenFn, isRefreshingToken } = context;
-  return { isAuth, userData, iniciarSesion, cerrarSesion, loading, updateUserData, refreshTokenFn, isRefreshingToken };
+  const { isAuth, userData, iniciarSesion, cerrarSesion, loading, updateUserData } = context;
+  return { isAuth, userData, iniciarSesion, cerrarSesion, loading, updateUserData };
 };

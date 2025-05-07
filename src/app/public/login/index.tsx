@@ -6,7 +6,7 @@ import { TextField, Stack, Button, Typography, Container, InputAdornment, Circul
 function Login() {
   const { username, setUsername, password, setPassword, handleLogin, isLoading, error, hide, toggleHide } = useLogin();
   const { loading } = useAuth();
-
+  console.log({ loading, isLoading });
   return (
     <Container maxWidth="md">
       {isLoading || loading ? (
