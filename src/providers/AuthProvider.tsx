@@ -96,11 +96,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           return null;
         }
         if (isTokenExpired(local.token)) {
-          console.log("Token expirado");
-
           refreshTokenFn(local.refreshToken);
           return null;
         }
+
         const res = await API.auth.check(local.token);
         if (!res) {
           cerrarSesion();

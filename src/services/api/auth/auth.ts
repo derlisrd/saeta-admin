@@ -55,7 +55,7 @@ export const apiServiceAuth = {
     refreshToken: async (token : string | null)=>{
       try {
         const {data, status} = await BASE.get('/refresh-token',{headers: {Authorization: token}})
-        return new RefreshTokenResponse({
+        return  RefreshTokenResponse.fromJSON({
           success: data.success,
           results: data.results,
           status,

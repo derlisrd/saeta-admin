@@ -11,6 +11,14 @@ export class RefreshTokenResponse {
     this.message = message;
   }
 
+  static fromJSON(data: any): RefreshTokenResponse {
+    return new RefreshTokenResponse({
+      success: data.success,
+      results: data.results == null ? null : RefreshTokenResults.fromJSON(data.results),
+      status: data.status,
+      message: data.message
+    });
+  }
 
 }
 
