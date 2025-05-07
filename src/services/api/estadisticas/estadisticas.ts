@@ -2,7 +2,7 @@
 import { BASE } from "../base";
 import axios from "axios";
 
-export const estadisticasApiService = {
+export const apiServiceEstadisticas = {
   pedidos: async (token: string | null) => {
     try {
       const { data, status } = await BASE.get("/estadisticas/pedidos", { headers: { Authorization: token } });

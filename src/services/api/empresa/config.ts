@@ -4,7 +4,7 @@ import { EmpresaResponse } from "@/services/dto/config/empresa";
 import { Impresora, ImpresoraResponse } from "@/services/dto/config/impresora";
 import axios from "axios";
 
-export const apiSErviceConfig = {
+export const apiServiceConfig = {
     updateEmpresa: async(form: Empresa, token : string | null)=>{
         try {
             const { data, status } = await BASE.put('/config/empresa', form, { headers: { Authorization: token } });

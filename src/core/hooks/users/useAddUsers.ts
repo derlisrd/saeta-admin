@@ -1,38 +1,36 @@
 import { useAuth } from "@/providers/AuthProvider";
 import API from "@/services/api";
-import { UserCreateForm, UserListResults } from "@/services/dto/users/user";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { UserCreateForm } from "@/services/dto/users/user";
+import { useMutation } from "@tanstack/react-query";
+import { useState } from "react";
 
 function useAddUsers() {
 
-    const queryClient = useQueryClient();
     const {userData} = useAuth()
+    const initialMessage = null
+    const [message,setMessage] = useState<{name: string, descripcion: string, severity?: "error" | "success" | "info" | "warning"} | null>(initialMessage)
+
+    const clearMessage = () => setMessage(initialMessage)
 
     const {mutateAsync, isPending} = useMutation({
         mutationFn: async(form: UserCreateForm) => {
-            // Asumiendo que existe un método para insertar impresoras en tu API
-            const res = await API.users.create(userData && userData.token, form);
+            const f = {...form, empresa_id: userData ? userData.empresa.id : 0}
+            const res = await API.users.create(userData && userData.token, f);
             return res;
         },
-        onSuccess: (data) => {
-            // Invalidar y refrescar la caché
-            queryClient.invalidateQueries({ queryKey: ['users'] });
-            
-            // Alternativa: Actualizar la caché manualmente sin hacer una nueva solicitud
-            
-            queryClient.setQueryData(['impresoras'], (old: UserListResults[] | undefined) => {
-                if (!old) return [data.results];
-                return [...old, data.results];
-            });
-            
-        }
+        onSettled(data) {
+            if(data && data.success){
+                setMessage({name: "Usuario creado", descripcion: "El usuario se ha creado correctamente", severity: "success"})
+                return
+            }
+            setMessage({name: "Error", descripcion: data ? data.message : 'Ocurrio un error al crear al usuario', severity: "error"})
+        },
     });
 
-    const insertar = async(form: UserCreateForm) => {
-        return mutateAsync(form);
-    }
+    const insertar = async(form: UserCreateForm) => mutateAsync(form);
     
-    return { isPending, insertar}
+    
+    return { isPending, insertar, message, clearMessage}
 }
 
 export default useAddUsers;

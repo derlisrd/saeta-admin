@@ -80,6 +80,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const newUserData = { ...userData, token: res.results.token, refreshToken: res.results.refreshToken };
       updateUserData(newUserData);
     }
+    if (res && !res.success) {
+      cerrarSesion();
+    }
   };
 
   const { isLoading } = useQuery({
@@ -93,6 +96,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           return null;
         }
         if (isTokenExpired(local.token)) {
+          console.log("Token expirado");
+
           refreshTokenFn(local.refreshToken);
           return null;
         }

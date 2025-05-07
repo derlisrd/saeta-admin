@@ -1,7 +1,8 @@
 import { apiServiceAuth } from "./auth/auth";
 import { apiServiceClientes } from "./clientes/clientes";
-import { apiSErviceConfig } from "./empresa/config";
-import { estadisticasApiService } from "./estadisticas/estadisticas";
+import { apiServiceConfig } from "./empresa/config";
+import { apiServiceSucursales } from "./empresa/sucursales";
+import { apiServiceEstadisticas } from "./estadisticas/estadisticas";
 import { apiServiceFormasPago } from "./factura/formaspago";
 import { apiServiceImpuestos } from "./factura/impuesto";
 import { apiServiceMonedas } from "./factura/monedas";
@@ -25,9 +26,10 @@ const API = {
     monedas: apiServiceMonedas,
     depositos: apiServiceDepositos,
     medidas: apiServiceMedidas,
-    config: apiSErviceConfig ,
+    config: apiServiceConfig ,
     users: apiServiceUsers,
-    estadisticas: estadisticasApiService
+    estadisticas: apiServiceEstadisticas,
+    sucursales: apiServiceSucursales
 }
 
 export default API

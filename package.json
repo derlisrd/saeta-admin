@@ -25,6 +25,7 @@
     "react-barcode": "1.6.1",
     "react-dom": "18.3.1",
     "react-dropzone": "14.3.5",
+    "react-hook-form": "7.56.2",
     "react-number-format": "5.4.3",
     "react-router-dom": "7.0.1",
     "react-to-print": "3.0.4",
