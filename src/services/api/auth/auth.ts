@@ -50,5 +50,39 @@ export const apiServiceAuth = {
       } catch (error) {
         return false
       }
+    },
+    refreshToken: async (token : string | null)=>{
+      try {
+        const {data, status} = await BASE.get('/refresh-token',{headers: {Authorization: token}})
+        return {
+          success : data.success,
+          results : data.results,
+          status,
+          message : ''
+        }
+      } catch (error) {
+        if(axios.isAxiosError(error)){
+          return {
+            success : false,
+            results : null,
+            status : error.response?.status || 500,
+            message : error.response?.data.message || 'Error en conexion'
+          }
+        }
+        if(!navigator.onLine){
+          return {
+            success : false,
+            results : null,
+            status : 400,
+            message : 'No hay conexión a internet'
+          }
+        }
+        return {
+          success : false,
+          results : null,
+          status : 500,
+          message : 'Error de servidor intente más tarde o contacte con Atención al cliente'
+        }
+      }
     }
 }

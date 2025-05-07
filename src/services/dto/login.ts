@@ -113,13 +113,15 @@ export class LoginResults {
   public empresa: Empresa
   public tokenRaw: string
   public impresoras: Impresora[] | null
+  public refreshToken: string;
 
-  constructor({user, token, empresa, tokenRaw, impresoras}: {user: User, token: string, empresa: Empresa, tokenRaw: string, impresoras: Impresora[] | null}) {
+  constructor({user, token, empresa, tokenRaw, impresoras, refreshToken}: {user: User, token: string, empresa: Empresa, tokenRaw: string, impresoras: Impresora[] | null, refreshToken : string} ) {
     this.user = user
     this.token = token
     this.empresa = empresa
     this.tokenRaw = tokenRaw
     this.impresoras = impresoras
+    this.refreshToken = refreshToken
   }
 
   static fromJSON(data: any): LoginResults {
@@ -128,7 +130,8 @@ export class LoginResults {
       token: data.token,
       empresa: Empresa.fromJSON(data.empresa),
       tokenRaw: data.tokenRaw,
-      impresoras: data.impresoras
+      impresoras: data.impresoras,
+      refreshToken: data.refresh_token
     });
   }
 }

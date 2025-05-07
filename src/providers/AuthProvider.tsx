@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useCallback, ReactNode } from "rea
 import { useSessionStorage } from "@/hooks/useSessionStorage";
 import { LoginResults } from "@/services/dto/login";
 import API from "@/services/api";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 // Define el tipo para el contexto
 type AuthContextType = {
@@ -12,6 +12,7 @@ type AuthContextType = {
   cerrarSesion: () => void;
   loading: boolean;
   updateUserData: (data: LoginResults) => void;
+  refreshTokenFn: () => Promise<void>;
 };
 
 // Contexto inicializado como undefined para ser manejado correctamente por useContext
@@ -19,7 +20,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // Proveedor del contexto
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const { setItemValue: setSessionUserData } = useSessionStorage<LoginResults | null>("userData", null);
+  const { setItemValue: setSessionUserData, current: getSessionUserData } = useSessionStorage<LoginResults | null>("userData", null);
 
   const [isAuth, setIsAuth] = useState(false);
   const [userData, setUserData] = useState<LoginResults | null>(null);
@@ -48,6 +49,40 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setSessionUserData(null);
     localStorage.removeItem("pedidoStore");
   }, [setSessionUserData]);
+
+  const isTokenExpired = (token: string): boolean => {
+    if (!token) return true;
+
+    try {
+      // Dividir el token en sus partes (header, payload, signature)
+      const parts = token.split(".");
+      if (parts.length !== 3) return true;
+
+      // Decodificar la parte del payload (la segunda parte)
+      const payload = JSON.parse(atob(parts[1]));
+
+      // Verificar si el token tiene un claim de expiración
+      if (!payload.exp) return false; // Sin exp, asumimos que no expira
+
+      // Convertir el tiempo actual a segundos (mismo formato que exp)
+      const currentTime = Math.floor(Date.now() / 1000);
+
+      // Comparar con el tiempo de expiración
+      return payload.exp < currentTime;
+    } catch (error) {
+      console.error("Error al verificar el token:", error);
+      return true; // Si hay un error al decodificar, asumimos que está expirado
+    }
+  };
+
+  const refreshTokenMutate = useMutation({
+    mutationKey: ["refreshToken"],
+    mutationFn: async () => {},
+  });
+
+  const refreshTokenFn = useCallback(async () => {
+    await refreshTokenMutate.mutateAsync();
+  }, [refreshTokenMutate]);
 
   const { isLoading } = useQuery({
     queryKey: ["checkAuth"],
@@ -78,32 +113,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     refetchInterval: 5 * 60 * 1000, // Refresca cada 5 minutos
   });
 
-  const isTokenExpired = (token: string): boolean => {
-    if (!token) return true;
-
-    try {
-      // Dividir el token en sus partes (header, payload, signature)
-      const parts = token.split(".");
-      if (parts.length !== 3) return true;
-
-      // Decodificar la parte del payload (la segunda parte)
-      const payload = JSON.parse(atob(parts[1]));
-
-      // Verificar si el token tiene un claim de expiración
-      if (!payload.exp) return false; // Sin exp, asumimos que no expira
-
-      // Convertir el tiempo actual a segundos (mismo formato que exp)
-      const currentTime = Math.floor(Date.now() / 1000);
-
-      // Comparar con el tiempo de expiración
-      return payload.exp < currentTime;
-    } catch (error) {
-      console.error("Error al verificar el token:", error);
-      return true; // Si hay un error al decodificar, asumimos que está expirado
-    }
-  };
-
-  return <AuthContext.Provider value={{ isAuth, userData, iniciarSesion, cerrarSesion, loading: isLoading, updateUserData }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ refreshTokenFn, isAuth, userData, iniciarSesion, cerrarSesion, loading: isLoading, updateUserData }}>{children}</AuthContext.Provider>;
 };
 
 // Hook personalizado para usar el contexto
