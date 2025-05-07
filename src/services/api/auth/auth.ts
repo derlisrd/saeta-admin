@@ -1,6 +1,7 @@
 import axios from "axios";
-import { LoginResponse } from "../../dto/login";
+import { LoginResponse } from "../../dto/auth/login";
 import {BASE} from "../base";
+import { RefreshTokenResponse } from "@/services/dto/auth/refresh";
 
 export const apiServiceAuth = {
     login : async( username : string, password : string)=>{
@@ -54,35 +55,35 @@ export const apiServiceAuth = {
     refreshToken: async (token : string | null)=>{
       try {
         const {data, status} = await BASE.get('/refresh-token',{headers: {Authorization: token}})
-        return {
-          success : data.success,
-          results : data.results,
+        return new RefreshTokenResponse({
+          success: data.success,
+          results: data.results,
           status,
-          message : ''
-        }
+          message: ''
+        });
       } catch (error) {
         if(axios.isAxiosError(error)){
-          return {
+          return new RefreshTokenResponse( {
             success : false,
             results : null,
             status : error.response?.status || 500,
             message : error.response?.data.message || 'Error en conexion'
-          }
+          })
         }
         if(!navigator.onLine){
-          return {
+          return new RefreshTokenResponse({
             success : false,
             results : null,
             status : 400,
             message : 'No hay conexión a internet'
-          }
+          })
         }
-        return {
+        return new RefreshTokenResponse ({
           success : false,
           results : null,
           status : 500,
           message : 'Error de servidor intente más tarde o contacte con Atención al cliente'
-        }
+        })
       }
     }
 }

@@ -1,4 +1,4 @@
-import { Empresa } from "@/services/dto/login";
+import { Empresa } from "@/services/dto/auth/login";
 import { PedidosDelDiaResults } from "@/services/dto/pedidos/pedidosDelDia";
 import { format } from "@formkit/tempo";
 import { Fragment } from "react";

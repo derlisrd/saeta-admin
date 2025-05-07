@@ -1,4 +1,4 @@
-import { Empresa } from "../login";
+import { Empresa } from "../auth/login";
 
 export class EmpresaResponse{
     success : boolean;

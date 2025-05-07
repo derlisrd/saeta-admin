@@ -1,6 +1,6 @@
 import { useAuth } from "@/providers/AuthProvider";
 import API from "@/services/api";
-import { Empresa } from "@/services/dto/login";
+import { Empresa } from "@/services/dto/auth/login";
 import { useEffect, useState } from "react";
 
 function useConfigEmpresa() {

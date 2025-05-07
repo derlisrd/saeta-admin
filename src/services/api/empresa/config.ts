@@ -1,4 +1,4 @@
-import { Empresa } from "@/services/dto/login";
+import { Empresa } from "@/services/dto/auth/login";
 import { BASE } from "../base";
 import { EmpresaResponse } from "@/services/dto/config/empresa";
 import { Impresora, ImpresoraResponse } from "@/services/dto/config/impresora";

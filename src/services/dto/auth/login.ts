@@ -1,4 +1,4 @@
-import { Impresora } from "./config/impresora"
+import { Impresora } from "../config/impresora"
 
 export class Sucursal {
   public id: number
