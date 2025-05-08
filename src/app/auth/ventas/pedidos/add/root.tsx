@@ -13,7 +13,9 @@ function Root() {
           <h3>Pedidos</h3>
         </Grid>
         <Grid size={12}>
-          <Button onClick={() => handleModal("main")}>Continuar pedidos</Button>
+          <Button onClick={() => handleModal("main")} endIcon={<Icon>arrow-narrow-right-dashed</Icon>}>
+            Continuar pedidos
+          </Button>
         </Grid>
         {pedidos.length > 1 && (
           <>

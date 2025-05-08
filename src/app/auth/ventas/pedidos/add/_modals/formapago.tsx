@@ -103,7 +103,7 @@ function FormaPagoModal() {
       <DialogTitle>
         <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
           <Total />
-          <Typography variant="button" sx={{ display: { xs: "none", sm: "block" } }}>
+          <Typography variant="button" fontSize={14} fontWeight="bold" sx={{ display: { xs: "none", sm: "block" } }}>
             Seleccione formas de pago
           </Typography>
         </Stack>

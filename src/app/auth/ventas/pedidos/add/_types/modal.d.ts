@@ -8,4 +8,5 @@ export type modalType = {
     success: boolean;
     descuento: boolean;
     formapago: boolean;
+    masvendidos:boolean;
   };

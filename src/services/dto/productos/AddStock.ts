@@ -1,6 +1,6 @@
 export class AddStock {
     deposito_id: number;
-    cantidad: number;
+    cantidad: number | undefined;
     deposito: string;
   
     constructor({ deposito_id = 0, cantidad = 0, deposito ='' }: Partial<AddStock>) {

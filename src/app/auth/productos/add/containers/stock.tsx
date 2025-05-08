@@ -1,6 +1,7 @@
 import { TextField, Grid2 as Grid, Typography, Select, FormControl, InputLabel, MenuItem, Button, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import useAddProducto from "../_hook/useAddProducto";
 import Icon from "@/components/ui/icon";
+import { NumericFormat } from "react-number-format";
 
 function Stock() {
   const { form, depositos, addStock, stockState, error, changeStockState } = useAddProducto();
@@ -10,16 +11,19 @@ function Stock() {
         <Typography variant="button">STOCK</Typography>
       </Grid>
       <Grid size={{ xs: 12, md: 4 }}>
-        <TextField
+        <NumericFormat
+          autoComplete="off"
+          customInput={TextField}
+          thousandSeparator="."
+          decimalSeparator=","
           placeholder="Cantidad"
+          name="cantidad"
+          value={stockState.cantidad ? stockState.cantidad : ""}
+          onValueChange={(e) => {
+            changeStockState("cantidad", Number(e.value));
+          }}
           fullWidth
           label="Cantidad"
-          name="cantidad"
-          value={stockState.cantidad}
-          autoComplete="off"
-          onChange={({ target }) => {
-            changeStockState(target.name, Number(target.value));
-          }}
           error={error.code === 9}
         />
       </Grid>

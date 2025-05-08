@@ -1,4 +1,4 @@
-import { CircularProgress, IconButton, InputAdornment, TextField } from "@mui/material";
+import { CircularProgress, IconButton, InputAdornment, TextField, Tooltip } from "@mui/material";
 import useHook from "../_hooks/useHook";
 import Icon from "@/components/ui/icon";
 import useModal from "../_hooks/useModal";
@@ -27,12 +27,26 @@ function InputCodigo() {
           sx: { padding: 0, fontSize: 15 },
           startAdornment: (
             <InputAdornment position="end">
-              <IconButton onClick={() => handleModal("productos")}>
-                <Icon>search</Icon>
-              </IconButton>
+              <Tooltip title="Buscar productos" arrow placement="left">
+                <IconButton onClick={() => handleModal("productos")}>
+                  <Icon>search</Icon>
+                </IconButton>
+              </Tooltip>
             </InputAdornment>
           ),
-          endAdornment: <InputAdornment position="start">{loadingAddProducto && <CircularProgress size={24} />}</InputAdornment>,
+          endAdornment: (
+            <InputAdornment position="start">
+              {loadingAddProducto ? (
+                <CircularProgress size={24} />
+              ) : (
+                <Tooltip title="Más vendidos" arrow placement="right">
+                  <IconButton onClick={() => handleModal("masvendidos")}>
+                    <Icon>shopping-cart</Icon>
+                  </IconButton>
+                </Tooltip>
+              )}
+            </InputAdornment>
+          ),
         },
       }}
     />

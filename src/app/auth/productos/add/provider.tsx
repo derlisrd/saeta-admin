@@ -11,10 +11,6 @@ import AddProductoContext, { modalType } from "./context";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import AllData from "./_types/allData";
 
-interface AddProductoProviderProps {
-  children: React.ReactNode;
-}
-
 const fetchData = async (token: string | null): Promise<AllData> => {
   const [impuestosRes, categoriasRes, depositosRes, medidasRes] = await Promise.all([
     apiServiceImpuestos.list(token),
@@ -36,7 +32,7 @@ const fetchData = async (token: string | null): Promise<AllData> => {
   };
 };
 
-function AddProductoProvider({ children }: AddProductoProviderProps) {
+function AddProductoProvider({ children }: { children: React.ReactNode }) {
   const { userData } = useAuth();
 
   const inputCodigoRef = useRef<HTMLInputElement>(null);
@@ -111,11 +107,11 @@ function AddProductoProvider({ children }: AddProductoProviderProps) {
       return;
     }
     setError({ code: 0, message: "" });
-    if (data) {
+    if (data && cantidad) {
       const depositoFind = data.depositos.find((e) => e.id === deposito_id);
       if (!depositoFind) return;
       const updatedStock = form.stock.some((item) => item.deposito_id === deposito_id)
-        ? form.stock.map((item) => (item.deposito_id === deposito_id ? new AddStock({ ...item, cantidad: item.cantidad + cantidad }) : item))
+        ? form.stock.map((item) => (item.deposito_id === deposito_id ? new AddStock({ ...item, cantidad: (item.cantidad ?? 0) + cantidad }) : item))
         : [...form.stock, new AddStock({ deposito_id, cantidad, deposito: depositoFind?.nombre })];
       setForm(new AddProducto({ ...form, stock: updatedStock }));
       setStockState((prev) => new AddStock({ ...prev, cantidad: 0 }));
