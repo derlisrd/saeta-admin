@@ -31,44 +31,11 @@ import Total from "../_components/total";
 import Icon from "@/components/ui/icon";
 
 function FinalizarPedido() {
-  const { pedidos, index, setResult, handleFormasPago, config, settingConfig, aplicarDescuento, changePedido } = useHook();
+  const { pedidos, index, setResult, config, settingConfig, aplicarDescuento } = useHook();
   //const { isSmDown } = useResponsive();
   const { setError, error, validate } = useFinalizarPedido();
   const { modal, handleModal, setModal } = useModal();
   const { insertPedido, isLoading } = useInsertPedido();
-  const [selectedFormaPago, setSelectedFormaPago] = useState<number>(0);
-  const [monto, setMonto] = useState(0);
-  const [inputValue, setInputValue] = useState("");
-
-  const agregarFormaPago = () => {
-    if (selectedFormaPago === 0) return setError({ active: true, message: "Seleccione una forma de pago", code: 43 });
-    setError({ active: false, message: "", code: 0 });
-    handleFormasPago(monto, selectedFormaPago, "add");
-    setMonto(0);
-    setSelectedFormaPago(0);
-  };
-
-  const handleNumberClick = (value: string) => {
-    const newValue = inputValue + value;
-    setInputValue(newValue);
-    // Convertir el valor a número y actualizar el estado monto
-    setMonto(parseFloat(newValue.replace(/\./g, "")));
-  };
-  const handleBackspace = () => {
-    if (inputValue.length > 0) {
-      // Eliminar el último carácter del inputValue
-      const newValue = inputValue.slice(0, -1);
-      setInputValue(newValue);
-
-      // Actualizar también el valor numérico
-      if (newValue === "") {
-        setMonto(0);
-      } else {
-        const numericValue = newValue.replace(/\./g, "");
-        setMonto(parseFloat(numericValue) || 0);
-      }
-    }
-  };
 
   const finalizarPedido = async () => {
     const validateError = validate(pedidos[index]);
@@ -93,11 +60,11 @@ function FinalizarPedido() {
   };
 
   return (
-    <Dialog disableRestoreFocus fullScreen open={modal.finalizar} onClose={() => handleModal("finalizar")}>
+    <Dialog disableRestoreFocus fullWidth open={modal.finalizar} onClose={() => handleModal("finalizar")}>
       <DialogTitle>
         <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
           <Typography variant="button" sx={{ display: { xs: "none", sm: "block" } }}>
-            Forma de pago
+            Confirmar venta
           </Typography>
           <Total />
         </Stack>
@@ -109,32 +76,6 @@ function FinalizarPedido() {
           <Grid container spacing={2} pt={1}>
             <Grid size={12}>
               <Grid container spacing={2} alignItems="center">
-                <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-                  <FormaPagoSelect selectedFormaPago={selectedFormaPago} setSelectedFormaPago={setSelectedFormaPago} error={error.code === 43} />
-                </Grid>
-                <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-                  <NumericFormat
-                    customInput={TextField}
-                    thousandSeparator="."
-                    decimalSeparator=","
-                    placeholder="Monto abonado"
-                    name="monto"
-                    onValueChange={(e) => {
-                      setMonto(Number(e.value));
-                      setInputValue(e.formattedValue);
-                    }}
-                    value={monto}
-                    fullWidth
-                    required
-                    label="Monto abonado"
-                    error={error.code === 7}
-                  />
-                </Grid>
-                <Grid size={{ xs: 12, sm: 6, md: 2 }}>
-                  <Button fullWidth onClick={agregarFormaPago}>
-                    Agregar
-                  </Button>
-                </Grid>
                 <Grid size={{ xs: 12, sm: 6, md: 4 }}>
                   <Stack direction="row" spacing={2}>
                     <Link
@@ -160,29 +101,6 @@ function FinalizarPedido() {
               </Grid>
             </Grid>
             <Grid size={{ xs: 12, sm: 6, md: 6 }}>
-              <Stack direction="row" spacing={2} alignItems="center">
-                <FormLabel>Condición de venta: </FormLabel>
-                <FormControlLabel
-                  value={0}
-                  control={<Radio />}
-                  checked={pedidos[index].tipo === 0}
-                  onChange={() => {
-                    changePedido("tipo", 0);
-                  }}
-                  label="Contado"
-                />
-                <FormControlLabel
-                  value={1}
-                  control={<Radio />}
-                  checked={pedidos[index].tipo === 1}
-                  onChange={() => {
-                    changePedido("tipo", 1);
-                  }}
-                  label="Crédito"
-                />
-              </Stack>
-            </Grid>
-            <Grid size={{ xs: 12, sm: 6, md: 6 }}>
               <EntregadoCheck />
             </Grid>
             <Grid size={{ xs: 12 }}>
@@ -198,17 +116,6 @@ function FinalizarPedido() {
                 label="Mostrar teclado"
               />
             </Grid>
-            <Grid size={{ xs: 12, sm: 12, md: 8 }}>
-              <Zoom in={config.showKeyboard} mountOnEnter unmountOnExit>
-                <Box>
-                  <Teclado onEnter={agregarFormaPago} onNumberClick={handleNumberClick} onBackspace={handleBackspace} />
-                </Box>
-              </Zoom>
-            </Grid>
-
-            <Grid size={{ xs: 12, sm: 12, md: 4 }}>
-              <ListaFormaPago />
-            </Grid>
           </Grid>
         )}
       </DialogContent>
@@ -217,7 +124,7 @@ function FinalizarPedido() {
           Regresar
         </Button>
         <Button startIcon={<Icon>check</Icon>} disabled={isLoading} sx={{ p: 2 }} onClick={finalizarPedido}>
-          Finalizar
+          Confirmar venta
         </Button>
       </DialogActions>
     </Dialog>

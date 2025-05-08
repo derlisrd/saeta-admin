@@ -6,9 +6,10 @@ interface TecladoProps {
   onEnter: () => void;
   onNumberClick: (value: string) => void;
   onBackspace: () => void;
+  clear?: () => void;
 }
 
-function Teclado({ onEnter, onNumberClick, onBackspace }: TecladoProps) {
+function Teclado({ onEnter, onNumberClick, onBackspace, clear }: TecladoProps) {
   // Función para manejar el clic en los botones numéricos
   const handleNumberClick = (value: string) => {
     onNumberClick(value);
@@ -137,6 +138,11 @@ function Teclado({ onEnter, onNumberClick, onBackspace }: TecladoProps) {
       <Box>
         <Button size="large" variant="outlined" fullWidth sx={{ fontSize: { xs: 12, sm: 24 }, height: "100%" }} onClick={() => handleNumberClick(".")}>
           .
+        </Button>
+      </Box>
+      <Box>
+        <Button size="large" fullWidth sx={{ fontSize: { xs: 12, sm: 16 }, height: "100%" }} onClick={clear} endIcon={<Icon>trash</Icon>}>
+          Limpiar
         </Button>
       </Box>
     </Box>

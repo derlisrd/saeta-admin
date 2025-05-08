@@ -7,4 +7,5 @@ export type modalType = {
     error: boolean;
     success: boolean;
     descuento: boolean;
+    formapago: boolean;
   };

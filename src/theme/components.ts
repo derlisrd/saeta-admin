@@ -80,8 +80,14 @@ export const components = (): Components<Omit<Theme, 'components' | 'palette'> &
     },
     styleOverrides:{
       root:{
-        borderRadius:"8px",
-        backgroundColor: 'background.paper'
+        borderRadius:"8px"
+      }
+    }
+  },
+  MuiDialogTitle:{
+    styleOverrides:{
+      root:{
+        fontSize: 15
       }
     }
   },

@@ -3,7 +3,17 @@ import ModalContext from "../_context/modalcontext";
 import { modalType } from "../_types/modal";
 
 function ModalProvider({ children }: { children: ReactNode }) {
-  const initialModal: modalType = { main: true, clientes: false, finalizar: false, registro: false, productos: false, error: false, success: false, descuento: false };
+  const initialModal: modalType = {
+    main: true,
+    clientes: false,
+    finalizar: false,
+    registro: false,
+    productos: false,
+    error: false,
+    success: false,
+    descuento: false,
+    formapago: false,
+  };
   const [modal, setModal] = useState<modalType>(initialModal);
   const handleModal = (name: keyof modalType) => {
     setModal((prev) => ({ ...prev, [name]: !prev[name] }));

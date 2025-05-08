@@ -7,7 +7,7 @@ function FinalizarButton() {
   const { handleModal } = useModal();
   return (
     pedidos[index].items.length > 0 && (
-      <Button variant="contained" onClick={() => handleModal("finalizar")} size="large" fullWidth sx={{ padding: 2 }}>
+      <Button variant="contained" onClick={() => handleModal("formapago")} size="large" fullWidth sx={{ padding: 2 }}>
         Finalizar
       </Button>
     )

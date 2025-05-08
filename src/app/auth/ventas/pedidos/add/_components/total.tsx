@@ -14,7 +14,7 @@ function Total() {
           </Typography>
         </>
       ) : (
-        <Typography variant="body1">Total: {pedidos[index].total.toLocaleString("es-PY")}</Typography>
+        <Typography variant="h6">Total: {pedidos[index].total.toLocaleString("es-PY")}</Typography>
       )}
     </Stack>
   );

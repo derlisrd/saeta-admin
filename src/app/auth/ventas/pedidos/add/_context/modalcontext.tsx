@@ -8,20 +8,6 @@ interface ModalContextProps {
   setModal: React.Dispatch<React.SetStateAction<modalType>>;
 }
 
-const ModalContext = createContext<ModalContextProps>({
-  modal: {
-    main: true,
-    registro: false,
-    clientes: false,
-    finalizar: false,
-    productos: false,
-    error: false,
-    success: false,
-    descuento: false,
-  },
-  setModal: () => {},
-  handleModal: () => {},
-  clearAllModals: () => {},
-});
+const ModalContext = createContext<ModalContextProps | undefined>(undefined);
 ModalContext.displayName = "ModalContext";
 export default ModalContext;

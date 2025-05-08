@@ -2,8 +2,11 @@ import { useContext } from "react";
 import ModalContext from "../_context/modalcontext";
 
 function useModal() {
-    const {modal, handleModal, clearAllModals,setModal} = useContext(ModalContext);
-    return {modal, handleModal, clearAllModals,setModal}
+    const context = useContext(ModalContext);
+    if(!context){
+        throw new Error('useModel error context')
+    }
+    return context
 }
 
 export default useModal;
