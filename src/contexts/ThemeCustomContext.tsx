@@ -9,11 +9,6 @@ interface ThemeCustomContextValuesType {
   changeColor: (availablecolors: availableColorsType) => void;
 }
 
-const ThemeCustomContext = createContext<ThemeCustomContextValuesType>({
-  modeDark: true,
-  toggleModeDark: () => {},
-  customTheme: {} as Theme,
-  changeColor: () => {},
-});
+const ThemeCustomContext = createContext<ThemeCustomContextValuesType | undefined>(undefined);
 
 export default ThemeCustomContext;

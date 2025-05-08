@@ -38,40 +38,4 @@ interface AddPedidoContextProps {
   aplicarDescuento: (descuento: number) => void;
 }
 
-export const AddPedidoContext = createContext<AddPedidoContextProps>({
-  inputCodigoRef: { current: null },
-  limpiarFinalizarPedido: () => {},
-  changePedido: () => {},
-  loading: false,
-  setCliente: () => {},
-  formasPago: [],
-  monedas: [],
-  removeItem: () => {},
-  cantidad: 1,
-  result: null,
-  setResult: () => {},
-  setCantidad: () => {},
-  handleFormasPago: () => {},
-  esperar: () => {},
-  cancelar: () => {},
-  loadingAddProducto: false,
-  clearError: () => {},
-  error: {
-    active: false,
-    code: 0,
-    message: "",
-  },
-  setError: () => {},
-  pedidos: [],
-  index: 0,
-  setIndex: () => {},
-  consultarCodigoInsertar: () => {},
-  selectedDeposito: 1,
-  setSelectedDeposito: () => {},
-  depositos: [],
-  config: {
-    showKeyboard: true,
-  },
-  settingConfig: () => {},
-  aplicarDescuento: () => {},
-});
+export const AddPedidoContext = createContext<AddPedidoContextProps | undefined>(undefined);

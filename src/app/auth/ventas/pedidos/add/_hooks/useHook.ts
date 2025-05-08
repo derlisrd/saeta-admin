@@ -2,68 +2,11 @@ import { useContext } from "react";
 import { AddPedidoContext } from "../context";
 
 function useHook() {
-  const {
-    pedidos,
-    consultarCodigoInsertar,
-    error,
-    setError,
-    clearError,
-    loadingAddProducto,
-    inputCodigoRef,
-    cantidad,
-    setCantidad,
-    removeItem,
-    index,
-    setIndex,
-    esperar,
-    cancelar,
-    formasPago,
-    loading,
-    changePedido,
-    setCliente,
-    result,
-    setResult,
-    limpiarFinalizarPedido,
-    monedas,
-    handleFormasPago,
-    depositos,
-    selectedDeposito,
-    setSelectedDeposito,
-    config,
-    settingConfig,
-    aplicarDescuento
-  } = useContext(AddPedidoContext);
-  return {
-    pedidos,
-    consultarCodigoInsertar,
-    error,
-    setError,
-    clearError,
-    loadingAddProducto,
-    inputCodigoRef,
-    cantidad,
-    setCantidad,
-    removeItem,
-    index,
-    setIndex,
-    esperar,
-    cancelar,
-    formasPago,
-    loading,
-    changePedido,
-    setCliente,
-    result,
-    setResult,
-    limpiarFinalizarPedido,
-    monedas,
-    handleFormasPago,
-    depositos,
-    selectedDeposito,
-    setSelectedDeposito,
-    config,
-    settingConfig,
-    aplicarDescuento
-  };
+  const context = useContext(AddPedidoContext)
+  if (!context) {
+    throw new Error("useHook must be used within a AddPedidoContextProvider");
+  }
+  return context
 }
 
 export default useHook;

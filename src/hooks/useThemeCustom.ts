@@ -2,8 +2,12 @@ import ThemeCustomContext from "@/contexts/ThemeCustomContext";
 import { useContext } from "react";
 
 function useThemeCustom() {
-    const {toggleModeDark,modeDark, customTheme, changeColor} = useContext(ThemeCustomContext)
-    return {toggleModeDark,modeDark, customTheme, changeColor}
+  const context = useContext(ThemeCustomContext);
+
+  if (context === undefined) {
+    throw new Error("useThemeCustom debe estar definido");
+  }
+  return context;
 }
 
 export default useThemeCustom;
