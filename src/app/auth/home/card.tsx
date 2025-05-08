@@ -1,6 +1,5 @@
 import Icon from "@/components/ui/icon";
 import useThemeCustom from "@/hooks/useThemeCustom";
-import { colors } from "@/theme/colors";
 import { Box, Card, CardContent, Stack, Typography } from "@mui/material";
 
 interface CardHomeProps {
