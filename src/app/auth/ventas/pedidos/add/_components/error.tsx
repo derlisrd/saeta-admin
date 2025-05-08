@@ -1,4 +1,4 @@
-import { Alert, Slide, Snackbar, Zoom } from "@mui/material";
+import { Alert, Snackbar, Zoom } from "@mui/material";
 
 interface ErrorProps {
   error: { active: boolean; message: string };

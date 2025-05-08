@@ -12,7 +12,7 @@ import Icon from "@/components/ui/icon";
 function FinalizarPedido() {
   const { pedidos, index, setResult, aplicarDescuento } = useHook();
   //const { isSmDown } = useResponsive();
-  const { setError, error, validate } = useFinalizarPedido();
+  const { setError, validate } = useFinalizarPedido();
   const { modal, handleModal, setModal } = useModal();
   const { insertPedido, isLoading } = useInsertPedido();
 
