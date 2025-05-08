@@ -1,4 +1,4 @@
-import { Alert, Slide, Snackbar } from "@mui/material";
+import { Alert, Slide, Snackbar, Zoom } from "@mui/material";
 
 interface ErrorProps {
   error: { active: boolean; message: string };
@@ -7,7 +7,7 @@ interface ErrorProps {
 
 function Error({ error, clearError }: ErrorProps) {
   return (
-    <Snackbar TransitionComponent={Slide} anchorOrigin={{ vertical: "bottom", horizontal: "right" }} open={error.active}>
+    <Snackbar TransitionComponent={Zoom} autoHideDuration={6000} onClose={clearError} anchorOrigin={{ vertical: "bottom", horizontal: "right" }} open={error.active}>
       <Alert onClose={clearError} severity="error" variant="filled" sx={{ width: "100%" }}>
         {error.message}
       </Alert>

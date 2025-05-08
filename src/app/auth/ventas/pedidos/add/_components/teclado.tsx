@@ -1,5 +1,5 @@
 import Icon from "@/components/ui/icon";
-import { Button, Box } from "@mui/material";
+import { Button, Box, Grid2 as Grid } from "@mui/material";
 import { useEffect } from "react";
 
 interface TecladoProps {
@@ -45,107 +45,102 @@ function Teclado({ onEnter, onNumberClick, onBackspace, clear }: TecladoProps) {
   }, [onEnter, onBackspace, onNumberClick]);
 
   return (
-    <Box
-      sx={{
-        display: "grid",
-        gridTemplateColumns: "repeat(4, 1fr)",
-        gridTemplateRows: "repeat(4, 1fr)",
-        gap: { xs: 0.5, sm: 2 },
-      }}
-    >
-      {/* Primera fila */}
-      <Box>
+    <Grid container spacing={1}>
+      <Grid size={3}>
         <Button size="large" fullWidth sx={{ fontSize: { xs: 12, sm: 24 }, height: "100%" }} onClick={() => handleNumberClick("1")}>
           1
         </Button>
-      </Box>
-      <Box>
+      </Grid>
+      <Grid size={3}>
         <Button size="large" fullWidth sx={{ fontSize: { xs: 12, sm: 24 }, height: "100%" }} onClick={() => handleNumberClick("2")}>
           2
         </Button>
-      </Box>
-      <Box>
+      </Grid>
+      <Grid size={3}>
         <Button size="large" fullWidth sx={{ fontSize: { xs: 12, sm: 24 }, height: "100%" }} onClick={() => handleNumberClick("3")}>
           3
         </Button>
-      </Box>
-      <Box>
+      </Grid>
+      <Grid size={3}>
         <Button size="large" variant="outlined" fullWidth sx={{ height: "100%" }} onClick={onBackspace} startIcon={<Icon size={24}>arrow-narrow-left-dashed</Icon>} />
-      </Box>
-
-      {/* Segunda fila */}
-      <Box>
+      </Grid>
+      <Grid size={3}>
         <Button size="large" fullWidth sx={{ fontSize: { xs: 12, sm: 24 }, height: "100%" }} onClick={() => handleNumberClick("4")}>
           4
         </Button>
-      </Box>
-      <Box>
+      </Grid>
+      <Grid size={3}>
         <Button size="large" fullWidth sx={{ fontSize: { xs: 12, sm: 24 }, height: "100%" }} onClick={() => handleNumberClick("5")}>
           5
         </Button>
-      </Box>
-      <Box>
+      </Grid>
+      <Grid size={3}>
         <Button size="large" fullWidth sx={{ fontSize: { xs: 12, sm: 24 }, height: "100%" }} onClick={() => handleNumberClick("6")}>
           6
         </Button>
-      </Box>
-
-      {/* Botón Enter que ocupa 2 filas */}
-      <Box sx={{ gridRow: "span 2" }}>
+      </Grid>
+      <Grid size={3}>
+        <Button size="large" variant="outlined" fullWidth sx={{ fontSize: { xs: 12, sm: 24 }, height: "100%" }} onClick={() => handleNumberClick(".")}>
+          .
+        </Button>
+      </Grid>
+      <Grid size={3}>
+        <Button size="large" fullWidth sx={{ fontSize: { xs: 12, sm: 24 }, height: "100%" }} onClick={() => handleNumberClick("7")}>
+          7
+        </Button>
+      </Grid>
+      <Grid size={3}>
+        <Button size="large" fullWidth sx={{ fontSize: { xs: 12, sm: 24 }, height: "100%" }} onClick={() => handleNumberClick("8")}>
+          8
+        </Button>
+      </Grid>
+      <Grid size={3}>
+        <Button size="large" fullWidth sx={{ fontSize: { xs: 12, sm: 24 }, height: "100%" }} onClick={() => handleNumberClick("9")}>
+          9
+        </Button>
+      </Grid>
+      <Grid size={3}>
         <Button
           variant="outlined"
+          color="secondary"
           sx={{
             fontSize: { xs: 12, sm: 24 },
             height: "100%",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
           }}
           fullWidth
           onClick={onEnter}
           startIcon={<Icon size={36}>corner-down-left</Icon>}
         />
-      </Box>
-
-      {/* Tercera fila */}
-      <Box>
-        <Button size="large" fullWidth sx={{ fontSize: { xs: 12, sm: 24 }, height: "100%" }} onClick={() => handleNumberClick("7")}>
-          7
-        </Button>
-      </Box>
-      <Box>
-        <Button size="large" fullWidth sx={{ fontSize: { xs: 12, sm: 24 }, height: "100%" }} onClick={() => handleNumberClick("8")}>
-          8
-        </Button>
-      </Box>
-      <Box>
-        <Button size="large" fullWidth sx={{ fontSize: { xs: 12, sm: 24 }, height: "100%" }} onClick={() => handleNumberClick("9")}>
-          9
-        </Button>
-      </Box>
-
-      {/* Cuarta fila */}
-      <Box>
-        <Button size="large" fullWidth sx={{ fontSize: { xs: 12, sm: 24 }, height: "100%" }} variant="outlined" onClick={() => handleNumberClick("000")}>
+      </Grid>
+      <Grid size={3}>
+        <Button size="large" variant="outlined" fullWidth sx={{ fontSize: { xs: 12, sm: 24 }, height: "100%" }} onClick={() => handleNumberClick("000")}>
           000
         </Button>
-      </Box>
-      <Box>
+      </Grid>
+      <Grid size={3}>
         <Button size="large" fullWidth sx={{ fontSize: { xs: 12, sm: 24 }, height: "100%" }} onClick={() => handleNumberClick("0")}>
           0
         </Button>
-      </Box>
-      <Box>
+      </Grid>
+      <Grid size={3}>
         <Button size="large" variant="outlined" fullWidth sx={{ fontSize: { xs: 12, sm: 24 }, height: "100%" }} onClick={() => handleNumberClick(".")}>
           .
         </Button>
-      </Box>
-      <Box>
-        <Button size="large" fullWidth sx={{ fontSize: { xs: 12, sm: 16 }, height: "100%" }} onClick={clear} endIcon={<Icon>trash</Icon>}>
-          Limpiar
-        </Button>
-      </Box>
-    </Box>
+      </Grid>
+      <Grid size={3}>
+        <Button
+          variant="outlined"
+          color="warning"
+          sx={{
+            fontSize: { xs: 12, sm: 24 },
+            height: "100%",
+          }}
+          fullWidth
+          onClick={clear}
+          startIcon={<Icon size={24}>trash</Icon>}
+        />
+      </Grid>
+    </Grid>
   );
 }
 

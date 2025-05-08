@@ -7,14 +7,14 @@ function Total() {
     <Stack direction="row" spacing={1}>
       {pedidos[index].descuento > 0 ? (
         <>
-          <Typography variant="body1">Descuento: {pedidos[index].descuento.toLocaleString("es-PY")}</Typography>
-          <Typography variant="body1">Total: {(pedidos[index].total - pedidos[index].descuento).toLocaleString("es-PY")}</Typography>
-          <Typography variant="body1" sx={{ textDecorationLine: "line-through" }}>
+          <Typography variant="button">Descuento: {pedidos[index].descuento.toLocaleString("es-PY")}</Typography>
+          <Typography variant="button">Total: {(pedidos[index].total - pedidos[index].descuento).toLocaleString("es-PY")}</Typography>
+          <Typography variant="button" sx={{ textDecorationLine: "line-through" }}>
             Total: {pedidos[index].total.toLocaleString("es-PY")}
           </Typography>
         </>
       ) : (
-        <Typography variant="h6">Total: {pedidos[index].total.toLocaleString("es-PY")}</Typography>
+        <Typography variant="button">Total: {pedidos[index].total.toLocaleString("es-PY")}</Typography>
       )}
     </Stack>
   );

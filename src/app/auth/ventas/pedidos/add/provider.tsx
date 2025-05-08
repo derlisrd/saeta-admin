@@ -86,6 +86,9 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
 
   const consultarCodigoInsertar = useCallback(
     async (codigo: string) => {
+      if (codigo === "") {
+        return setError({ code: 123, message: "Ingrese el código del producto", active: true });
+      }
       setLoadingAddProducto(true);
 
       // Verificar primero si el producto ya existe en el pedido actual

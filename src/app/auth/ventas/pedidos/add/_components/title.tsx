@@ -17,7 +17,7 @@ function Title() {
               }}
               color="secondary"
             >
-              <Icon size={24}>arrow-left-dashed</Icon>
+              <Icon size={36}>arrow-left-dashed</Icon>
             </IconButton>
           </Tooltip>
           <Typography variant="body1">Pedido | Total: {pedidos[index].total} Gs</Typography>

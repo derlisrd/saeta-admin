@@ -1,6 +1,7 @@
 import {
   Alert,
   Button,
+  Checkbox,
   Dialog,
   DialogActions,
   DialogContent,
@@ -41,6 +42,10 @@ function FormaPagoModal() {
     setMonto(undefined);
     setError({ code: 0, message: "" });
     setFormaPagoSelected(0);
+  };
+  const close = () => {
+    setError({ code: 0, message: "" });
+    handleModal("formapago");
   };
 
   const agregarFormaPago = () => {
@@ -116,24 +121,20 @@ function FormaPagoModal() {
             )}
           </Grid>
           <Grid size={{ xs: 12, md: 6 }}>
-            <Stack direction="row" spacing={2} alignItems="center">
+            <Stack direction="row" spacing={2} alignItems="center" justifyContent="flex-end">
               <FormLabel>Condición de venta: </FormLabel>
               <FormControlLabel
                 value={0}
-                control={<Radio />}
+                control={<Checkbox icon={<Icon size={22}>circle-dashed</Icon>} checkedIcon={<Icon size={22}>circle-check</Icon>} />}
                 checked={pedidos[index].tipo === 0}
-                onChange={() => {
-                  changePedido("tipo", 0);
-                }}
+                onChange={() => changePedido("tipo", 0)}
                 label="Contado"
               />
               <FormControlLabel
                 value={1}
-                control={<Radio />}
+                control={<Checkbox icon={<Icon size={22}>circle-dashed</Icon>} checkedIcon={<Icon size={22}>circle-check</Icon>} />}
                 checked={pedidos[index].tipo === 1}
-                onChange={() => {
-                  changePedido("tipo", 1);
-                }}
+                onChange={() => changePedido("tipo", 1)}
                 label="Crédito"
               />
             </Stack>
@@ -149,13 +150,14 @@ function FormaPagoModal() {
                   }}
                   variant={formaPagoSelected === e.id ? "contained" : "outlined"}
                   startIcon={<Icon size={24}>cash-banknote</Icon>}
+                  endIcon={<Icon size={24}>{formaPagoSelected === e.id ? "circle-check" : "circle-dashed"}</Icon>}
                 >
                   {e.descripcion}
                 </Button>
               ))}
             </Stack>
           </Grid>
-          <Grid size={{ xs: 12, md: 8, lg: 6 }}>
+          <Grid size={{ xs: 12, sm: 8, md: 7, lg: 6 }}>
             <NumericFormat
               customInput={TextField}
               thousandSeparator="."
@@ -194,7 +196,7 @@ function FormaPagoModal() {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button variant="outlined" startIcon={<Icon>arrow-narrow-left-dashed</Icon>} color="secondary" sx={{ p: 2 }} onClick={() => handleModal("formapago")}>
+        <Button variant="outlined" startIcon={<Icon>arrow-narrow-left-dashed</Icon>} color="secondary" sx={{ p: 2 }} onClick={close}>
           Regresar
         </Button>
         <Button sx={{ p: 2 }} onClick={siguiente} endIcon={<Icon>arrow-narrow-right-dashed</Icon>}>
