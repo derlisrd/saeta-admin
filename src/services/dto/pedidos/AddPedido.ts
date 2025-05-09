@@ -140,6 +140,7 @@ export class AddPedidoResults{
       return new AddPedidoResults({
         id: data.id as number,
         total: data.total as number,
+        tipo: data.tipo,
         importe_final: data.importe_final,
         descuento: data.descuento as number,
         cliente: ClienteResults.fromJSON(data.cliente),

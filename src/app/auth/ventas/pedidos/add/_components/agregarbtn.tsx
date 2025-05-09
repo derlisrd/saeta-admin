@@ -1,5 +1,6 @@
 import { Button } from "@mui/material";
 import useHook from "../_hooks/useHook";
+import Icon from "@/components/ui/icon";
 
 function AgregarButton() {
   const { inputCodigoRef, consultarCodigoInsertar } = useHook();
@@ -13,7 +14,7 @@ function AgregarButton() {
   };
 
   return (
-    <Button variant="outlined" size="large" fullWidth sx={{ padding: 2 }} onClick={handleClick}>
+    <Button variant="outlined" endIcon={<Icon>shopping-cart-plus</Icon>} fullWidth sx={{ padding: 2 }} onClick={handleClick}>
       Agregar item
     </Button>
   );

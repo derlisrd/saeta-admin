@@ -91,15 +91,7 @@ function FormaPagoModal() {
   };
 
   return (
-    <Dialog
-      open={modal.formapago}
-      onClose={() => {
-        handleModal("formapago");
-      }}
-      fullWidth
-      maxWidth="md"
-      fullScreen={isMdDown}
-    >
+    <Dialog open={modal.formapago} onClose={close} fullWidth maxWidth="md" fullScreen={isMdDown}>
       <DialogTitle>
         <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
           <Total />

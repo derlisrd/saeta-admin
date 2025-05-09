@@ -7,16 +7,19 @@ import { NumericFormat } from "react-number-format";
 function DescuentoModal() {
   const { aplicarDescuento, pedidos, index } = useHook();
   const { modal, setModal } = useModal();
-  const [montoDescuento, setMontoDescuento] = useState(0);
+  const [montoDescuento, setMontoDescuento] = useState<number | undefined>(undefined);
   const [error, setError] = useState({ code: 0, message: "" });
 
   const close = () => {
     setError({ code: 0, message: "" });
-    setMontoDescuento(0);
+    setMontoDescuento(undefined);
     setModal({ ...modal, finalizar: true, descuento: false });
   };
 
   const aplicar = () => {
+    if (!montoDescuento) {
+      return null;
+    }
     if (montoDescuento > pedidos[index].total) return setError({ code: 43, message: "El monto no puede ser mayor al total" });
     aplicarDescuento(montoDescuento);
     close();
@@ -44,7 +47,7 @@ function DescuentoModal() {
                   aplicar();
                 }
               }}
-              value={montoDescuento}
+              value={montoDescuento ? montoDescuento : ""}
               fullWidth
               required
               helperText={error.message}
