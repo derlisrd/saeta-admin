@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 import {
   Button,
+  Checkbox,
   FormControl,
   FormControlLabel,
   FormHelperText,
@@ -15,6 +16,7 @@ import {
   Radio,
   RadioGroup,
   Select,
+  Stack,
   TextField,
   Typography,
 } from "@mui/material";
@@ -48,17 +50,29 @@ function Datos() {
             onChange={(e) => changeByName(e.target.name, e.target.value)}
           />
         </Grid>
-        <Grid size={{ xs: 12, md: 2 }}>
+        <Grid size={{ xs: 12, md: 6 }}>
           <Button variant="contained" size="large" onClick={generateCode}>
             GENERAR
           </Button>
         </Grid>
-        <Grid size={{ xs: 12, md: 4 }}>
-          <FormLabel id="tipo">Tipo:</FormLabel>
-          <RadioGroup row name="tipo" onChange={(e) => changeByName(e.target.name, Number(e.target.value))}>
-            <FormControlLabel value="1" checked={form.tipo === 1} control={<Radio />} label="Producto" />
-            <FormControlLabel value="2" checked={form.tipo === 2} control={<Radio />} label="Servicio" />
-          </RadioGroup>
+        <Grid size={{ xs: 12, md: 12 }}>
+          <Stack direction="row" alignItems="center" spacing={2}>
+            <FormLabel id="tipo">Seleccione tipo:</FormLabel>
+            <FormControlLabel
+              value="1"
+              checked={form.tipo === 1}
+              onChange={() => changeByName("tipo", 1)}
+              control={<Checkbox icon={<Icon size={22}>circle-dashed</Icon>} checkedIcon={<Icon size={22}>circle-check</Icon>} />}
+              label="Producto"
+            />
+            <FormControlLabel
+              value="2"
+              checked={form.tipo === 2}
+              onChange={() => changeByName("tipo", 2)}
+              control={<Checkbox icon={<Icon size={22}>circle-dashed</Icon>} checkedIcon={<Icon size={22}>circle-check</Icon>} />}
+              label="Servicio"
+            />
+          </Stack>
         </Grid>
         <Grid size={12}>
           <Typography variant="button">INFORMACION</Typography>

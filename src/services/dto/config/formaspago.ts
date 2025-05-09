@@ -57,25 +57,23 @@ export class FormasPagoResults {
     tipo: "efectivo" | "digital";
     descripcion: string;
     porcentaje_descuento: number;
+    activo: number;
 
-    constructor({ id = 0, tipo = "efectivo", descripcion = "", porcentaje_descuento = 0 }: { 
+    constructor({ id = 0, tipo = "efectivo", descripcion = "", porcentaje_descuento = 0, activo = 0 }: { 
         id?: number; 
         tipo?: "efectivo" | "digital"; 
         descripcion?: string; 
         porcentaje_descuento?: number; 
+        activo: number;
     }) {
         this.id = id;
         this.tipo = tipo;
         this.descripcion = descripcion;
         this.porcentaje_descuento = porcentaje_descuento;
+        this.activo = activo;
     }
 
     static fromJSON(data: any) {
-        return new FormasPagoResults({
-            id: data.id,
-            tipo: data.tipo,
-            descripcion: data.descripcion,
-            porcentaje_descuento: data.porcentaje_descuento
-        });
+        return new FormasPagoResults({...data});
     }
 }

@@ -1,6 +1,6 @@
 import { useAuth } from "@/providers/AuthProvider";
 import API from "@/services/api";
-import { FormasPagoAdd, FormasPagoAddResponse, FormasPagoResponse, FormasPagoResults } from "@/services/dto/config/formaspago";
+import { FormasPagoAdd, FormasPagoAddResponse, FormasPagoResponse } from "@/services/dto/config/formaspago";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 
@@ -22,11 +22,7 @@ function useFormasPago() {
                 
                 // Crear copia de los datos actuales
                 const newData = { ...oldData };
-                
-                // Añadir el nuevo elemento a los resultados si es necesario
-                if (newData.results) {
-                    newData.results = [...newData.results, response.results];
-                }
+                newData.push(response.results)
                 
                 return newData;
             });   
@@ -39,7 +35,7 @@ function useFormasPago() {
     },
    })
     
-    const {data, isLoading} = useQuery({
+    const {data, isLoading, refetch} = useQuery({
         queryKey: ['formasPago'],
         queryFn: ()=> API.formasPago.list(userData && userData.token),
         select: (data) => FormasPagoResponse.fromJSON(data),

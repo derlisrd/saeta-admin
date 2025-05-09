@@ -3,6 +3,7 @@ import Icon from "@/components/ui/icon";
 import useFormasPago from "@/core/hooks/config/useFormasPago";
 import { Box, Breadcrumbs, Button, Container, LinearProgress, Slide, Stack, Typography } from "@mui/material";
 import AddModal from "./_modals/add";
+import ColumnsFormasPago from "./_components/ColumnsFormasPago";
 
 function FormasPago() {
   const { isLoading, modals, setModals, listado } = useFormasPago();
@@ -23,7 +24,7 @@ function FormasPago() {
       ) : (
         <Slide direction="down" in mountOnEnter unmountOnExit>
           <Box>
-            <GenericTable data={listado} columns={[]} rowHeight={40} headerHeight={36} />
+            <GenericTable data={listado} columns={ColumnsFormasPago({ width: window.innerWidth })} rowHeight={40} headerHeight={36} />
           </Box>
         </Slide>
       )}

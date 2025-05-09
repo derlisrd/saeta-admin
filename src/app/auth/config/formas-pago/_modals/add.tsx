@@ -1,8 +1,8 @@
 import Icon from "@/components/ui/icon";
-import { Button, Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, FormControlLabel, FormLabel, Grid2 as Grid, Stack, TextField } from "@mui/material";
-import { NumericFormat } from "react-number-format";
+import { Button, Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, FormControlLabel, FormLabel, Grid2 as Grid, LinearProgress, Stack, TextField } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
 import { FormasPagoAdd } from "@/services/dto/config/formaspago";
+import useFormasPago from "@/core/hooks/config/useFormasPago";
 
 interface AddModalProps {
   open: boolean;
@@ -10,6 +10,8 @@ interface AddModalProps {
 }
 
 function AddModal(props: AddModalProps) {
+  const { isPending, insertar } = useFormasPago();
+
   const {
     control,
     handleSubmit,
@@ -23,14 +25,18 @@ function AddModal(props: AddModalProps) {
     mode: "onBlur", // Validar al perder el foco
   });
 
-  const onSubmit = (data: FormasPagoAdd) => console.log(data);
+  const onSubmit = (data: FormasPagoAdd) => insertar(data);
 
   return (
     <Dialog open={props.open} onClose={props.onClose}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <DialogTitle>Agregar forma de pago</DialogTitle>
         <DialogContent>
-          <Grid container spacing={2} mt={2}>
+          <Grid container spacing={2}>
+            <Grid size={12}>
+              {isPending && <LinearProgress />}
+              {}
+            </Grid>
             <Grid size={12}>
               <Controller
                 control={control}
@@ -49,32 +55,33 @@ function AddModal(props: AddModalProps) {
                 <Controller
                   name="tipo"
                   control={control}
-                  defaultValue="efectivo" // Establece el valor por defecto
                   render={({ field }) => (
-                    <>
+                    <Stack direction="row" spacing={2}>
                       <FormControlLabel
-                        value="efectivo"
                         control={
                           <Checkbox
-                            {...field} // Vincula el campo con el input
+                            disabled={isPending}
                             icon={<Icon size={22}>circle-dashed</Icon>}
                             checkedIcon={<Icon size={22}>circle-check</Icon>}
+                            checked={field.value === "efectivo"}
+                            onChange={() => field.onChange("efectivo")}
                           />
                         }
                         label="Efectivo"
                       />
                       <FormControlLabel
-                        value="digital"
                         control={
                           <Checkbox
-                            {...field} // Vincula el campo con el input
+                            disabled={isPending}
                             icon={<Icon size={22}>circle-dashed</Icon>}
                             checkedIcon={<Icon size={22}>circle-check</Icon>}
+                            checked={field.value === "digital"}
+                            onChange={() => field.onChange("digital")}
                           />
                         }
                         label="Banco o digital"
                       />
-                    </>
+                    </Stack>
                   )}
                 />
               </Stack>
@@ -83,7 +90,6 @@ function AddModal(props: AddModalProps) {
               <Controller
                 name="porcentaje_descuento"
                 control={control}
-                defaultValue={0}
                 rules={{
                   min: {
                     value: 0,
@@ -95,18 +101,14 @@ function AddModal(props: AddModalProps) {
                   },
                 }}
                 render={({ field }) => (
-                  <NumericFormat
-                    {...field} // Vincula el campo con el input
-                    customInput={TextField}
-                    thousandSeparator="."
-                    decimalSeparator=","
+                  <TextField
+                    {...field}
+                    type="number"
                     label="Porcentaje de descuento"
                     placeholder="Descuento"
                     fullWidth
-                    onValueChange={(values) => {
-                      field.onChange(values.floatValue); // Actualiza el valor en react-hook-form
-                    }}
-                    value={field.value} // Usa el valor controlado por react-hook-form
+                    error={!!errors.porcentaje_descuento}
+                    helperText={errors.porcentaje_descuento?.message}
                   />
                 )}
               />
@@ -117,8 +119,8 @@ function AddModal(props: AddModalProps) {
           <Button variant="outlined" onClick={props.onClose} startIcon={<Icon>arrow-narrow-left-dashed</Icon>}>
             Regresar
           </Button>
-          <Button type="submit" variant="contained" startIcon={<Icon>device-floppy</Icon>}>
-            Guardar
+          <Button type="submit" variant="contained" disabled={isPending} startIcon={<Icon>device-floppy</Icon>}>
+            {isPending ? "Guardando..." : "Guardar"}
           </Button>
         </DialogActions>
       </form>

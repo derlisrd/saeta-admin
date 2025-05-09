@@ -131,10 +131,11 @@ function FormaPagoModal() {
             </Stack>
           </Grid>
           <Grid size={12}>
-            <Stack direction="row">
+            <Stack direction="row" spacing={2}>
               {formasPago.map((e, i) => (
                 <Button
                   key={i}
+                  size="small"
                   onClick={() => {
                     setFormaPagoSelected(e.id);
                     setError({ code: 0, message: "" });
