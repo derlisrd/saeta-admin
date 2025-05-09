@@ -3,7 +3,7 @@ import { apiServiceClientes } from "./clientes/clientes";
 import { apiServiceConfig } from "./empresa/config";
 import { apiServiceSucursales } from "./empresa/sucursales";
 import { apiServiceEstadisticas } from "./estadisticas/estadisticas";
-import { apiServiceFormasPago } from "./factura/formaspago";
+import { apiServiceFormasPago } from "./config/formaspago";
 import { apiServiceImpuestos } from "./factura/impuesto";
 import { apiServiceMonedas } from "./factura/monedas";
 import { apiServicePedidos } from "./pedidos/pedidos";

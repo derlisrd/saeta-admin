@@ -140,7 +140,7 @@ function FormaPagoModal() {
                     setError({ code: 0, message: "" });
                   }}
                   variant={formaPagoSelected === e.id ? "contained" : "outlined"}
-                  startIcon={<Icon size={24}>cash-banknote</Icon>}
+                  startIcon={<Icon size={24}>{e.tipo === "efectivo" ? "cash" : "credit-card-pay"}</Icon>}
                   endIcon={<Icon size={24}>{formaPagoSelected === e.id ? "circle-check" : "circle-dashed"}</Icon>}
                 >
                   {e.descripcion}

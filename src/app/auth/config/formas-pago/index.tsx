@@ -1,36 +1,21 @@
 import GenericTable from "@/components/table/GenericTable";
 import Icon from "@/components/ui/icon";
 import useFormasPago from "@/core/hooks/config/useFormasPago";
-import { Box, Button, Container, InputAdornment, LinearProgress, Slide, Stack, TextField } from "@mui/material";
-import { useState } from "react";
+import { Box, Breadcrumbs, Button, Container, LinearProgress, Slide, Stack, Typography } from "@mui/material";
+import AddModal from "./_modals/add";
 
 function FormasPago() {
-  const [search, setSearch] = useState("");
-
-  const { isLoading } = useFormasPago();
+  const { isLoading, modals, setModals, listado } = useFormasPago();
 
   return (
     <Container>
+      <Breadcrumbs separator="›">
+        <Typography variant="overline">Configuración</Typography>
+        <Typography variant="overline">Formas de pago</Typography>
+      </Breadcrumbs>
       <Stack spacing={2} my={2} direction="row" alignItems="center">
-        <TextField
-          label="Buscar"
-          placeholder="Nombre o documento"
-          slotProps={{
-            input: {
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Icon>search</Icon>
-                </InputAdornment>
-              ),
-            },
-          }}
-          onChange={({ target }) => setSearch(target.value)}
-        />
-        <Button startIcon={<Icon>cards</Icon>} onClick={() => {}}>
+        <Button startIcon={<Icon>cards</Icon>} onClick={() => setModals({ ...modals, add: true })}>
           Agregar
-        </Button>
-        <Button onClick={() => {}} startIcon={<Icon>refresh</Icon>}>
-          Refrescar
         </Button>
       </Stack>
       {isLoading ? (
@@ -38,10 +23,11 @@ function FormasPago() {
       ) : (
         <Slide direction="down" in mountOnEnter unmountOnExit>
           <Box>
-            <GenericTable data={[]} columns={[]} rowHeight={40} headerHeight={36} />
+            <GenericTable data={listado} columns={[]} rowHeight={40} headerHeight={36} />
           </Box>
         </Slide>
       )}
+      <AddModal onClose={() => setModals({ ...modals, add: false })} open={modals.add} />
     </Container>
   );
 }

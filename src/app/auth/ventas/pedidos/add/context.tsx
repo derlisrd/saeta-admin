@@ -1,4 +1,4 @@
-import { FormasPagoResults } from "@/services/dto/factura/formaspago";
+import { FormasPagoResults } from "@/services/dto/config/formaspago";
 import { AddPedido, AddPedidoResponse } from "@/services/dto/pedidos/AddPedido";
 import { createContext, Dispatch, RefObject, SetStateAction } from "react";
 import { MonedaResults } from "@/services/dto/factura/moneda";

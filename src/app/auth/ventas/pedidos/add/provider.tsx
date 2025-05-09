@@ -5,7 +5,7 @@ import API from "@/services/api";
 import { useAuth } from "@/providers/AuthProvider";
 import { PedidoStoreType } from "./_types/pedidoStore";
 import useStore from "@/hooks/useStore";
-import { FormasPagoResults } from "@/services/dto/factura/formaspago";
+import { FormasPagoResults } from "@/services/dto/config/formaspago";
 import { MonedaResults } from "@/services/dto/factura/moneda";
 import { DepositoResults } from "@/services/dto/productos/deposito";
 import { ConfiguracionType } from "./_types/configuracion";

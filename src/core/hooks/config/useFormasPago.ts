@@ -1,20 +1,55 @@
 import { useAuth } from "@/providers/AuthProvider";
-import { BASE } from "@/services/api/base";
-import { useQuery } from "@tanstack/react-query";
+import API from "@/services/api";
+import { FormasPagoAdd, FormasPagoAddResponse, FormasPagoResponse, FormasPagoResults } from "@/services/dto/config/formaspago";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 
 function useFormasPago() {
     const {userData} = useAuth()
+    const queryClient = useQueryClient();
+   const [modals,setModals] = useState({add: false})
+
+   const {isPending, mutateAsync} = useMutation({
+    mutationKey: ['formasPagoAdd'],
+    mutationFn: async(form : FormasPagoAdd)=>{
+        return await API.formasPago.add(userData && userData.token, form)
+    },
+    onSuccess: async (response: FormasPagoAddResponse) => {
+        if (response.success && response.results) {
+            await queryClient.invalidateQueries({ queryKey: ['formasPago'] });
+            queryClient.setQueryData(['formasPago'], (oldData: any) => {
+                if (!oldData) return oldData;
+                
+                // Crear copia de los datos actuales
+                const newData = { ...oldData };
+                
+                // Añadir el nuevo elemento a los resultados si es necesario
+                if (newData.results) {
+                    newData.results = [...newData.results, response.results];
+                }
+                
+                return newData;
+            });   
+            // Cerrar el modal después de añadir exitosamente
+            setModals(prev => ({ ...prev, add: false }));
+        }
+    },
+    onSettled: () => {
+        
+    },
+   })
     
     const {data, isLoading} = useQuery({
         queryKey: ['formasPago'],
-        queryFn: ()=> fetch(BASE +'/formas-pago',{ method: 'GET', headers : { 'Authorization': userData ? userData.token : ''}}),
-        
+        queryFn: ()=> API.formasPago.list(userData && userData.token),
+        select: (data) => FormasPagoResponse.fromJSON(data),
     })
+
+
     
-    console.log(data);
     
     
-    return {data, isLoading}
+    return {listado : data ? data.results : [], isLoading, modals, setModals, insertar : (form : FormasPagoAdd)=> mutateAsync(form) , isPending}
 }
 
 export default useFormasPago;

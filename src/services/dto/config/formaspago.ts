@@ -1,3 +1,34 @@
+export class FormasPagoAdd{
+    tipo: "efectivo" | "digital";
+    descripcion: string;
+    porcentaje_descuento: number;
+
+    constructor({ tipo = 'efectivo', descripcion ='', porcentaje_descuento = 0 }: {
+        tipo: "efectivo" | "digital";
+        descripcion: string;
+        porcentaje_descuento: number;
+    }){
+        this.tipo = tipo;
+        this.descripcion = descripcion;
+        this.porcentaje_descuento = porcentaje_descuento;
+    }
+}
+
+export class FormasPagoAddResponse {
+    success: boolean;
+    status: number;
+    results: FormasPagoResults | null;
+    message: string;
+    constructor({ success = false , status = 0, results = null, message = '' }) {
+        this.success = success;
+        this.status = status;
+        this.results = results;
+        this.message = message;
+    }
+}
+
+
+
 export class FormasPagoResponse {
     success: boolean;
     status: number;
@@ -19,7 +50,6 @@ export class FormasPagoResponse {
             message: data.message
         });
     }
-
 }
 
 export class FormasPagoResults {
