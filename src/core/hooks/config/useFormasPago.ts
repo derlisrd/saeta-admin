@@ -35,7 +35,7 @@ function useFormasPago() {
     },
    })
     
-    const {data, isLoading, refetch} = useQuery({
+    const {data, isLoading} = useQuery({
         queryKey: ['formasPago'],
         queryFn: ()=> API.formasPago.list(userData && userData.token),
         select: (data) => FormasPagoResponse.fromJSON(data),

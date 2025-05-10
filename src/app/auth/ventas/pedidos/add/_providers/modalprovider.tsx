@@ -13,6 +13,7 @@ function ModalProvider({ children }: { children: ReactNode }) {
     success: false,
     descuento: false,
     formapago: false,
+    masvendidos: false,
   };
   const [modal, setModal] = useState<modalType>(initialModal);
   const handleModal = (name: keyof modalType) => {

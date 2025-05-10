@@ -68,7 +68,8 @@ function useAddProducto() {
   const addStock = () => {
     const { deposito_id, cantidad } = stockState;
     
-    if (deposito_id === 0 || cantidad === 0) {
+    
+    if (deposito_id === 0 || cantidad === 0 || !cantidad) {
       setError({ code: 9, message: "Seleccione un depósito y una cantidad" });
       return;
     }
@@ -76,9 +77,7 @@ function useAddProducto() {
 
     const existingStock = form.stock.find((item) => item.deposito_id === deposito_id);
     const updatedStock = existingStock
-      ? form.stock.map((item) => (item.deposito_id === deposito_id ? new AddStock({ ...item, cantidad: item.cantidad + cantidad }) : item))
-      : [...form.stock, new AddStock({ deposito_id, cantidad, deposito: depositoFind?.nombre })];
-    setForm(new AddProducto({ ...form, stock: updatedStock }));
+      ? form.stock.map((item) => (item.deposito_id === deposito_id ? new AddStock({ ...item, cantidad: (item.cantidad || 0) + (cantidad) }) : item))      : [...form.stock, new AddStock({ deposito_id, cantidad: cantidad || 0, deposito: depositoFind?.nombre })];    setForm(new AddProducto({ ...form, stock: updatedStock }));
 
     setStockState(new AddStock({ deposito_id, cantidad: 0, deposito: depositoFind?.nombre }));
   };
