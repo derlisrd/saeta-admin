@@ -28,7 +28,7 @@ const AccionesCell = ({ rowData, onSelectProducto }: AccionesCellProps) => {
         </IconButton>
       </Tooltip>
       <Tooltip title="Codigo de barra" placement="right" arrow>
-        <IconButton onClick={() => nav(`/productos/codigo-barra?codigo=${rowData.id}&precio=${rowData.precio_normal}`)}>
+        <IconButton onClick={() => nav(`/productos/codigo-barra?codigo=${rowData.codigo}&precio=${rowData.precio_normal}`)}>
           <Icon>barcode</Icon>
         </IconButton>
       </Tooltip>
@@ -37,7 +37,7 @@ const AccionesCell = ({ rowData, onSelectProducto }: AccionesCellProps) => {
 };
 
 export const productosColumnConfig = (width: number, onSelectProducto?: (producto: ProductoResults) => void): ColumnConfigType[] => [
-  { dataKey: "id", label: "Código", width: width * 0.1 },
+  { dataKey: "codigo", label: "Código", width: width * 0.1 },
   { dataKey: "nombre", label: "Nombre", width: width * 0.2 },
   {
     dataKey: "costo",
