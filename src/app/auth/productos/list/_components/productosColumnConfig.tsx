@@ -32,6 +32,11 @@ const AccionesCell = ({ rowData, onSelectProducto }: AccionesCellProps) => {
           <Icon>barcode</Icon>
         </IconButton>
       </Tooltip>
+      <Tooltip title="Editar" placement="right" arrow>
+        <IconButton onClick={() => nav(`/productos/edit/${rowData.id}`, { state: rowData })}>
+          <Icon>edit</Icon>
+        </IconButton>
+      </Tooltip>
     </Stack>
   );
 };

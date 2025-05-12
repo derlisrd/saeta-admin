@@ -39,6 +39,24 @@ export const apiServiceProductos = {
       return false;
     }
   },
+  find: async(token: string | null, id: number) =>{
+    try {
+      const { data, status } = await BASE.get(`/productos/find/${id}`, { headers: { Authorization: token } });
+      return ({
+        success: data.success,
+        status,
+        results: data.results,
+        message: ""
+      });
+    } catch (e) {
+      return ({
+        success: false,
+        status: 500,
+        results: null,
+        message: "Error al obtener productos"
+      });
+    }
+  },
   list: async (token: string | null): Promise<ProductoResponse> => {
     try {
       const { data, status } = await BASE.get("/productos", { headers: { Authorization: token } });

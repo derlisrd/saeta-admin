@@ -32,6 +32,7 @@ export class ProductoResults{
     category_id: number;
     codigo: string;
     nombre: string;
+    descripcion: string;
     costo: number;
     precio_normal: number;
     precio_minimo: number;
@@ -46,12 +47,13 @@ export class ProductoResults{
       category_id = 0,
       codigo = "",
       nombre = "",
+      descripcion = '',
       costo = 0,
       precio_normal = 0,
       precio_minimo = 0,
       disponible = 1,
       tipo = 1,
-      cantidad_minima = 0
+      cantidad_minima = 0,
     }: Partial<ProductoResults>) {
       this.id = id;
       this.impuesto_id = impuesto_id;
@@ -65,6 +67,7 @@ export class ProductoResults{
       this.disponible = disponible;
       this.tipo = tipo;
       this.cantidad_minima = cantidad_minima;
+      this.descripcion = descripcion;
     }
   
   

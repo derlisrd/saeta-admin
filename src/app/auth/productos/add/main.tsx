@@ -1,11 +1,11 @@
 import { Box, Container, LinearProgress, Paper, Slide } from "@mui/material";
 import TabsCustom from "./_components/tabscustom";
-import TabContainer from "./_components/tabcontainer";
 import Datos from "./containers/datos";
 import Imagenes from "./containers/imagenes";
 import useAddProducto from "./_hook/useAddProducto";
 import NotificacionSnack from "@/components/common/NotificacionSnack";
 import LargeButtonStyled from "@/components/ui/LargeButton";
+import TabContainer from "@/components/containers/tabcontainer";
 
 function AddProductoMain() {
   const { clearSuccess, success, loading, tabValue, sendForm } = useAddProducto();
