@@ -1,7 +1,7 @@
 import { useAuth } from "@/providers/AuthProvider";
 import API from "@/services/api";
 import { Impresora } from "@/services/dto/config/impresora";
-import { useMutation, useQuery,useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery,useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 
 function useImpresoras() {
     
@@ -10,7 +10,7 @@ function useImpresoras() {
 
 
 
-    const {data, isLoading} = useQuery({
+    const {data, isLoading} = useSuspenseQuery({
         queryKey: ['impresoras'],
         queryFn: async() => {
             const res = await API.config.impresoras(userData && userData.token);
@@ -19,7 +19,6 @@ function useImpresoras() {
             }
             return []
         },
-        enabled: Boolean(userData && userData?.token), 
         staleTime: 1000 * 60 * 5
     });
 

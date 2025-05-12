@@ -35,7 +35,7 @@ function FormaPagoModal() {
   const [formaPagoSelected, setFormaPagoSelected] = useState<number>(0);
   const [monto, setMonto] = useState<number | undefined>(undefined);
   const [inputValue, setInputValue] = useState("");
-  console.log({ monto, formasDePago: pedidos[index].formas_pagos });
+
   const clear = () => {
     setInputValue("");
     setMonto(undefined);
