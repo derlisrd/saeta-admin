@@ -35,7 +35,7 @@ function FormaPagoModal() {
   const [formaPagoSelected, setFormaPagoSelected] = useState<number>(0);
   const [monto, setMonto] = useState<number | undefined>(undefined);
   const [inputValue, setInputValue] = useState("");
-
+  console.log({ monto, formasDePago: pedidos[index].formas_pagos });
   const clear = () => {
     setInputValue("");
     setMonto(undefined);
@@ -48,7 +48,10 @@ function FormaPagoModal() {
   };
 
   const agregarFormaPago = () => {
-    if (monto === undefined) return setError({ code: 2, message: "Ingrese monto a abonar" });
+    if (monto === undefined || monto === 0) {
+      setError({ code: 2, message: "Ingrese monto a abonar" });
+      return;
+    }
     handleFormasPago(monto, formaPagoSelected, "add");
     clear();
   };
@@ -63,6 +66,7 @@ function FormaPagoModal() {
     // Convertir el valor a número y actualizar el estado monto
     setMonto(parseFloat(newValue.replace(/\./g, "")) || 0); // Asegurar que sea 0 si la conversión falla
   };
+
   const handleBackspace = () => {
     if (inputValue.length > 0) {
       // Eliminar el último carácter del inputValue
@@ -74,7 +78,7 @@ function FormaPagoModal() {
         setMonto(undefined); // Resetear a undefined si no hay input
       } else {
         const numericValue = newValue.replace(/\./g, "");
-        setMonto(parseFloat(numericValue) || 0);
+        setMonto(parseFloat(numericValue) || undefined);
       }
     } else {
       setMonto(undefined); // Asegurar que sea undefined si se retrocede desde un input vacío
@@ -87,6 +91,8 @@ function FormaPagoModal() {
     if (validateError.code > 0) {
       return setError(validateError);
     }
+    setFormaPagoSelected(0);
+    setMonto(undefined);
     setModal({ ...modal, formapago: false, finalizar: true });
   };
 

@@ -13,7 +13,7 @@ function EditProducto() {
   const { isLoading, data: productoDesdeQuery } = useEditProductoQuery(id, !productoDesdeState && !!id);
 
   const producto: ProductoResults | undefined = productoDesdeState || productoDesdeQuery;
-
+  console.log(producto);
   return (
     <Container>
       <Box sx={{ position: "fixed", bottom: 32, right: 32, zIndex: 100 }}>

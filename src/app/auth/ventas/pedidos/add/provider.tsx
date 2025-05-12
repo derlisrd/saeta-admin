@@ -256,18 +256,18 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
   }, [set]);
 
   const handleFormasPago = useCallback(
-    (monto: number, id: number, type: "add" | "remove") => {
+    (nuevomonto: number, id: number, type: "add" | "remove") => {
       if (type === "add") {
         const formaPago = formasPago.find((formaPago) => formaPago.id === id);
         if (!formaPago) return;
         const copiaPedidos = [...pedidos];
         const findIndexPago = copiaPedidos[index].formas_pagos.findIndex((e) => e.id === id);
         if (findIndexPago !== -1) {
-          copiaPedidos[index].formas_pagos[findIndexPago].monto += monto;
+          copiaPedidos[index].formas_pagos[findIndexPago].monto += nuevomonto;
         } else {
           copiaPedidos[index].formas_pagos.push({
             id: id,
-            monto: monto,
+            monto: nuevomonto,
             abreviatura: formaPago.descripcion,
           });
         }
@@ -284,7 +284,7 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
         }
       }
     },
-    [formasPago]
+    [formasPago, pedidos]
   );
 
   /* const getAllDatas = useCallback(async () => {
