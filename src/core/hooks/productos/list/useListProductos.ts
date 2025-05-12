@@ -1,7 +1,7 @@
 import { useAuth } from "@/providers/AuthProvider";
 import API from "@/services/api";
 import { ProductoResults } from "@/services/dto/productos/producto";
-import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
+import {  useSuspenseQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
 

@@ -1,7 +1,7 @@
 import { useAuth } from "@/providers/AuthProvider";
 import API from "@/services/api";
 import { Impresora } from "@/services/dto/config/impresora";
-import { useMutation, useQuery,useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
+import { useMutation,useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 
 function useImpresoras() {
     

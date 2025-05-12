@@ -1,7 +1,7 @@
 import { useAuth } from "@/providers/AuthProvider"
 import API from "@/services/api"
 import { PedidosDelDiaResults } from "@/services/dto/pedidos/pedidosDelDia"
-import { useQuery, useSuspenseQuery } from "@tanstack/react-query"
+import {  useSuspenseQuery } from "@tanstack/react-query"
 import { useState, useCallback } from "react"
 
 function useListaPedidos() {
