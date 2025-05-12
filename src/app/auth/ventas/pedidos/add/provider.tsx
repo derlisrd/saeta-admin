@@ -5,10 +5,8 @@ import API from "@/services/api";
 import { useAuth } from "@/providers/AuthProvider";
 import { PedidoStoreType } from "./_types/pedidoStore";
 import useStore from "@/hooks/useStore";
-import { FormasPagoResults } from "@/services/dto/config/formaspago";
-import { MonedaResults } from "@/services/dto/factura/moneda";
-import { DepositoResults } from "@/services/dto/productos/deposito";
 import { ConfiguracionType } from "./_types/configuracion";
+import { useSuspenseQueries } from "@tanstack/react-query";
 
 function AddPedidoProvider({ children }: { children: ReactNode }) {
   const { userData } = useAuth();
@@ -19,11 +17,43 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
 
   const [result, setResult] = useState<AddPedidoResponse | null>(null);
 
-  const [formasPago, setFormasPago] = useState<FormasPagoResults[]>([]);
-  const [monedas, setMonedas] = useState<MonedaResults[]>([]);
-  const [depositos, setDepositos] = useState<DepositoResults[]>([]);
+  // Utilizar React Query para las peticiones en paralelo
+  const [{ data: formasPago }, { data: monedas }, { data: depositos }] = useSuspenseQueries({
+    queries: [
+      {
+        queryKey: ["formasPago"],
+        queryFn: async () => {
+          const res = await API.formasPago.list(userData && userData.token);
+          if (res.success && res.results) {
+            return res.results;
+          }
+          return [];
+        },
+      },
+      {
+        queryKey: ["monedas"],
+        queryFn: async () => {
+          const res = await API.monedas.list(userData && userData.token);
+          if (res.success && res.results) {
+            return res.results;
+          }
+          return [];
+        },
+      },
+      {
+        queryKey: ["depositos"],
+        queryFn: async () => {
+          const res = await API.depositos.list(userData && userData.token);
+          if (res.success && res.results) {
+            return res.results;
+          }
+          return [];
+        },
+      },
+    ],
+  });
+
   const [selectedDeposito, setSelectedDeposito] = useState(1);
-  const [loading, setLoading] = useState(false);
   const [cantidad, setCantidad] = useState(1);
   const [loadingAddProducto, setLoadingAddProducto] = useState(false);
   const initialPedido: AddPedido = new AddPedido({
@@ -225,28 +255,6 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
     inputCodigoRef.current?.focus();
   }, [set]);
 
-  const getAllDatas = useCallback(async () => {
-    try {
-      setLoading(true);
-      const [formasPagoRes, monedasRes, depositosRes] = await Promise.all([
-        API.formasPago.list(userData && userData?.token),
-        API.monedas.list(userData && userData?.token),
-        API.depositos.list(userData && userData?.token),
-      ]);
-      if (formasPagoRes.success && formasPagoRes.results) {
-        setFormasPago(formasPagoRes.results);
-      }
-      if (monedasRes.success && monedasRes.results) {
-        setMonedas(monedasRes.results);
-      }
-      if (depositosRes.success && depositosRes.results) {
-        setDepositos(depositosRes.results);
-      }
-    } finally {
-      setLoading(false);
-    }
-  }, [userData?.token]);
-
   const handleFormasPago = useCallback(
     (monto: number, id: number, type: "add" | "remove") => {
       if (type === "add") {
@@ -279,9 +287,27 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
     [formasPago]
   );
 
-  useEffect(() => {
-    getAllDatas();
-  }, [getAllDatas]);
+  /* const getAllDatas = useCallback(async () => {
+    try {
+      setLoading(true);
+      const [formasPagoRes, monedasRes, depositosRes] = await Promise.all([
+        API.formasPago.list(userData && userData?.token),
+        API.monedas.list(userData && userData?.token),
+        API.depositos.list(userData && userData?.token),
+      ]);
+      if (formasPagoRes.success && formasPagoRes.results) {
+        setFormasPago(formasPagoRes.results);
+      }
+      if (monedasRes.success && monedasRes.results) {
+        setMonedas(monedasRes.results);
+      }
+      if (depositosRes.success && depositosRes.results) {
+        setDepositos(depositosRes.results);
+      }
+    } finally {
+      setLoading(false);
+    }
+  }, [userData?.token]); */
 
   useEffect(() => {
     if (store) {
@@ -307,7 +333,6 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
       esperar,
       cancelar,
       formasPago,
-      loading,
       changePedido,
       setCliente,
       result,
@@ -335,7 +360,6 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
       esperar,
       cancelar,
       formasPago,
-      loading,
       changePedido,
       setCliente,
       result,

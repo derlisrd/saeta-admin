@@ -1,7 +1,7 @@
 import { useAuth } from "@/providers/AuthProvider"
 import API from "@/services/api"
 import { PedidosDelDiaResults } from "@/services/dto/pedidos/pedidosDelDia"
-import { useQuery } from "@tanstack/react-query"
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query"
 import { useState, useCallback } from "react"
 
 function useListaPedidos() {
@@ -17,7 +17,7 @@ function useListaPedidos() {
         refetch,
         isFetching,
         data
-    } = useQuery({
+    } = useSuspenseQuery({
         queryKey: ['listaPedidos'], // Incluir desde y hasta en la queryKey para que se actualice automáticamente
         queryFn: async () => {
             if (!userData || !userData.token) {
@@ -35,7 +35,7 @@ function useListaPedidos() {
                 return []
             }
         },
-        enabled: Boolean(userData && userData?.token),
+        //enabled: Boolean(userData && userData?.token),
         staleTime: 1000 * 60 * 5 // 5 minutos
     })
 

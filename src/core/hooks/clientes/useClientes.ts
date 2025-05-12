@@ -2,7 +2,7 @@ import { useAuth } from "@/providers/AuthProvider";
 import API from "@/services/api";
 
 
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
 
 
@@ -12,7 +12,7 @@ function useClientes() {
 
 
 
-    const { isLoading, data } = useQuery({
+    const { isLoading, data } = useSuspenseQuery({
         queryKey:['listaClientes'],
         queryFn: async() =>{
             const res = await API.clientes.list(userData && userData.token)

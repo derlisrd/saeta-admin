@@ -7,7 +7,6 @@ import { DepositoResults } from "@/services/dto/productos/deposito";
 import { ConfiguracionType } from "./_types/configuracion";
 
 interface AddPedidoContextProps {
-  loading: boolean;
   changePedido: <K extends keyof AddPedido>(name: K, value: AddPedido[K]) => void;
   formasPago: FormasPagoResults[];
   monedas: MonedaResults[];

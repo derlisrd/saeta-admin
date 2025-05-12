@@ -1,7 +1,7 @@
 import { useAuth } from "@/providers/AuthProvider";
 import API from "@/services/api";
 import { ProductoResults } from "@/services/dto/productos/producto";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
 
@@ -10,18 +10,16 @@ function useListProductos() {
   const [selectDeposito, setSelectDeposito] = useState<number>(0);
   const [selectedProducto, setSelectedProducto] = useState<ProductoResults | null>(null);
   // Fetch productos
-  const { data: productosData, isLoading: productosLoading, error: productosError, refetch } = useQuery({
+  const { data: productosData, isLoading: productosLoading, error: productosError, refetch } = useSuspenseQuery({
     queryKey: ["productos", userData?.token],
     queryFn: () => API.productos.list(userData && userData?.token),
-    enabled: !!userData?.token,
     staleTime: 1000 * 60 * 5, // Cache por 5 minutos
   });
 
   // Fetch depósitos
-  const { data: depositosData, isLoading: depositosLoading, error: depositosError } = useQuery({
+  const { data: depositosData, isLoading: depositosLoading, error: depositosError } = useSuspenseQuery({
     queryKey: ["depositos", userData?.token],
     queryFn: () => API.depositos.list(userData && userData?.token),
-    enabled: !!userData?.token,
     staleTime: 1000 * 60 * 5, // Cache por 5 minutos
   });
 
@@ -38,5 +36,4 @@ function useListProductos() {
   };
   
 }
-
 export default useListProductos;
