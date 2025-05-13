@@ -1,7 +1,8 @@
 import Icon from "@/components/ui/icon";
 import useLogin from "@/core/hooks/login/useLogin";
 import { useAuth } from "@/providers/AuthProvider";
-import { TextField, Stack, Button, Typography, Container, InputAdornment, CircularProgress, Alert, IconButton } from "@mui/material";
+import { TextField, Stack, Button, Typography, Container, InputAdornment, CircularProgress, Alert, IconButton, Link as Enlace, Box } from "@mui/material";
+import { Link } from "react-router-dom";
 
 function Login() {
   const { username, setUsername, password, setPassword, handleLogin, isLoading, error, hide, toggleHide } = useLogin();
@@ -70,9 +71,15 @@ function Login() {
                 id="password_user"
                 value={password}
               />
+
               <Button variant="contained" type="submit" size="large">
                 Ingresar
               </Button>
+              <Box sx={{ width: '100%', textAlign: 'right' }}>
+                <Enlace component={Link} to="/recuperar" color="primary">
+                  Recuperar mi contraseña
+                </Enlace>
+              </Box>
             </Stack>
           </Stack>
         </form>
@@ -80,5 +87,4 @@ function Login() {
     </Container>
   );
 }
-
 export default Login;

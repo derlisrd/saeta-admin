@@ -14,6 +14,7 @@ function AddUsuario() {
     control,
     handleSubmit,
     formState: { errors },
+    reset
   } = useForm<UserCreateForm>({
     defaultValues: {
       name: "",
@@ -26,7 +27,19 @@ function AddUsuario() {
     mode: "onBlur", // Validar al perder el foco
   });
   const nav = useNavigate();
-  const onSubmit = (data: UserCreateForm) => insertar(data);
+  const onSubmit = async (data: UserCreateForm) => {
+    const success = await insertar(data); // Asume que insertar ahora retorna una promesa que resuelve con un booleano
+    if (success) {
+      reset({ // Llama a la función reset para limpiar el formulario
+        name: "",
+        username: "",
+        email: "",
+        password: "",
+        sucursal_id: 0,
+        empresa_id: 0,
+      });
+    }
+  }
 
   return (
     <Container>

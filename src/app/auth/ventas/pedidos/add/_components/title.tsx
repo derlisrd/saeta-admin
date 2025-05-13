@@ -15,7 +15,7 @@ function Title() {
               onClick={() => {
                 handleModal("main");
               }}
-              color="secondary"
+              color="primary"
             >
               <Icon size={36}>arrow-left-dashed</Icon>
             </IconButton>
