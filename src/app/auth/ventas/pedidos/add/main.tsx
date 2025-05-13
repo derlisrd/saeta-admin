@@ -23,7 +23,7 @@ function Main() {
       <DialogContent>
         <Container maxWidth="lg">
           <Grid container spacing={{ xs: 1, sm: 1 }}>
-            <Grid size={{ xs: 12, sm: 12, md: 8, lg: 9 }}>
+            <Grid size={{ xs: 0, sm: 12, md: 8, lg: 9 }}>
               <Items />
             </Grid>
             <Grid size={{ xs: 12, sm: 12, md: 4, lg: 3 }}>

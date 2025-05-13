@@ -7,6 +7,7 @@ import {
   FormHelperText,
   FormLabel,
   Grid2 as Grid,
+  InputAdornment,
   InputLabel,
   List,
   ListItemButton,
@@ -30,11 +31,20 @@ function Datos() {
       <Grid container spacing={{ xs: 2 }} alignItems="center">
         <Grid size={{ xs: 12, md: 6 }}>
           <TextField
+            slotProps={{
+              input: {
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Icon>barcode</Icon>
+                  </InputAdornment>
+                )
+              }
+            }}
             id="codigo"
             fullWidth
             error={error.code === 1}
             helperText={error.code === 1 ? error.message : ""}
-            label="Código"
+            label="Código de barras"
             autoFocus
             inputRef={inputCodigoRef}
             onBlur={(e) => {
@@ -53,7 +63,7 @@ function Datos() {
             GENERAR
           </Button>
         </Grid>
-        <Grid size={{ xs: 12, md: 12 }}>
+        <Grid size={{ xs: 12, md: 6 }}>
           <Stack direction="row" alignItems="center" spacing={2}>
             <FormLabel id="tipo">Seleccione tipo:</FormLabel>
             <FormControlLabel
@@ -71,6 +81,16 @@ function Datos() {
               label="Servicio"
             />
           </Stack>
+        </Grid>
+        <Grid size={{ xs: 12, md: 6 }}>
+
+          <FormControlLabel
+            value="1"
+            checked={form.disponible === 1}
+            onChange={() => changeByName("disponible", form.disponible === 1 ? 0 : 1)}
+            control={<Checkbox icon={<Icon size={22}>circle-dashed</Icon>} checkedIcon={<Icon size={22}>circle-check</Icon>} />}
+            label="Mostrar en tienda virtual"
+          />
         </Grid>
         <Grid size={12}>
           <Typography variant="button">INFORMACION</Typography>
@@ -91,7 +111,7 @@ function Datos() {
         </Grid>
         <Grid size={{ xs: 12, md: 8 }}>
           <TextField
-            placeholder="Descripción detallada"
+            placeholder="Descripción detallada del producto"
             fullWidth
             value={form.descripcion}
             label="Descripción detallada"

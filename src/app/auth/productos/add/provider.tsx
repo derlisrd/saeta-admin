@@ -8,7 +8,7 @@ import { AddProducto } from "@/services/dto/productos/AddProducto";
 import { AddStock } from "@/services/dto/productos/AddStock";
 import { useCallback, useMemo, useRef, useState } from "react";
 import AddProductoContext, { modalType } from "./context";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
 import AllData from "./_types/allData";
 
 const fetchData = async (token: string | null): Promise<AllData> => {
@@ -55,10 +55,9 @@ function AddProductoProvider({ children }: { children: React.ReactNode }) {
     data,
     isLoading,
     error: dataError,
-  } = useQuery<AllData>({
+  } = useSuspenseQuery<AllData>({
     queryKey: ["allData", userData && userData?.token],
     queryFn: () => fetchData(userData && userData?.token),
-    enabled: !!(userData && userData?.token),
     staleTime: 1000 * 60 * 5, // Cache for 5 minutes
   });
 
