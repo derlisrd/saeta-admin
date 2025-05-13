@@ -256,7 +256,7 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
   }, [set]);
 
   const handleFormasPago = useCallback(
-    (nuevomonto: number, id: number, type: "add" | "remove") => {
+    (nuevomonto: number, id: number, type: "add" | "remove", detallesText: string) => {
       if (type === "add") {
         const formaPago = formasPago.find((formaPago) => formaPago.id === id);
         if (!formaPago) return;
@@ -269,6 +269,7 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
             id: id,
             monto: nuevomonto,
             abreviatura: formaPago.descripcion,
+            detalles: detallesText
           });
         }
         set(copiaPedidos, index);

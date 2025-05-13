@@ -35,12 +35,14 @@ function FormaPagoModal() {
   const [formaPagoSelected, setFormaPagoSelected] = useState<number>(0);
   const [monto, setMonto] = useState<number | undefined>(undefined);
   const [inputValue, setInputValue] = useState("");
+  const [detallesText, setDetallesText] = useState('')
 
   const clear = () => {
     setInputValue("");
     setMonto(undefined);
     setError({ code: 0, message: "" });
     setFormaPagoSelected(0);
+    setDetallesText('')
   };
   const close = () => {
     setError({ code: 0, message: "" });
@@ -48,19 +50,26 @@ function FormaPagoModal() {
   };
 
   const agregarFormaPago = () => {
+    if (formaPagoSelected === 0) {
+      setError({ code: 1, message: "Presione una forma de pago. Ej: efectivo" });
+      return
+    }
     if (monto === undefined || monto === 0) {
       setError({ code: 2, message: "Ingrese monto a abonar" });
       return;
     }
-    handleFormasPago(monto, formaPagoSelected, "add");
-    clear();
+    handleFormasPago(monto, formaPagoSelected, "add", detallesText);
+    setError({ code: 0, message: "" });
+    setFormaPagoSelected(0);
+    setMonto(undefined)
+    setDetallesText('')
   };
 
   const handleNumberClick = (value: string) => {
-    if (formaPagoSelected === 0) {
+    /* if (formaPagoSelected === 0) {
       setError({ code: 1, message: "Presione una forma de pago. Ej: efectivo" });
       return;
-    }
+    } */
     const newValue = inputValue + value;
     setInputValue(newValue);
     // Convertir el valor a número y actualizar el estado monto
@@ -119,7 +128,7 @@ function FormaPagoModal() {
           </Grid>
           <Grid size={{ xs: 12, md: 6 }}>
             <Stack direction="row" spacing={2} alignItems="center" justifyContent="flex-end">
-              <FormLabel>Condición de venta: </FormLabel>
+              <FormLabel>Seleccione condición de venta: </FormLabel>
               <FormControlLabel
                 value={0}
                 control={<Checkbox icon={<Icon size={22}>circle-dashed</Icon>} checkedIcon={<Icon size={22}>circle-check</Icon>} />}
@@ -184,7 +193,14 @@ function FormaPagoModal() {
               }}
             />
           </Grid>
-          <Grid size={{ xs: 12, md: 6, lg: 6 }}></Grid>
+          <Grid size={{ xs: 12, sm: 4, md: 5, lg: 6 }}>
+            <TextField
+              fullWidth
+              label='Observacion y detalles de pago...'
+              onChange={({ target }) => setDetallesText(target.value)}
+              value={detallesText}
+            />
+          </Grid>
           <Grid size={{ xs: 12, sm: 8, md: 7, lg: 6 }}>
             <Teclado onBackspace={handleBackspace} onEnter={agregarFormaPago} clear={clear} onNumberClick={handleNumberClick} />
           </Grid>

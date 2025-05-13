@@ -6,8 +6,9 @@ export class RegistroCliente {
     razon_social: string | null;
     telefono: string | null;
     direccion: string | null;
+    extranjero : number = 0;
 
-    constructor({ doc = '', nombres = '', apellidos = '', email = '', razon_social = '', telefono = '', direccion = ''  } : Partial<RegistroCliente>)  {
+    constructor({ doc = '', nombres = '', apellidos = '', email = '', razon_social = '', telefono = '', direccion = '', extranjero =0  } : Partial<RegistroCliente>)  {
         this.doc = doc;
         this.nombres = nombres;
         this.apellidos = apellidos;
@@ -15,6 +16,7 @@ export class RegistroCliente {
         this.razon_social = razon_social;
         this.telefono = telefono;
         this.direccion = direccion;
+        this.extranjero = extranjero 
     }
 
     static fromJSON(data: any) {
@@ -25,7 +27,8 @@ export class RegistroCliente {
             email: data.email,
             razon_social: data.razon_social,
             telefono: data.telefono,
-            direccion: data.direccion
+            direccion: data.direccion,
+            extranjero: data.extranjero
         });
     }
 

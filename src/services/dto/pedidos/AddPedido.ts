@@ -87,10 +87,12 @@ export class FormasPago{
   id: number;
   abreviatura: string;
   monto: number;
-  constructor({ id = 0, abreviatura = "", monto = 0 }: Partial<FormasPago>) {
+  detalles: string | undefined;
+  constructor({ id = 0, abreviatura = "", monto = 0, detalles ='' }: Partial<FormasPago>) {
     this.id = id;
     this.abreviatura = abreviatura;
     this.monto = monto;
+    this.detalles = detalles
   }
 }
 

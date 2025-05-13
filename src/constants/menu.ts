@@ -246,7 +246,7 @@ export default [
     {
         id: 8,
         title: 'Actualización',
-        icon: 'users',
+        icon: 'refresh',
         color: '#0066cc',
         url: '/actualizacion',
         private: false,

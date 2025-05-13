@@ -17,11 +17,12 @@ function useRegistroCliente() {
     const clearFormRegistroCliente = () => setForm(new RegistroCliente({}));
     
 
-    const handleForm = (key: string, value: string) => setForm({...form,[key]: value});
+    const handleForm = (key: string, value: any) => setForm({...form,[key]: value});
     
 
     const verificarPorDocumento = async (documento : string) => {
-        if(documento.length < 4) return;
+
+        if(documento.length < 4 || form.extranjero === 1) return;
         setLoading(true)
         const res = await API.clientes.porDocumento(userData && userData.token,documento);
         setLoading(false)

@@ -1,4 +1,4 @@
-import { Alert, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid2 as Grid, LinearProgress, TextField } from "@mui/material";
+import { Alert, Button, Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, FormControlLabel, FormLabel, Grid2 as Grid, LinearProgress, TextField } from "@mui/material";
 import useHook from "../_hooks/useHook";
 import useRegistroCliente from "../_hooks/useRegistroCliente";
 import useModal from "../_hooks/useModal";
@@ -25,9 +25,29 @@ function RegistroClienteModal() {
     <Dialog fullWidth open={modal.registro} onClose={cerrar}>
       <DialogTitle>Registrar cliente</DialogTitle>
       <DialogContent>
-        {loading && <LinearProgress />}
-        <Grid container spacing={{ xs: 2 }} mt={2}>
-          <Grid size={{ xs: 12, md: 12 }}>{error.code > 0 && <Alert severity="error">{error.message}</Alert>}</Grid>
+        <Grid container spacing={{ xs: 2 }}>
+          <Grid size={{ xs: 12, md: 12 }}>
+            {loading && <LinearProgress />}
+            {error.code > 0 && <Alert severity="error">{error.message}</Alert>}
+          </Grid>
+          <Grid size={12}>
+            <FormLabel>Extranjero: </FormLabel>
+            <FormControlLabel
+              value={0}
+              control={<Checkbox icon={<Icon size={22}>circle-dashed</Icon>} checkedIcon={<Icon size={22}>circle-check</Icon>} />}
+              checked={form.extranjero === 0}
+              onChange={() => handleForm("extranjero", 0)}
+              label="Nacional"
+            />
+            <FormControlLabel
+              value={1}
+              control={<Checkbox icon={<Icon size={22}>circle-dashed</Icon>} checkedIcon={<Icon size={22}>circle-check</Icon>} />}
+              checked={form.extranjero === 1}
+              onChange={() => handleForm("extranjero", 1)}
+              label="Extranjero"
+            />
+          </Grid>
+
           <Grid size={{ xs: 12, md: 12 }}>
             <TextField
               label="Documento o RUC"

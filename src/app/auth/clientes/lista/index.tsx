@@ -8,24 +8,11 @@ import TableHeaderRender from "./_components/tableheaderrender";
 import { ClienteResults } from "@/services/dto/clientes/cliente";
 import { useState } from "react";
 import Icon from "@/components/ui/icon";
+import ColumnClienteTable from "./_components/ColumnClienteTable";
 
-const getColumnConfig = (width: number): ColumnConfigType[] => [
-  { dataKey: "id", label: "ID", width: width * 0.1 },
-  { dataKey: "doc", label: "Doc", width: width * 0.15 },
-  { dataKey: "razon_social", label: "Razón social", width: width * 0.3 },
-  { dataKey: "telefono", label: "Tel.", width: width * 0.13 },
-  { dataKey: "extranjero", label: "Extranjero", width: width * 0.13 },
-  /*   {
-    dataKey: "created_at",
-    label: "Registro",
-    width: width * 0.15,
-    cellRenderer: ({ rowData }: TableCellProps) => (rowData.created_at ? format(rowData.created_at, "DD-MM-YY HH:mm") : ""),
-  }, */
-  { dataKey: "_", label: "Acciones", width: width * 0.18 },
-];
 
 const columns = (width: number): ColumnConfigType[] =>
-  getColumnConfig(width).map((config) => ({
+  ColumnClienteTable(width).map((config) => ({
     ...config,
     headerRenderer: TableHeaderRender,
     cellRenderer: config.cellRenderer || TableCellRender,
@@ -40,7 +27,7 @@ function Clientes() {
 
   return (
     <Container>
-      <Stack spacing={2} my={2} direction="row" alignItems="center">
+      <Stack spacing={2} my={1} direction="row" alignItems="center">
         <TextField
           label="Buscar"
           placeholder="Nombre o documento"

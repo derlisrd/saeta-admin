@@ -38,7 +38,6 @@ export const apiServicePedidos = {
       const { data, status } = await BASE.get(`/pedidos?desde=${desde}&hasta=${hasta}`, { headers: { Authorization: token } });
       return ({ success: data.success as boolean, status, results: data.results, message: "" });
     } catch (e) {
-      console.log(e);
       if (axios.isAxiosError(e)) {
         return ({
           success: false,
