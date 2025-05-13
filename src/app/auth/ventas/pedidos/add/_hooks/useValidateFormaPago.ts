@@ -12,7 +12,7 @@ function useValidateFormaPago() {
             message: ''
         }
         let sumaFormasPago = form.formas_pagos.reduce((sum, formaPago) => sum + formaPago.monto, 0);
-            if((form.total - form.descuento) > sumaFormasPago && form.tipo === 0 ){
+            if((form.total - form.descuento) > sumaFormasPago && form.condicion === 0 ){
                 error = {
                     code: 7,
                     message: "El monto abonado no es suficiente"
@@ -20,7 +20,7 @@ function useValidateFormaPago() {
                 return error
             }
 
-        if(form.tipo ===1 && form.cliente_id === 0){
+        if(form.condicion ===1 && form.cliente_id === 0){
             error = {
                 code: 1,
                 message: "Debe seleccionar un cliente si la condición de venta es crédito"

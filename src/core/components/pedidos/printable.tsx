@@ -30,7 +30,7 @@ function Printable({ pedido, empresa }: PrintableProps) {
           {empresa && empresa.direccion} Tel: {empresa && empresa.telefono}
         </h5>
         <h5>Fecha: {format(pedido.created_at, "DD/MM/YYYY")}</h5>
-        <h5>Condicion: {pedido.tipo === 1 ? "Credito" : "Contado"}</h5>
+        <h5>Condicion: {pedido.condicion === 1 ? "Credito" : "Contado"}</h5>
       </div>
       <div style={dashedBorderStyle} />
       <div>
@@ -60,7 +60,7 @@ function Printable({ pedido, empresa }: PrintableProps) {
         <ul>
           {pedido.formas_pago_pedido &&
             pedido.formas_pago_pedido.map((pago) => (
-              <li key={pago.id} style={{ lineHeight: "0.5" }}>
+              <li key={pago.id}>
                 {pago.abreviatura}: {parseFloat(pago.monto).toLocaleString(locale)}
               </li>
             ))}

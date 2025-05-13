@@ -5,27 +5,18 @@ import useInsertPedido from "../_hooks/useInsertPedido";
 import EntregadoCheck from "../_components/entregadocheck";
 import useModal from "../_hooks/useModal";
 
-import useFinalizarPedido from "../_hooks/useFinalizarPedido";
 import Total from "../_components/total";
 import Icon from "@/components/ui/icon";
 
 function FinalizarPedido() {
   const { pedidos, index, setResult, aplicarDescuento } = useHook();
   //const { isSmDown } = useResponsive();
-  const { setError, validate } = useFinalizarPedido();
   const { modal, handleModal, setModal } = useModal();
   const { insertPedido, isLoading } = useInsertPedido();
 
   const finalizarPedido = async () => {
-    const validateError = validate(pedidos[index]);
 
-    if (validateError.active) {
-      setError(validateError);
-      setResult({ success: false, status: 400, message: validateError.message, results: null });
-      handleModal("error");
-      return;
-    }
-    setError({ active: false, message: "", code: 0 });
+    
     const res = await insertPedido(pedidos[index]);
     if (!res.success) {
       setResult(res);

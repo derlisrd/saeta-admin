@@ -38,7 +38,7 @@ function useFinalizarPedido() {
                 return error
             }
 
-            if(form.tipo ===1 && form.cliente_id === 0){
+            if(form.condicion ===1 && form.cliente_id === 0){
                 error = {
                     code: 1,
                     active: true,

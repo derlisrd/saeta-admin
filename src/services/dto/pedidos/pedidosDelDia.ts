@@ -25,9 +25,11 @@ export class PedidosDelDiaResults {
   formas_pago_pedido: FormasPagoPedidoResults[];
   descuento: number;
   tipo: number;
+  condicion: number;
 
   constructor({ id = 0, fecha = "", total = 0, estado = 0, created_at='',
-    razon_social ='', doc = '', items = [], importe_final = 0, formas_pago_pedido = [], descuento = 0, tipo=0
+    razon_social ='', doc = '', items = [], importe_final = 0, formas_pago_pedido = [], descuento = 0, tipo=0,
+    condicion = 0
    }: Partial<PedidosDelDiaResults>) {
     this.id = id;
     this.fecha = fecha;
@@ -41,6 +43,7 @@ export class PedidosDelDiaResults {
     this.formas_pago_pedido = formas_pago_pedido;
     this.descuento = descuento;
     this.tipo = tipo;
+    this.condicion = condicion;
   }
 
   static fromJson(json: any): PedidosDelDiaResults {

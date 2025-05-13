@@ -8,6 +8,7 @@ export class AddPedido {
   formas_pagos: FormasPago[] = [];
   moneda_id: number = 0;
   tipo: number = 0;
+  condicion: number = 0;
   porcentaje_descuento: number = 0;
   descuento: number = 0;
   total: number = 0;
@@ -24,7 +25,8 @@ export class AddPedido {
     porcentaje_descuento,
     descuento,
     total,
-    items
+    items,
+    condicion
   }: Partial<AddPedido> = {}) { // Se agrega un objeto vacío como valor por defecto
     this.entregado = entregado ?? this.entregado;
     this.moneda_id = moneda_id ?? this.moneda_id;
@@ -33,6 +35,7 @@ export class AddPedido {
     this.cliente = cliente ?? this.cliente;
     this.formas_pagos = formas_pagos ?? this.formas_pagos;
     this.tipo = tipo ?? this.tipo;
+    this.condicion = condicion ?? this.condicion;
     this.porcentaje_descuento = porcentaje_descuento ?? this.porcentaje_descuento;
     this.descuento = descuento ?? this.descuento;
     this.total = total ?? this.total;
@@ -123,8 +126,9 @@ export class AddPedidoResults{
   descuento: number;
   importe_final: number;
   tipo: number;
+  condicion: number;
 
-  constructor({ created_at = '',tipo=0, id = 0, total = 0, estado = 1, descuento = 0, cliente = new ClienteResults({}), formas_pago_pedido = [], importe_final = 0 }) {
+  constructor({ created_at = '',tipo=0, id = 0, total = 0, estado = 1, descuento = 0, cliente = new ClienteResults({}), formas_pago_pedido = [], importe_final = 0, condicion =0 }) {
       this.total = total;
       this.id = id;
       this.estado = estado;
@@ -134,10 +138,12 @@ export class AddPedidoResults{
       this.fecha = this.formatFecha(created_at);
       this.importe_final = importe_final;
       this.tipo = tipo;
+      this.condicion = condicion
     }
 
     static fromJSON(data: any) {
       return new AddPedidoResults({
+        ...data,
         id: data.id as number,
         total: data.total as number,
         tipo: data.tipo,

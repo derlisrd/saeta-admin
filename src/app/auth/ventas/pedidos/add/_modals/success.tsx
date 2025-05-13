@@ -37,6 +37,7 @@ function SuccessModal() {
     doc: data.results.cliente.doc,
     descuento: data.results.descuento,
     tipo: data.results.tipo,
+    condicion: data.results.condicion,
     importe_final: data.results.importe_final,
     items: pedidos[index].items.map((item) => ({
       ...item,

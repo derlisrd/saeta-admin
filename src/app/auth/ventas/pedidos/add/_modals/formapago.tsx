@@ -123,15 +123,15 @@ function FormaPagoModal() {
               <FormControlLabel
                 value={0}
                 control={<Checkbox icon={<Icon size={22}>circle-dashed</Icon>} checkedIcon={<Icon size={22}>circle-check</Icon>} />}
-                checked={pedidos[index].tipo === 0}
-                onChange={() => changePedido("tipo", 0)}
+                checked={pedidos[index].condicion === 0}
+                onChange={() => changePedido("condicion", 0)}
                 label="Contado"
               />
               <FormControlLabel
                 value={1}
                 control={<Checkbox icon={<Icon size={22}>circle-dashed</Icon>} checkedIcon={<Icon size={22}>circle-check</Icon>} />}
-                checked={pedidos[index].tipo === 1}
-                onChange={() => changePedido("tipo", 1)}
+                checked={pedidos[index].condicion === 1}
+                onChange={() => changePedido("condicion", 1)}
                 label="Crédito"
               />
             </Stack>

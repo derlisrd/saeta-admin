@@ -243,4 +243,14 @@ export default [
             }
         ]
     },
+    {
+        id: 8,
+        title: 'Actualización',
+        icon: 'users',
+        color: '#0066cc',
+        url: '/actualizacion',
+        private: false,
+        submenu: null,
+        descripcion: 'Actualización'
+    },
 ]
