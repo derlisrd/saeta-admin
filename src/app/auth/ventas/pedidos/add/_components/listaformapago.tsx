@@ -14,7 +14,7 @@ function ListaFormaPago() {
           secondaryAction={
             <IconButton
               onClick={() => {
-                handleFormasPago(0, formaPago.id, "remove");
+                handleFormasPago(0, formaPago.id, "remove", '');
               }}
             >
               <Icon>trash</Icon>
