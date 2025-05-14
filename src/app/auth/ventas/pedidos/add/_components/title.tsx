@@ -20,7 +20,7 @@ function Title() {
               <Icon size={36}>arrow-left-dashed</Icon>
             </IconButton>
           </Tooltip>
-          <Typography variant="body1">Pedido | Total: {pedidos[index].total} Gs</Typography>
+          <Typography variant="body1" sx={{ display: { xs: 'none', md: 'block' } }}>Pedido | Total: {pedidos[index].total} Gs</Typography>
         </Stack>
         <Link
           component="button"

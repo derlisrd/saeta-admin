@@ -16,7 +16,7 @@ function FinalizarPedido() {
 
   const finalizarPedido = async () => {
 
-    
+
     const res = await insertPedido(pedidos[index]);
     if (!res.success) {
       setResult(res);
@@ -86,7 +86,7 @@ function FinalizarPedido() {
           Regresar
         </Button>
         <Button startIcon={<Icon>check</Icon>} disabled={isLoading} sx={{ p: 2 }} onClick={finalizarPedido}>
-          Confirmar venta
+          Confirmar
         </Button>
       </DialogActions>
     </Dialog>

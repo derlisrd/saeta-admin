@@ -21,6 +21,7 @@ function Item({ item, removeItem, index }: ItemProps) {
           <Icon>trash</Icon>
         </IconButton>
       </Grid>
+
     </Grid>
   );
 }
