@@ -35,14 +35,14 @@ function FormaPagoModal() {
   const [formaPagoSelected, setFormaPagoSelected] = useState<number>(0);
   const [monto, setMonto] = useState<number | undefined>(undefined);
   const [inputValue, setInputValue] = useState("");
-  const [detallesText, setDetallesText] = useState('')
+  const [detallesText, setDetallesText] = useState("");
 
   const clear = () => {
     setInputValue("");
     setMonto(undefined);
     setError({ code: 0, message: "" });
     setFormaPagoSelected(0);
-    setDetallesText('')
+    setDetallesText("");
   };
   const close = () => {
     setError({ code: 0, message: "" });
@@ -52,7 +52,7 @@ function FormaPagoModal() {
   const agregarFormaPago = () => {
     if (formaPagoSelected === 0) {
       setError({ code: 1, message: "Presione una forma de pago. Ej: efectivo" });
-      return
+      return;
     }
     if (monto === undefined || monto === 0) {
       setError({ code: 2, message: "Ingrese monto a abonar" });
@@ -61,8 +61,8 @@ function FormaPagoModal() {
     handleFormasPago(monto, formaPagoSelected, "add", detallesText);
     setError({ code: 0, message: "" });
     setFormaPagoSelected(0);
-    setMonto(undefined)
-    setDetallesText('')
+    setMonto(undefined);
+    setDetallesText("");
   };
 
   const handleNumberClick = (value: string) => {
@@ -194,12 +194,7 @@ function FormaPagoModal() {
             />
           </Grid>
           <Grid size={{ xs: 12, sm: 4, md: 5, lg: 6 }}>
-            <TextField
-              fullWidth
-              label='Observacion y detalles de pago...'
-              onChange={({ target }) => setDetallesText(target.value)}
-              value={detallesText}
-            />
+            <TextField fullWidth label="Observacion y detalles de pago..." onChange={({ target }) => setDetallesText(target.value)} value={detallesText} />
           </Grid>
           <Grid size={{ xs: 12, sm: 8, md: 7, lg: 6 }}>
             <Teclado onBackspace={handleBackspace} onEnter={agregarFormaPago} clear={clear} onNumberClick={handleNumberClick} />
@@ -210,7 +205,7 @@ function FormaPagoModal() {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button variant="outlined" startIcon={<Icon>arrow-narrow-left-dashed</Icon>} color="secondary" sx={{ p: 2 }} onClick={close}>
+        <Button variant="outlined" startIcon={<Icon>arrow-narrow-left-dashed</Icon>} sx={{ p: 2 }} onClick={close}>
           Regresar
         </Button>
         <Button sx={{ p: 2 }} onClick={siguiente} endIcon={<Icon>arrow-narrow-right-dashed</Icon>}>

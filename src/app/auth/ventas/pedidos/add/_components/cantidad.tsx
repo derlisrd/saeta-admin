@@ -1,4 +1,4 @@
-import { IconButton, InputAdornment, TextField } from "@mui/material";
+import { Box, IconButton, InputAdornment, TextField } from "@mui/material";
 import useHook from "../_hooks/useHook";
 import { NumericFormat } from "react-number-format";
 import Icon from "@/components/ui/icon";
@@ -14,35 +14,37 @@ function InputCantidad() {
   };
 
   return (
-    <NumericFormat
-      customInput={TextField}
-      allowedDecimalSeparators={["%"]}
-      value={cantidad}
-      thousandSeparator=","
-      decimalSeparator="."
-      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCantidad(Number(e.target.value))}
-      fullWidth
-      autoComplete="off"
-      label="Cantidad"
-      slotProps={{
-        input: {
-          startAdornment: (
-            <InputAdornment position="start">
-              <IconButton onClick={menos}>
-                <Icon>minus</Icon>
-              </IconButton>
-            </InputAdornment>
-          ),
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton onClick={() => setCantidad(cantidad + 1)}>
-                <Icon>plus</Icon>
-              </IconButton>
-            </InputAdornment>
-          ),
-        },
-      }}
-    />
+    <Box sx={{ display: { xs: "none", md: "block" } }}>
+      <NumericFormat
+        customInput={TextField}
+        allowedDecimalSeparators={["%"]}
+        value={cantidad}
+        thousandSeparator=","
+        decimalSeparator="."
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCantidad(Number(e.target.value))}
+        fullWidth
+        autoComplete="off"
+        label="Cantidad"
+        slotProps={{
+          input: {
+            startAdornment: (
+              <InputAdornment position="start">
+                <IconButton onClick={menos}>
+                  <Icon>minus</Icon>
+                </IconButton>
+              </InputAdornment>
+            ),
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={() => setCantidad(cantidad + 1)}>
+                  <Icon>plus</Icon>
+                </IconButton>
+              </InputAdornment>
+            ),
+          },
+        }}
+      />
+    </Box>
   );
 }
 

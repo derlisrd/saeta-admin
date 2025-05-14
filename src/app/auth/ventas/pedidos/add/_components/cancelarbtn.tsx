@@ -13,7 +13,7 @@ function CancelarButton() {
   }
   if (pedidos[index].items.length > 0) {
     return (
-      <Button variant="outlined" size="large" color="error" onClick={cancelar} fullWidth sx={{ padding: 2 }}>
+      <Button variant="outlined" size="large" color="warning" onClick={cancelar} fullWidth sx={{ padding: 2 }}>
         Cancelar
       </Button>
     );
