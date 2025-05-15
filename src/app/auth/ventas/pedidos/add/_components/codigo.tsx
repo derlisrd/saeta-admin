@@ -10,8 +10,8 @@ function InputCodigo() {
     <Box sx={{ display: { xs: "none", md: "block" } }}>
       <TextField
         placeholder="Código"
-        label="Código de producto"
-        helperText="Ingrese el código y presione ENTER"
+        label="Ingrese código y presione ENTER"
+        helperText="Presione la lupa para buscar productos"
         fullWidth
         inputRef={inputCodigoRef}
         autoComplete="off"

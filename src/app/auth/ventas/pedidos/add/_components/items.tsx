@@ -34,13 +34,13 @@ function Items() {
       <Grid container direction='row' spacing={1} alignItems='center'
         sx={{ display: { xs: "flex", md: "none" } }}
       >
-        <Grid size={4}>
+        <Grid size={12}>
           <Tooltip title='Agregar producto' arrow>
             <Button size="large" onClick={() => handleModal('productos')}><Icon>shopping-cart-plus</Icon></Button>
           </Tooltip>
         </Grid>
         {pedidos[index].items.map((item, i) => (
-          <Grid size={4} key={i}>
+          <Grid size={{ xs: 12, sm: 6 }} key={i}>
             <CardItem item={item} removeItem={() => removeItem(item.producto_id)} />
           </Grid>
         ))}

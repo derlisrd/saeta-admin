@@ -1,4 +1,4 @@
-import { DialogTitle, IconButton, Link, Stack, Tooltip, Typography, Zoom } from "@mui/material";
+import { Button, DialogTitle, IconButton, Stack, Tooltip, Typography, Zoom } from "@mui/material";
 import useHook from "../_hooks/useHook";
 import useModal from "../_hooks/useModal";
 import Icon from "@/components/ui/icon";
@@ -20,17 +20,17 @@ function Title() {
               <Icon size={36}>arrow-left-dashed</Icon>
             </IconButton>
           </Tooltip>
-          <Typography variant="body1" sx={{ display: { xs: 'none', md: 'block' } }}>Pedido | Total: {pedidos[index].total} Gs</Typography>
+          <Typography variant="body1" sx={{ display: { xs: 'none', md: 'block' } }}>Pedido | Total: {pedidos[index].total.toLocaleString('es-PY')} Gs</Typography>
         </Stack>
-        <Link
-          component="button"
-          variant="overline"
+        <Button
           onClick={() => {
             handleModal("clientes");
           }}
+          size="small"
+          startIcon={<Icon>user-plus</Icon>}
         >
-          {pedidos[index].cliente_id === 0 ? "Seleccionar Cliente" : pedidos[index].cliente}
-        </Link>
+          {pedidos[index].cliente_id === 0 ? "Agregar Cliente" : pedidos[index].cliente}
+        </Button>
       </Stack>
     </DialogTitle>
   );

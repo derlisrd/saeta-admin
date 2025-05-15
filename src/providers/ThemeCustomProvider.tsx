@@ -81,13 +81,11 @@ function ThemeCustomProvider({ children }: ThemeCustomProviderType) {
   useEffect(() => {
     const ca = new AbortController();
     let isActive = true;
-    if (isActive) {
-      checkTheme();
-    }
+    if (isActive) { checkTheme() }
     return () => {
       isActive = false;
       ca.abort();
-    };
+    }
   }, [checkTheme]);
 
   const values = { modeDark, toggleModeDark, customTheme, changeColor };

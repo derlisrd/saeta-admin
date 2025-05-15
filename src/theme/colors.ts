@@ -5,7 +5,7 @@ import { availableColorsType } from "@/core/types/availablecolors";
 
 export const availableColors : Array<availableColorsType> = [
     { name: "violet", color: "#734ad5", secondary : "#d500f9", mode:'system' },
-    { name: "green", color: "#259965", secondary : "#ad3128", mode:'system' },
+    { name: "green", color: "#259965", secondary : "#fc7703", mode:'system' },
     { name: "bluelight", color: "#2187ab", secondary : "#f6ab4d", mode:'system' },
     { name: "bluesky", color: "#2189e4", secondary : "#f6ab4d", mode:'light' },
     { name: "orange", color: "#d76a16", secondary : "#8298cf", mode:'system' },

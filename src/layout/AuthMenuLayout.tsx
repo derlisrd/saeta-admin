@@ -49,6 +49,11 @@ function AuthMenuLayout() {
                 <Icon>{modeDark ? "moon-stars" : "sun"}</Icon>
               </IconButton>
             </Tooltip>
+            <Tooltip placement="bottom" arrow title="Configuraciones">
+              <IconButton>
+                <Icon>settings-code</Icon>
+              </IconButton>
+            </Tooltip>
             <Tooltip placement="bottom" arrow title="Cerrar sesión">
               <IconButton onClick={signOut}>
                 <Icon>door-exit</Icon>

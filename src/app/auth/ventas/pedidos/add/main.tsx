@@ -6,7 +6,6 @@ import Title from "./_components/title";
 import useHook from "./_hooks/useHook";
 import InputCantidad from "./_components/cantidad";
 import FinalizarButton from "./_components/finalizarbtn";
-import AgregarButton from "./_components/agregarbtn";
 import CancelarButton from "./_components/cancelarbtn";
 import EsperarButton from "./_components/esperarbtn";
 import ListaDeEspera from "./_components/listadeespera";
@@ -28,7 +27,8 @@ function Main() {
               <Items />
             </Grid>
             <Grid size={{ xs: 12, sm: 12, md: 4, lg: 3 }}>
-              <Box sx={{ position: { xs: 'fixed', md: 'relative' }, bottom: 0, left: 0, width: '100%', px: { xs: 2, md: 0 } }}>
+              <Box sx={{ height: { xs: '180px', md: '0' } }} />
+              <Box sx={{ position: { xs: 'fixed', md: 'relative' }, bottom: 0, left: 0, width: '100%', px: { xs: 2, md: 0 }, backgroundColor: 'background.paper' }}>
                 <Grid container spacing={2} pt={1}>
                   <Grid size={12}>
                     <InputCodigo />
@@ -36,17 +36,14 @@ function Main() {
                   <Grid size={12}>
                     <InputCantidad />
                   </Grid>
-                  <Grid size={12}>
-                    <AgregarButton />
+                  <Grid size={6}>
+                    <EsperarButton />
                   </Grid>
                   <Grid size={6}>
                     <FinalizarButton />
                   </Grid>
-                  <Grid size={6}>
+                  <Grid size={12} sx={{ display: { xs: 'none', md: 'block' } }}>
                     <CancelarButton />
-                  </Grid>
-                  <Grid size={12}>
-                    <EsperarButton />
                   </Grid>
                   <Grid size={12}>
                     <ListaDeEspera />

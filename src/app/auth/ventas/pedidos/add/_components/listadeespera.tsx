@@ -17,7 +17,7 @@ function ListaDeEspera() {
             }
           >
             <ListItemButton onClick={() => setIndex(i)} selected={i === index}>
-              <ListItemText primary={pedido.total} secondary={i === index ? "Pedido actual" : "Pedido en espera"} />
+              <ListItemText primary={pedido.total.toLocaleString('es-PY')} secondary={i === index ? "Pedido actual" : "Pedido en espera"} />
             </ListItemButton>
           </ListItem>
         ))}

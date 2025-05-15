@@ -1,15 +1,26 @@
+import Icon from "@/components/ui/icon";
 import { AddPedidoItem } from "@/services/dto/pedidos/AddPedido";
-import { Box, Typography } from "@mui/material";
+import { List, ListItem, ListItemText, IconButton } from "@mui/material";
 
 interface CardItemProps {
     item: AddPedidoItem;
     removeItem: () => void;
 }
 
-function CardItem({ item }: CardItemProps) {
-    return <Box sx={{ backgroundColor: 'background.default', p: 2, width: '100%', height: '100%' }}>
-        <Typography fontSize={11} variant='caption'>{item.nombre}</Typography>
-    </Box>
+function CardItem({ item, removeItem }: CardItemProps) {
+    return (
+        <List sx={{ width: '100%', bgcolor: 'background.default', borderRadius: 3, boxShadow: 2 }} >
+            <ListItem
+                secondaryAction={
+                    <IconButton edge="end" onClick={removeItem}>
+                        <Icon>trash</Icon>
+                    </IconButton>
+                }
+            >
+                <ListItemText primary={item.nombre} secondary={`${item.cantidad} x ${item.precio.toLocaleString("es-PY")}`} />
+            </ListItem>
+        </List>
+    );
 }
 
 export default CardItem;
