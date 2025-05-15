@@ -28,7 +28,7 @@ function Main() {
             </Grid>
             <Grid size={{ xs: 12, sm: 12, md: 4, lg: 3 }}>
               <Box sx={{ height: { xs: '180px', md: '0' } }} />
-              <Box sx={{ position: { xs: 'fixed', md: 'relative' }, bottom: 0, left: 0, width: '100%', px: { xs: 2, md: 0 }, backgroundColor: 'background.paper' }}>
+              <Box sx={{ position: { xs: 'fixed', md: 'relative' }, bottom: 0, left: 0, width: '100%', px: { xs: 2, md: 0 }, backgroundColor: { xs: 'background.default', md: 'transparent' }, zIndex: 1 }}>
                 <Grid container spacing={2} pt={1}>
                   <Grid size={12}>
                     <InputCodigo />
