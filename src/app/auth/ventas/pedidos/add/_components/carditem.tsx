@@ -9,7 +9,7 @@ interface CardItemProps {
 
 function CardItem({ item, removeItem }: CardItemProps) {
     return (
-        <List sx={{ width: '100%', bgcolor: 'background.default', borderRadius: 3, boxShadow: 2 }} >
+        <List sx={{ width: '100%', borderRadius: 3, boxShadow: 4 }} >
             <ListItem
                 secondaryAction={
                     <IconButton edge="end" onClick={removeItem}>
