@@ -1,4 +1,4 @@
-import { Container, Dialog, DialogContent, Fade, Grid2 as Grid } from "@mui/material";
+import { Box, Container, Dialog, DialogContent, Fade, Grid2 as Grid } from "@mui/material";
 import Items from "./_components/items";
 import Error from "./_components/error";
 import InputCodigo from "./_components/codigo";
@@ -16,6 +16,7 @@ function Main() {
   const { error, clearError } = useHook();
   const { modal } = useModal();
 
+
   return (
     <Dialog open={modal.main} fullScreen TransitionComponent={Fade} disableRestoreFocus PaperProps={{ sx: { borderRadius: "0" } }}>
       <Error error={error} clearError={clearError} />
@@ -27,29 +28,31 @@ function Main() {
               <Items />
             </Grid>
             <Grid size={{ xs: 12, sm: 12, md: 4, lg: 3 }}>
-              <Grid container spacing={2} pt={1}>
-                <Grid size={12}>
-                  <InputCodigo />
+              <Box sx={{ position: { xs: 'fixed', md: 'relative' }, bottom: 0, left: 0, width: '100%', px: { xs: 2, md: 0 } }}>
+                <Grid container spacing={2} pt={1}>
+                  <Grid size={12}>
+                    <InputCodigo />
+                  </Grid>
+                  <Grid size={12}>
+                    <InputCantidad />
+                  </Grid>
+                  <Grid size={12}>
+                    <AgregarButton />
+                  </Grid>
+                  <Grid size={6}>
+                    <FinalizarButton />
+                  </Grid>
+                  <Grid size={6}>
+                    <CancelarButton />
+                  </Grid>
+                  <Grid size={12}>
+                    <EsperarButton />
+                  </Grid>
+                  <Grid size={12}>
+                    <ListaDeEspera />
+                  </Grid>
                 </Grid>
-                <Grid size={12}>
-                  <InputCantidad />
-                </Grid>
-                <Grid size={12}>
-                  <AgregarButton />
-                </Grid>
-                <Grid size={6}>
-                  <FinalizarButton />
-                </Grid>
-                <Grid size={6}>
-                  <CancelarButton />
-                </Grid>
-                <Grid size={12}>
-                  <EsperarButton />
-                </Grid>
-                <Grid size={12}>
-                  <ListaDeEspera />
-                </Grid>
-              </Grid>
+              </Box>
             </Grid>
           </Grid>
         </Container>

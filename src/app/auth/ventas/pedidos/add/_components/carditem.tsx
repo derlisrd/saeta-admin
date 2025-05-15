@@ -8,7 +8,7 @@ interface CardItemProps {
 
 function CardItem({ item }: CardItemProps) {
     return <Box sx={{ backgroundColor: 'background.default', p: 2, width: '100%', height: '100%' }}>
-        <Typography variant='caption'>{item.nombre}</Typography>
+        <Typography fontSize={11} variant='caption'>{item.nombre}</Typography>
     </Box>
 }
 

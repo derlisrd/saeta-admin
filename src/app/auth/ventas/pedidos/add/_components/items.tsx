@@ -1,4 +1,4 @@
-import { Grid2 as Grid, Box, Button } from "@mui/material";
+import { Grid2 as Grid, Box, Button, Tooltip } from "@mui/material";
 import Item from "./item";
 import useHook from "../_hooks/useHook";
 import CardItem from "./carditem";
@@ -34,11 +34,13 @@ function Items() {
       <Grid container direction='row' spacing={1} alignItems='center'
         sx={{ display: { xs: "flex", md: "none" } }}
       >
-        <Grid size={3}>
-          <Button onClick={() => handleModal('productos')}><Icon>shopping-cart-plus</Icon></Button>
+        <Grid size={4}>
+          <Tooltip title='Agregar producto' arrow>
+            <Button size="large" onClick={() => handleModal('productos')}><Icon>shopping-cart-plus</Icon></Button>
+          </Tooltip>
         </Grid>
         {pedidos[index].items.map((item, i) => (
-          <Grid size={3} key={i}>
+          <Grid size={4} key={i}>
             <CardItem item={item} removeItem={() => removeItem(item.producto_id)} />
           </Grid>
         ))}
