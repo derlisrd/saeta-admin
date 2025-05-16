@@ -29,6 +29,12 @@ function useEstadisticas() {
     const isLoading = pedidosResponse.isLoading || lucrosResponse.isLoading
     
     const combinedData = {
+        ayer: {
+            cantidad: pedidosResponse.data?.results?.ayer?.cantidad || 0,
+            descuento: pedidosResponse.data?.results?.ayer?.descuento || 0,
+            importe: pedidosResponse.data?.results?.ayer?.importe || 0,
+            lucro:  lucrosResponse.data?.results?.ayer?.lucro || 0,
+        },
         hoy: {
             cantidad: pedidosResponse.data?.results?.hoy?.cantidad || 0,
             descuento: pedidosResponse.data?.results?.hoy?.descuento || 0,

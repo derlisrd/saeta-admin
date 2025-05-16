@@ -13,6 +13,7 @@ export class LucrosResponse {
   }
   
   export class LucrosResults {
+    ayer: LucroEstadistica;
     hoy: LucroEstadistica;
     mes: LucroEstadistica;
     semana: LucroEstadistica;
@@ -21,6 +22,7 @@ export class LucrosResponse {
       this.hoy = data.hoy;
       this.mes = data.mes;
       this.semana = data.semana;
+      this.ayer = data.ayer;
     }
   
     static fromJson(json: any): LucrosResults {
@@ -28,6 +30,7 @@ export class LucrosResponse {
         hoy: LucroEstadistica.fromJson(json.hoy),
         mes: LucroEstadistica.fromJson(json.mes),
         semana: LucroEstadistica.fromJson(json.semana),
+        ayer: LucroEstadistica.fromJson(json.ayer),
       });
     }
   }

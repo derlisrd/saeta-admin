@@ -14,6 +14,7 @@ export class EstadisticasResponse {
   }
   
   export class EstadisticasResults {
+      ayer: Estadistica;
       hoy: Estadistica;
       mes: Estadistica;
       semana: Estadistica;
@@ -22,10 +23,12 @@ export class EstadisticasResponse {
           this.hoy = data.hoy;
           this.mes = data.mes;
           this.semana = data.semana;
+          this.ayer = data.ayer;
       }
   
       static fromJson(json: any): EstadisticasResults {
           return new EstadisticasResults({
+            ayer: Estadistica.fromJson(json.ayer),
               hoy: Estadistica.fromJson(json.hoy),
               mes: Estadistica.fromJson(json.mes),
               semana: Estadistica.fromJson(json.semana)
