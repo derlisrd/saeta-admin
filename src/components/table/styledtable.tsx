@@ -7,7 +7,7 @@ const StyledTableContainer = styled(Box)(({ theme }) => ({
     textTransform: "uppercase",
     fontWeight: "bold",
     fontSize: '12px',
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.primary.main,
   },
   "& .ReactVirtualized__Table__row": {
     padding: "0 14px",

@@ -42,9 +42,9 @@ const AccionesCell = ({ rowData, onSelectProducto }: AccionesCellProps) => {
 };
 
 export const productosColumnConfig = (width: number, onSelectProducto?: (producto: ProductoResults) => void): ColumnConfigType[] => [
-  { dataKey: "codigo", label: "Código", width: width * 0.1 },
+  { dataKey: "codigo", label: "Código", width: width * 0.08 },
   {
-    dataKey: "nombre", label: "Nombre", width: width * 0.3,
+    dataKey: "nombre", label: "Producto", width: width * 0.3,
     cellRenderer: ({ rowData }: TableCellProps) => (
       <Stack direction='row' spacing={1} alignItems='center'>
         <IconButton>
@@ -52,7 +52,7 @@ export const productosColumnConfig = (width: number, onSelectProducto?: (product
         </IconButton>
         <Stack direction='column'>
           <Typography variant="caption">{rowData.nombre}</Typography>
-          <Typography variant="caption" fontSize={10}>{rowData.precio_normal.toLocaleString("es-PY")}</Typography>
+          <Typography variant="caption">{rowData.precio_normal.toLocaleString("es-PY")}</Typography>
         </Stack>
       </Stack>
     )
@@ -71,7 +71,7 @@ export const productosColumnConfig = (width: number, onSelectProducto?: (product
   {
     dataKey: "_",
     label: "Acciones",
-    width: width * 0.18,
+    width: width * 0.2,
     cellRenderer: (props: TableCellProps) => <AccionesCell {...props} onSelectProducto={onSelectProducto || (() => { })} />,
   },
 ];

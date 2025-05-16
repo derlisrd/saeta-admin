@@ -66,12 +66,12 @@ function ListaProductos() {
         <LinearProgress />
       ) : (
         <Slide direction="up" in={true} mountOnEnter unmountOnExit>
-          <Box boxShadow={3} borderRadius={2}>
+          <Box>
             <GenericTable
               data={listado}
               columns={columns(window.innerWidth)} // Pasa el ancho inicial
-              rowHeight={48}
-              headerHeight={36}
+              rowHeight={48!}
+              headerHeight={36!}
             />
           </Box>
         </Slide>

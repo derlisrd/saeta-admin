@@ -10,7 +10,7 @@ const TableHeadRender = ({ label }: TableHeaderProps) => (
       boxSizing: "border-box",
       cursor: "pointer",
       height: 48,
-      bgcolor: "primary.main",
+      backgroundColor: "primary.main",
       color: "white",
       padding: "0 0 0 14px",
     }}
