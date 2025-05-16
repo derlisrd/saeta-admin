@@ -1,7 +1,7 @@
 import { ColumnConfigType } from "@/core/types/columnconfig";
 import { TableCellProps } from "react-virtualized";
 import { format } from "@formkit/tempo";
-import { Stack, Tooltip, IconButton } from "@mui/material";
+import { Stack, Tooltip, IconButton, Typography } from "@mui/material";
 import { ProductoResults } from "@/services/dto/productos/producto";
 import Icon from "@/components/ui/icon";
 import { useNavigate } from "react-router-dom"; // Si necesitas la navegación aquí
@@ -43,30 +43,35 @@ const AccionesCell = ({ rowData, onSelectProducto }: AccionesCellProps) => {
 
 export const productosColumnConfig = (width: number, onSelectProducto?: (producto: ProductoResults) => void): ColumnConfigType[] => [
   { dataKey: "codigo", label: "Código", width: width * 0.1 },
-  { dataKey: "nombre", label: "Nombre", width: width * 0.2 },
   {
-    dataKey: "costo",
-    label: "Costo",
-    width: width * 0.2,
-    cellRenderer: ({ rowData }: TableCellProps) => rowData.costo.toLocaleString("es-PY"),
+    dataKey: "nombre", label: "Nombre", width: width * 0.3,
+    cellRenderer: ({ rowData }: TableCellProps) => (
+      <Stack direction='row' spacing={1} alignItems='center'>
+        <IconButton>
+          <Icon size={22}>photo</Icon>
+        </IconButton>
+        <Stack direction='column'>
+          <Typography variant="caption">{rowData.nombre}</Typography>
+          <Typography variant="caption" fontSize={10}>{rowData.precio_normal.toLocaleString("es-PY")}</Typography>
+        </Stack>
+      </Stack>
+    )
   },
-  {
-    dataKey: "precio_normal",
-    label: "Precio",
-    width: width * 0.2,
-    cellRenderer: ({ rowData }: TableCellProps) => rowData.precio_normal.toLocaleString("es-PY"),
-  },
-  { dataKey: "tipo", label: "Tipo", width: width * 0.1 },
   {
     dataKey: "created_at",
     label: "Fecha",
     width: width * 0.18,
-    cellRenderer: ({ rowData }: TableCellProps) => format(rowData.created_at, "DD-MM-YY HH:mm"),
+    cellRenderer: ({ rowData }: TableCellProps) => (
+      <Stack direction='column'>
+        <Typography variant="caption">{format(rowData.created_at, "DD-MMM-YY")}</Typography>
+        <Typography variant="caption" fontSize={11}>{format(rowData.created_at, "HH:mm")}</Typography>
+      </Stack>
+    ),
   },
   {
     dataKey: "_",
     label: "Acciones",
     width: width * 0.18,
-    cellRenderer: (props: TableCellProps) => <AccionesCell {...props} onSelectProducto={onSelectProducto || (() => {})} />,
+    cellRenderer: (props: TableCellProps) => <AccionesCell {...props} onSelectProducto={onSelectProducto || (() => { })} />,
   },
 ];

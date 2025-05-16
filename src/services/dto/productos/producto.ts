@@ -39,6 +39,7 @@ export class ProductoResults{
     disponible: number;
     tipo: number;
     cantidad_minima: number;
+    created_at: string;
   
     constructor({
       id = 0,
@@ -54,6 +55,7 @@ export class ProductoResults{
       disponible = 1,
       tipo = 1,
       cantidad_minima = 0,
+      created_at = "",
     }: Partial<ProductoResults>) {
       this.id = id;
       this.impuesto_id = impuesto_id;
@@ -68,6 +70,7 @@ export class ProductoResults{
       this.tipo = tipo;
       this.cantidad_minima = cantidad_minima;
       this.descripcion = descripcion;
+      this.created_at = created_at;
     }
   
   

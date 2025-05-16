@@ -10,7 +10,7 @@ export default function TableCellHead({ children }: { children: React.ReactNode 
         boxSizing: "border-box",
         cursor: "pointer",
         height: 48,
-        bgcolor: "primary.main",
+        backgroundColor: "background.paper",
         color: "white",
         padding: "0 0 0 14px",
       }}
