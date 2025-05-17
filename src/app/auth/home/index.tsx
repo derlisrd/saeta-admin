@@ -5,7 +5,6 @@ import CardHome from "./card";
 function Home() {
   const { data, isLoading } = useEstadisticas();
 
-  console.log(data);
   return (
     <Container sx={{ mb: 5 }}>
       {data && (
@@ -16,10 +15,13 @@ function Home() {
           </Grid>
 
           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-            <CardHome data={data.ayer.importe.toLocaleString("es-PY")} title="Ayer" icon="restore" caption="Pedidos de ayer" />
+            <CardHome data={data.ayer.importe.toLocaleString("es-PY")} title="Ayer" icon="calendar-clock"
+              caption={'Pedidos: ' + data.ayer.cantidad}
+            />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-            <CardHome data={data.semana_pasada.importe.toLocaleString("es-PY")} title="Semana pasada" icon="restore" caption="Semana pasada" />
+            <CardHome data={data.semana_pasada.importe.toLocaleString("es-PY")} title="Semana pasada" icon="calendar-event"
+              caption={'Pedidos: ' + data.semana.cantidad} />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
             <CardHome data={data.hoy.importe.toLocaleString("es-PY")} title="Hoy" icon="moneybag"
@@ -57,21 +59,7 @@ function Home() {
           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
             <CardHome data={data.mes.lucro.toLocaleString("es-PY")} title="Del mes" icon="chart-pie" />
           </Grid>
-          <Grid size={12}>
-            <Typography variant="button">Pedidos</Typography>
-          </Grid>
-          <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-            <CardHome data={data.ayer.cantidad} title="Ayer" icon="forklift" />
-          </Grid>
-          <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-            <CardHome data={data.hoy.cantidad} title="Hoy" icon="forklift" />
-          </Grid>
-          <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-            <CardHome data={data.semana.cantidad} title="En la semana" icon="basket-up" />
-          </Grid>
-          <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-            <CardHome data={data.mes.cantidad} title="Del mes" icon="chart-bar" />
-          </Grid>
+
         </Grid>
       )}
     </Container>

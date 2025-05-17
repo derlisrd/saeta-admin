@@ -3,6 +3,7 @@ import { useSessionStorage } from "@/hooks/useSessionStorage";
 import API from "@/services/api";
 import { useQuery } from "@tanstack/react-query";
 import { LoginResults } from "@/services/dto/auth/login";
+import useAuthenticatedQuery from "@/hooks/useAutenticatedQuery";
 
 // Define el tipo para el contexto
 type AuthContextType = {
@@ -17,106 +18,16 @@ type AuthContextType = {
 // Contexto inicializado como undefined para ser manejado correctamente por useContext
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// Proveedor del contexto
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const { setItemValue: setSessionUserData } = useSessionStorage<LoginResults | null>("userData", null);
+  const authQuery = useAuthenticatedQuery();
 
-  const [isAuth, setIsAuth] = useState(false);
-  const [userData, setUserData] = useState<LoginResults | null>(null);
-
-  const updateUserData = (data: LoginResults) => {
-    setUserData(data);
-    setSessionUserData(data);
-  };
-
-  // Función para iniciar sesión
-  const iniciarSesion = useCallback(
-    (data: LoginResults | null, mantener?: boolean) => {
-      if (data !== null) {
-        setIsAuth(true);
-        setUserData(data);
-        if (mantener) setSessionUserData(data);
-      }
-    },
-    [setSessionUserData]
+  return (
+    <AuthContext.Provider value={{ ...authQuery }}>
+      {children}
+    </AuthContext.Provider>
   );
-
-  // Función para cerrar sesión
-  const cerrarSesion = useCallback(() => {
-    setIsAuth(false);
-    setUserData(null);
-    setSessionUserData(null);
-    localStorage.removeItem("pedidoStore");
-  }, [setSessionUserData]);
-
-  const isTokenExpired = (token: string): boolean => {
-    if (!token) return true;
-
-    try {
-      // Dividir el token en sus partes (header, payload, signature)
-      const parts = token.split(".");
-      if (parts.length !== 3) return true;
-
-      // Decodificar la parte del payload (la segunda parte)
-      const payload = JSON.parse(atob(parts[1]));
-
-      // Verificar si el token tiene un claim de expiración
-      if (!payload.exp) return false; // Sin exp, asumimos que no expira
-
-      // Convertir el tiempo actual a segundos (mismo formato que exp)
-      const currentTime = Math.floor(Date.now() / 1000);
-
-      // Comparar con el tiempo de expiración
-      return payload.exp < currentTime;
-    } catch (error) {
-      console.error("Error al verificar el token:", error);
-      return true; // Si hay un error al decodificar, asumimos que está expirado
-    }
-  };
-
-  const refreshTokenFn = async (refreshToken: string) => {
-    const res = await API.auth.refreshToken("Bearer " + refreshToken);
-    if (res && res.success && res.results && userData) {
-      const newUserData = { ...userData, token: res.results.token, refreshToken: res.results.refreshToken };
-      updateUserData(newUserData);
-    }
-    if (res && !res.success) {
-      cerrarSesion();
-    }
-  };
-
-  const { isLoading } = useQuery({
-    queryKey: ["checkAuth"],
-    queryFn: async () => {
-      const localStorage = window.sessionStorage.getItem("userData");
-      if (localStorage && localStorage !== "null") {
-        const local = JSON.parse(localStorage) as LoginResults;
-        if (!local.token) {
-          cerrarSesion();
-          return null;
-        }
-        if (isTokenExpired(local.token)) {
-          refreshTokenFn(local.refreshToken);
-          return null;
-        }
-
-        const res = await API.auth.check(local.token);
-        if (!res) {
-          cerrarSesion();
-          return null;
-        }
-        iniciarSesion(local);
-        return local;
-      }
-      return null;
-    },
-    staleTime: 5 * 60 * 1000, // Evita reconsultas innecesarias por 5 minutos
-    refetchOnWindowFocus: true,
-    refetchInterval: 5 * 60 * 1000, // Refresca cada 5 minutos
-  });
-
-  return <AuthContext.Provider value={{ isAuth, userData, iniciarSesion, cerrarSesion, loading: isLoading, updateUserData }}>{children}</AuthContext.Provider>;
 };
+
 
 // Hook personalizado para usar el contexto
 export const useAuth = () => {
