@@ -2,15 +2,12 @@ import Icon from "@/components/ui/icon";
 import { Button, Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, FormControlLabel, FormLabel, Grid2 as Grid, LinearProgress, Stack, TextField } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
 import { FormasPagoAdd } from "@/services/dto/config/formaspago";
-import useFormasPago from "@/core/hooks/config/useFormasPago";
+import { useFormasPagoContext } from "../provider";
 
-interface AddModalProps {
-  open: boolean;
-  onClose: () => void;
-}
 
-function AddModal(props: AddModalProps) {
-  const { isPending, insertar } = useFormasPago();
+
+function AddFormasPagoModal() {
+  const { isPending, insertar, modals, handleModals } = useFormasPagoContext();
 
   const {
     control,
@@ -27,15 +24,16 @@ function AddModal(props: AddModalProps) {
 
   const onSubmit = (data: FormasPagoAdd) => insertar(data);
 
+  const close = () => handleModals("add")
+
   return (
-    <Dialog open={props.open} onClose={props.onClose}>
+    <Dialog open={modals.add} onClose={close} fullWidth >
       <form onSubmit={handleSubmit(onSubmit)}>
         <DialogTitle>Agregar forma de pago</DialogTitle>
         <DialogContent>
           <Grid container spacing={2}>
             <Grid size={12}>
               {isPending && <LinearProgress />}
-              {}
             </Grid>
             <Grid size={12}>
               <Controller
@@ -116,7 +114,7 @@ function AddModal(props: AddModalProps) {
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button variant="outlined" onClick={props.onClose} startIcon={<Icon>arrow-narrow-left-dashed</Icon>}>
+          <Button variant="outlined" onClick={close} startIcon={<Icon>arrow-narrow-left-dashed</Icon>}>
             Regresar
           </Button>
           <Button type="submit" variant="contained" disabled={isPending} startIcon={<Icon>device-floppy</Icon>}>
@@ -128,4 +126,4 @@ function AddModal(props: AddModalProps) {
   );
 }
 
-export default AddModal;
+export default AddFormasPagoModal;

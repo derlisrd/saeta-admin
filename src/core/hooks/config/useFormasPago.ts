@@ -1,41 +1,45 @@
 import { useAuth } from "@/providers/AuthProvider";
 import API from "@/services/api";
-import { FormasPagoAdd, FormasPagoAddResponse, FormasPagoResponse } from "@/services/dto/config/formaspago";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { FormasPagoAdd, FormasPagoResponse } from "@/services/dto/config/formaspago";
+import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
 function useFormasPago() {
     const {userData} = useAuth()
     const queryClient = useQueryClient();
    const [modals,setModals] = useState({add: false})
+    
 
    const {isPending, mutateAsync} = useMutation({
     mutationKey: ['formasPagoAdd'],
     mutationFn: async(form : FormasPagoAdd)=>{
         return await API.formasPago.add(userData && userData.token, form)
     },
-    onSuccess: async (response: FormasPagoAddResponse) => {
-        if (response.success && response.results) {
+    onSettled: async(data) => {
+        if(data && data.results && data.success){
+            setModals({...modals, add: false})
             await queryClient.invalidateQueries({ queryKey: ['formasPago'] });
-            queryClient.setQueryData(['formasPago'], (oldData: any) => {
+            queryClient.setQueryData(['formasPago'], (oldData: FormasPagoResponse | null) => {
                 if (!oldData) return oldData;
                 
                 // Crear copia de los datos actuales
                 const newData = { ...oldData };
-                newData.push(response.results)
+                const nuevoResultado = {
+                    id: data.results?.id || 0,
+                    tipo: data.results?.tipo || "efectivo",
+                    descripcion: data.results?.descripcion || "",
+                    porcentaje_descuento: data.results?.porcentaje_descuento || 0,
+                    activo: data.results?.activo || 0,
+                }
+                newData.results.push(nuevoResultado);
                 
                 return newData;
-            });   
-            // Cerrar el modal después de añadir exitosamente
-            setModals(prev => ({ ...prev, add: false }));
+            });         
         }
-    },
-    onSettled: () => {
-        
     },
    })
     
-    const {data, isLoading} = useQuery({
+    const {data, isLoading} = useSuspenseQuery({
         queryKey: ['formasPago'],
         queryFn: ()=> API.formasPago.list(userData && userData.token),
         select: (data) => FormasPagoResponse.fromJSON(data),

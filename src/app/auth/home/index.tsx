@@ -5,6 +5,7 @@ import CardHome from "./card";
 function Home() {
   const { data, isLoading } = useEstadisticas();
 
+  console.log(data);
   return (
     <Container>
       {data && (
@@ -15,43 +16,55 @@ function Home() {
           </Grid>
 
           <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-            <CardHome data={data.ayer.importe.toLocaleString("es-PY")} title="Ayer" icon="restore" />
+            <CardHome data={data.ayer.importe.toLocaleString("es-PY")} title="Ayer" icon="restore" caption="Pedidos de ayer" />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-            <CardHome data={data.hoy.importe.toLocaleString("es-PY")} title="Hoy" icon="moneybag" />
+            <CardHome data={data.hoy.importe.toLocaleString("es-PY")} title="Hoy" icon="moneybag"
+              caption={data.comparaciones.dia.porcentaje.toFixed(2) + '%'}
+              captionColor={data.comparaciones.dia.porcentaje > 0 ? "green" : "red"}
+              captionIcon={data.comparaciones.dia.porcentaje > 0 ? "arrow-big-up" : "arrow-big-down"}
+            />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-            <CardHome data={data.semana.importe.toLocaleString("es-PY")} title="Semana" icon="circle-dashed-check" />
+            <CardHome data={data.semana.importe.toLocaleString("es-PY")} title="Semana" icon="circle-dashed-check"
+              caption={data.comparaciones.semana.porcentaje.toFixed(2) + '%'}
+              captionColor={data.comparaciones.semana.porcentaje > 0 ? "green" : "red"}
+              captionIcon={data.comparaciones.semana.porcentaje > 0 ? "arrow-big-up" : "arrow-big-down"}
+            />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-            <CardHome data={data.mes.importe.toLocaleString("es-PY")} title="Mes" icon="calendar-month" />
+            <CardHome data={data.mes.importe.toLocaleString("es-PY")} title="Mes" icon="calendar-month"
+              caption={data.comparaciones.mensual.porcentaje.toFixed(2) + '%'}
+              captionColor={data.comparaciones.mensual.porcentaje > 0 ? "green" : "red"}
+              captionIcon={data.comparaciones.mensual.porcentaje > 0 ? "arrow-big-up" : "arrow-big-down"}
+            />
           </Grid>
           <Grid size={12}>
             <h3>Lucros</h3>
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-            <CardHome data={data.ayer.lucro.toLocaleString("es-PY")} title="Lucro de ayer" icon="chart-dots" />
+            <CardHome data={data.ayer.lucro.toLocaleString("es-PY")} title="De ayer" icon="chart-dots" />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-            <CardHome data={data.hoy.lucro.toLocaleString("es-PY")} title="Lucro de hoy" icon="chart-histogram" />
+            <CardHome data={data.hoy.lucro.toLocaleString("es-PY")} title="De hoy" icon="chart-histogram" />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-            <CardHome data={data.semana.lucro.toLocaleString("es-PY")} title="Lucro de semana" icon="chart-line" />
+            <CardHome data={data.semana.lucro.toLocaleString("es-PY")} title="De la semana" icon="chart-line" />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-            <CardHome data={data.mes.lucro.toLocaleString("es-PY")} title="Lucro del mes" icon="chart-pie" />
+            <CardHome data={data.mes.lucro.toLocaleString("es-PY")} title="Del mes" icon="chart-pie" />
           </Grid>
           <Grid size={12}>
-            <h3>Pedidos</h3>
+            <h3>Cantidad de pedidos</h3>
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-            <CardHome data={data.hoy.cantidad} title="Cantidad pedidos de hoy" icon="forklift" />
+            <CardHome data={data.hoy.cantidad} title="Hoy" icon="forklift" />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-            <CardHome data={data.semana.cantidad} title="Cantidad pedidos de semana" icon="basket-up" />
+            <CardHome data={data.semana.cantidad} title="En la semana" icon="basket-up" />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-            <CardHome data={data.mes.cantidad} title="Cantidad pedidos de mes" icon="chart-bar" />
+            <CardHome data={data.mes.cantidad} title="Del mes" icon="chart-bar" />
           </Grid>
         </Grid>
       )}
