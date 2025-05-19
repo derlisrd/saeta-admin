@@ -1,7 +1,4 @@
-import { createContext, useContext, useState, useCallback, ReactNode } from "react";
-import { useSessionStorage } from "@/hooks/useSessionStorage";
-import API from "@/services/api";
-import { useQuery } from "@tanstack/react-query";
+import { createContext, useContext, ReactNode } from "react";
 import { LoginResults } from "@/services/dto/auth/login";
 import useAuthenticatedQuery from "@/hooks/useAutenticatedQuery";
 

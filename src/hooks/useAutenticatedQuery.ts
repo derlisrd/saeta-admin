@@ -104,6 +104,7 @@ const useAuthenticatedQuery = () => {
       cerrarSesion: cerrarSesionInternal,
       loading: query.isLoading,
       updateUserData: updateUserDataInternal,
+      refreshTokenFnInternal
     };
   }
 
