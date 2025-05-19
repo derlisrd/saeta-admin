@@ -34,7 +34,7 @@ function NotFoundPage() {
           <Typography variant="h4" gutterBottom>
             Página no encontrada
           </Typography>
-          <Typography variant="subtitle1" color="textSecondary" paragraph>
+          <Typography variant="subtitle1" color="textSecondary">
             Lo sentimos, la página que estás buscando no existe.
           </Typography>
           <Box mt={3}>
