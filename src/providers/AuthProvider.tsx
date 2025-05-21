@@ -117,7 +117,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     userData: userDataInternal,
     iniciarSesion: iniciarSesionInternal,
     cerrarSesion: cerrarSesionInternal,
-    loading: isLoading && false,
+    loading: isLoading && true,
     updateUserData: updateUserDataInternal
   };
 

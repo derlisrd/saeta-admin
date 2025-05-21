@@ -10,6 +10,37 @@ export default [
         descripcion: 'Inicio'
     },
     {
+        id: 51,
+        title: 'Informes',
+        icon: 'chart-histogram',
+        color: '#0066cc',
+        url: null,
+        private: false,
+        open: false,
+        descripcion: null,
+        submenu: [
+            {
+                id: 9876,
+                title: 'General',
+                icon: 'receipt_long',
+                color: '#0066cc',
+                url: '/informes/general',
+                private: false,
+                descripcion: null
+            },
+            {
+                id: 3987,
+                title: 'Productos',
+                icon: 'list',
+                color: '#0066cc',
+                url: '/informes/productos',
+                private: false,
+                descripcion: 'Lista de pedidos'
+            }
+        ],
+
+    },
+    {
         id: 2,
         title: 'Clientes',
         icon: 'users',
