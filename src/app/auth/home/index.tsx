@@ -16,12 +16,12 @@ function Home() {
 
           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
             <CardHome data={data.ayer.importe.toLocaleString("es-PY")} title="Ayer" icon="calendar-clock"
-              caption={'Pedidos: ' + data.ayer.cantidad}
+              caption={'Cantidad pedidos: ' + data.ayer.cantidad}
             />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
             <CardHome data={data.semana_pasada.importe.toLocaleString("es-PY")} title="Semana pasada" icon="calendar-event"
-              caption={'Pedidos: ' + data.semana_pasada.cantidad} />
+              caption={'Cantidad pedidos: ' + data.semana_pasada.cantidad} />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 4 }}></Grid>
           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
