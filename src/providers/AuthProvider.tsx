@@ -102,13 +102,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           }
         }
       }
-      console.log("No se encontró un token válido en el almacenamiento local.");
-
       return null;
     },
-    staleTime: 60 * 5000,
+    staleTime: 60 * 10000,
     refetchOnWindowFocus: true,
-    refetchInterval: 60 * 5000, // Refrescar si el token es válido y tiene un refreshToken
+    refetchInterval: 60 * 10000, // Refrescar si el token es válido y tiene un refreshToken
   });
 
   const values = {
