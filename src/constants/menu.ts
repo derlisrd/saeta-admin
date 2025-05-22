@@ -11,7 +11,7 @@ export default [
     },
     {
         id: 51,
-        title: 'Informes',
+        title: 'Estadisticas',
         icon: 'chart-histogram',
         color: '#0066cc',
         url: null,
@@ -24,18 +24,18 @@ export default [
                 title: 'General',
                 icon: 'receipt_long',
                 color: '#0066cc',
-                url: '/informes/general',
+                url: '/estadisticas',
                 private: false,
                 descripcion: null
             },
             {
                 id: 3987,
-                title: 'Productos',
+                title: 'Producto',
                 icon: 'list',
                 color: '#0066cc',
-                url: '/informes/productos',
+                url: '/estadisticas/producto',
                 private: false,
-                descripcion: 'Lista de pedidos'
+                descripcion: 'Estadisticas de producto'
             }
         ],
 

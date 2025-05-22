@@ -2,7 +2,6 @@ import { createContext, useContext, ReactNode, useState, useCallback } from "rea
 import { LoginResults } from "@/services/dto/auth/login";
 import API from "@/services/api";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useSessionStorage } from "@/hooks/useSessionStorage";
 
 // Define el tipo para el contexto
 type AuthContextType = {
@@ -18,15 +17,15 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const { setItemValue: setSessionUserData } = useSessionStorage<LoginResults | null>("userData", null);
+
   const [isAuthInternal, setIsAuthInternal] = useState(false);
   const [userDataInternal, setUserDataInternal] = useState<LoginResults | null>(null);
   const queryClient = useQueryClient();
 
   const updateUserDataInternal = useCallback((data: LoginResults) => {
     setUserDataInternal(data);
-    setSessionUserData(data);
-  }, [setSessionUserData]);
+    window.sessionStorage.setItem("userData", JSON.stringify(data));
+  }, []);
 
   const iniciarSesionInternal = useCallback(
     (data: LoginResults | null, mantener?: boolean) => {
@@ -38,7 +37,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
       }
     },
-    [setSessionUserData]
+    []
   );
 
   const cerrarSesionInternal = () => {
@@ -81,35 +80,35 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const { isLoading } = useQuery({
     queryKey: ["checkAuth"],
-
     queryFn: async () => {
       const localData = window.sessionStorage.getItem("userData");
+
       if (localData) {
         const localDataParsed = JSON.parse(localData) as LoginResults;
-
-        if (isTokenExpiredFn(localDataParsed.token)) {
+        /* if (isTokenExpiredFn(localDataParsed.token)) {
           const resfresh = await API.auth.refreshToken("Bearer " + localDataParsed.refreshToken);
           if (resfresh && resfresh.success && resfresh.results) {
             const newUserData = { ...localDataParsed, token: resfresh.results.token, refreshToken: resfresh.results.refreshToken };
             updateUserDataInternal(newUserData);
             return newUserData;
           }
-        }
-
-        const res = await API.auth.check(localDataParsed.token);
-        if (res) {
-          iniciarSesionInternal(localDataParsed);
-          return localData;
-        } else {
-          cerrarSesionInternal();
-          return null;
+        } */
+        if (localDataParsed.refreshToken) {
+          const res = await API.auth.refreshToken("Bearer " + localDataParsed.refreshToken);
+          if (res && res.success && res.results) {
+            const newUserData = { ...localDataParsed, token: res.results.token, refreshToken: res.results.refreshToken };
+            iniciarSesionInternal(newUserData, true);
+            return localData;
+          }
         }
       }
+      console.log("No se encontró un token válido en el almacenamiento local.");
+
       return null;
     },
-    staleTime: 5 * 60 * 1000,
+    staleTime: 60 * 5000,
     refetchOnWindowFocus: true,
-    refetchInterval: 5 * 60 * 1000,
+    refetchInterval: 60 * 5000, // Refrescar si el token es válido y tiene un refreshToken
   });
 
   const values = {
@@ -117,7 +116,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     userData: userDataInternal,
     iniciarSesion: iniciarSesionInternal,
     cerrarSesion: cerrarSesionInternal,
-    loading: isLoading && true,
+    loading: isLoading,
     updateUserData: updateUserDataInternal
   };
 

@@ -8,13 +8,13 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 const Loadable =
   <T extends object>(Component: LazyExoticComponent<() => JSX.Element>) =>
-  (props: T) => {
-    return (
-      <Suspense fallback={<LoadingPage />}>
-        <Component {...props} />
-      </Suspense>
-    );
-  };
+    (props: T) => {
+      return (
+        <Suspense fallback={<LoadingPage />}>
+          <Component {...props} />
+        </Suspense>
+      );
+    };
 
 function AutenticatedPages() {
   return (
@@ -22,6 +22,9 @@ function AutenticatedPages() {
       <Routes>
         <Route path="/" element={<AuthMenuLayout />}>
           <Route index element={<Home />} />
+
+          <Route path="/estadisticas/producto" element={<EstadisticasProducto />} />
+
           <Route path="/clientes" element={<Clientes />} />
           <Route path="/clientes/add" element={<ClientesAdd />} />
           <Route path="/productos/lista" element={<ProductosLista />} />
@@ -34,6 +37,7 @@ function AutenticatedPages() {
           <Route path="/config/formas-pago" element={<FormasPago />} />
 
           <Route path="/productos/add" element={<ProductosAdd />} />
+
           <Route path="/productos/edit/:id" element={<ProductosEdit />} />
           <Route path="/productos/carga-stock" element={<ProductosCargaStock />} />
           <Route path="/productos/codigo-barra" element={<PrintCodigoBarra />} />
@@ -75,6 +79,8 @@ const ProductosAdd = Loadable(lazy(() => import("./productos/add")));
 const ProductosEdit = Loadable(lazy(() => import("./productos/edit")));
 const ProductosCargaStock = Loadable(lazy(() => import("./productos/carga-stock")));
 
-const Actualizaciones = Loadable(lazy(()=>import('./actualizacion')));
+const Actualizaciones = Loadable(lazy(() => import('./actualizacion')));
 
+
+const EstadisticasProducto = Loadable(lazy(() => import("./estadisticas/producto")));
 export default AutenticatedPages;
