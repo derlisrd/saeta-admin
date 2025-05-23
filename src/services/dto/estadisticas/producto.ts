@@ -8,7 +8,7 @@ export class EstadisticasProductoResponse {
     this.success = success ?? false;
     this.message = message ?? "";
     this.status = status ?? 0;
-    this.results = results ?? null;
+    this.results = results ? EstadisticasProductoResults.fromJSON(results) : null;
   }
 
   
@@ -36,14 +36,7 @@ export class EstadisticasProductoResults {
     results.costo = data.costo;
     results.total = data.total;
     results.ventas = data.ventas.map((venta: any) => {
-      const ventaObj = new EstadisticasProductoVentas();
-      ventaObj.id = venta.id;
-      ventaObj.nombre = venta.nombre;
-      ventaObj.precio = venta.precio;
-      ventaObj.costo = venta.costo;
-      ventaObj.cantidad = venta.cantidad;
-      ventaObj.descuento = venta.descuento;
-      return ventaObj;
+      return EstadisticasProductoVentas.fromJSON(venta);
     });
     return results;
   }
@@ -56,13 +49,26 @@ export class EstadisticasProductoVentas {
   costo: number;
   cantidad: number;
   descuento: number;
+  fecha: string;
 
-  constructor() {
-    this.id = 0;
-    this.nombre = "";
-    this.precio = 0;
-    this.costo = 0;
-    this.cantidad = 0;
-    this.descuento = 0;
+  constructor({ id, nombre, precio, costo, cantidad, descuento, fecha }: Partial<EstadisticasProductoVentas>) {
+    this.id = id ?? 0;
+    this.nombre = nombre ?? "";
+    this.precio = precio ?? 0;
+    this.costo = costo ?? 0;
+    this.cantidad = cantidad ?? 0;
+    this.descuento = descuento ?? 0;
+    this.fecha = fecha ?? "";
+  }
+  static fromJSON(data: any) {
+    return new EstadisticasProductoVentas({
+      id: data.id,
+      nombre: data.nombre,
+      precio: data.precio,
+      costo: data.costo,
+      cantidad: data.cantidad,
+      descuento: data.descuento,
+      fecha: data.created_at
+    });
   }
 }

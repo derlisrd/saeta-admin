@@ -98,6 +98,11 @@ function useEstadisticas() {
         return ((valorActual - valorAnterior) / valorAnterior) * 100;
     }
 
-    return { data: combinedData, isLoading };
+  const refresh = () => {
+    pedidosResponse.refetch();
+    lucrosResponse.refetch();
+  };
+
+    return { data: combinedData, isLoading, refresh };
 }
 export default useEstadisticas;

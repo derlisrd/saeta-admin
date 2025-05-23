@@ -1,9 +1,10 @@
 import useEstadisticas from "@/core/hooks/home/useEstadisticas";
-import { Container, Grid2 as Grid, LinearProgress, Typography } from "@mui/material";
+import { Container, Grid2 as Grid, IconButton, LinearProgress, Typography } from "@mui/material";
 import CardHome from "./card";
+import Icon from "@/components/ui/icon";
 
 function Home() {
-  const { data, isLoading } = useEstadisticas();
+  const { data, isLoading, refresh } = useEstadisticas();
 
   return (
     <Container sx={{ mb: 5 }}>
@@ -11,7 +12,7 @@ function Home() {
         <Grid spacing={2} container>
           <Grid size={12}>{isLoading && <LinearProgress />}</Grid>
           <Grid size={12}>
-            <Typography variant="h5">Estadísticas</Typography>
+            <Typography variant="h5">Estadísticas</Typography> <IconButton onClick={() => refresh()}><Icon>rotate-clockwise</Icon></IconButton>
           </Grid>
 
           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
@@ -25,21 +26,21 @@ function Home() {
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 4 }}></Grid>
           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-            <CardHome data={data.hoy.importe.toLocaleString("es-PY")} title="Hoy" icon="moneybag"
+            <CardHome data={data.hoy.importe.toLocaleString("es-PY")} title="Ventas de hoy" icon="moneybag"
               caption={data.comparaciones.dia.porcentaje.toFixed(2) + '%'}
               captionColor={data.comparaciones.dia.porcentaje > 0 ? "green" : "red"}
               captionIcon={data.comparaciones.dia.porcentaje > 0 ? "arrow-big-up" : "arrow-big-down"}
             />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-            <CardHome data={data.semana.importe.toLocaleString("es-PY")} title="Semana" icon="circle-dashed-check"
+            <CardHome data={data.semana.importe.toLocaleString("es-PY")} title="Ventas de la semana" icon="circle-dashed-check"
               caption={data.comparaciones.semana.porcentaje.toFixed(2) + '%'}
               captionColor={data.comparaciones.semana.porcentaje > 0 ? "green" : "red"}
               captionIcon={data.comparaciones.semana.porcentaje > 0 ? "arrow-big-up" : "arrow-big-down"}
             />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-            <CardHome data={data.mes.importe.toLocaleString("es-PY")} title="Mes" icon="calendar-month"
+            <CardHome data={data.mes.importe.toLocaleString("es-PY")} title="Ventas del mes" icon="calendar-month"
               caption={data.comparaciones.mensual.porcentaje.toFixed(2) + '%'}
               captionColor={data.comparaciones.mensual.porcentaje > 0 ? "green" : "red"}
               captionIcon={data.comparaciones.mensual.porcentaje > 0 ? "arrow-big-up" : "arrow-big-down"}
