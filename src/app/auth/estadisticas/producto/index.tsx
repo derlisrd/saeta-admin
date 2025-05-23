@@ -9,9 +9,10 @@ import dayjs from "dayjs";
 import useEstadisticasPorProducto from "@/core/hooks/estadisticas/useEstadisticasPorProducto";
 import Icon from "@/components/ui/icon";
 import Datos from "./_components/datos";
-import Ventas from "./_components/ventas";
 import GenericTable from "@/components/table/GenericTable";
-import { columns } from "./_components/configcolumns";
+import { columnsconfig } from "./_components/configcolumns";
+
+
 
 
 function EstadisticasProducto() {
@@ -34,6 +35,7 @@ function EstadisticasProducto() {
         if (selectedProducto && fechaDesde && fechaHasta) {
             send(selectedProducto.id, desde, hasta);
         }
+        setSearch('')
     }
     const clear = () => {
         setSelectedProducto(null);
@@ -48,8 +50,8 @@ function EstadisticasProducto() {
     return (
         <Container maxWidth='xl'>
             <Slide direction="up" in={true} mountOnEnter unmountOnExit>
-                <Box component={Paper} boxShadow={4} borderRadius={4} mb={6} padding={{ xs: 2, md: 2 }}>
-                    <Grid container spacing={2} alignItems='center'>
+                <Box component={Paper} boxShadow={4} borderRadius={4} padding={{ xs: 2, md: 2 }}>
+                    <Grid container spacing={2} alignItems='center' mb={1}>
                         <Grid size={12}>
                             <Typography variant="body1">Seleccione el producto y el rango de fecha</Typography>
                         </Grid>
@@ -68,7 +70,7 @@ function EstadisticasProducto() {
                                 loading={loadingBusqueda}
                                 loadingText="Buscando..."
                                 noOptionsText="No se encontraron resultados"
-                                value={selectedProducto ?? null}
+                                value={selectedProducto}
                                 renderInput={(params) => <TextField {...params} placeholder="Buscar producto..." onChange={(e) => setSearch(e.target.value)} value={search} />}
                             />
                         </Grid>
@@ -107,32 +109,23 @@ function EstadisticasProducto() {
                             />
                         </Grid>
                         <Grid size={{ xs: 12, sm: 6, md: 2 }}>
-                            <Button onClick={handleSend} endIcon={<Icon>report-search</Icon>}>
+                            <Button onClick={handleSend} fullWidth endIcon={<Icon>report-search</Icon>}>
                                 Consultar
                             </Button>
                         </Grid>
                         <Grid size={{ xs: 12, sm: 6, md: 2 }}>
-                            <Button variant="outlined" onClick={clear} endIcon={<Icon>trash</Icon>}>
+                            <Button variant="outlined" fullWidth onClick={clear} endIcon={<Icon>trash</Icon>}>
                                 Limpiar
                             </Button>
                         </Grid>
-                        <Grid size={{ xs: 12 }}>
+                        <Grid size={12}>
                             {data && data.results && <Datos data={data.results} />}
                         </Grid>
-                        <Grid size={{ xs: 12 }}>
-                            {data &&
-                                data.results &&
-                                data.results.ventas.map((item, index) => (
-                                    <div key={index}>
-                                        <Typography variant="h6">{item.id}</Typography>
-
-                                    </div>
-                                ))}
-
-                        </Grid>
                     </Grid>
+                    <GenericTable minHeight={320} data={data && data.results ? data.results.ventas : []} columns={columnsconfig()} rowHeight={40} headerHeight={36} />
                 </Box>
             </Slide>
+
         </Container>
     );
 }

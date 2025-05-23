@@ -13,14 +13,15 @@ interface GenericTableProps<T> {
   rowHeight?: number;
   headerHeight?: number;
   sx?: SxProps<Theme>;
+  minHeight?: number;
 }
 
 const defaultHeaderRenderer = ({ label }: TableHeaderProps) => <TableCellHead>{label}</TableCellHead>;
 const defaultCellRenderer = ({ cellData }: TableCellProps) => <TableCell>{cellData}</TableCell>;
 
-function GenericTable<T extends object>({ data, columns, rowHeight = 48, headerHeight = 48, sx }: GenericTableProps<T>) {
+function GenericTable<T extends object>({ data, columns, rowHeight = 48, headerHeight = 48, sx, minHeight = 190 }: GenericTableProps<T>) {
   return (
-    <StyledTableContainer sx={{ minHeight: `calc(100% - ${headerHeight + 190}px)`, ...sx }}>
+    <StyledTableContainer sx={{ minHeight: `calc(100% - ${headerHeight + minHeight}px)`, ...sx }}>
       {data && (
         <AutoSizer>
           {({ height, width }) => (
