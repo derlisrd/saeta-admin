@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     queryClient.removeQueries({ queryKey: 'checkAuth' }) // Limpia la query al cerrar sesión
   }
 
-  const isTokenExpiredFn = (token: string): boolean => {
+  /* const isTokenExpiredFn = (token: string): boolean => {
     if (!token) return true;
 
     try {
@@ -62,7 +62,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       console.error("Error al verificar el token:", error);
       return true;
     }
-  }
+  } */
 
   /* const refreshTokenFnInternal = useCallback(async (refreshToken: string) => {
     const res = await API.auth.refreshToken("Bearer " + refreshToken);
