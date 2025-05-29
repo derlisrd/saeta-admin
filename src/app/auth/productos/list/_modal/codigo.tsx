@@ -2,18 +2,18 @@ import Icon from "@/components/ui/icon";
 import Barcode from "react-barcode";
 import { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
-import { ProductoResults } from "@/services/dto/productos/producto";
 import { Button, Dialog, DialogActions, DialogContent, Grid2 as Grid } from "@mui/material";
 import { useAuth } from "@/providers/AuthProvider";
+import { useProductosLista } from "../provider";
 
-interface PrintCodigoModalProps {
-  open: boolean;
-  onClose: () => void;
-  selectedProducto: ProductoResults | null;
-}
 
-function PrintCodigoModal({ open, onClose, selectedProducto }: PrintCodigoModalProps) {
-  if (!selectedProducto) return null;
+
+function PrintCodigoModal() {
+
+  const { modals, handleModals, selectedProducto } = useProductosLista()
+
+
+  if (!selectedProducto) return <></>;
 
   const { userData } = useAuth();
 
@@ -22,7 +22,7 @@ function PrintCodigoModal({ open, onClose, selectedProducto }: PrintCodigoModalP
   const impresoraWidth = userData?.impresoras?.[0]?.mm ? `${userData.impresoras[0].mm}mm` : "100%";
 
   return (
-    <Dialog open={open} onClose={onClose} disableRestoreFocus>
+    <Dialog open={modals.codigo} onClose={() => handleModals("codigo")} disableRestoreFocus>
       <DialogContent>
         <Grid container spacing={2}>
           <Grid size={12}>
@@ -51,7 +51,7 @@ function PrintCodigoModal({ open, onClose, selectedProducto }: PrintCodigoModalP
         <Button startIcon={<Icon>printer</Icon>} color="primary" onClick={() => print()}>
           Imprimir
         </Button>
-        <Button variant="outlined" onClick={onClose}>
+        <Button variant="outlined" onClick={() => handleModals("codigo")}>
           Cerrar
         </Button>
       </DialogActions>
