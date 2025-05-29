@@ -14,7 +14,7 @@ function FiltrosProductos({
     const nav = useNavigate();
 
     return <Grid container alignItems="center" spacing={2} my={2}>
-        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+        <Grid size={{ xs: 12, sm: 6, md: 4 }}>
             <TextField
                 fullWidth
                 label="Buscar"
@@ -31,7 +31,7 @@ function FiltrosProductos({
                 onChange={({ target }) => setSearch(target.value)}
             />
         </Grid>
-        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+        <Grid size={{ xs: 12, sm: 6, md: 4 }}>
             <DepositoSelect />
         </Grid>
         <Grid size={{ xs: 6, sm: 6, md: 3 }}>
@@ -39,7 +39,7 @@ function FiltrosProductos({
                 Registrar
             </Button>
         </Grid>
-        <Grid size={{ xs: 6, sm: 6, md: 3 }}>
+        <Grid size={{ xs: 6, sm: 6, md: 1 }}>
             <Tooltip title="Actualizar" placement="top" arrow>
                 <IconButton onClick={() => refresh()} >
                     <Icon>refresh</Icon>
