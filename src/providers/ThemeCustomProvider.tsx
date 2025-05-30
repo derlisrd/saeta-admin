@@ -61,9 +61,9 @@ function ThemeCustomProvider({ children }: ThemeCustomProviderType) {
     setCustomThemeStorage(newModeTheme);
   };
 
-  const checkTheme = useCallback(() => {
+  const checkTheme = useCallback((refresh: boolean = false) => {
     let temaDark: boolean;
-    if (customThemeStorage === undefined) {
+    if (customThemeStorage === undefined || refresh) {
       if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
         temaDark = true;
       } else {
@@ -88,7 +88,7 @@ function ThemeCustomProvider({ children }: ThemeCustomProviderType) {
     }
   }, [checkTheme]);
 
-  const values = { modeDark, toggleModeDark, customTheme, changeColor };
+  const values = { modeDark, toggleModeDark, customTheme, changeColor, checkTheme };
   return <ThemeCustomContext.Provider value={values}>{children}</ThemeCustomContext.Provider>;
 }
 

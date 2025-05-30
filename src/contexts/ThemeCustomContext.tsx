@@ -7,6 +7,7 @@ interface ThemeCustomContextValuesType {
   toggleModeDark: () => void;
   customTheme?: Theme;
   changeColor: (availablecolors: availableColorsType) => void;
+  checkTheme: (refresh: boolean) => void;
 }
 
 const ThemeCustomContext = createContext<ThemeCustomContextValuesType | undefined>(undefined);

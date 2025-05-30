@@ -1,17 +1,17 @@
 import Icon from "@/components/ui/icon";
 import MenuNavList from "./components/MenuNavList";
 import useDrawerMenu from "@/hooks/useDrawerMenu";
-import useThemTypeMode from "@/hooks/useThemeCustom";
 
 import { Drawer, Box, Toolbar, Stack, IconButton, Tooltip, Typography } from "@mui/material";
 import { NavigateOptions, Outlet, To, useLocation, useNavigate } from "react-router-dom";
+import DrawerTheme from "./components/DrawerTheme";
 
 function AuthMenuLayout() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { isOpenMenu, toggleMenu, isOpenMobileMenu, toggleMobileMenu, DRAWER_WIDTH } = useDrawerMenu();
+  const { isOpenMenu, toggleMenu, isOpenMobileMenu, toggleMobileMenu, DRAWER_WIDTH, isOpenConfigDrawer, toggleConfigDrawer } = useDrawerMenu();
 
-  const { toggleModeDark, modeDark } = useThemTypeMode();
+
 
   let margin_left = isOpenMenu ? `${DRAWER_WIDTH}px` : "0";
   let width_main = isOpenMenu ? `calc(100% - ${DRAWER_WIDTH}px)` : "100%";
@@ -44,13 +44,9 @@ function AuthMenuLayout() {
           </Stack>
 
           <Stack flexDirection="row">
-            <Tooltip placement="bottom" arrow title="Cambiar tema">
-              <IconButton onClick={toggleModeDark}>
-                <Icon>{modeDark ? "moon-stars" : "sun"}</Icon>
-              </IconButton>
-            </Tooltip>
+
             <Tooltip placement="bottom" arrow title="Configuraciones">
-              <IconButton>
+              <IconButton onClick={toggleConfigDrawer}>
                 <Icon>settings-code</Icon>
               </IconButton>
             </Tooltip>
@@ -94,6 +90,7 @@ function AuthMenuLayout() {
       >
         <MenuNavList navegar={navegar} isMobile />
       </Drawer>
+      <DrawerTheme isOpen={isOpenConfigDrawer} handleIsOpen={toggleConfigDrawer} />
       <TopBar />
       <Box sx={{ paddingTop: 8, paddingLeft: 2, paddingRight: 2, width: { md: width_main }, marginLeft: { md: margin_left }, transition: "all 0.2s" }}>
         <Outlet />

@@ -262,16 +262,6 @@ export default [
                 private: false,
                 descripcion: 'Parámetros'
             }
-            ,
-            {
-                id: 4,
-                title: 'Tema',
-                icon: 'brush',
-                color: '#0066cc',
-                url: '/config/tema',
-                private: false,
-                descripcion: 'Tema'
-            }
         ]
     },
     {
