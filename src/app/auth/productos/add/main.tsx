@@ -19,7 +19,7 @@ function AddProductoMain() {
       <NotificacionSnack open={success.active} onClose={clearSuccess} message={success.message} severity="info" />
 
       <Slide direction="up" in={true} mountOnEnter unmountOnExit>
-        <Box boxShadow={4} borderRadius={4} component={Paper} mb={6} padding={{ xs: 0, sm: 1, md: 2 }}>
+        <Box boxShadow={4} borderRadius={4} component={Paper} mb={6} padding={{ xs: 0, sm: 1 }}>
           {loading && <LinearProgress sx={{ margin: "18px" }} />}
           <TabsCustom />
           <TabContainer index={0} tabValue={tabValue}>

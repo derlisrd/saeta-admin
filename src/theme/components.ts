@@ -58,7 +58,7 @@ export const components = (): Components<Omit<Theme, 'components' | 'palette'> &
   MuiTextField:{
     defaultProps:{
       sx:{
-        borderRadius:"9px",
+        borderRadius:"9px"
       },
       variant:"outlined",
     },
@@ -75,7 +75,7 @@ export const components = (): Components<Omit<Theme, 'components' | 'palette'> &
   MuiInputBase:{
     defaultProps:{
       sx:{
-        backgroundColor: 'background.paper'
+        backgroundColor: 'background.paper',
       }
     },
     styleOverrides:{
@@ -101,7 +101,7 @@ export const components = (): Components<Omit<Theme, 'components' | 'palette'> &
       root: {
         borderRadius: "8px",
         borderWidth: 0,
-        fontSize: 13,
+        fontSize: 13
       },
     },
   },
