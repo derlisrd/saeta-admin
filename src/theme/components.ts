@@ -157,7 +157,8 @@ export const components = (): Components<Omit<Theme, 'components' | 'palette'> &
   MuiSelect: {
     styleOverrides: {
       root: {
-        fontSize: 12
+        fontSize: 12,
+        padding: 0
       }
     }
   }
