@@ -1,5 +1,5 @@
 import Icon from "@/components/ui/icon";
-import { Button, Container } from "@mui/material";
+import { Button, Container, TextField } from "@mui/material";
 
 function Actualizacion() {
 
@@ -11,6 +11,7 @@ function Actualizacion() {
 
     return <Container>
         <Button startIcon={<Icon>refresh</Icon>} onClick={() => refresh()}>Actualizar</Button>
+        <TextField label="Codigo" />
     </Container>
 }
 

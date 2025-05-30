@@ -3,7 +3,7 @@ import { Components, CssVarsTheme, Theme } from "@mui/material";
 export const components = (): Components<Omit<Theme, 'components' | 'palette'> & CssVarsTheme> => ({
   MuiCssBaseline:{
     styleOverrides:{
-      "::-webkit-scrollbar": {width: 0}
+      "::-webkit-scrollbar": {width: 12}
     }
   },
   MuiCard: {
@@ -58,7 +58,7 @@ export const components = (): Components<Omit<Theme, 'components' | 'palette'> &
   MuiTextField:{
     defaultProps:{
       sx:{
-        borderRadius:"9px"
+        borderRadius:"8px"
       },
       variant:"outlined",
     },
@@ -76,6 +76,7 @@ export const components = (): Components<Omit<Theme, 'components' | 'palette'> &
     defaultProps:{
       sx:{
         backgroundColor: 'background.paper',
+        fontSize: 19
       }
     },
     styleOverrides:{
@@ -94,21 +95,24 @@ export const components = (): Components<Omit<Theme, 'components' | 'palette'> &
   MuiOutlinedInput: {
     defaultProps:{
       sx:{
-        backgroundColor: 'background.paper'
+        backgroundColor: 'background.paper',
       }
     },
     styleOverrides: {
       root: {
         borderRadius: "8px",
         borderWidth: 0,
-        fontSize: 13
+        '& input':{
+          padding: '14px 8px',
+          fontSize: 12
+        }
       },
     },
   },
   MuiInputLabel: {
     styleOverrides: {
       root: {
-        fontSize: 13,
+        fontSize: 12
       },
     },
   },
@@ -147,6 +151,13 @@ export const components = (): Components<Omit<Theme, 'components' | 'palette'> &
     styleOverrides:{
       paper:{
         borderRadius:"12px"
+      }
+    }
+  },
+  MuiSelect: {
+    styleOverrides: {
+      root: {
+        fontSize: 12
       }
     }
   }
