@@ -53,7 +53,7 @@ function Stock() {
         </FormControl>
       </Grid>
       <Grid size={{ xs: 12, md: 4 }}>
-        <Button variant="outlined" size="large" onClick={addStock}>
+        <Button variant="outlined" endIcon={<Icon size={14}>basket-plus</Icon>} onClick={addStock}>
           AGREGAR
         </Button>
       </Grid>

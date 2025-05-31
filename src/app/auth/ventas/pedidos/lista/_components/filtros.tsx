@@ -41,7 +41,7 @@ function Filtros({ setSearch, buscar, search, refresh, setDesde, setHasta, desde
             input: {
               startAdornment: (
                 <InputAdornment position="start">
-                  <Icon size={18}>search</Icon>
+                  <Icon size={14}>search</Icon>
                 </InputAdornment>
               ),
             },
@@ -55,7 +55,7 @@ function Filtros({ setSearch, buscar, search, refresh, setDesde, setHasta, desde
           placeholder="Buscar por razón social o documento..."
           onChange={({ target }) => setSearch(target.value)}
           fullWidth
-          size="small"
+
         />
       </Grid>
       <Grid size={{ xs: 12, sm: 4, md: 3 }}>
@@ -71,7 +71,7 @@ function Filtros({ setSearch, buscar, search, refresh, setDesde, setHasta, desde
           slotProps={{
             textField: {
               fullWidth: true,
-              size: "small",
+
             },
           }}
         />
@@ -89,7 +89,7 @@ function Filtros({ setSearch, buscar, search, refresh, setDesde, setHasta, desde
           slotProps={{
             textField: {
               fullWidth: true,
-              size: "small",
+
             },
           }}
         />

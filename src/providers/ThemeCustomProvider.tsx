@@ -8,6 +8,7 @@ import { typography } from "@/theme/typography";
 import { createTheme, Theme } from "@mui/material";
 import { ReactNode, useCallback, useEffect, useState } from "react";
 import { availableColorsType } from "@/core/types/availablecolors";
+import { LayoutProvider } from "./LayoutProvider";
 
 interface ThemeCustomProviderType {
   children: ReactNode;
@@ -37,8 +38,7 @@ function ThemeCustomProvider({ children }: ThemeCustomProviderType) {
       newModeTheme.palette.text.secondary = colorsMode.light.textSecondary;
       newModeTheme.palette.divider = colorsMode.light.divider;
       newModeTheme.shadows = shadowsLight;
-      setCustomTheme(createTheme({ ...newModeTheme, cssVariables: true }));
-      setCustomThemeStorage(newModeTheme);
+
     } else {
       newModeTheme.palette.mode = "dark";
       newModeTheme.palette.background.default = colorsMode.dark.bgdefault;
@@ -47,10 +47,9 @@ function ThemeCustomProvider({ children }: ThemeCustomProviderType) {
       newModeTheme.palette.text.secondary = colorsMode.dark.textSecondary;
       newModeTheme.palette.divider = colorsMode.dark.divider;
       newModeTheme.shadows = shadowsDark;
-
-      setCustomTheme(createTheme({ ...newModeTheme, cssVariables: true }));
-      setCustomThemeStorage(newModeTheme);
     }
+    setCustomTheme(createTheme({ ...newModeTheme, cssVariables: true }));
+    setCustomThemeStorage(newModeTheme);
   };
   const changeColor = ({ color, secondary }: availableColorsType) => {
     const newModeTheme = { ...customThemeStorage } as Theme;
@@ -89,7 +88,9 @@ function ThemeCustomProvider({ children }: ThemeCustomProviderType) {
   }, [checkTheme]);
 
   const values = { modeDark, toggleModeDark, customTheme, changeColor, checkTheme };
-  return <ThemeCustomContext.Provider value={values}>{children}</ThemeCustomContext.Provider>;
+  return <ThemeCustomContext.Provider value={values}>
+    {children}
+  </ThemeCustomContext.Provider>;
 }
 
 export default ThemeCustomProvider;

@@ -133,7 +133,7 @@ function FormaPagoModal() {
           </Grid>
           <Grid size={{ xs: 12, md: 6 }}>
             <Stack direction="row" spacing={2} alignItems="center" justifyContent="flex-end">
-              <FormLabel>Seleccione condición de venta: </FormLabel>
+              <FormLabel>Condición de venta: </FormLabel>
               <FormControlLabel
                 value={0}
                 control={<Checkbox icon={<Icon size={22}>circle-dashed</Icon>} checkedIcon={<Icon size={22}>circle-check</Icon>} />}

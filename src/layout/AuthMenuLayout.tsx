@@ -1,15 +1,16 @@
 import Icon from "@/components/ui/icon";
 import MenuNavList from "./components/MenuNavList";
-import useDrawerMenu from "@/hooks/useDrawerMenu";
+
 
 import { Drawer, Box, Toolbar, Stack, IconButton, Tooltip, Typography } from "@mui/material";
 import { NavigateOptions, Outlet, To, useLocation, useNavigate } from "react-router-dom";
 import DrawerTheme from "./components/DrawerTheme";
+import { useLayoutContext } from "@/providers/LayoutProvider";
 
 function AuthMenuLayout() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { isOpenMenu, toggleMenu, isOpenMobileMenu, toggleMobileMenu, DRAWER_WIDTH, isOpenConfigDrawer, toggleConfigDrawer } = useDrawerMenu();
+  const { isOpenMenu, toggleMenu, isOpenMobileMenu, toggleMobileMenu, DRAWER_WIDTH, isOpenConfigDrawer, toggleConfigDrawer } = useLayoutContext();
 
 
 

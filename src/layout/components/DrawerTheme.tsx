@@ -56,7 +56,7 @@ function DrawerTheme({ isOpen, handleIsOpen }: ThemeDrawerLayoutProps) {
                         <Stack direction="column" spacing={1} alignItems="center">
                             <Stack direction="row" spacing={1} alignItems="center">
                                 <Icon>sun-moon</Icon>
-                                <Switch size="small" checked={!modeDark} onClick={toggleModeDark} />
+                                <Switch size="small" checked={!modeDark} onChange={(_, check) => { toggleModeDark(); }} />
                             </Stack>
                             <Typography variant="overline">Tema</Typography>
                         </Stack>
@@ -64,15 +64,13 @@ function DrawerTheme({ isOpen, handleIsOpen }: ThemeDrawerLayoutProps) {
                 </Box>
 
                 <Box>
-                    <Chip label="Colores" color="primary" size="small" icon={<Icon>traffic-lights</Icon>} />
+                    <Chip label="Colores" color="primary" sx={{ p: 1 }} icon={<Icon>traffic-lights</Icon>} />
                     <Grid container spacing={2} my={1} p={1} border={1} borderColor="divider" borderRadius={2}>
                         <Grid size={6}>
-                            <Button fullWidth>Primario</Button>
+                            <Chip label="Primario" color="primary" sx={{ p: 1 }} />
                         </Grid>
                         <Grid size={6}>
-                            <Button color="secondary" fullWidth>
-                                Secundario
-                            </Button>
+                            <Chip label="Secundario" color="secondary" sx={{ p: 1 }} />
                         </Grid>
                         {availableColors.map((item, i) => (
                             <Grid key={i} size={4}>

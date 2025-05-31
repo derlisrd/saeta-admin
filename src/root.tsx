@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider } from "./providers/AuthProvider";
 import ThemeCustomProvider from "./providers/ThemeCustomProvider";
 import { BrowserRouter } from "react-router-dom";
+import { LayoutProvider } from "./providers/LayoutProvider";
 
 function Root() {
   const queryClient = new QueryClient();
@@ -12,7 +13,9 @@ function Root() {
       <BrowserRouter basename="/admin">
         <ThemeCustomProvider>
           <AuthProvider>
-            <App />
+            <LayoutProvider>
+              <App />
+            </LayoutProvider>
           </AuthProvider>
         </ThemeCustomProvider>
       </BrowserRouter>

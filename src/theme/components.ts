@@ -92,27 +92,46 @@ export const components = (): Components<Omit<Theme, 'components' | 'palette'> &
       }
     }
   },
+  MuiInput:{
+    styleOverrides: {
+      root: {
+        /* borderRadius: "8px",
+        padding: "18px" */
+      }
+    }
+  },
   MuiOutlinedInput: {
     defaultProps:{
       sx:{
         backgroundColor: 'background.paper',
-      }
+      },
+      size: 'medium'
     },
     styleOverrides: {
       root: {
         borderRadius: "8px",
         borderWidth: 0,
         '& input':{
-          padding: '14px 8px',
-          fontSize: 12
+           
+          /* fontSize: 12 */
         }
       },
     },
   },
+  MuiInputAdornment:{
+    styleOverrides: {
+      root: {
+       /* marginRight: '0'
+         "& svg": {
+          fontSize: 18
+        } */
+      }
+    }
+  },
   MuiInputLabel: {
     styleOverrides: {
       root: {
-        fontSize: 12
+        /* fontSize: 12 */
       },
     },
   },
@@ -157,8 +176,8 @@ export const components = (): Components<Omit<Theme, 'components' | 'palette'> &
   MuiSelect: {
     styleOverrides: {
       root: {
-        fontSize: 12,
-        padding: 0
+        /* fontSize: 12,
+        padding: 0 */
       }
     }
   }
