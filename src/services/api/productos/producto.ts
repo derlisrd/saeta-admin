@@ -5,6 +5,24 @@ import { ConsultarPorDepositoResponse } from "@/services/dto/productos/consulta"
 import axios from 'axios'
 
 export const apiServiceProductos = {
+  productosPorDeposito: async (token: string | null, deposito_id: number, q : string): Promise<ProductoResponse> => {
+    try {
+      const { data, status } = await BASE.get(`/productos/deposito/${deposito_id}?q=${q}`, { headers: { Authorization: token } });
+      return ProductoResponse.fromJSON({
+        success: data.success,
+        status,
+        results: data.results,
+        message: ""
+      });
+    } catch (e) {
+      return ProductoResponse.fromJSON({
+        success: false,
+        status: 500,
+        results: null,
+        message: "Error al obtener productos"
+      });
+    }
+  },
   consultarCodigoPorDeposito: async (token: string | null, codigo: string, deposito_id: number, cantidad : number): Promise<ConsultarPorDepositoResponse> => {
     try {
       const { data, status } = await BASE.get(`/productos/consultar-por-deposito?codigo=${codigo}&deposito_id=${deposito_id}&cantidad=${cantidad}`, { headers: { Authorization: token } });

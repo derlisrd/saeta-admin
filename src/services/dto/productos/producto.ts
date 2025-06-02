@@ -28,7 +28,6 @@ export class ProductoResponse{
 export class ProductoResults{
     id: number;
     impuesto_id: number;
-    medida_id: number;
     category_id: number;
     codigo: string;
     nombre: string;
@@ -40,11 +39,11 @@ export class ProductoResults{
     tipo: number;
     cantidad_minima: number;
     created_at: string;
+    cantidad: number | null;
   
     constructor({
       id = 0,
       impuesto_id = 0,
-      medida_id = 0,
       category_id = 0,
       codigo = "",
       nombre = "",
@@ -56,10 +55,10 @@ export class ProductoResults{
       tipo = 1,
       cantidad_minima = 0,
       created_at = "",
+      cantidad = null
     }: Partial<ProductoResults>) {
       this.id = id;
       this.impuesto_id = impuesto_id;
-      this.medida_id = medida_id;
       this.category_id = category_id;
       this.codigo = codigo;
       this.nombre = nombre;
@@ -71,10 +70,14 @@ export class ProductoResults{
       this.cantidad_minima = cantidad_minima;
       this.descripcion = descripcion;
       this.created_at = created_at;
+    this.cantidad = cantidad;
     }
   
   
     static fromJSON(json: Record<string, any>): ProductoResults {
-      return new ProductoResults(json);
+      return new ProductoResults({
+        ...json,
+      cantidad: json.cantidad || null
+      });
     }
 }

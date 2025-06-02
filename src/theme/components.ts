@@ -1,45 +1,44 @@
 import { Components, CssVarsTheme, Theme } from "@mui/material";
 
-export const components = (): Components<Omit<Theme, 'components' | 'palette'> & CssVarsTheme> => ({
-  MuiCssBaseline:{
-    styleOverrides:{
-      "::-webkit-scrollbar": {width: 12}
+export const components = (): Components<Omit<Theme, "components" | "palette"> & CssVarsTheme> => ({
+  MuiCssBaseline: {
+    styleOverrides: {
+      "::-webkit-scrollbar": { width: 12 }
     }
   },
   MuiCard: {
     styleOverrides: {
       root: {
         borderRadius: "16px",
-        boxShadow:
-          "7px 6px 8px 1px rgb(0 0 0 / 10%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 3px 3px 3px 0px rgb(0 0 0 / 12%)",
-      },
-    },
+        boxShadow: "7px 6px 8px 1px rgb(0 0 0 / 10%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 3px 3px 3px 0px rgb(0 0 0 / 12%)"
+      }
+    }
   },
   MuiListItemIcon: {
     styleOverrides: {
       root: {
-         minWidth: "30px",
+        minWidth: "30px"
         /*"& span": {
           //fontSize:tema.fontSize.menu
         }, */
-      },
-    },
+      }
+    }
   },
-  MuiFormHelperText:{
-    styleOverrides:{
-      root:{
-        fontSize:9
+  MuiFormHelperText: {
+    styleOverrides: {
+      root: {
+        fontSize: 9
       }
     }
   },
   MuiListItem: {
     styleOverrides: {
       root: {
-        alignItems: 'center',
+        alignItems: "center",
         borderRadius: "0 18px 18px 0",
         transition: "all 0.02s linear",
         "&.Mui-selected": {
-          borderLeft: `4px solid `,
+          borderLeft: `4px solid `
         },
         "&:hover": {
           /* backgroundColor: colores[tema.colors].primary.light,
@@ -50,49 +49,51 @@ export const components = (): Components<Omit<Theme, 'components' | 'palette'> &
                 : colorText,
              fontWeight:"bold", 
           }, */
-          borderRadius: "0 18px 18px 0",
-        },
-      },
-    },
-  },
-  MuiTextField:{
-    defaultProps:{
-      sx:{
-        borderRadius:"8px"
-      },
-      variant:"outlined",
-    },
-    styleOverrides:{
-      root:{
-        borderRadius:"8px",
-        "&:hover": {
-          border: 'none',
-          outline: "none",
+          borderRadius: "0 18px 18px 0"
         }
       }
     }
   },
-  MuiInputBase:{
-    defaultProps:{
-      sx:{
-        backgroundColor: 'background.paper',
-        fontSize: 19
-      }
+  MuiTextField: {
+    defaultProps: {
+      sx: {
+        borderRadius: "8px"
+      },
+      variant: "outlined",
+      size: "small"
     },
-    styleOverrides:{
-      root:{
-        borderRadius:"8px"
+    styleOverrides: {
+      root: {
+        borderRadius: "8px",
+        "&:hover": {
+          border: "none",
+          outline: "none"
+        }
       }
     }
   },
-  MuiDialogTitle:{
-    styleOverrides:{
-      root:{
+  MuiInputBase: {
+    defaultProps: {
+      sx: {
+        backgroundColor: "background.paper",
+        fontSize: 19
+      },
+      size: "small"
+    },
+    styleOverrides: {
+      root: {
+        borderRadius: "8px"
+      }
+    }
+  },
+  MuiDialogTitle: {
+    styleOverrides: {
+      root: {
         fontSize: 15
       }
     }
   },
-  MuiInput:{
+  MuiInput: {
     styleOverrides: {
       root: {
         /* borderRadius: "8px",
@@ -101,27 +102,26 @@ export const components = (): Components<Omit<Theme, 'components' | 'palette'> &
     }
   },
   MuiOutlinedInput: {
-    defaultProps:{
-      sx:{
-        backgroundColor: 'background.paper',
+    defaultProps: {
+      sx: {
+        backgroundColor: "background.paper"
       },
-      size: 'medium'
+      size: "small"
     },
     styleOverrides: {
       root: {
         borderRadius: "8px",
         borderWidth: 0,
-        '& input':{
-           
+        "& input": {
           /* fontSize: 12 */
         }
-      },
-    },
+      }
+    }
   },
-  MuiInputAdornment:{
+  MuiInputAdornment: {
     styleOverrides: {
       root: {
-       /* marginRight: '0'
+        /* marginRight: '0'
          "& svg": {
           fontSize: 18
         } */
@@ -132,53 +132,52 @@ export const components = (): Components<Omit<Theme, 'components' | 'palette'> &
     styleOverrides: {
       root: {
         /* fontSize: 12 */
-      },
-    },
+      }
+    }
   },
   MuiButton: {
-    defaultProps:{
-      variant:'contained',
+    defaultProps: {
+      variant: "contained"
     },
     styleOverrides: {
       root: {
         borderRadius: "12px",
-        "&:hover": {
-        },
-      },
-    },
-  },
-  MuiTableCell:{
-    styleOverrides:{
-      root:{
-        fontSize:12,
-        padding:4,
+        "&:hover": {}
       }
     }
   },
-  MuiDialogActions:{
-    styleOverrides:{
-      root:{
-        padding:8
+  MuiTableCell: {
+    styleOverrides: {
+      root: {
+        fontSize: 12,
+        padding: 4
       }
     }
   },
-  MuiDialog:{
-    defaultProps:{
-      fullWidth:true,
-      disableRestoreFocus:true,
+  MuiDialogActions: {
+    styleOverrides: {
+      root: {
+        padding: 8
+      }
+    }
+  },
+  MuiDialog: {
+    defaultProps: {
+      fullWidth: true,
+      disableRestoreFocus: true
     },
-    styleOverrides:{
-      paper:{
-        borderRadius:"12px"
+    styleOverrides: {
+      paper: {
+        borderRadius: "12px"
       }
     }
   },
   MuiSelect: {
+    defaultProps: {
+      size: "small"
+    },
     styleOverrides: {
-      root: {
-        /* fontSize: 12,
-        padding: 0 */
-      }
+      root: {}
     }
   }
-})
+});

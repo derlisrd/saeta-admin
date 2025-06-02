@@ -24,9 +24,9 @@ function InputCodigo() {
           }
         }}
         sx={{
-
           "& .MuiInputBase-root": {
             backgroundColor: "background.paper",
+            padding: "10px 4px",
           },
         }}
         slotProps={{

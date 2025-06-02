@@ -15,11 +15,11 @@ function FiltrosProductos({
 
     return (
         <Grid container alignItems="center" justifyContent='flex-end' spacing={2} my={2}>
-            <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+            <Grid size={{ xs: 12, sm: 6, md: 6 }}>
                 <TextField
                     fullWidth
                     label="Buscar"
-                    placeholder="Nombre o codigo"
+                    placeholder="Buscar por nombre o codigo..."
                     slotProps={{
                         input: {
                             startAdornment: (
@@ -32,10 +32,10 @@ function FiltrosProductos({
                     onChange={({ target }) => setSearch(target.value)}
                 />
             </Grid>
-            <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
                 <DepositoSelect />
             </Grid>
-            <Grid size={{ xs: 6, sm: 6, md: 3 }}>
+            <Grid size={{ xs: 6, sm: 6, md: 2 }}>
                 <Button startIcon={<Icon>device-ipad-horizontal-plus</Icon>} onClick={() => nav("/productos/add")}>
                     Registrar
                 </Button>

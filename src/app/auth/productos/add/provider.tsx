@@ -76,7 +76,7 @@ function AddProductoProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const generateCode = useCallback(() => {
-    const code = Math.random().toString(36).slice(2);
+    const code = Math.floor(10000000 + Math.random() * 99999999).toString();
     setForm((prev) => new AddProducto({ ...prev, codigo: code }));
     inputCodigoRef.current?.focus();
   }, []);

@@ -65,7 +65,7 @@ export const productosColumnConfig = (width: number, onSelectProducto?: (product
         dataKey: "stock",
         label: "Stock",
         width: width * 0.1,
-        cellRenderer: ({ rowData }: TableCellProps) => <Typography variant="caption">{rowData.stock}</Typography>,
+        cellRenderer: ({ rowData }: TableCellProps) => <Typography variant="caption">{rowData.cantidad}</Typography>,
     },
     {
         dataKey: "created_at",

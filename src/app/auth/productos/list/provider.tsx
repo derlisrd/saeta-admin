@@ -2,7 +2,7 @@ import API from "@/services/api";
 import { useContext, createContext, useState, Dispatch, SetStateAction } from "react";
 import { useAuth } from "@/providers/AuthProvider";
 import { ProductoResponse, ProductoResults } from "@/services/dto/productos/producto";
-import { QueryObserverResult, RefetchOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { QueryObserverResult, RefetchOptions, useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { DepositoResults } from "@/services/dto/productos/deposito";
 
 type modalsType = {
@@ -22,6 +22,7 @@ type ProductosListaContextType = {
     refresh: (options?: RefetchOptions) => Promise<QueryObserverResult<ProductoResponse, Error>>
     modals: modalsType;
     handleModals: (key: keyof modalsType) => void;
+    changeSelectDeposito: (id: number, q: string) => void;
 };
 
 const ProductosListaContext = createContext<ProductosListaContextType | undefined>(undefined);
@@ -29,6 +30,7 @@ const ProductosListaContext = createContext<ProductosListaContextType | undefine
 export const ProductosListaProvider = ({ children }: { children: React.ReactNode }) => {
 
     const { userData } = useAuth();
+    const queryClient = useQueryClient();
 
     const [modals, setModals] = useState<modalsType>({ codigo: false, imagenes: false });
 
@@ -51,10 +53,21 @@ export const ProductosListaProvider = ({ children }: { children: React.ReactNode
         staleTime: 1000 * 60 * 5, // Cache por 5 minutos
     });
 
+    const searchPorDeposito = useMutation({
+        mutationKey: ["productos-deposito", userData?.token],
+        mutationFn: ({ deposito_id, q }: { deposito_id: number; q: string }) =>
+            API.productos.productosPorDeposito(userData && userData?.token, deposito_id, q),
+        onSettled(data) {
+            if (data && data.success) {
+                queryClient.setQueryData(["productos", userData?.token], data);
+            }
+        },
+    })
+
     const values = {
         list: productosData?.results ?? [],
         depositos: depositosData?.results ?? [],
-        loading: productosLoading || depositosLoading,
+        loading: productosLoading || depositosLoading || searchPorDeposito.isPending,
         error: productosError || depositosError,
         selectDeposito,
         setSelectDeposito,
@@ -63,13 +76,14 @@ export const ProductosListaProvider = ({ children }: { children: React.ReactNode
         refresh: refetch,
         modals,
         handleModals,
+        changeSelectDeposito: (id: number, q: string) => {
+            searchPorDeposito.mutate({ deposito_id: id, q });
+        }
     };
 
 
     return <ProductosListaContext.Provider value={values}>{children}</ProductosListaContext.Provider>;
 };
-
-
 export const useProductosLista = () => {
     const context = useContext(ProductosListaContext);
     if (!context) {

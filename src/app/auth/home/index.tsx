@@ -24,7 +24,10 @@ function Home() {
             <CardHome data={data.semana_pasada.importe.toLocaleString("es-PY")} title="Semana pasada" icon="calendar-event"
               caption={'Cantidad pedidos: ' + data.semana_pasada.cantidad} />
           </Grid>
-          <Grid size={{ xs: 12, sm: 6, md: 4 }}></Grid>
+          <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+            <CardHome data={data.mes_pasado.importe.toLocaleString("es-PY")} title="Mes pasado" icon="calendar-event"
+              caption={'Cantidad pedidos: ' + data.mes_pasado.cantidad} />
+          </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
             <CardHome data={data.hoy.importe.toLocaleString("es-PY")} title="Ventas de hoy" icon="moneybag"
               caption={data.comparaciones.dia.porcentaje.toFixed(2) + '%'}

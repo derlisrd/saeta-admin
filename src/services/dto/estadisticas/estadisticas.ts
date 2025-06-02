@@ -57,9 +57,9 @@ export class EstadisticasPedidosResponse {
   
       static fromJson(json: any): Estadistica {
           return new Estadistica({
-              cantidad: json.cantidad_pedidos,
-              descuento: json.descuento_total,
-              importe: json.importe_final_total
+              cantidad: json.cantidad_pedidos | 0,
+              descuento: json.descuento_total | 0,
+              importe: json.importe_final_total | 0
           });
       }
   
