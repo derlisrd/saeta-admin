@@ -104,9 +104,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       }
       return null;
     },
-    staleTime: 60 * 10000,
+    staleTime: 30 * 60000,
     refetchOnWindowFocus: true,
-    refetchInterval: 60 * 10000, // Refrescar si el token es válido y tiene un refreshToken
+    refetchInterval: 30 * 60000, // Refrescar si el token es válido y tiene un refreshToken
   });
 
   const values = {
