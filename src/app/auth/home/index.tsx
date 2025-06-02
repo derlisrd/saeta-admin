@@ -1,5 +1,5 @@
 import useEstadisticas from "@/core/hooks/home/useEstadisticas";
-import { Container, Grid2 as Grid, IconButton, LinearProgress, Typography } from "@mui/material";
+import { Container, Grid2 as Grid, IconButton, LinearProgress, Tooltip, Typography } from "@mui/material";
 import CardHome from "./card";
 import Icon from "@/components/ui/icon";
 
@@ -12,7 +12,10 @@ function Home() {
         <Grid spacing={2} container>
           <Grid size={12}>{isLoading && <LinearProgress />}</Grid>
           <Grid size={12}>
-            <Typography variant="h5">Estadísticas</Typography> <IconButton onClick={() => refresh()}><Icon>rotate-clockwise</Icon></IconButton>
+            <Typography variant="h5">Estadísticas</Typography>
+            <Tooltip title="Actualizar datos" placement="left" arrow>
+              <IconButton onClick={() => refresh()}><Icon>rotate-clockwise</Icon></IconButton>
+            </Tooltip>
           </Grid>
 
           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
@@ -25,7 +28,7 @@ function Home() {
               caption={'Cantidad pedidos: ' + data.semana_pasada.cantidad} />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-            <CardHome data={data.mes_pasado.importe.toLocaleString("es-PY")} title="Mes pasado" icon="calendar-event"
+            <CardHome data={data.mes_pasado.importe.toLocaleString("es-PY")} title="Mes pasado" icon="calendar"
               caption={'Cantidad pedidos: ' + data.mes_pasado.cantidad} />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
@@ -36,7 +39,7 @@ function Home() {
             />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-            <CardHome data={data.semana.importe.toLocaleString("es-PY")} title="Ventas de la semana" icon="circle-dashed-check"
+            <CardHome data={data.semana.importe.toLocaleString("es-PY")} title="Ventas de la semana" icon="calendar-plus"
               caption={data.comparaciones.semana.porcentaje.toFixed(2) + '%'}
               captionColor={data.comparaciones.semana.porcentaje > 0 ? "green" : "red"}
               captionIcon={data.comparaciones.semana.porcentaje > 0 ? "arrow-big-up" : "arrow-big-down"}
