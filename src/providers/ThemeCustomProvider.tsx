@@ -8,7 +8,6 @@ import { typography } from "@/theme/typography";
 import { createTheme, Theme } from "@mui/material";
 import { ReactNode, useCallback, useEffect, useState } from "react";
 import { availableColorsType } from "@/core/types/availablecolors";
-import { LayoutProvider } from "./LayoutProvider";
 
 interface ThemeCustomProviderType {
   children: ReactNode;

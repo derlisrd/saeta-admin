@@ -56,7 +56,7 @@ function DrawerTheme({ isOpen, handleIsOpen }: ThemeDrawerLayoutProps) {
                         <Stack direction="column" spacing={1} alignItems="center">
                             <Stack direction="row" spacing={1} alignItems="center">
                                 <Icon>sun-moon</Icon>
-                                <Switch size="small" checked={!modeDark} onChange={(_, check) => { toggleModeDark(); }} />
+                                <Switch size="small" checked={!modeDark} onChange={() => { toggleModeDark(); }} />
                             </Stack>
                             <Typography variant="overline">Tema</Typography>
                         </Stack>

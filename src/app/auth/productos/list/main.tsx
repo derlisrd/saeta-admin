@@ -1,7 +1,6 @@
 import GenericTable from "@/components/table/GenericTable";
-import useListProductos from "@/core/hooks/productos/list/useListProductos";
 import { Box, Container, LinearProgress, Slide } from "@mui/material";
-import PrintCodigoModal from "./_modal/codigo";
+
 import { useState } from "react";
 import { ProductoResults } from "@/services/dto/productos/producto";
 
