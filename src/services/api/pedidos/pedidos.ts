@@ -1,6 +1,7 @@
 import { AddPedido, AddPedidoResponse } from "@/services/dto/pedidos/AddPedido";
 import { BASE } from "../base";
 import axios from "axios";
+import { PedidosDelDiaResponse } from "@/services/dto/pedidos/pedidosDelDia";
 
 export const apiServicePedidos = {
   insert: async (token: string | null, pedido: AddPedido) => {
@@ -36,10 +37,10 @@ export const apiServicePedidos = {
   lista: async (token: string | null, desde?: string | null, hasta?: string | null) => {
     try {
       const { data, status } = await BASE.get(`/pedidos?desde=${desde}&hasta=${hasta}`, { headers: { Authorization: token } });
-      return ({ success: data.success as boolean, status, results: data.results, message: "" });
+      return new PedidosDelDiaResponse({ success: data.success as boolean, status, results: data.results, message: "" });
     } catch (e) {
       if (axios.isAxiosError(e)) {
-        return ({
+        return new PedidosDelDiaResponse({
           success: false,
           results: null,
           status: e.response?.status || 500,
@@ -47,14 +48,14 @@ export const apiServicePedidos = {
         });
       }
       if (!navigator.onLine) {
-        return ({
+        return new PedidosDelDiaResponse({
           success: false,
           results: null,
           status: 0,
           message: "No hay conexión a Internet."
         });
       }
-      return ({
+      return new PedidosDelDiaResponse({
         success: false,
         results: null,
         status: 500,

@@ -1,16 +1,17 @@
 import { Route, Routes } from "react-router-dom";
 import AuthMenuLayout from "@/layout/AuthMenuLayout";
 import { Suspense, lazy, LazyExoticComponent } from "react";
-import LoadingPage from "@/core/components/ui/loading";
+//import LoadingPage from "@/core/components/ui/loading";
 import LogOut from "./logout";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import LoadingScreen from "@/components/ui/loading";
 
 const Loadable =
   <T extends object>(Component: LazyExoticComponent<() => JSX.Element>) =>
     (props: T) => {
       return (
-        <Suspense fallback={<LoadingPage />}>
+        <Suspense fallback={<LoadingScreen />}>
           <Component {...props} />
         </Suspense>
       );

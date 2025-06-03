@@ -28,7 +28,7 @@ function PrintCodigoBarra() {
     <Container>
       <h3>Imprimir código de barras</h3>
       <Stack direction="row" spacing={2} alignItems="center">
-        <Button onClick={() => setCopia((prev) => prev + 1)}>Agregar copia</Button>
+        <Button onClick={() => setCopia((prev) => prev + 1)} endIcon={<Icon>copy</Icon>}>Copia</Button>
         <Button onClick={() => setAltura((prev) => prev + 1)}>Aumentar altura</Button>
         <Button onClick={() => setAltura((prev) => prev - 1)}>Disminuir altura</Button>
         <Button onClick={() => setEspacio((prev) => prev + 1)}>Aumentar espacio</Button>

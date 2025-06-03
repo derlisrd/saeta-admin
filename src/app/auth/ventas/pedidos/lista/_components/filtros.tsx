@@ -3,27 +3,22 @@ import { useState } from "react";
 import { Grid2 as Grid, TextField, InputAdornment, Tooltip, IconButton, Button } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
+import { useListaPedidosContext } from "../provider";
 
 interface FiltrosProps {
   setSearch: React.Dispatch<React.SetStateAction<string>>;
-  buscar: (q: string) => void;
   search: string;
-  refresh?: () => void;
-  setDesde: React.Dispatch<React.SetStateAction<string>>;
-  setHasta: React.Dispatch<React.SetStateAction<string>>;
-  desde?: string;
-  hasta?: string;
+
 }
 
-function Filtros({ setSearch, buscar, search, refresh, setDesde, setHasta, desde, hasta }: FiltrosProps) {
-  // Estados temporales para los datepickers
+function Filtros({ setSearch, search }: FiltrosProps) {
+
+  const { desde, hasta, refetch, setDesde, setHasta } = useListaPedidosContext()
+
   const [fechaDesde, setFechaDesde] = useState<dayjs.Dayjs | null>(desde ? dayjs(desde) : null);
   const [fechaHasta, setFechaHasta] = useState<dayjs.Dayjs | null>(hasta ? dayjs(hasta) : null);
 
-  const handleBuscarClick = () => {
-    // Aplicar filtros y refrescar los datos
-    if (refresh) refresh();
-  };
+  const handleBuscarClick = () => refetch()
 
   const handleLimpiarFiltros = () => {
     setSearch("");
@@ -48,7 +43,7 @@ function Filtros({ setSearch, buscar, search, refresh, setDesde, setHasta, desde
           }}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
-              buscar(search);
+              //buscar(search);
             }
           }}
           value={search}
@@ -113,7 +108,7 @@ function Filtros({ setSearch, buscar, search, refresh, setDesde, setHasta, desde
           </Grid>
           <Grid size={4}>
             <Tooltip title="Actualizar" placement="top" arrow>
-              <IconButton onClick={refresh} color="primary">
+              <IconButton onClick={refetch} color="primary">
                 <Icon>refresh</Icon>
               </IconButton>
             </Tooltip>
