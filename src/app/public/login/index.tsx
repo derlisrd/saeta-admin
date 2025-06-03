@@ -16,8 +16,8 @@ function Login() {
       ) : (
         <form onSubmit={handleLogin}>
           <Stack sx={{ height: "100vh", alignItems: "center", justifyContent: "center", width: "100%" }}>
-            <Stack gap={2} p={3} boxShadow={5} borderRadius={3} maxWidth={360} width="100%" alignItems="center" sx={{ border: "1px solid #efefef" }}>
-              <Typography variant="button" fontSize={20}>
+            <Stack gap={3} p={3} boxShadow={5} borderRadius={3} maxWidth={360} width="100%" alignItems="center" sx={{ border: "1px solid #efefef" }}>
+              <Typography variant="h5">
                 INGRESAR
               </Typography>
               {error.code > 0 && <Alert severity="error">{error.message}</Alert>}

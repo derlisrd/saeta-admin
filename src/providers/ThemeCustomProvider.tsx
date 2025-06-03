@@ -1,4 +1,3 @@
-import ThemeCustomContext from "@/contexts/ThemeCustomContext";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { components } from "@/theme/components";
 import { pallete } from "@/theme/pallete";
@@ -6,12 +5,22 @@ import { colorsMode } from "@/theme/colors";
 import { shadowsDark, shadowsLight } from "@/theme/shadows";
 import { typography } from "@/theme/typography";
 import { createTheme, Theme } from "@mui/material";
-import { ReactNode, useCallback, useEffect, useState } from "react";
+import { ReactNode, useCallback, useEffect, useState, createContext } from "react";
 import { availableColorsType } from "@/core/types/availablecolors";
 
-interface ThemeCustomProviderType {
-  children: ReactNode;
+interface ThemeCustomContextValuesType {
+  modeDark: boolean;
+  toggleModeDark: () => void;
+  customTheme?: Theme;
+  changeColor: (availablecolors: availableColorsType) => void;
+  checkTheme: (refresh: boolean) => void;
+  changeFontSize: (size: number) => void;
+  fontSize: number;
 }
+
+export const ThemeCustomContext = createContext<ThemeCustomContextValuesType | undefined>(undefined);
+
+interface ThemeCustomProviderType { children: ReactNode; }
 
 function ThemeCustomProvider({ children }: ThemeCustomProviderType) {
   const initialCustomTheme = {
@@ -23,6 +32,7 @@ function ThemeCustomProvider({ children }: ThemeCustomProviderType) {
   const { current: customThemeStorage, setItemValue: setCustomThemeStorage } = useLocalStorage<Theme>("customTheme", initialCustomTheme);
 
   const [customTheme, setCustomTheme] = useState<Theme>();
+  const [fontSize, setFontSize] = useState<number>(customThemeStorage?.typography.fontSize || 12);
 
   const modeDark = customTheme?.palette.mode === "dark";
 
@@ -48,15 +58,16 @@ function ThemeCustomProvider({ children }: ThemeCustomProviderType) {
       newModeTheme.shadows = shadowsDark;
     }
     setCustomTheme(createTheme({ ...newModeTheme, cssVariables: true }));
-    setCustomThemeStorage(newModeTheme);
-  };
+    window.localStorage.setItem("customTheme", JSON.stringify(newModeTheme));
+  }
+
   const changeColor = ({ color, secondary }: availableColorsType) => {
     const newModeTheme = { ...customThemeStorage } as Theme;
     newModeTheme.palette.primary.main = color;
     newModeTheme.palette.secondary.main = secondary;
 
     setCustomTheme(createTheme(newModeTheme));
-    setCustomThemeStorage(newModeTheme);
+    window.localStorage.setItem("customTheme", JSON.stringify(newModeTheme));
   };
 
   const checkTheme = useCallback((refresh: boolean = false) => {
@@ -69,12 +80,22 @@ function ThemeCustomProvider({ children }: ThemeCustomProviderType) {
       }
       const newModeTheme = { ...initialCustomTheme };
       newModeTheme.palette.mode = temaDark ? "dark" : "light";
+      setFontSize(12)
       setCustomTheme(createTheme({ ...newModeTheme, cssVariables: true }));
       setCustomThemeStorage(newModeTheme);
     } else {
       setCustomTheme(createTheme(customThemeStorage));
     }
+    //console.log('checkTheme render')
   }, []);
+
+  const changeFontSize = (size: number) => {
+    const newModeTheme = { ...customThemeStorage } as Theme;
+    newModeTheme.typography.fontSize = size;
+    setFontSize(size);
+    setCustomTheme(createTheme(newModeTheme));
+    window.localStorage.setItem("customTheme", JSON.stringify(newModeTheme));
+  };
 
   useEffect(() => {
     const ca = new AbortController();
@@ -86,7 +107,7 @@ function ThemeCustomProvider({ children }: ThemeCustomProviderType) {
     }
   }, [checkTheme]);
 
-  const values = { modeDark, toggleModeDark, customTheme, changeColor, checkTheme };
+  const values = { modeDark, toggleModeDark, customTheme, changeColor, checkTheme, changeFontSize, fontSize };
   return <ThemeCustomContext.Provider value={values}>
     {children}
   </ThemeCustomContext.Provider>;

@@ -74,7 +74,7 @@ export const productosColumnConfig = (width: number, onSelectProducto?: (product
         cellRenderer: ({ rowData }: TableCellProps) => (
             <Stack direction='column'>
                 <Typography variant="caption">{format(rowData.created_at, "DD-MMM-YY")}</Typography>
-                <Typography variant="caption" fontSize={11}>{format(rowData.created_at, "HH:mm")}</Typography>
+                <Typography variant="caption">{format(rowData.created_at, "HH:mm")}</Typography>
             </Stack>
         ),
     },

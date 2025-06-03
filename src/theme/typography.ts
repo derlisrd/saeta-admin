@@ -1,12 +1,11 @@
 import { TypographyOptions } from "@mui/material/styles/createTypography";
 
 export const typography = {
-    fontSize: 14,
+    fontSize: 12,
     caption: {
-      fontSize: 12,
     },
     body1: {
-      fontSize: 14,
+      
     },
     h5: {
       fontWeight: "bold",

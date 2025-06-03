@@ -14,7 +14,7 @@ function Total() {
           </Typography>
         </>
       ) : (
-        <Typography variant="button" fontSize={15} fontWeight="bold">
+        <Typography variant="button" fontWeight="bold">
           Total: {pedidos[index].total.toLocaleString("es-PY")}
         </Typography>
       )}

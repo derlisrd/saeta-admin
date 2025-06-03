@@ -59,7 +59,7 @@ function Datos() {
           />
         </Grid>
         <Grid size={{ xs: 12, md: 6 }}>
-          <Button variant="contained" size="large" onClick={generateCode}>
+          <Button variant="contained" endIcon={<Icon>arrows-random</Icon>} onClick={generateCode}>
             GENERAR
           </Button>
         </Grid>

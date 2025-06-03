@@ -9,17 +9,19 @@ import { useProductosLista } from "../provider";
 
 
 function PrintCodigoModal() {
-
+  const { userData } = useAuth();
   const { modals, handleModals, selectedProducto } = useProductosLista()
 
 
-  if (!selectedProducto) return <></>;
 
-  const { userData } = useAuth();
+
+
 
   const contentRef = useRef<HTMLDivElement>(null);
   const print = useReactToPrint({ contentRef, ignoreGlobalStyles: true });
   const impresoraWidth = userData?.impresoras?.[0]?.mm ? `${userData.impresoras[0].mm}mm` : "100%";
+
+  if (!selectedProducto) return <></>;
 
   return (
     <Dialog open={modals.codigo} onClose={() => handleModals("codigo")} disableRestoreFocus>
@@ -41,7 +43,7 @@ function PrintCodigoModal() {
               }}
             >
               <Barcode value={selectedProducto.codigo} height={36} fontSize={14} font="monospace" background="#ffffff" margin={0} marginTop={2} textMargin={0} format="CODE128" />
-              <span style={{ color: "#000", display: "block", fontFamily: "monospace", fontSize: 12 }}>{selectedProducto.precio_normal.toLocaleString("es-PY")}</span>
+              <span style={{ color: "#000", display: "block", fontFamily: "monospace" }}>{selectedProducto.precio_normal.toLocaleString("es-PY")}</span>
             </div>
           </Grid>
           <Grid size={12}></Grid>

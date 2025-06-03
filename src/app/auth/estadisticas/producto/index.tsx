@@ -50,12 +50,10 @@ function EstadisticasProducto() {
     return (
         <Container maxWidth='xl'>
             <Slide direction="up" in={true} mountOnEnter unmountOnExit>
-                <Box component={Paper} boxShadow={4} borderRadius={4} padding={{ xs: 2, md: 2 }}>
+                <Box component={Paper} boxShadow={4} borderRadius={4} padding={{ xs: 1, md: 2 }}>
                     <Grid container spacing={2} alignItems='center' mb={1}>
                         <Grid size={12}>
-                            <Typography variant="body1">Seleccione el producto y el rango de fecha</Typography>
-                        </Grid>
-                        <Grid size={12}>
+                            <Typography variant="body2">Seleccione el producto y el rango de fecha</Typography>
                             {isPending && <LinearProgress />}
                         </Grid>
                         <Grid size={{ xs: 12, sm: 12, md: 12 }}>

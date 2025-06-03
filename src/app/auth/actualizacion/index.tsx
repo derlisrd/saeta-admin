@@ -11,6 +11,9 @@ function Actualizacion() {
 
     return <Container>
         <Button startIcon={<Icon>refresh</Icon>} onClick={() => refresh()}>Actualizar</Button>
+        <Button variant="outlined">Outlined</Button>
+        <Button color='secondary' startIcon={<Icon>refresh</Icon>} onClick={() => refresh()}>Actualizar</Button>
+        <Button color='secondary' variant="outlined">Outlined</Button>
         <TextField label="Codigo" />
     </Container>
 }

@@ -27,7 +27,7 @@ function useEstadisticas() {
         ],
     });
 
-    const isLoading = pedidosResponse.isLoading || lucrosResponse.isLoading;
+  const isLoading = pedidosResponse.isLoading || lucrosResponse.isLoading || lucrosResponse.isFetching || pedidosResponse.isFetching;
 
     const combinedData = {
         ayer: {
@@ -103,6 +103,6 @@ function useEstadisticas() {
     lucrosResponse.refetch();
   };
 
-    return { data: combinedData, isLoading, refresh };
+    return { data: combinedData, isLoading : isLoading, refresh };
 }
 export default useEstadisticas;

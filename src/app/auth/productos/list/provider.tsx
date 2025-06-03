@@ -40,7 +40,7 @@ export const ProductosListaProvider = ({ children }: { children: React.ReactNode
     const [selectDeposito, setSelectDeposito] = useState<number>(0);
     const [selectedProducto, setSelectedProducto] = useState<ProductoResults | null>(null);
     // Fetch productos
-    const { data: productosData, isLoading: productosLoading, error: productosError, refetch } = useSuspenseQuery({
+    const { data: productosData, isLoading: productosLoading, error: productosError, refetch, isFetching } = useSuspenseQuery({
         queryKey: ["productos", userData?.token],
         queryFn: () => API.productos.list(userData && userData?.token),
         staleTime: 1000 * 60 * 5, // Cache por 5 minutos
@@ -67,7 +67,7 @@ export const ProductosListaProvider = ({ children }: { children: React.ReactNode
     const values = {
         list: productosData?.results ?? [],
         depositos: depositosData?.results ?? [],
-        loading: productosLoading || depositosLoading || searchPorDeposito.isPending,
+        loading: productosLoading || depositosLoading || searchPorDeposito.isPending || isFetching,
         error: productosError || depositosError,
         selectDeposito,
         setSelectDeposito,

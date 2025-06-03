@@ -6,13 +6,11 @@ const StyledTableContainer = styled(Box)(({ theme }) => ({
     borderRadius: "5px",
     textTransform: "uppercase",
     fontWeight: "bold",
-    fontSize: '12px',
     backgroundColor: theme.palette.primary.main,
   },
   "& .ReactVirtualized__Table__row": {
     padding: "0 14px",
     cursor: "pointer",
-    fontSize: '13px',
     transition: "background-color 0.1s ease",
     "&:nth-of-type(even)": {
       backgroundColor: theme.palette.background.paper,

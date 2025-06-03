@@ -10,7 +10,6 @@ export default function TableCellRender({ cellData }: TableCellProps) {
         alignItems: "center",
         boxSizing: "border-box",
         height: 48,
-        fontSize: 13,
         paddingLeft: 1,
       }}
     >

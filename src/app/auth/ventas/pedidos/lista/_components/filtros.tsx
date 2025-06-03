@@ -55,7 +55,6 @@ function Filtros({ setSearch, buscar, search, refresh, setDesde, setHasta, desde
           placeholder="Buscar por razón social o documento..."
           onChange={({ target }) => setSearch(target.value)}
           fullWidth
-
         />
       </Grid>
       <Grid size={{ xs: 12, sm: 4, md: 3 }}>
@@ -71,7 +70,10 @@ function Filtros({ setSearch, buscar, search, refresh, setDesde, setHasta, desde
           slotProps={{
             textField: {
               fullWidth: true,
-
+              placeholder: "Fecha de inicio",
+              sx: {
+                padding: 0,
+              }
             },
           }}
         />
@@ -89,7 +91,6 @@ function Filtros({ setSearch, buscar, search, refresh, setDesde, setHasta, desde
           slotProps={{
             textField: {
               fullWidth: true,
-
             },
           }}
         />

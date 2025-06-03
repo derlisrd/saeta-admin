@@ -74,22 +74,19 @@ export const components = (): Components<Omit<Theme, "components" | "palette"> &
   },
   MuiInputBase: {
     defaultProps: {
-      sx: {
-        backgroundColor: "background.paper",
-        fontSize: 19
-      },
       size: "small"
     },
     styleOverrides: {
       root: {
-        borderRadius: "8px"
+        borderRadius: "8px",
+        backgroundColor: "background.paper",
       }
     }
   },
   MuiDialogTitle: {
     styleOverrides: {
       root: {
-        fontSize: 15
+       
       }
     }
   },
@@ -98,22 +95,25 @@ export const components = (): Components<Omit<Theme, "components" | "palette"> &
       root: {
         /* borderRadius: "8px",
         padding: "18px" */
+        
+        '& input':{
+          
+        }
       }
     }
   },
   MuiOutlinedInput: {
     defaultProps: {
-      sx: {
-        backgroundColor: "background.paper"
-      },
       size: "small"
     },
     styleOverrides: {
       root: {
+        backgroundColor: "background.paper",
         borderRadius: "8px",
         borderWidth: 0,
+
         "& input": {
-          /* fontSize: 12 */
+          
         }
       }
     }
@@ -125,19 +125,23 @@ export const components = (): Components<Omit<Theme, "components" | "palette"> &
          "& svg": {
           fontSize: 18
         } */
+        "& svg": {
+          
+        }
       }
     }
   },
   MuiInputLabel: {
     styleOverrides: {
       root: {
-        /* fontSize: 12 */
+        
       }
     }
   },
   MuiButton: {
     defaultProps: {
-      variant: "contained"
+      variant: "contained",
+      
     },
     styleOverrides: {
       root: {
@@ -149,7 +153,7 @@ export const components = (): Components<Omit<Theme, "components" | "palette"> &
   MuiTableCell: {
     styleOverrides: {
       root: {
-        fontSize: 12,
+        
         padding: 4
       }
     }
@@ -177,7 +181,9 @@ export const components = (): Components<Omit<Theme, "components" | "palette"> &
       size: "small"
     },
     styleOverrides: {
-      root: {}
+      root: {
+        
+      }
     }
   }
 });

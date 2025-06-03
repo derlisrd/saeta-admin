@@ -4,14 +4,14 @@ import { availableColorsType } from "@/core/types/availablecolors";
 
 
 export const availableColors : Array<availableColorsType> = [
+  { name: "green", color: "#00a76f", secondary : "#74ccae", mode:'system' },
     { name: "violet", color: "#734ad5", secondary : "#acd549", mode:'system' },
-    { name: "green", color: "#259965", secondary : "#992558", mode:'system' },
     { name: "bluelight", color: "#2187ab", secondary : "#f6ab4d", mode:'system' },
     { name: "bluesky", color: "#2189e4", secondary : "#f6ab4d", mode:'light' },
     { name: "orange", color: "#d76a16", secondary : "#8298cf", mode:'system' },
-    { name: "red", color: "#c52f6f", secondary : "#2fc584", mode:'system' },
+    { name: "red", color: "#c52f6f", secondary : "#7d2eaa", mode:'system' },
     { name: "new", color: "#2065D1", secondary : "#d18c20", mode:'dark' },
-    {name : "black", color: "#000000", secondary : "#f6ab4d", mode:'light'},
+    {name : "black", color: "#000000", secondary : "#646464", mode:'light'},
     {name : "insta", color: "#517fa4", secondary : "#a47651", mode:'light'},
   ];
   
@@ -152,9 +152,9 @@ export const availableColors : Array<availableColorsType> = [
         contrastText: "#fff",
       },
       secondary: {
-        light: "#444",
-        main: "#444",
-        dark: "#444",
+        light: "#a5a5a5",
+        main: "#6b6b6b",
+        dark: "#3f3f3f",
         contrastText: "#000",
       },
     },

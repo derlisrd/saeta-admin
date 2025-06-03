@@ -1,5 +1,5 @@
 import Icon from "@/components/ui/icon";
-import { Drawer, Box, Chip, Grid2 as Grid, IconButton, Button, Switch, Stack, Typography, Tooltip } from "@mui/material";
+import { Drawer, Box, Chip, Grid2 as Grid, IconButton, Button, Switch, Stack, Typography, Tooltip, Slider } from "@mui/material";
 import { availableColors } from "@/theme/colors";
 import useThemeCustom from "@/hooks/useThemeCustom";
 
@@ -10,7 +10,7 @@ interface ThemeDrawerLayoutProps {
 }
 function DrawerTheme({ isOpen, handleIsOpen }: ThemeDrawerLayoutProps) {
 
-    const { changeColor, toggleModeDark, modeDark, checkTheme } = useThemeCustom();
+    const { changeColor, toggleModeDark, modeDark, checkTheme, changeFontSize, fontSize } = useThemeCustom();
 
     const refresh = () => checkTheme(true);
     const abrirPantallaCompleta = () => {
@@ -19,7 +19,7 @@ function DrawerTheme({ isOpen, handleIsOpen }: ThemeDrawerLayoutProps) {
         } else {
             document.documentElement.requestFullscreen();
         }
-    };
+    }
 
     return (
         <Drawer
@@ -52,11 +52,17 @@ function DrawerTheme({ isOpen, handleIsOpen }: ThemeDrawerLayoutProps) {
                     </Stack>
                 </Stack>
                 <Box my={2}>
-                    <Button variant="outlined" sx={{ backgroundColor: "background.paper" }} onClick={toggleModeDark}>
+                    <Button variant="outlined" sx={{ backgroundColor: "background.paper", p: 2, borderRadius: 4 }} onClick={toggleModeDark}>
                         <Stack direction="column" spacing={1} alignItems="center">
                             <Stack direction="row" spacing={1} alignItems="center">
                                 <Icon>sun-moon</Icon>
-                                <Switch size="small" checked={!modeDark} onChange={() => { toggleModeDark(); }} />
+                                <Switch
+                                    size="small"
+                                    checked={!modeDark}
+                                    onChange={() => {
+                                        toggleModeDark();
+                                    }}
+                                />
                             </Stack>
                             <Typography variant="overline">Tema</Typography>
                         </Stack>
@@ -67,10 +73,10 @@ function DrawerTheme({ isOpen, handleIsOpen }: ThemeDrawerLayoutProps) {
                     <Chip label="Colores" color="primary" sx={{ p: 1 }} icon={<Icon>traffic-lights</Icon>} />
                     <Grid container spacing={2} my={1} p={1} border={1} borderColor="divider" borderRadius={2}>
                         <Grid size={6}>
-                            <Chip label="Primario" color="primary" sx={{ p: 1 }} />
+                            <Chip label="Color 1" color="primary" sx={{ p: 1, width: "100%" }} />
                         </Grid>
                         <Grid size={6}>
-                            <Chip label="Secundario" color="secondary" sx={{ p: 1 }} />
+                            <Chip label="Color 2" color="secondary" sx={{ p: 1, width: "100%" }} />
                         </Grid>
                         {availableColors.map((item, i) => (
                             <Grid key={i} size={4}>
@@ -87,6 +93,23 @@ function DrawerTheme({ isOpen, handleIsOpen }: ThemeDrawerLayoutProps) {
                             </Grid>
                         ))}
                     </Grid>
+                </Box>
+                <Box>
+                    <Typography variant="overline">Tamaño de fuente</Typography>
+                    <Slider
+                        defaultValue={fontSize}
+                        shiftStep={3}
+                        step={1}
+                        marks
+                        value={fontSize}
+                        min={10}
+                        max={16}
+                        sx={{ mt: 4 }}
+                        valueLabelDisplay="on"
+                        onChange={(_, value) => {
+                            changeFontSize(typeof value === "number" ? value : value[0]);
+                        }}
+                    />
                 </Box>
             </Stack>
         </Drawer>

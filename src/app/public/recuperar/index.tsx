@@ -37,7 +37,7 @@ function RecuperarPassword() {
                 <form onSubmit={handleRecuperarPassword}>
                     <Stack sx={{ height: "100vh", alignItems: "center", justifyContent: "center", width: "100%" }}>
                         <Stack gap={2} p={3} boxShadow={5} borderRadius={3} maxWidth={360} width="100%" alignItems="center" sx={{ border: "1px solid #efefef" }}>
-                            <Typography variant="button" fontSize={20}>
+                            <Typography variant="button">
                                 RECUPERAR CONTRASEÑA
                             </Typography>
                             {error && <Alert severity="error">{error.message}</Alert>}

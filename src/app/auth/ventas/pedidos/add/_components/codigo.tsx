@@ -31,7 +31,7 @@ function InputCodigo() {
         }}
         slotProps={{
           input: {
-            sx: { padding: 0, fontSize: 15 },
+            sx: { padding: 0 },
             startAdornment: (
               <InputAdornment position="end">
                 <Tooltip title="Buscar productos" arrow placement="left">

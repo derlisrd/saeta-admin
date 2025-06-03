@@ -11,7 +11,7 @@ interface PrintableProps {
 function Printable({ pedido, empresa }: PrintableProps) {
   if (!pedido) {
     return (
-      <div style={{ backgroundColor: "#fff", padding: "10px", fontFamily: "monospace !important", fontSize: 12, color: "#000 !important" }}>
+      <div style={{ backgroundColor: "#fff", padding: "10px", fontFamily: "monospace !important", color: "#000 !important" }}>
         No hay datos del pedido para mostrar.
       </div>
     );

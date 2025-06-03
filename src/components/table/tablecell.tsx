@@ -9,7 +9,6 @@ export default function TableCell({ children }: { children: React.ReactNode }) {
         alignItems: "center",
         boxSizing: "border-box",
         height: 48,
-        fontSize: 13,
         paddingLeft: 1,
       }}
     >
