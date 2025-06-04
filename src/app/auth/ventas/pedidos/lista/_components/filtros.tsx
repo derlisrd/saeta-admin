@@ -3,7 +3,10 @@ import { useState } from "react";
 import { Grid2 as Grid, TextField, InputAdornment, Tooltip, IconButton, Button } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
+
 import { useListaPedidosContext } from "../provider";
+
+
 
 interface FiltrosProps {
   setSearch: React.Dispatch<React.SetStateAction<string>>;
@@ -59,7 +62,11 @@ function Filtros({ setSearch, search }: FiltrosProps) {
           onChange={(date) => {
             setFechaDesde(date);
             setDesde(date ? date.format("YYYY-MM-DD") : "");
-            // No hacemos refresh automáticamente para permitir que el usuario seleccione ambas fechas
+          }}
+          localeText={{
+            cancelButtonLabel: "Cancelar",
+            okButtonLabel: "Aceptar",
+
           }}
           format="DD-MMM-YYYY"
           slotProps={{

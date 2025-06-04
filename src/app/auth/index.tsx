@@ -5,6 +5,9 @@ import { Suspense, lazy, LazyExoticComponent } from "react";
 import LogOut from "./logout";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
+import "dayjs/locale/es";
+dayjs.locale("es");
 import LoadingScreen from "@/components/ui/loading";
 
 const Loadable =
@@ -19,7 +22,9 @@ const Loadable =
 
 function AutenticatedPages() {
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
+    <LocalizationProvider dateAdapter={AdapterDayjs}
+      adapterLocale="es"
+    >
       <Routes>
         <Route path="/" element={<AuthMenuLayout />}>
           <Route index element={<Home />} />
