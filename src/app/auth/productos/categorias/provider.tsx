@@ -77,7 +77,7 @@ function CategoriasProvider({ children }: { children: React.ReactNode }) {
   });
 
   const values = {
-    lista: data?.results ?? null,
+    lista: data?.results ?? [],
     isLoading,
     error,
     refetch,

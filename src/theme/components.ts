@@ -185,5 +185,12 @@ export const components = (): Components<Omit<Theme, "components" | "palette"> &
         
       }
     }
+  },
+  MuiBackdrop: {
+    styleOverrides: {
+      root: {
+        backdropFilter: "blur(3px)"
+      }
+    }
   }
 });
