@@ -3,9 +3,11 @@ import useHook from "../_hooks/useHook";
 import useRegistroCliente from "../_hooks/useRegistroCliente";
 import useModal from "../_hooks/useModal";
 import Icon from "@/components/ui/icon";
+import { useQueryClient } from "@tanstack/react-query";
 
 function RegistroClienteModal() {
   const { setCliente } = useHook();
+  const queryCliente = useQueryClient();
   const { modal, handleModal } = useModal();
   const { form, handleForm, verificarPorDocumento, loading, handleRegistro, clearFormRegistroCliente, error } = useRegistroCliente();
 
@@ -14,6 +16,7 @@ function RegistroClienteModal() {
     if (res == null) {
       return;
     }
+    queryCliente.invalidateQueries({ queryKey: ["listaClientes"] });
     setCliente(res.id, res.razon_social || `${res.nombres} ${res.apellidos}`);
     handleModal("registro");
     clearFormRegistroCliente();

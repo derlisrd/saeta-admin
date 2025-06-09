@@ -7,16 +7,15 @@ import useModal from "../_hooks/useModal";
 
 import Total from "../_components/total";
 import Icon from "@/components/ui/icon";
+import { useQueryClient } from "@tanstack/react-query";
 
 function FinalizarPedido() {
   const { pedidos, index, setResult, aplicarDescuento } = useHook();
-  //const { isSmDown } = useResponsive();
+  const queryCliente = useQueryClient()
   const { modal, handleModal, setModal } = useModal();
   const { insertPedido, isLoading } = useInsertPedido();
 
   const finalizarPedido = async () => {
-
-
     const res = await insertPedido(pedidos[index]);
     if (!res.success) {
       setResult(res);
@@ -24,11 +23,11 @@ function FinalizarPedido() {
     }
 
     if (res.success && res.results) {
+      queryCliente.invalidateQueries({ queryKey: ["listaPedidos"] });
       setResult(res);
       setModal({ ...modal, finalizar: false, main: false, success: true });
     }
   };
-
   return (
     <Dialog disableRestoreFocus fullWidth open={modal.finalizar} onClose={() => handleModal("finalizar")}>
       <DialogTitle>

@@ -1,11 +1,11 @@
 import { Components, CssVarsTheme, Theme } from "@mui/material";
 
 export const components = (): Components<Omit<Theme, "components" | "palette"> & CssVarsTheme> => ({
-  MuiCssBaseline: {
+  /* MuiCssBaseline: {
     styleOverrides: {
       "::-webkit-scrollbar": { width: 12 }
     }
-  },
+  }, */
   MuiCard: {
     styleOverrides: {
       root: {
@@ -27,7 +27,7 @@ export const components = (): Components<Omit<Theme, "components" | "palette"> &
   MuiFormHelperText: {
     styleOverrides: {
       root: {
-        fontSize: 9
+        
       }
     }
   },
