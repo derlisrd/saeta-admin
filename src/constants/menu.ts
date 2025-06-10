@@ -96,6 +96,15 @@ export default [
                 private: false,
                 descripcion: 'Facturación'
             },
+            {
+                id: 346,
+                title: 'A cobrar',
+                icon: 'list',
+                color: '#0066cc',
+                url: '/ventas/cobrar',
+                private: false,
+                descripcion: 'Ventas a cobrar'
+            },
         ],
 
     },
