@@ -48,7 +48,7 @@ function CargaStock() {
   return (
     <Container>
       <Slide direction="up" in={true} mountOnEnter unmountOnExit>
-        <Box component={Paper} boxShadow={4} borderRadius={4} mb={6} padding={{ xs: 0, sm: 1, md: 2 }}>
+        <Box component={Paper} boxShadow={4} borderRadius={4} mb={6} padding={{ xs: 1, md: 2 }}>
           <Grid container spacing={1} alignItems="center">
             <Grid size={12}>
               <h4>Seleccione el depósito y ingrese la cantidad del producto</h4>
