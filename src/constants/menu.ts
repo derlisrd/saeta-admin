@@ -98,12 +98,12 @@ export default [
             },
             {
                 id: 346,
-                title: 'A cobrar',
+                title: 'Créditos',
                 icon: 'list',
                 color: '#0066cc',
-                url: '/ventas/cobrar',
+                url: '/ventas/creditos',
                 private: false,
-                descripcion: 'Ventas a cobrar'
+                descripcion: 'Créditos'
             },
         ],
 

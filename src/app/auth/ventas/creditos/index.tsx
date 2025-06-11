@@ -1,9 +1,9 @@
 import { Container, Typography } from "@mui/material";
 
-function Cobrar() {
+function Creditos() {
     return <Container>
         <Typography variant="h5">Cobrar</Typography>
     </Container>
 }
 
-export default Cobrar;
+export default Creditos;
