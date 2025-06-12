@@ -1,4 +1,6 @@
-function usePermisos() {
+import { useQuery } from "@tanstack/react-query";
+
+function usePermisos(selectedUser) {
     const { userData } = useAuth()
     const [permisosSelect, setPermisosSelect] = useState<PermisosMapeados[]>([]);
 
@@ -9,7 +11,7 @@ function usePermisos() {
         refetchOnWindowFocus: false
     });
 
-    const { mutateAsync, isPending } = useMutation({
+    /* const { mutateAsync, isPending } = useMutation({
         mutationKey: ["revocar", "asignar"],
         mutationFn: async ({ id, asignados, revocados }: { id: number; asignados: number[]; revocados: number[] }) => {
             if (revocados.length > 0) {
@@ -83,7 +85,7 @@ function usePermisos() {
         if (!selectedUser) return;
         await mutateAsync({ id: selectedUser?.id, asignados: permisosParaEnviar, revocados: permisosRevocados });
     };
-    
+     */
     return {}
 }
 

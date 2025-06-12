@@ -19,8 +19,20 @@ type PermisosMapeados = {
 
 function PermisosModal() {
 
-
+    const { userData } = useAuth()
     const { modals, handleModals, selectedUser, setSelectedUser, permisos } = useUserProvider()
+
+
+    const { data: permisosData, isLoading } = useQuery({
+        queryKey: ["permisosByUser", selectedUser ? selectedUser.id : 0],
+        queryFn: () => API.permisos.byAdmin(userData && userData.token, selectedUser ? selectedUser.id : 0),
+        enabled: !!selectedUser && modals.permisos,
+        refetchOnWindowFocus: false
+    });
+
+
+    console.log(permisosData, isLoading)
+
 
     const close = () => { setSelectedUser(null); handleModals('permisos'); }
 
