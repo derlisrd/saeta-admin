@@ -1,36 +1,19 @@
 import { useAuth } from "@/providers/AuthProvider";
-import { apiServiceImpuestos } from "@/services/api/factura/impuesto";
-import { apiServiceCategorias } from "@/services/api/productos/categoria";
-import { apiServiceDepositos } from "@/services/api/productos/deposito";
-import { apiServiceMedidas } from "@/services/api/productos/medidas";
-import { apiServiceProductos } from "@/services/api/productos/producto";
+
 import { AddProducto } from "@/services/dto/productos/AddProducto";
 import { AddStock } from "@/services/dto/productos/AddStock";
 import { useCallback, useMemo, useRef, useState } from "react";
 import AddProductoContext, { modalType } from "./context";
-import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
-import AllData from "./_types/allData";
+import { useMutation, useSuspenseQueries } from "@tanstack/react-query";
 
-const fetchData = async (token: string | null): Promise<AllData> => {
-  const [impuestosRes, categoriasRes, depositosRes, medidasRes] = await Promise.all([
-    apiServiceImpuestos.list(token),
-    apiServiceCategorias.list(token),
-    apiServiceDepositos.list(token),
-    apiServiceMedidas.list(token),
-  ]);
+import API from "@/services/api";
+import { ImpuestoResponse } from "@/services/dto/factura/impuesto";
+import { CategoriaResponse } from "@/services/dto/productos/categoria";
+import { DepositoResponse } from "@/services/dto/productos/deposito";
+import { MedidasResponse } from "@/services/dto/productos/medidas";
+import { validateForm } from "./helpers/validate";
 
-  if (!impuestosRes.success) throw new Error("Error fetching impuestos");
-  if (!categoriasRes.success) throw new Error("Error fetching categorias");
-  if (!depositosRes.success) throw new Error("Error fetching depositos");
-  if (!medidasRes.success) throw new Error("Error fetching medidas");
 
-  return {
-    impuestos: impuestosRes.results || [],
-    categorias: categoriasRes.results || [],
-    depositos: depositosRes.results || [],
-    medidas: medidasRes.results || [],
-  };
-};
 
 function AddProductoProvider({ children }: { children: React.ReactNode }) {
   const { userData } = useAuth();
@@ -51,15 +34,47 @@ function AddProductoProvider({ children }: { children: React.ReactNode }) {
     setModal((prev) => ({ ...prev, [key]: !prev[key] }));
   }, []);
 
-  const {
-    data,
-    isLoading,
-    error: dataError,
-  } = useSuspenseQuery<AllData>({
-    queryKey: ["allData", userData && userData?.token],
-    queryFn: () => fetchData(userData && userData?.token),
-    staleTime: 1000 * 60 * 5, // Cache for 5 minutes
+  const results = useSuspenseQueries({
+    queries: [
+      {
+        queryKey: ["impuestos"],
+        queryFn: () => API.impuestos.list(userData && userData.token),
+        select: (data: ImpuestoResponse) => (data && data.results) ? data.results : [],
+        retry: false
+      },
+      {
+        queryKey: ["categorias"],
+        queryFn: () => API.categorias.list(userData && userData.token),
+        select: (data: CategoriaResponse) => (data && data.results) ? data.results : [],
+        retry: false
+      },
+      {
+        queryKey: ["depositos"],
+        queryFn: () => API.depositos.list(userData && userData.token),
+        select: (data: DepositoResponse) => (data && data.results) ? data.results : [],
+        retry: false
+      },
+      {
+        queryKey: ["medidas"],
+        queryFn: () => API.medidas.list(userData && userData.token),
+        select: (data: MedidasResponse) => (data && data.results) ? data.results : [],
+        retry: false
+      },
+    ],
   });
+
+  const [impuestosRes, categoriasRes, depositosRes, medidasRes] = results;
+
+  const isLoading = results.some((r) => r.isLoading);
+  const dataError = results.find((r) => r.error)?.error;
+
+  const data = {
+    impuestos: impuestosRes.data ?? [],
+    categorias: categoriasRes.data ?? [],
+    depositos: depositosRes.data ?? [],
+    medidas: medidasRes.data ?? [],
+  };
+
 
   const clearSuccess = useCallback(() => setSuccess({ active: false, message: "" }), []);
   const clearForm = useCallback(() => setForm(new AddProducto({})), []);
@@ -84,7 +99,7 @@ function AddProductoProvider({ children }: { children: React.ReactNode }) {
   const verificarCodigoDisponible = useCallback(
     async (codigo: string) => {
       if (!codigo) return;
-      const res = await apiServiceProductos.verificarCodigoDisponible(codigo, userData && userData?.token);
+      const res = await API.productos.verificarCodigoDisponible(codigo, userData && userData?.token);
       if (!res) {
         setError({ code: 1, message: "El código ya está en uso" });
         inputCodigoRef.current?.focus();
@@ -121,50 +136,11 @@ function AddProductoProvider({ children }: { children: React.ReactNode }) {
     setForm((prev) => new AddProducto({ ...prev, stock: prev.stock.filter((item) => item.deposito_id !== deposito_id) }));
   }, []);
 
-  const validateForm = useCallback(() => {
-    const { codigo, nombre, precio_minimo, precio_normal, category_id, impuesto_id, medida_id, costo } = form;
-    if (!codigo) {
-      setError({ code: 1, message: "El código es requerido" });
-      return false;
-    }
-    if (!nombre) {
-      setError({ code: 2, message: "El nombre es requerido" });
-      return false;
-    }
-    if (impuesto_id === 0) {
-      setError({ code: 3, message: "Seleccione un impuesto" });
-      return false;
-    }
-    if (category_id === 0) {
-      setError({ code: 4, message: "Seleccione una categoría" });
-      return false;
-    }
-    if (medida_id === 0) {
-      setError({ code: 5, message: "Seleccione una medida" });
-      return false;
-    }
 
-    if (!costo) {
-      setError({ code: 6, message: "El costo es requerido" });
-      return false;
-    }
-
-    if (!precio_normal) {
-      setError({ code: 7, message: "El precio normal es requerido" });
-      return false;
-    }
-    if (!precio_minimo) {
-      setError({ code: 8, message: "El precio mínimo es requerido" });
-      return false;
-    }
-
-    clearError();
-    return true;
-  }, [form, clearError]);
 
   const mutateCaller = useMutation({
     mutationFn: async () => {
-      return apiServiceProductos.add(form, userData && userData?.token);
+      return API.productos.add(form, userData && userData?.token);
     },
     onSuccess: (res) => {
       if (res.success) {
@@ -178,10 +154,19 @@ function AddProductoProvider({ children }: { children: React.ReactNode }) {
       setError({ code: 500, message: "Ocurrió un error inesperado" });
     },
   });
+
+
   const sendForm = useCallback(async () => {
-    if (!validateForm()) throw new Error("Formulario inválido");
+    const validateError = validateForm(form);
+    if (validateError.code > 0) {
+      setError({ code: validateError.code, message: validateError.message });
+      return;
+    }
     mutateCaller.mutate();
   }, [validateForm, form, userData, clear]);
+
+
+
 
   const values = useMemo(
     () => ({
@@ -210,6 +195,7 @@ function AddProductoProvider({ children }: { children: React.ReactNode }) {
       setTabValue,
       modal,
       handleModal,
+      dataError
     }),
     [
       form,

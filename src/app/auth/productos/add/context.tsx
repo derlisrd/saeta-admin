@@ -47,37 +47,9 @@ interface AddProductoContextTypes {
   changeStockState: (name: string, value: number) => void;
   tabValue: number;
   setTabValue: React.Dispatch<React.SetStateAction<number>>;
+  dataError: Error | null | undefined
 }
 
-const AddProductoContext = createContext<AddProductoContextTypes>({
-  form: new AddProducto({}),
-  setForm: () => {},
-  clearError: () => {},
-  error: { code: 0, message: "" },
-  changeByName: () => {},
-  sendForm: async () => {},
-  impuestos: [],
-  categorias: [],
-  depositos: [],
-  loading: true,
-  medidas: [],
-  addStock: () => {},
-  stockState: new AddStock({}),
-  setStockState: () => {},
-  removeStock: () => {},
-  success: { active: false, message: "" },
-  clearSuccess: () => {},
-  verificarCodigoDisponible: () => {},
-  generateCode: () => {},
-  inputCodigoRef: { current: null },
-  changeStockState: () => {},
-  tabValue: 0,
-  setTabValue: () => {},
-  modal: {
-    categorias: false,
-    unidad: false,
-  },
-  handleModal: () => {},
-});
+const AddProductoContext = createContext<AddProductoContextTypes | undefined>(undefined);
 
 export default AddProductoContext;

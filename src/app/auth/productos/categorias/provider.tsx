@@ -5,6 +5,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { AddCategoria, AddCategoriaResponse } from "@/services/dto/productos/AddCategoria";
 import { CategoriaResponse } from "@/services/dto/productos/categoria";
+import { showAlert } from "@/core/utils/alert";
 
 function CategoriasProvider({ children }: { children: React.ReactNode }) {
   const { userData } = useAuth();
@@ -30,12 +31,13 @@ function CategoriasProvider({ children }: { children: React.ReactNode }) {
 
       return { data, previousCategorias };
     },
-    onError: (context, error) => {
-      console.log(context, error);
-      // Si la mutación falla, revierte la lista de categorías al estado anterior
-      /* if (context?.previousCategorias) {
-        queryClient.setQueryData(['categorias', userData?.token], context.previousCategorias);
-      } */
+    onError: async (error, variables, context) => {
+      console.log(context, data, variables);
+      await showAlert({
+        title: "Error al guardar",
+        message: error.message,
+        type: "error",
+      });
     },
     onSuccess: (data) => {
       if (data.success && data.results) {
@@ -58,8 +60,9 @@ function CategoriasProvider({ children }: { children: React.ReactNode }) {
         });
       }
     },
-    onSettled: (data) => {
-      console.log(data?.results);
+
+    onSettled: () => {
+      //console.log(data?.results);
       // Recarga los datos para asegurarte de que estén sincronizados con el servidor
       // queryClient.invalidateQueries({ queryKey: ["categorias", userData?.token] });
     },
@@ -69,15 +72,22 @@ function CategoriasProvider({ children }: { children: React.ReactNode }) {
     mutate(form);
   };
 
-  const { data, isLoading, error, refetch } = useQuery({
+  const { data, isLoading, error, refetch, isError } = useQuery({
     queryKey: ["categorias", userData && userData.token],
     queryFn: () => API.categorias.list(userData && userData.token),
     enabled: !!(userData && userData.token),
     staleTime: 1000 * 60 * 5,
+    retry: false,
+    select: (data) => {
+      if (data && data.success && data.results) {
+        return data.results
+      }
+      return []
+    },
   });
 
   const values = {
-    lista: data?.results ?? [],
+    lista: data || [],
     isLoading,
     error,
     refetch,
@@ -85,6 +95,7 @@ function CategoriasProvider({ children }: { children: React.ReactNode }) {
     modals,
     addCategoria,
     isPendingAdd: isPending,
+    isError,
   };
   return <CategoriasContext.Provider value={values}>{children}</CategoriasContext.Provider>;
 }

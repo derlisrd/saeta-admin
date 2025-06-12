@@ -8,8 +8,9 @@ import LargeButtonStyled from "@/components/ui/LargeButton";
 import TabContainer from "@/components/containers/tabcontainer";
 
 function AddProductoMain() {
-  const { clearSuccess, success, loading, tabValue, sendForm } = useAddProducto();
-  // tab value no cambia console.log(tabValue);
+  const { clearSuccess, success, loading, tabValue, sendForm, dataError } = useAddProducto();
+  console.log(dataError);
+
   return (
     <Container>
       <Box sx={{ position: "fixed", bottom: 32, right: 32, zIndex: 100 }}>

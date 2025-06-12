@@ -1,5 +1,6 @@
 import { ImpuestoResponse } from "@/services/dto/factura/impuesto"
 import { BASE } from "../base"
+import { isAxiosError } from "axios";
 
 export const apiServiceImpuestos = {
     list: async(token : string | null)  =>  {
@@ -8,7 +9,10 @@ export const apiServiceImpuestos = {
 
             return new ImpuestoResponse({ success : data.success as boolean, status, results: data.results, message: '' });
         } catch (e) {
-            return new ImpuestoResponse({ success : false, status : 500, results: null, message: 'Error de servidor'});
+            if(isAxiosError(e)){
+                throw new Error(e.response?.data.message || "Error al obtener los impuestos");
+            }
+            throw new Error("Error al obtener los impuestos");
         }
     },
 }

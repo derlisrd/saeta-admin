@@ -11,7 +11,8 @@ export type CategoriasModals = {
 interface CategoriasContextType {
   lista: CategoriaResults[];
   isLoading: boolean;
-  error: unknown;
+  error: Error | null;
+  isError: boolean;
   refetch: () => void;
   modals: CategoriasModals;
   handleModal: (modal: keyof CategoriasModals) => void;
@@ -19,19 +20,6 @@ interface CategoriasContextType {
   isPendingAdd: boolean;
 }
 
-const CategoriasContext = createContext<CategoriasContextType>({
-  lista: [],
-  isLoading: false,
-  error: null,
-  refetch: () => { },
-  modals: {
-    crear: false,
-    editar: false,
-    eliminar: false,
-  },
-  handleModal: () => { },
-  addCategoria: () => { },
-  isPendingAdd: false,
-});
+const CategoriasContext = createContext<CategoriasContextType | undefined>(undefined);
 
 export default CategoriasContext;
