@@ -38,16 +38,16 @@ function DrawerTheme({ isOpen, handleIsOpen }: ThemeDrawerLayoutProps) {
                     <Stack direction="row">
                         <Tooltip placement="bottom" arrow title="Pantalla completa">
                             <IconButton onClick={abrirPantallaCompleta}>
-                                <Icon>maximize</Icon>
+                                <Icon name='maximize' />
                             </IconButton>
                         </Tooltip>
                         <Tooltip placement="bottom" arrow title="Restablecer">
                             <IconButton onClick={refresh}>
-                                <Icon>refresh</Icon>
+                                <Icon name='refresh' />
                             </IconButton>
                         </Tooltip>
                         <IconButton onClick={handleIsOpen}>
-                            <Icon>x</Icon>
+                            <Icon name='x' />
                         </IconButton>
                     </Stack>
                 </Stack>
@@ -55,7 +55,7 @@ function DrawerTheme({ isOpen, handleIsOpen }: ThemeDrawerLayoutProps) {
                     <Button variant="outlined" sx={{ backgroundColor: "background.paper", p: 2, borderRadius: 4 }} onClick={toggleModeDark}>
                         <Stack direction="column" spacing={1} alignItems="center">
                             <Stack direction="row" spacing={1} alignItems="center">
-                                <Icon>sun-moon</Icon>
+                                <Icon name='sun-moon' />
                                 <Switch
                                     size="small"
                                     checked={!modeDark}
@@ -70,7 +70,7 @@ function DrawerTheme({ isOpen, handleIsOpen }: ThemeDrawerLayoutProps) {
                 </Box>
 
                 <Box>
-                    <Chip label="Colores" color="primary" sx={{ p: 1 }} icon={<Icon>traffic-lights</Icon>} />
+                    <Chip label="Colores" color="primary" sx={{ p: 1 }} icon={<Icon name='traffic-lights' />} />
                     <Grid container spacing={2} my={1} p={1} border={1} borderColor="divider" borderRadius={2}>
                         <Grid size={6}>
                             <Chip label="Color 1" color="primary" sx={{ p: 1, width: "100%" }} />
@@ -86,9 +86,8 @@ function DrawerTheme({ isOpen, handleIsOpen }: ThemeDrawerLayoutProps) {
                                         changeColor(item);
                                     }}
                                 >
-                                    <Icon size={24} color={item.color}>
-                                        color-swatch
-                                    </Icon>
+                                    <Icon name="color-swatch" size={24} color={item.color} />
+
                                 </IconButton>
                             </Grid>
                         ))}

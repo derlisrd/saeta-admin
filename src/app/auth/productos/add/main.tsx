@@ -6,10 +6,23 @@ import useAddProducto from "./_hook/useAddProducto";
 import NotificacionSnack from "@/components/common/NotificacionSnack";
 import LargeButtonStyled from "@/components/ui/LargeButton";
 import TabContainer from "@/components/containers/tabcontainer";
+import { useEffect } from "react";
+import { showAlert } from "@/core/utils/alert";
+
 
 function AddProductoMain() {
   const { clearSuccess, success, loading, tabValue, sendForm, dataError } = useAddProducto();
-  console.log(dataError);
+
+  useEffect(() => {
+    if (dataError) {
+      showAlert({
+        title: 'Atención',
+        message: dataError.message,
+        type: "error"
+      })
+    }
+  }, [dataError])
+
 
   return (
     <Container>

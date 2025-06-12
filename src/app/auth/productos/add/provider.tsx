@@ -4,7 +4,7 @@ import { AddProducto } from "@/services/dto/productos/AddProducto";
 import { AddStock } from "@/services/dto/productos/AddStock";
 import { useCallback, useMemo, useRef, useState } from "react";
 import AddProductoContext, { modalType } from "./context";
-import { useMutation, useSuspenseQueries } from "@tanstack/react-query";
+import { useMutation, useQueries, useSuspenseQueries } from "@tanstack/react-query";
 
 import API from "@/services/api";
 import { ImpuestoResponse } from "@/services/dto/factura/impuesto";
@@ -34,7 +34,7 @@ function AddProductoProvider({ children }: { children: React.ReactNode }) {
     setModal((prev) => ({ ...prev, [key]: !prev[key] }));
   }, []);
 
-  const results = useSuspenseQueries({
+  const results = useQueries({
     queries: [
       {
         queryKey: ["impuestos"],
@@ -65,14 +65,17 @@ function AddProductoProvider({ children }: { children: React.ReactNode }) {
 
   const [impuestosRes, categoriasRes, depositosRes, medidasRes] = results;
 
+
   const isLoading = results.some((r) => r.isLoading);
   const dataError = results.find((r) => r.error)?.error;
+  const isError = results.some((r) => r.isError);
+
 
   const data = {
-    impuestos: impuestosRes.data ?? [],
-    categorias: categoriasRes.data ?? [],
-    depositos: depositosRes.data ?? [],
-    medidas: medidasRes.data ?? [],
+    impuestos: impuestosRes.data ? impuestosRes.data : [],
+    categorias: categoriasRes.data ? categoriasRes.data : [],
+    depositos: depositosRes.data ? depositosRes.data : [],
+    medidas: medidasRes.data ? medidasRes.data : [],
   };
 
 
@@ -195,7 +198,8 @@ function AddProductoProvider({ children }: { children: React.ReactNode }) {
       setTabValue,
       modal,
       handleModal,
-      dataError
+      dataError,
+      isError
     }),
     [
       form,
@@ -206,6 +210,7 @@ function AddProductoProvider({ children }: { children: React.ReactNode }) {
       data?.medidas,
       isLoading,
       dataError,
+      isError,
       data,
       stockState,
       success,

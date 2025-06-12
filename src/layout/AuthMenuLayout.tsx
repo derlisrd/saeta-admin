@@ -32,11 +32,11 @@ function AuthMenuLayout() {
         <Stack justifyContent="space-between" flexDirection="row" width="100%" alignItems="center">
           <Stack flexDirection="row" alignItems="center" justifyContent="center" gap={1}>
             <IconButton onClick={toggleMobileMenu} sx={{ width: "50px", height: "50px", display: { xs: "block", md: "none" } }}>
-              <Icon>menu-2</Icon>
+              <Icon name="menu-2" />
             </IconButton>
             <Tooltip placement="bottom" arrow title={isOpenMenu ? "Cerrar menú" : "Abrir menú"}>
               <IconButton onClick={toggleMenu} sx={{ width: "50px", height: "50px", marginLeft: margin_left, display: { xs: "none", md: "block", transition: "all 0.2s" } }}>
-                <Icon size={24}>{isOpenMenu ? "chevron-left" : "arrow-narrow-right"}</Icon>
+                <Icon size={24} name={isOpenMenu ? "chevron-left" : "arrow-narrow-right"} />
               </IconButton>
             </Tooltip>
             <Typography variant="body1" sx={{ fontWeight: "bold" }}>
@@ -48,12 +48,12 @@ function AuthMenuLayout() {
 
             <Tooltip placement="bottom" arrow title="Configuraciones">
               <IconButton onClick={toggleConfigDrawer}>
-                <Icon>settings-code</Icon>
+                <Icon name='settings-code' />
               </IconButton>
             </Tooltip>
             <Tooltip placement="bottom" arrow title="Cerrar sesión">
               <IconButton onClick={signOut}>
-                <Icon>door-exit</Icon>
+                <Icon name="door-exit" />
               </IconButton>
             </Tooltip>
           </Stack>

@@ -33,7 +33,7 @@ function ListaProductosMain() {
     : [];
 
   return (
-    <Container sx={{ paddingBottom: 6 }}>
+    <Container>
       <FiltrosProductos
         setSearch={setSearch}
         search={search}

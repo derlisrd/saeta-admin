@@ -27,7 +27,7 @@ function Login() {
                   input: {
                     startAdornment: (
                       <InputAdornment position="start">
-                        <Icon>user</Icon>
+                        <Icon name='user' />
                       </InputAdornment>
                     ),
                   },
@@ -48,13 +48,13 @@ function Login() {
                   input: {
                     startAdornment: (
                       <InputAdornment position="start">
-                        <Icon>lock</Icon>
+                        <Icon name='lock' />
                       </InputAdornment>
                     ),
                     endAdornment: (
                       <InputAdornment position="end">
                         <IconButton onClick={toggleHide}>
-                          <Icon>{hide ? `eye-off` : `eye`}</Icon>
+                          <Icon name={hide ? `eye-off` : `eye`} />
                         </IconButton>
                       </InputAdornment>
                     ),

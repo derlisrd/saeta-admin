@@ -47,7 +47,8 @@ interface AddProductoContextTypes {
   changeStockState: (name: string, value: number) => void;
   tabValue: number;
   setTabValue: React.Dispatch<React.SetStateAction<number>>;
-  dataError: Error | null | undefined
+  dataError: Error | null | undefined,
+  isError: boolean;
 }
 
 const AddProductoContext = createContext<AddProductoContextTypes | undefined>(undefined);

@@ -1,20 +1,27 @@
 import { useAuth } from "@/providers/AuthProvider";
 import API from "@/services/api";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 function useUsers() {
     const {userData} = useAuth()
 
-    const {isLoading, data, refetch} = useSuspenseQuery({
-        queryKey: ['users'],
-        queryFn: () =>  API.users.list(userData && userData.token),
-        staleTime: 1000 * 60 * 5, // Cache por 5 minutos
-        })
-    
+    const { isLoading, data, refetch, error } = useQuery({
+      queryKey: ["users"],
+      queryFn: () => API.users.list(userData && userData.token),
+      select: (data) => {
+        if(data && data.results) return data.results
+        return []
+      },
+      staleTime: 1000 * 60 * 5,
+      retry: false
+    });
+
     
     return {
         isLoading,
-        data: data ? data.results : [], refetch
+        data, 
+        refetch,
+        error
     }
 }
 

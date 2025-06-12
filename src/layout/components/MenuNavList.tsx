@@ -69,20 +69,16 @@ const MenuNavList = ({ isMobile = false, navegar, isOpenMenu = true }: { isMobil
                   {isOpenMenu ? (
                     <ListItemButton onClick={() => openCollapseMenu(e.open, e.id)} sx={SELECTED}>
                       <ListItemIcon>
-                        <Icon size={18} color="primary">
-                          {e.icon}
-                        </Icon>
+                        <Icon name={e.icon} size={18} />
                       </ListItemIcon>
                       <ListItemText primary={e.title} />
-                      <Icon>{e.open ? `chevron-right` : `chevron-down`}</Icon>
+                      <Icon name={e.open ? `chevron-right` : `chevron-down`} />
                     </ListItemButton>
                   ) : (
                     <Tooltip title={e.title} placement="right">
                       <ListItemButton onClick={() => openCollapseMenu(e.open, e.id)} sx={SELECTED}>
                         <ListItemIcon sx={{ minWidth: 0, justifyContent: "center" }}>
-                          <Icon size={18} color="primary">
-                            {e.icon}
-                          </Icon>
+                          <Icon name={e.icon} size={18} />
                         </ListItemIcon>
                       </ListItemButton>
                     </Tooltip>
@@ -99,7 +95,7 @@ const MenuNavList = ({ isMobile = false, navegar, isOpenMenu = true }: { isMobil
                             onClick={() => navegar(elem.url ?? "#", isMobile, { state: { descripcion: elem.descripcion } })}
                           >
                             <ListItemIcon>
-                              <Icon>caret-right</Icon>
+                              <Icon name="caret-right" />
                             </ListItemIcon>
                             <ListItemText primary={elem.title} />
                           </ListItemButton>
@@ -114,9 +110,7 @@ const MenuNavList = ({ isMobile = false, navegar, isOpenMenu = true }: { isMobil
                 {isOpenMenu ? (
                   <ListItemButton selected={pathname === e.url} onClick={() => navegar(e.url ?? "#", isMobile, { state: { descripcion: e.descripcion } })} sx={SELECTED}>
                     <ListItemIcon>
-                      <Icon size={18} color="primary">
-                        {e.icon}
-                      </Icon>
+                      <Icon size={18} name={e.icon} />
                     </ListItemIcon>
                     <ListItemText>{e.title}</ListItemText>
                   </ListItemButton>
@@ -124,9 +118,7 @@ const MenuNavList = ({ isMobile = false, navegar, isOpenMenu = true }: { isMobil
                   <Tooltip title={e.title} placement="right">
                     <ListItemButton selected={pathname === e.url} onClick={() => navegar(e.url ?? "#", isMobile, { state: { descripcion: e.descripcion } })} sx={SELECTED}>
                       <ListItemIcon sx={{ minWidth: 0, justifyContent: "center" }}>
-                        <Icon size={18} color="primary">
-                          {e.icon}
-                        </Icon>
+                        <Icon size={18} name={e.icon} />
                       </ListItemIcon>
                     </ListItemButton>
                   </Tooltip>

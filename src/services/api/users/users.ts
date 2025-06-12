@@ -19,19 +19,9 @@ export const apiServiceUsers = {
         }
         catch (e) {
             if(isAxiosError(e)){
-                return new UserListResponse( {
-                    success: false,
-                    status: e.response?.status || 500,
-                    results: null,
-                    message: e.response?.data.message || 'Error de servidor'
-                })
+                throw new Error(e.response?.data.message || "Error de servidor");
             }
-            return new UserListResponse( {
-                success: false,
-                status: 500,
-                results: null,
-                message: 'Error de servidor'
-            })
+            throw new Error("Error de servidor");
         }
     },
     create: async(token : string | null, form : UserCreateForm)=>{

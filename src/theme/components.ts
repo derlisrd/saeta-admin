@@ -26,9 +26,7 @@ export const components = (): Components<Omit<Theme, "components" | "palette"> &
   },
   MuiFormHelperText: {
     styleOverrides: {
-      root: {
-        
-      }
+      root: {}
     }
   },
   MuiListItem: {
@@ -79,15 +77,13 @@ export const components = (): Components<Omit<Theme, "components" | "palette"> &
     styleOverrides: {
       root: {
         borderRadius: "8px",
-        backgroundColor: "background.paper",
+        backgroundColor: "background.paper"
       }
     }
   },
   MuiDialogTitle: {
     styleOverrides: {
-      root: {
-       
-      }
+      root: {}
     }
   },
   MuiInput: {
@@ -95,10 +91,8 @@ export const components = (): Components<Omit<Theme, "components" | "palette"> &
       root: {
         /* borderRadius: "8px",
         padding: "18px" */
-        
-        '& input':{
-          
-        }
+
+        "& input": {}
       }
     }
   },
@@ -112,9 +106,7 @@ export const components = (): Components<Omit<Theme, "components" | "palette"> &
         borderRadius: "8px",
         borderWidth: 0,
 
-        "& input": {
-          
-        }
+        "& input": {}
       }
     }
   },
@@ -125,23 +117,18 @@ export const components = (): Components<Omit<Theme, "components" | "palette"> &
          "& svg": {
           fontSize: 18
         } */
-        "& svg": {
-          
-        }
+        "& svg": {}
       }
     }
   },
   MuiInputLabel: {
     styleOverrides: {
-      root: {
-        
-      }
+      root: {}
     }
   },
   MuiButton: {
     defaultProps: {
-      variant: "contained",
-      
+      variant: "contained"
     },
     styleOverrides: {
       root: {
@@ -153,7 +140,6 @@ export const components = (): Components<Omit<Theme, "components" | "palette"> &
   MuiTableCell: {
     styleOverrides: {
       root: {
-        
         padding: 4
       }
     }
@@ -162,6 +148,14 @@ export const components = (): Components<Omit<Theme, "components" | "palette"> &
     styleOverrides: {
       root: {
         padding: 8
+      }
+    }
+  },
+  MuiContainer: {
+    styleOverrides: {
+      root: {
+        paddingLeft: "0 !important",
+        paddingRight: "0 !important"
       }
     }
   },
@@ -181,9 +175,7 @@ export const components = (): Components<Omit<Theme, "components" | "palette"> &
       size: "small"
     },
     styleOverrides: {
-      root: {
-        
-      }
+      root: {}
     }
   },
   MuiBackdrop: {
