@@ -15,7 +15,7 @@ export const apiServicePermisos = {
       throw new Error("Error desconocido");
     }
   },
-  byAdmin: async(token: string | null, id: number) =>{
+  byUser: async(token: string | null, id: number) =>{
     try {
       const {data, status} = await BASE.get(`/permisos/by-user/${id}`, { headers: { Authorization: `Bearer ${token}` } });
 

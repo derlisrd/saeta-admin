@@ -7,12 +7,12 @@ function useQueryPermisos(enabled: boolean, userId: number) {
     
     const { data: permisosOtorgados, isLoading } = useQuery({
         queryKey: ["permisosByUser", userId],
-        queryFn: () => API.permisos.byAdmin(userData && userData.token, userId),
+        queryFn: () => API.permisos.byUser(userData && userData.token, userId),
         select: (data) =>{
             if (data && data.results) return data.results;
             return []
         },
-        enabled: false, //!!selectedUser && modals.permisos,
+        enabled: enabled, //!!selectedUser && modals.permisos,
         refetchOnWindowFocus: false
     });
     return {
