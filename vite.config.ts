@@ -1,8 +1,8 @@
 import { defineConfig, AliasOptions } from "vite";
 import react from "@vitejs/plugin-react-swc";
-// @ts-ignoreimport path from "path";
+import path from "path";
+// @ts-ignore
 
-//@ts-expect-error import
 const root = path.resolve(__dirname, "src");
 
 // https://vite.dev/config/
