@@ -1,15 +1,24 @@
+import { useAuth } from "@/providers/AuthProvider";
+import API from "@/services/api";
 import { useQuery } from "@tanstack/react-query";
 
-function usePermisos(selectedUser) {
+function useQueryPermisos(enabled: boolean, userId: number) {
     const { userData } = useAuth()
-    const [permisosSelect, setPermisosSelect] = useState<PermisosMapeados[]>([]);
-
-    const { data: permisosData, isLoading } = useQuery({
-        queryKey: ["permisosByUser", selectedUser ? selectedUser.id : 0],
-        queryFn: () => API.permisos.byAdmin(userData && userData.token, selectedUser ? selectedUser.id : 0),
-        enabled: !!selectedUser && modals.permisos,
+    
+    const { data: permisosOtorgados, isLoading } = useQuery({
+        queryKey: ["permisosByUser", userId],
+        queryFn: () => API.permisos.byAdmin(userData && userData.token, userId),
+        select: (data) =>{
+            if (data && data.results) return data.results;
+            return []
+        },
+        enabled: false, //!!selectedUser && modals.permisos,
         refetchOnWindowFocus: false
     });
+    return {
+    permisosOtorgados,
+    isLoading
+    }
 
     /* const { mutateAsync, isPending } = useMutation({
         mutationKey: ["revocar", "asignar"],
@@ -86,7 +95,7 @@ function usePermisos(selectedUser) {
         await mutateAsync({ id: selectedUser?.id, asignados: permisosParaEnviar, revocados: permisosRevocados });
     };
      */
-    return {}
+    
 }
 
-export default usePermisos;
+export default useQueryPermisos;

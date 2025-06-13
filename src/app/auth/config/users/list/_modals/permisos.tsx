@@ -6,6 +6,7 @@ import { useAuth } from "@/providers/AuthProvider";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import API from "@/services/api";
 import { set } from "react-hook-form";
+import useQueryPermisos from "../_hooks/useQueryPermisos";
 
 
 type PermisosMapeados = {
@@ -19,21 +20,11 @@ type PermisosMapeados = {
 
 function PermisosModal() {
 
-    const { userData } = useAuth()
+
     const { modals, handleModals, selectedUser, setSelectedUser, permisos } = useUserProvider()
+    const { permisosOtorgados, isLoading } = useQueryPermisos(!!selectedUser && modals.permisos, selectedUser ? selectedUser.id : 0)
 
-
-    const { data: permisosData, isLoading } = useQuery({
-        queryKey: ["permisosByUser", selectedUser ? selectedUser.id : 0],
-        queryFn: () => API.permisos.byAdmin(userData && userData.token, selectedUser ? selectedUser.id : 0),
-        enabled: !!selectedUser && modals.permisos,
-        refetchOnWindowFocus: false
-    });
-
-
-    console.log(permisosData, isLoading)
-
-
+    console.log(permisosOtorgados);
     const close = () => { setSelectedUser(null); handleModals('permisos'); }
 
     return <Dialog maxWidth='xs' open={modals.permisos} onClose={close}>
