@@ -11,7 +11,6 @@ export default function TableCellHead({ children }: { children: React.ReactNode 
         cursor: "pointer",
         height: 48,
         backgroundColor: "primary.main",
-        color: "white",
         padding: "0 0 0 14px",
       }}
     >
