@@ -24,7 +24,7 @@ function PermisosModal() {
     const { permisosOtorgados, isLoading } = useQueryPermisos(!!selectedUser && modals.permisos, selectedUser ? selectedUser.id : 0)
     const [permisosSelected, setPermisosSelected] = useState<PermisosMapeados[]>([]);
 
-    const { sendPermisos } = useSendPermisos()
+    const { sendPermisos, isPending } = useSendPermisos()
 
     const close = () => { setSelectedUser(null); handleModals('permisos'); }
 
@@ -59,7 +59,7 @@ function PermisosModal() {
     return <Dialog maxWidth='xs' open={modals.permisos} onClose={close}>
         <DialogTitle>Permisos</DialogTitle>
         <DialogContent>
-            {(isLoading) ? <LinearProgress /> :
+            {(isLoading || isPending) ? <LinearProgress /> :
                 <PermisoSelectables permisosSelectables={permisosSelected} onChangeCheckBox={handleCheckboxChange} />
             }
         </DialogContent>
