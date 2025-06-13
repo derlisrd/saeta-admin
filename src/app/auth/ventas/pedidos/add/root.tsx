@@ -13,7 +13,7 @@ function Root() {
           <h3>Pedidos</h3>
         </Grid>
         <Grid size={12}>
-          <Button onClick={() => handleModal("main")} endIcon={<Icon>arrow-narrow-right-dashed</Icon>}>
+          <Button onClick={() => handleModal("main")} endIcon={<Icon name='arrow-narrow-right-dashed' />}>
             Continuar pedidos
           </Button>
         </Grid>
@@ -28,8 +28,8 @@ function Root() {
                   <ListItem
                     key={i}
                     secondaryAction={
-                      <IconButton edge="end" onClick={() => {}}>
-                        <Icon size={22}>check</Icon>
+                      <IconButton edge="end" onClick={() => { }}>
+                        <Icon size={22} name="check" />
                       </IconButton>
                     }
                   >

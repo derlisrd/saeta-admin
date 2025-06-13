@@ -58,7 +58,7 @@ function Imagenes() {
       {/* Área de subida con Drag & Drop */}
       <Box {...getRootProps()} borderRadius={2} border={2} padding={3} sx={{ borderStyle: "dashed", cursor: "pointer" }}>
         <input {...getInputProps()} />
-        <Icon size={24}>photo-up</Icon>
+        <Icon size={24} name='photo-up' />
         <Typography variant="h6" color="textSecondary">
           {isDragActive ? "Suelta las imágenes aquí..." : "Arrastra y suelta imágenes aquí o haz clic para seleccionar"}
         </Typography>
@@ -83,7 +83,7 @@ function Imagenes() {
                   size="small"
                   onClick={() => removeImage(index)}
                 >
-                  <Icon>trash</Icon>
+                  <Icon name='trash' />
                 </IconButton>
               </Card>
             </Grid>

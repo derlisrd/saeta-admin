@@ -27,9 +27,9 @@ function NotFoundPage() {
       <Slide direction="down" in={true} mountOnEnter unmountOnExit>
         <Box>
           <IconWrapper>
-            <Icon color="silver" size={64}>
-              carrot
-            </Icon>
+            <Icon color="silver" name="carrot" size={64} />
+
+
           </IconWrapper>
           <Typography variant="h4" gutterBottom>
             Página no encontrada
@@ -39,7 +39,7 @@ function NotFoundPage() {
           </Typography>
           <Box mt={3}>
             <Button
-              startIcon={<Icon>arrow-narrow-left-dashed</Icon>}
+              startIcon={<Icon name="arrow-narrow-left-dashed" />}
               component={RouterLink} // Usa Link de React Router si estás navegando dentro de la app
               to="/"
               variant="contained"

@@ -1,11 +1,11 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, LinearProgress, List, ListItem, ListItemIcon, ListItemText, Switch, Typography } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, LinearProgress } from "@mui/material";
 import { useUserProvider } from "../provider";
 import Icon from "@/components/ui/icon";
 import { useEffect, useMemo, useState } from "react";
-import { useAuth } from "@/providers/AuthProvider";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import API from "@/services/api";
 import useQueryPermisos from "../_hooks/useQueryPermisos";
+import PermisoSelectables from "../_components/permisoselectables";
+import useSendPermisos from "../_hooks/useSendPermisos";
+
 
 
 type PermisosMapeados = {
@@ -22,10 +22,14 @@ function PermisosModal() {
 
     const { modals, handleModals, selectedUser, setSelectedUser, permisos } = useUserProvider()
     const { permisosOtorgados, isLoading } = useQueryPermisos(!!selectedUser && modals.permisos, selectedUser ? selectedUser.id : 0)
+    const [permisosSelected, setPermisosSelected] = useState<PermisosMapeados[]>([]);
+
+    const { sendPermisos } = useSendPermisos()
+
+    const close = () => { setSelectedUser(null); handleModals('permisos'); }
 
     const permisosIniciales = useMemo(() => {
         if (!permisosOtorgados || !permisos) return [];
-
         return permisos.map((i) => ({
             id: i.id,
             permiso_id: i.id,
@@ -36,14 +40,28 @@ function PermisosModal() {
         }));
     }, [permisosOtorgados, permisos, selectedUser]);
 
-    console.log(permisosIniciales)
+    const enviarPermisos = () => {
+        if (!selectedUser) return;
+        sendPermisos(permisosIniciales, permisosSelected, selectedUser.id);
+    }
 
-    const close = () => { setSelectedUser(null); handleModals('permisos'); }
+    // Función para manejar el cambio de checkbox
+    const handleCheckboxChange = (permisoId: number) => {
+        setPermisosSelected(prev => prev.map(permiso => permiso.id === permisoId ? { ...permiso, checked: !permiso.checked } : permiso));
+    }
+
+    useEffect(() => {
+        if (permisosIniciales.length > 0) {
+            setPermisosSelected(permisosIniciales);
+        }
+    }, [permisosIniciales]);
 
     return <Dialog maxWidth='xs' open={modals.permisos} onClose={close}>
         <DialogTitle>Permisos</DialogTitle>
         <DialogContent>
-
+            {(isLoading) ? <LinearProgress /> :
+                <PermisoSelectables permisosSelectables={permisosSelected} onChangeCheckBox={handleCheckboxChange} />
+            }
         </DialogContent>
         <DialogActions>
             <Button
@@ -53,7 +71,7 @@ function PermisosModal() {
             >
                 Regresar
             </Button>
-            <Button onClick={() => { }} endIcon={<Icon name='device-floppy' />}>
+            <Button onClick={enviarPermisos} endIcon={<Icon name='device-floppy' />}>
                 Guardar
             </Button>
         </DialogActions>

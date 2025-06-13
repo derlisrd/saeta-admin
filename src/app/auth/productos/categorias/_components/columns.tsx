@@ -15,7 +15,7 @@ const AccionesCell = () => {
         <Stack direction="row">
             <Tooltip title="Editar" placement="top" arrow>
                 <IconButton onClick={() => { }}>
-                    <Icon>edit</Icon>
+                    <Icon name='edit' />
                 </IconButton>
             </Tooltip>
         </Stack>

@@ -17,7 +17,7 @@ function Title() {
               }}
               color="primary"
             >
-              <Icon size={36}>arrow-left-dashed</Icon>
+              <Icon size={36} name="arrow-left-dashed" />
             </IconButton>
           </Tooltip>
           <Typography variant="body1" sx={{ display: { xs: 'none', md: 'block' } }}>Pedido | Total: {pedidos[index].total.toLocaleString('es-PY')} Gs</Typography>
@@ -27,7 +27,7 @@ function Title() {
             handleModal("clientes");
           }}
           size="small"
-          startIcon={<Icon>user-plus</Icon>}
+          startIcon={<Icon name='user-plus' />}
         >
           {pedidos[index].cliente_id === 0 ? "Agregar Cliente" : pedidos[index].cliente}
         </Button>

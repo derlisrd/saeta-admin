@@ -7,6 +7,7 @@ import { AddCategoria, AddCategoriaResponse } from "@/services/dto/productos/Add
 import { CategoriaResponse } from "@/services/dto/productos/categoria";
 import { showAlert } from "@/core/utils/alert";
 
+
 function CategoriasProvider({ children }: { children: React.ReactNode }) {
   const { userData } = useAuth();
   const queryClient = useQueryClient();
@@ -82,12 +83,14 @@ function CategoriasProvider({ children }: { children: React.ReactNode }) {
       if (data && data.success && data.results) {
         return data.results
       }
+
       return []
     },
+
   });
 
   const values = {
-    lista: data || [],
+    lista: data ? data : [],
     isLoading,
     error,
     refetch,

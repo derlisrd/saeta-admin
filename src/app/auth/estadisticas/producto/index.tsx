@@ -107,12 +107,12 @@ function EstadisticasProducto() {
                             />
                         </Grid>
                         <Grid size={{ xs: 12, sm: 6, md: 2 }}>
-                            <Button onClick={handleSend} fullWidth endIcon={<Icon>report-search</Icon>}>
+                            <Button onClick={handleSend} fullWidth endIcon={<Icon name='report-search' />}>
                                 Consultar
                             </Button>
                         </Grid>
                         <Grid size={{ xs: 12, sm: 6, md: 2 }}>
-                            <Button variant="outlined" fullWidth onClick={clear} endIcon={<Icon>trash</Icon>}>
+                            <Button variant="outlined" fullWidth onClick={clear} endIcon={<Icon name='trash' />}>
                                 Limpiar
                             </Button>
                         </Grid>

@@ -55,7 +55,7 @@ function Empresa() {
               </Grid>
               <Grid size={{ xs: 12 }}>
                 <Stack direction="row" spacing={2} justifyContent="flex-end">
-                  <Button disabled={isLoading} size="large" startIcon={<Icon>device-floppy</Icon>} onClick={updateEmpresa} variant="contained">
+                  <Button disabled={isLoading} size="large" startIcon={<Icon name='device-floppy' />} onClick={updateEmpresa} variant="contained">
                     Guardar
                   </Button>
                 </Stack>

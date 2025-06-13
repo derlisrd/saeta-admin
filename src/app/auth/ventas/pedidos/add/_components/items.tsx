@@ -38,7 +38,7 @@ function Items() {
           >
             <Grid size={12}>
               <Tooltip title='Agregar producto' arrow>
-                <Button size="large" onClick={() => handleModal('productos')}><Icon>shopping-cart-plus</Icon></Button>
+                <Button size="large" onClick={() => handleModal('productos')}><Icon name='shopping-cart-plus' /></Button>
               </Tooltip>
             </Grid>
             {pedidos[index].items.map((item, i) => (

@@ -37,14 +37,14 @@ function RegistroClienteModal() {
             <FormLabel>Extranjero: </FormLabel>
             <FormControlLabel
               value={0}
-              control={<Checkbox icon={<Icon size={22}>circle-dashed</Icon>} checkedIcon={<Icon size={22}>circle-check</Icon>} />}
+              control={<Checkbox icon={<Icon size={22} name='circle-dashed' />} checkedIcon={<Icon size={22} name='circle-check' />} />}
               checked={form.extranjero === 0}
               onChange={() => handleForm("extranjero", 0)}
               label="Nacional"
             />
             <FormControlLabel
               value={1}
-              control={<Checkbox icon={<Icon size={22}>circle-dashed</Icon>} checkedIcon={<Icon size={22}>circle-check</Icon>} />}
+              control={<Checkbox icon={<Icon size={22} name='circle-dashed' />} checkedIcon={<Icon size={22} name='circle-check' />} />}
               checked={form.extranjero === 1}
               onChange={() => handleForm("extranjero", 1)}
               label="Extranjero"
@@ -90,7 +90,7 @@ function RegistroClienteModal() {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button startIcon={<Icon>device-floppy</Icon>} onClick={registar} disabled={loading}>
+        <Button startIcon={<Icon name='device-floppy' />} onClick={registar} disabled={loading}>
           Guardar
         </Button>
         <Button variant="outlined" onClick={cerrar} disabled={loading}>

@@ -36,7 +36,7 @@ function InputCodigo() {
               <InputAdornment position="end">
                 <Tooltip title="Buscar productos" arrow placement="left">
                   <IconButton onClick={() => handleModal("productos")}>
-                    <Icon>search</Icon>
+                    <Icon name="search" />
                   </IconButton>
                 </Tooltip>
               </InputAdornment>
@@ -48,7 +48,7 @@ function InputCodigo() {
                 ) : (
                   <Tooltip title="Más vendidos" arrow placement="right">
                     <IconButton onClick={() => handleModal("masvendidos")}>
-                      <Icon>shopping-cart</Icon>
+                      <Icon name='shopping-cart' />
                     </IconButton>
                   </Tooltip>
                 )}

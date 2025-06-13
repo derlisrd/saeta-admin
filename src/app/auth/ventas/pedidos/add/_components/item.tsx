@@ -18,7 +18,7 @@ function Item({ item, removeItem, index }: ItemProps) {
       <Grid size={{ xs: 12, sm: 2 }}>{item.total.toLocaleString("es-PY")}</Grid>
       <Grid size={{ xs: 12, sm: 1 }}>
         <IconButton onClick={removeItem} size="small">
-          <Icon>trash</Icon>
+          <Icon name='trash' />
         </IconButton>
       </Grid>
 

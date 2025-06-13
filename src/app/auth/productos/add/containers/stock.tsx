@@ -53,7 +53,7 @@ function Stock() {
         </FormControl>
       </Grid>
       <Grid size={{ xs: 12, md: 4 }}>
-        <Button variant="outlined" endIcon={<Icon size={14}>basket-plus</Icon>} onClick={addStock}>
+        <Button variant="outlined" endIcon={<Icon size={14} name='basket-plus' />} onClick={addStock}>
           AGREGAR
         </Button>
       </Grid>
@@ -63,7 +63,7 @@ function Stock() {
             <ListItem disablePadding key={i}>
               <ListItemButton>
                 <ListItemIcon>
-                  <Icon>trash</Icon>
+                  <Icon name="trash" />
                 </ListItemIcon>
                 <ListItemText primary={`Deposito: ${e.deposito}`} secondary={`Cantidad: ${e.cantidad}`} />
               </ListItemButton>

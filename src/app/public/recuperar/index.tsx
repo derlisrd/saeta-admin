@@ -48,7 +48,7 @@ function RecuperarPassword() {
                                     input: {
                                         startAdornment: (
                                             <InputAdornment position="start">
-                                                <Icon>mail</Icon>
+                                                <Icon name="mail" />
                                             </InputAdornment>
                                         ),
                                     },

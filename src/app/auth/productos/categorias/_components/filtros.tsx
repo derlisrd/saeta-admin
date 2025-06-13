@@ -14,7 +14,7 @@ function Filtros() {
                     input: {
                         startAdornment: (
                             <InputAdornment position="start">
-                                <Icon>search</Icon>
+                                <Icon name='search' />
                             </InputAdornment>
                         ),
                     },
@@ -23,7 +23,7 @@ function Filtros() {
             />
         </Grid>
         <Grid size={6}>
-            <Button startIcon={<Icon>device-ipad-horizontal-plus</Icon>} onClick={() => { handleModal('crear') }}>
+            <Button startIcon={<Icon name='device-ipad-horizontal-plus' />} onClick={() => { handleModal('crear') }}>
                 Registrar
             </Button>
         </Grid>

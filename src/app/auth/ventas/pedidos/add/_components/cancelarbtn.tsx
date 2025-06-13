@@ -7,14 +7,14 @@ function CancelarButton() {
 
   if (pedidos.length > 1) {
     return (
-      <Button endIcon={<Icon>trash</Icon>} variant="outlined" color="warning" onClick={cancelar} fullWidth sx={{ padding: 2 }}>
+      <Button endIcon={<Icon name='trash' />} variant="outlined" color="warning" onClick={cancelar} fullWidth sx={{ padding: 2 }}>
         Cancelar
       </Button>
     );
   }
   if (pedidos[index].items.length > 0) {
     return (
-      <Button endIcon={<Icon>trash</Icon>} variant="outlined" color="warning" onClick={cancelar} fullWidth sx={{ padding: 2 }}>
+      <Button endIcon={<Icon name='trash' />} variant="outlined" color="warning" onClick={cancelar} fullWidth sx={{ padding: 2 }}>
         Cancelar
       </Button>
     );

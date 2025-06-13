@@ -64,10 +64,10 @@ function ClientesEdit() {
             </Grid>
             <Grid size={{ xs: 12, md: 12 }}>
               <Stack direction="row" spacing={2} justifyContent="flex-end">
-                <Button disabled={isLoading} size="large" startIcon={<Icon>chevrons-left</Icon>} onClick={() => navigate("/clientes")} variant="outlined">
+                <Button disabled={isLoading} size="large" startIcon={<Icon name='chevrons-left' />} onClick={() => navigate("/clientes")} variant="outlined">
                   Regresar
                 </Button>
-                <Button disabled={isLoading} size="large" startIcon={<Icon>device-floppy</Icon>} onClick={submit} variant="contained">
+                <Button disabled={isLoading} size="large" startIcon={<Icon name='device-floppy' />} onClick={submit} variant="contained">
                   Guardar
                 </Button>
               </Stack>

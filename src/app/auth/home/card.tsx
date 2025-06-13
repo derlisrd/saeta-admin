@@ -21,13 +21,12 @@ function CardHome({ data, title, icon, color, caption, captionIcon, captionColor
           <Box>
             <Typography variant="caption">{title}</Typography>
             <Typography variant="h5">{data}</Typography>
-            <Typography variant="caption">{caption}</Typography> {captionIcon && <Icon size={14} color={captionColor}>{captionIcon}</Icon>}
+            <Typography variant="caption">{caption}</Typography>{" "}
+            {captionIcon && (
+              <Icon name={captionIcon} size={14} color={captionColor} />
+            )}
           </Box>
-          {icon && (
-            <Icon color={color ?? customTheme?.palette.primary.main} size={36}>
-              {icon}
-            </Icon>
-          )}
+          {icon && <Icon name={icon} color={color ?? customTheme?.palette.primary.main} size={36} />}
         </Stack>
       </CardContent>
     </Card>

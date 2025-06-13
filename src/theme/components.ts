@@ -184,5 +184,10 @@ export const components = (): Components<Omit<Theme, "components" | "palette"> &
         backdropFilter: "blur(3px)"
       }
     }
+  },
+  MuiCssBaseline: {
+    styleOverrides: {
+      
+    }
   }
 });

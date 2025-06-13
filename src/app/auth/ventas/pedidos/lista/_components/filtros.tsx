@@ -11,7 +11,6 @@ import { useListaPedidosContext } from "../provider";
 interface FiltrosProps {
   setSearch: React.Dispatch<React.SetStateAction<string>>;
   search: string;
-
 }
 
 function Filtros({ setSearch, search }: FiltrosProps) {
@@ -39,7 +38,7 @@ function Filtros({ setSearch, search }: FiltrosProps) {
             input: {
               startAdornment: (
                 <InputAdornment position="start">
-                  <Icon size={14}>search</Icon>
+                  <Icon name='search' size={14} />
                 </InputAdornment>
               ),
             },
@@ -102,21 +101,21 @@ function Filtros({ setSearch, search }: FiltrosProps) {
           <Grid size={4}>
             <Tooltip title="Buscar" placement="top" arrow>
               <Button fullWidth onClick={handleBuscarClick}>
-                <Icon>search</Icon>
+                <Icon name='search' />
               </Button>
             </Tooltip>
           </Grid>
           <Grid size={4}>
             <Tooltip title="Limpiar filtros" placement="top" arrow>
               <Button fullWidth variant="outlined" onClick={handleLimpiarFiltros}>
-                <Icon>x</Icon>
+                <Icon name="x" />
               </Button>
             </Tooltip>
           </Grid>
           <Grid size={4}>
             <Tooltip title="Actualizar" placement="top" arrow>
               <IconButton onClick={refetch} color="primary">
-                <Icon>refresh</Icon>
+                <Icon name="refresh" />
               </IconButton>
             </Tooltip>
           </Grid>

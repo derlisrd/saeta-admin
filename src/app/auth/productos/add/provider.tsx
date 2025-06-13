@@ -4,7 +4,7 @@ import { AddProducto } from "@/services/dto/productos/AddProducto";
 import { AddStock } from "@/services/dto/productos/AddStock";
 import { useCallback, useMemo, useRef, useState } from "react";
 import AddProductoContext, { modalType } from "./context";
-import { useMutation, useQueries, useSuspenseQueries } from "@tanstack/react-query";
+import { useMutation, useQueries } from "@tanstack/react-query";
 
 import API from "@/services/api";
 import { ImpuestoResponse } from "@/services/dto/factura/impuesto";

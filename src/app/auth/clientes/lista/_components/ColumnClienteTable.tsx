@@ -25,7 +25,7 @@ const ColumnClienteTable = (width: number): ColumnConfigType[] => [
         cellRenderer: ({ rowData }: TableCellProps) => (
             <Stack direction='row' spacing={1}>
                 <IconButton onClick={() => console.log(rowData)}>
-                    <Icon>edit</Icon>
+                    <Icon name='edit' />
                 </IconButton>
             </Stack >
         )

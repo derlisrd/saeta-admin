@@ -12,7 +12,7 @@ function ListaDeEspera() {
             key={i}
             secondaryAction={
               <IconButton edge="end" onClick={cancelar}>
-                <Icon>check</Icon>
+                <Icon name="check" />
               </IconButton>
             }
           >

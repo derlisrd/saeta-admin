@@ -50,7 +50,7 @@ function PrintCodigoModal() {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button startIcon={<Icon>printer</Icon>} color="primary" onClick={() => print()}>
+        <Button startIcon={<Icon name='printer' />} color="primary" onClick={() => print()}>
           Imprimir
         </Button>
         <Button variant="outlined" onClick={() => handleModals("codigo")}>

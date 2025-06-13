@@ -2,6 +2,7 @@ import { CategoriaResponse } from "@/services/dto/productos/categoria";
 import { BASE } from "../base";
 import { AddCategoria, AddCategoriaResponse } from "@/services/dto/productos/AddCategoria";
 import { isAxiosError } from "axios";
+import { ApiError } from "../error";
 
 
 export const apiServiceCategorias = {
@@ -12,10 +13,10 @@ export const apiServiceCategorias = {
     } catch (e) {
       //return new CategoriaResponse({ success : false, status : 500, results: null, message: 'Error de servidor'});
       if (isAxiosError(e)) {
-        throw new Error(e.response?.data.message || "Error de servidor");
+        throw new ApiError(e.response?.data.message || "Error de servidor", e.response?.status || 500);
         //return new CategoriaResponse({ success: false, status: e.response?.status || 500, results: null, message: e.response?.data.message || "Error de servidor" });
       }
-      throw new Error("Error de servidor");
+      throw new ApiError("Error de servidor");
       //return new CategoriaResponse({ success: false, status: 500, results: null, message: "Error de servidor" });
     }
   },

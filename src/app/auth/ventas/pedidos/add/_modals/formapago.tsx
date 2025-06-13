@@ -125,7 +125,7 @@ function FormaPagoModal() {
           <Grid size={{ xs: 12, md: 6 }}>
             {error.code > 0 && (
               <Zoom in>
-                <Alert severity="error" variant="outlined" icon={<Icon>exclamation-circle</Icon>}>
+                <Alert severity="error" variant="outlined" icon={<Icon name='exclamation-circle' />}>
                   {error.message}
                 </Alert>
               </Zoom>
@@ -136,14 +136,14 @@ function FormaPagoModal() {
               <FormLabel>Condición de venta: </FormLabel>
               <FormControlLabel
                 value={0}
-                control={<Checkbox icon={<Icon size={22}>circle-dashed</Icon>} checkedIcon={<Icon size={22}>circle-check</Icon>} />}
+                control={<Checkbox icon={<Icon name='circle-dashed' size={22} />} checkedIcon={<Icon name='circle-check' size={22} />} />}
                 checked={pedidos[index].condicion === 0}
                 onChange={() => changePedido("condicion", 0)}
                 label="Contado"
               />
               <FormControlLabel
                 value={1}
-                control={<Checkbox icon={<Icon size={22}>circle-dashed</Icon>} checkedIcon={<Icon size={22}>circle-check</Icon>} />}
+                control={<Checkbox icon={<Icon name='circle-dashed' size={22} />} checkedIcon={<Icon name='circle-check' size={22} />} />}
                 checked={pedidos[index].condicion === 1}
                 onChange={() => changePedido("condicion", 1)}
                 label="Crédito"
@@ -161,7 +161,7 @@ function FormaPagoModal() {
                     setError({ code: 0, message: "" });
                   }}
                   variant={formaPagoSelected === e.id ? "contained" : "outlined"}
-                  startIcon={<Icon size={24}>{e.tipo === "efectivo" ? "cash" : "credit-card-pay"}</Icon>}
+                  startIcon={<Icon name={e.tipo === "efectivo" ? "cash" : "credit-card-pay"} size={24} />}
 
                 >
                   {e.descripcion}
@@ -190,7 +190,7 @@ function FormaPagoModal() {
                   endAdornment: (
                     <InputAdornment position="end">
                       <IconButton onClick={clear}>
-                        <Icon>x</Icon>
+                        <Icon name="x" />
                       </IconButton>
                     </InputAdornment>
                   ),
@@ -213,10 +213,10 @@ function FormaPagoModal() {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button variant="outlined" startIcon={<Icon>arrow-narrow-left-dashed</Icon>} sx={{ p: 2 }} onClick={close}>
+        <Button variant="outlined" startIcon={<Icon name='arrow-narrow-left-dashed' />} sx={{ p: 2 }} onClick={close}>
           Regresar
         </Button>
-        <Button sx={{ p: 2 }} onClick={siguiente} endIcon={<Icon>arrow-narrow-right-dashed</Icon>}>
+        <Button sx={{ p: 2 }} onClick={siguiente} endIcon={<Icon name='arrow-narrow-right-dashed' />}>
           Siguiente
         </Button>
       </DialogActions>

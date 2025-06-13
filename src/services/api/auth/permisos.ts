@@ -30,26 +30,26 @@ export const apiServicePermisos = {
   },
   asignar: async(token: string | null, id: number, permisos: number[]) =>{
     try {
-      const {data, status} = await BASE.post(`/permisos/asignar`, { permisos, admin_id: id }, { headers: { Authorization: `Bearer ${token}` } });
+      const {data, status} = await BASE.post(`/permisos/asignar`, { permisos, user_id: id }, { headers: { Authorization: `Bearer ${token}` } });
       return { success: data.success as boolean, message: data.message, status: status };
     }
     catch (error) {
       if (axios.isAxiosError(error)) {
-        return { success: false, message: error.response?.data.message, status: error.response?.status };
+        throw new Error(error.response?.data.message || "Error desconocido" );
       }
-      return { success: false, message: "Error desconocido", status: 500 };
+      throw new Error("Error desconocido");
     }
   },
   revocar: async(token: string | null, id: number, permisos: number[]) =>{
     try {
-      const {data, status} = await BASE.post(`/permisos/revocar`, { permisos, admin_id: id }, { headers: { Authorization: `Bearer ${token}` } });
+      const {data, status} = await BASE.post(`/permisos/revocar`, { permisos, user_id: id }, { headers: { Authorization: `Bearer ${token}` } });
       return { success: data.success as boolean, message: data.message, status: status };
     }
     catch (error) {
-        if (axios.isAxiosError(error)) {
-          throw new Error(error.response?.data.message || "Error desconocido" );
-        }
-        throw new Error("Error desconocido");
+      if (axios.isAxiosError(error)) {
+        throw new Error(error.response?.data.message || "Error desconocido" );
+      }
+      throw new Error("Error desconocido");
       }
   },
 }

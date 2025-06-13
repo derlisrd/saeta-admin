@@ -62,7 +62,7 @@ function Teclado({ onEnter, onNumberClick, onBackspace, clear }: TecladoProps) {
         </Button>
       </Grid>
       <Grid size={3}>
-        <Button size="large" variant="outlined" fullWidth sx={{ height: "100%" }} onClick={onBackspace} startIcon={<Icon size={24}>arrow-narrow-left-dashed</Icon>} />
+        <Button size="large" variant="outlined" fullWidth sx={{ height: "100%" }} onClick={onBackspace} startIcon={<Icon name="arrow-narrow-left-dashed" size={24} />} />
       </Grid>
       <Grid size={3}>
         <Button size="large" fullWidth sx={{ fontSize: { xs: 12, sm: 24 }, height: "100%" }} onClick={() => handleNumberClick("4")}>
@@ -109,7 +109,7 @@ function Teclado({ onEnter, onNumberClick, onBackspace, clear }: TecladoProps) {
           }}
           fullWidth
           onClick={onEnter}
-          startIcon={<Icon size={36}>corner-down-left</Icon>}
+          startIcon={<Icon size={36} name="corner-down-left" />}
         />
       </Grid>
       <Grid size={3}>
@@ -137,7 +137,7 @@ function Teclado({ onEnter, onNumberClick, onBackspace, clear }: TecladoProps) {
           }}
           fullWidth
           onClick={clear}
-          startIcon={<Icon size={24}>trash</Icon>}
+          startIcon={<Icon name="trash" size={24} />}
         />
       </Grid>
     </Grid>

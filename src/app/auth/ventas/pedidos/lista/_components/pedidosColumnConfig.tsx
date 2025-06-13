@@ -25,12 +25,12 @@ const AccionesCell = ({ rowData, onImprimir }: AccionesCellProps) => (
   <Stack direction="row">
     <Tooltip title="Imprimir" placement="top" arrow>
       <IconButton onClick={() => onImprimir(rowData)}>
-        <Icon>printer</Icon>
+        <Icon name='printer' />
       </IconButton>
     </Tooltip>
     <Tooltip title="Cancelar" placement="top" arrow>
       <IconButton onClick={() => console.log("Cancelar pedido ID:", rowData.id)}>
-        <Icon>x</Icon>
+        <Icon name='x' />
       </IconButton>
     </Tooltip>
   </Stack>

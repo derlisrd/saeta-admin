@@ -19,10 +19,10 @@ function CardItem({ item, removeItem }: CardItemProps) {
         </CardContent>
         <CardActions>
             <IconButton>
-                <Icon>photo-search</Icon>
+                <Icon name="photo-search" />
             </IconButton>
             <IconButton onClick={removeItem}>
-                <Icon>trash</Icon>
+                <Icon name="trash" />
             </IconButton>
         </CardActions>
     </Card>

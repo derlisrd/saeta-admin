@@ -35,7 +35,7 @@ function Datos() {
               input: {
                 startAdornment: (
                   <InputAdornment position="start">
-                    <Icon>barcode</Icon>
+                    <Icon name='barcode' />
                   </InputAdornment>
                 )
               }
@@ -59,7 +59,7 @@ function Datos() {
           />
         </Grid>
         <Grid size={{ xs: 12, md: 6 }}>
-          <Button variant="contained" endIcon={<Icon>arrows-random</Icon>} onClick={generateCode}>
+          <Button variant="contained" endIcon={<Icon name='arrows-random' />} onClick={generateCode}>
             GENERAR
           </Button>
         </Grid>
@@ -70,14 +70,14 @@ function Datos() {
               value="1"
               checked={form.tipo === 1}
               onChange={() => changeByName("tipo", 1)}
-              control={<Checkbox icon={<Icon size={22}>circle-dashed</Icon>} checkedIcon={<Icon size={22}>circle-check</Icon>} />}
+              control={<Checkbox icon={<Icon name='circle-dashed' />} checkedIcon={<Icon name='circle-check' />} />}
               label="Producto"
             />
             <FormControlLabel
               value="2"
               checked={form.tipo === 2}
               onChange={() => changeByName("tipo", 2)}
-              control={<Checkbox icon={<Icon size={22}>circle-dashed</Icon>} checkedIcon={<Icon size={22}>circle-check</Icon>} />}
+              control={<Checkbox icon={<Icon name='circle-dashed' />} checkedIcon={<Icon name='circle-check' />} />}
               label="Servicio"
             />
           </Stack>
@@ -88,7 +88,7 @@ function Datos() {
             value="1"
             checked={form.disponible === 1}
             onChange={() => changeByName("disponible", form.disponible === 1 ? 0 : 1)}
-            control={<Checkbox icon={<Icon size={22}>circle-dashed</Icon>} checkedIcon={<Icon size={22}>circle-check</Icon>} />}
+            control={<Checkbox icon={<Icon name='circle-dashed' />} checkedIcon={<Icon name='circle-check' />} />}
             label="Mostrar en tienda virtual"
           />
         </Grid>
@@ -167,7 +167,7 @@ function Datos() {
               <List>
                 <ListItemButton onClick={() => handleModal("categorias")}>
                   <ListItemIcon>
-                    <Icon>circle-plus</Icon>
+                    <Icon name='circle-plus' />
                   </ListItemIcon>
                   <ListItemText primary="Agregar categoria" />
                 </ListItemButton>

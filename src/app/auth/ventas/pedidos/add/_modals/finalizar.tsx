@@ -81,10 +81,10 @@ function FinalizarPedido() {
         )}
       </DialogContent>
       <DialogActions>
-        <Button variant="outlined" startIcon={<Icon>arrow-narrow-left-dashed</Icon>} disabled={isLoading} sx={{ p: 2 }} onClick={() => handleModal("finalizar")}>
+        <Button variant="outlined" startIcon={<Icon name='arrow-narrow-left-dashed' />} disabled={isLoading} sx={{ p: 2 }} onClick={() => handleModal("finalizar")}>
           Regresar
         </Button>
-        <Button endIcon={<Icon>check</Icon>} disabled={isLoading} sx={{ p: 2 }} onClick={finalizarPedido}>
+        <Button endIcon={<Icon name='check' />} disabled={isLoading} sx={{ p: 2 }} onClick={finalizarPedido}>
           Confirmar
         </Button>
       </DialogActions>

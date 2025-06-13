@@ -29,14 +29,14 @@ function Clientes() {
             input: {
               startAdornment: (
                 <InputAdornment position="start">
-                  <Icon>search</Icon>
+                  <Icon name='search' />
                 </InputAdornment>
               ),
             },
           }}
           onChange={({ target }) => setSearch(target.value)}
         />
-        <Button startIcon={<Icon>users-plus</Icon>} onClick={() => nav("/clientes/add")}>
+        <Button startIcon={<Icon name='users-plus' />} onClick={() => nav("/clientes/add")}>
           Registrar
         </Button>
       </Stack>

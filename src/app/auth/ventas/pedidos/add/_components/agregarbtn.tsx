@@ -14,7 +14,7 @@ function AgregarButton() {
   };
 
   return (
-    <Button variant="outlined" endIcon={<Icon>shopping-cart-plus</Icon>} fullWidth sx={{ padding: 1, display: { xs: 'none', md: 'block' } }} onClick={handleClick}>
+    <Button variant="outlined" endIcon={<Icon name='shopping-cart-plus' />} fullWidth sx={{ padding: 1, display: { xs: 'none', md: 'block' } }} onClick={handleClick}>
       Agregar item
     </Button>
   );

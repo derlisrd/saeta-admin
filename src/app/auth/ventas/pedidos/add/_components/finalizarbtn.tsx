@@ -8,7 +8,7 @@ function FinalizarButton() {
   const { handleModal } = useModal();
   return (
     pedidos[index].items.length > 0 && (
-      <Button endIcon={<Icon>arrow-narrow-right-dashed</Icon>} onClick={() => handleModal("formapago")} size="large" fullWidth sx={{ p: 2 }}>
+      <Button endIcon={<Icon name='arrow-narrow-right-dashed' />} onClick={() => handleModal("formapago")} size="large" fullWidth sx={{ p: 2 }}>
         Proceder
       </Button>
     )

@@ -60,7 +60,7 @@ function AddUsuario() {
                 <Box display='flex' gap={4} padding={2} flexDirection='column' alignItems='center'
                   onClick={() => document.getElementById("file-input")?.click()}
                   sx={{ cursor: "pointer" }} borderRadius={4} bgcolor='background.default'>
-                  <Icon size={64}>photo-plus</Icon>
+                  <Icon size={64} name='photo-plus' />
                   <input type="file" hidden id="file-input" />
                   <Typography variant="body2" color="textSecondary">
                     Permitido *.jpeg, *.jpg, *.png, *.gif
@@ -149,10 +149,10 @@ function AddUsuario() {
 
                     <Grid size={12}>
                       <Stack direction="row" spacing={2} justifyContent="flex-end">
-                        <Button variant="outlined" onClick={() => nav("/config/users")} startIcon={<Icon>arrow-narrow-left-dashed</Icon>}>
+                        <Button variant="outlined" onClick={() => nav("/config/users")} startIcon={<Icon name='arrow-narrow-left-dashed' />}>
                           Regresar
                         </Button>
-                        <Button type="submit" variant="contained" startIcon={<Icon>device-floppy</Icon>}>
+                        <Button type="submit" variant="contained" startIcon={<Icon name='device-floppy' />}>
                           Guardar
                         </Button>
                       </Stack>

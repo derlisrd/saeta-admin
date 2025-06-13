@@ -5,22 +5,23 @@ import { UserListResults } from "@/services/dto/users/user";
 import { TableCellProps } from "react-virtualized";
 import { modalsType } from "../provider";
 
-export default function ColumnsUsers(setSelectedUser: any, handleModals: (modalName: keyof modalsType) => void) {
-
-
-
+export default function ColumnsUsers(setSelectedUser: React.Dispatch<React.SetStateAction<UserListResults | null>>, handleModals: (modalName: keyof modalsType) => void) {
   const width = window.innerWidth;
-
 
   const Acciones = (rowData: UserListResults) => (
     <Stack direction="row" spacing={1}>
       <Tooltip title="Seleccionar">
-        <IconButton onClick={() => { setSelectedUser(rowData); handleModals('permisos'); }}>
+        <IconButton
+          onClick={() => {
+            setSelectedUser(rowData);
+            handleModals("permisos");
+          }}
+        >
           <Icon name="key" />
         </IconButton>
       </Tooltip>
     </Stack>
-  )
+  );
 
   const columns: ColumnConfigType[] = [
     {
@@ -52,8 +53,8 @@ export default function ColumnsUsers(setSelectedUser: any, handleModals: (modalN
       label: "Acciones",
       dataKey: "_",
       width: width * 0.2,
-      cellRenderer: ({ rowData }: TableCellProps) => <Acciones {...rowData} />
-    }
+      cellRenderer: ({ rowData }: TableCellProps) => <Acciones {...rowData} />,
+    },
   ];
   return columns;
 }

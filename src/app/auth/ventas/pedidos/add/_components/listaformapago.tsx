@@ -17,7 +17,7 @@ function ListaFormaPago() {
                 handleFormasPago(0, formaPago.id, "remove", '');
               }}
             >
-              <Icon>trash</Icon>
+              <Icon name='trash' />
             </IconButton>
           }
         >

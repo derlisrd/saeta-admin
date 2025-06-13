@@ -35,7 +35,7 @@ function ImprimirModal({ open, selectedRow, onClose }: ImprimirModalProps) {
           color: theme.palette.grey[500],
         })}
       >
-        <Icon>x</Icon>
+        <Icon name='x' />
       </IconButton>
       <DialogContent>
         <div ref={contentRef} style={{ fontFamily: "monospace", color: "#000 !important", width: impresoraWidth, maxWidth: impresoraWidth, margin: "0 auto" }}>
@@ -43,10 +43,10 @@ function ImprimirModal({ open, selectedRow, onClose }: ImprimirModalProps) {
         </div>
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => print()} startIcon={<Icon>printer</Icon>}>
+        <Button onClick={() => print()} startIcon={<Icon name="printer" />}>
           Imprimir
         </Button>
-        <Button onClick={onClose} variant="outlined" startIcon={<Icon>x</Icon>}>
+        <Button onClick={onClose} variant="outlined" startIcon={<Icon name="x" />}>
           Cerrar
         </Button>
       </DialogActions>

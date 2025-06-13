@@ -1,5 +1,5 @@
 import Barcode from "react-barcode";
-import { Button, Container, Stack } from "@mui/material";
+import { Button, Container, Stack, Typography } from "@mui/material";
 import { useSearchParams } from "react-router-dom";
 import { useRef, useState } from "react";
 import { useReactToPrint } from "react-to-print";
@@ -26,9 +26,11 @@ function PrintCodigoBarra() {
   };
   return (
     <Container>
-      <h3>Imprimir código de barras</h3>
+      <Typography variant="h5"> Imprimir código de barras </Typography>
       <Stack direction="row" spacing={2} alignItems="center">
-        <Button onClick={() => setCopia((prev) => prev + 1)} endIcon={<Icon>copy</Icon>}>Copia</Button>
+        <Button onClick={() => setCopia((prev) => prev + 1)} endIcon={<Icon name="copy" />}>
+          Copia
+        </Button>
         <Button onClick={() => setAltura((prev) => prev + 1)}>Aumentar altura</Button>
         <Button onClick={() => setAltura((prev) => prev - 1)}>Disminuir altura</Button>
         <Button onClick={() => setEspacio((prev) => prev + 1)}>Aumentar espacio</Button>
@@ -56,7 +58,7 @@ function PrintCodigoBarra() {
           </div>
         ))}
       </div>
-      <Button sx={{ mt: 2 }} startIcon={<Icon>printer</Icon>} color="primary" onClick={() => print()}>
+      <Button sx={{ mt: 2 }} startIcon={<Icon name="printer" />} color="primary" onClick={() => print()}>
         Imprimir
       </Button>
     </Container>

@@ -24,7 +24,7 @@ function FiltrosProductos({
                         input: {
                             startAdornment: (
                                 <InputAdornment position="start">
-                                    <Icon>search</Icon>
+                                    <Icon name="search" />
                                 </InputAdornment>
                             ),
                         },
@@ -36,14 +36,14 @@ function FiltrosProductos({
                 <DepositoSelect />
             </Grid>
             <Grid size={{ xs: 6, sm: 6, md: 2 }}>
-                <Button startIcon={<Icon>device-ipad-horizontal-plus</Icon>} onClick={() => nav("/productos/add")}>
+                <Button startIcon={<Icon name='device-ipad-horizontal-plus' />} onClick={() => nav("/productos/add")}>
                     Registrar
                 </Button>
             </Grid>
             <Grid size={{ xs: 6, sm: 6, md: 1 }}>
                 <Tooltip title="Actualizar" placement="top" arrow>
                     <IconButton onClick={() => refresh()}>
-                        <Icon>refresh</Icon>
+                        <Icon name="refresh" />
                     </IconButton>
                 </Tooltip>
             </Grid>

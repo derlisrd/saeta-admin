@@ -30,14 +30,14 @@ function InputCantidad() {
             startAdornment: (
               <InputAdornment position="start">
                 <IconButton onClick={menos}>
-                  <Icon>minus</Icon>
+                  <Icon name="minus" />
                 </IconButton>
               </InputAdornment>
             ),
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton onClick={() => setCantidad(cantidad + 1)}>
-                  <Icon>plus</Icon>
+                  <Icon name='plus' />
                 </IconButton>
               </InputAdornment>
             ),

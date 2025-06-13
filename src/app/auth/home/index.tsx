@@ -14,7 +14,7 @@ function Home() {
           <Grid size={12}>
             <Typography variant="h5">Estadísticas</Typography>
             <Tooltip title="Actualizar datos" placement="left" arrow>
-              <IconButton onClick={() => refresh()}><Icon>rotate-clockwise</Icon></IconButton>
+              <IconButton onClick={() => refresh()}><Icon name='rotate-clockwise' /></IconButton>
             </Tooltip>
           </Grid>
 

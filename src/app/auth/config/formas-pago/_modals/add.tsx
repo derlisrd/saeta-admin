@@ -59,8 +59,8 @@ function AddFormasPagoModal() {
                         control={
                           <Checkbox
                             disabled={isPending}
-                            icon={<Icon size={22}>circle-dashed</Icon>}
-                            checkedIcon={<Icon size={22}>circle-check</Icon>}
+                            icon={<Icon size={22} name='circle-dashed' />}
+                            checkedIcon={<Icon size={22} name='circle-check' />}
                             checked={field.value === "efectivo"}
                             onChange={() => field.onChange("efectivo")}
                           />
@@ -71,8 +71,8 @@ function AddFormasPagoModal() {
                         control={
                           <Checkbox
                             disabled={isPending}
-                            icon={<Icon size={22}>circle-dashed</Icon>}
-                            checkedIcon={<Icon size={22}>circle-check</Icon>}
+                            icon={<Icon size={22} name='circle-dashed' />}
+                            checkedIcon={<Icon size={22} name='circle-check' />}
                             checked={field.value === "digital"}
                             onChange={() => field.onChange("digital")}
                           />
@@ -114,10 +114,10 @@ function AddFormasPagoModal() {
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button variant="outlined" onClick={close} startIcon={<Icon>arrow-narrow-left-dashed</Icon>}>
+          <Button variant="outlined" onClick={close} startIcon={<Icon name='arrow-narrow-left-dashed' />}>
             Regresar
           </Button>
-          <Button type="submit" variant="contained" disabled={isPending} startIcon={<Icon>device-floppy</Icon>}>
+          <Button type="submit" variant="contained" disabled={isPending} startIcon={<Icon name='device-floppy' />}>
             {isPending ? "Guardando..." : "Guardar"}
           </Button>
         </DialogActions>

@@ -15,7 +15,7 @@ function FormasPagoList() {
             <Typography variant="overline">Formas de pago</Typography>
         </Breadcrumbs>
         <Stack spacing={2} my={2} direction="row" alignItems="center">
-            <Button startIcon={<Icon>cards</Icon>} onClick={() => handleModals("add")}>
+            <Button startIcon={<Icon name='cards' />} onClick={() => handleModals("add")}>
                 Agregar
             </Button>
         </Stack>

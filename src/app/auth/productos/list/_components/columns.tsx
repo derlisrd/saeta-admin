@@ -28,17 +28,17 @@ const AccionesCell = ({ rowData, onSelectProducto }: AccionesCellProps) => {
         <Stack direction="row">
             <Tooltip title="Código de barra" placement="top" arrow>
                 <IconButton onClick={() => onSelectProducto(rowData)}>
-                    <Icon>printer</Icon>
+                    <Icon name="printer" />
                 </IconButton>
             </Tooltip>
             <Tooltip title="Codigo de barra" placement="right" arrow>
                 <IconButton onClick={() => nav(`/productos/codigo-barra?codigo=${rowData.codigo}&precio=${rowData.precio_normal}`)}>
-                    <Icon>barcode</Icon>
+                    <Icon name="barcode" />
                 </IconButton>
             </Tooltip>
             <Tooltip title="Editar" placement="right" arrow>
                 <IconButton onClick={() => nav(`/productos/edit/${rowData.id}`, { state: rowData })}>
-                    <Icon>edit</Icon>
+                    <Icon name="edit" />
                 </IconButton>
             </Tooltip>
         </Stack>
@@ -52,7 +52,7 @@ export const productosColumnConfig = (width: number, onSelectProducto?: (product
         cellRenderer: ({ rowData }: TableCellProps) => (
             <Stack direction='row' spacing={1} alignItems='center'>
                 <IconButton>
-                    <Icon size={22}>photo</Icon>
+                    <Icon name="photo" size={22} />
                 </IconButton>
                 <Stack direction='column'>
                     <Typography variant="caption">{rowData.nombre}</Typography>

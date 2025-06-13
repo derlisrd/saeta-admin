@@ -38,7 +38,7 @@ function ClientesModal() {
             handleModal("clientes");
             handleModal("registro");
           }}
-          startIcon={<Icon>user-plus</Icon>}
+          startIcon={<Icon name='user-plus' />}
         >
           Registrar
         </Button>

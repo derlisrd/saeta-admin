@@ -21,7 +21,7 @@ function Parametros() {
                     <Stack direction="row" spacing={2} alignItems="center">
                       <Box>
                         <Avatar sx={{ width: 48, height: 48, bgcolor: "primary.light" }}>
-                          <Icon size={24}>{e.icon}</Icon>
+                          <Icon size={24} name={e.icon} />
                         </Avatar>
                       </Box>
                       <Box>

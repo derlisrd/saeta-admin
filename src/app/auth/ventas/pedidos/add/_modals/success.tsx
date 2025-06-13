@@ -61,10 +61,10 @@ function SuccessModal() {
         )}
       </DialogContent>
       <DialogActions>
-        <Button startIcon={<Icon>printer</Icon>} color="primary" onClick={() => print()}>
+        <Button startIcon={<Icon name='printer' />} color="primary" onClick={() => print()}>
           Imprimir
         </Button>
-        <Button variant="outlined" endIcon={<Icon>check</Icon>} color="primary" onClick={cerrar}>
+        <Button variant="outlined" endIcon={<Icon name='check' />} color="primary" onClick={cerrar}>
           Listo
         </Button>
       </DialogActions>

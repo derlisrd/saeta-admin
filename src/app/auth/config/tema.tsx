@@ -21,7 +21,7 @@ function Tema() {
                   changeColor(item);
                 }}
                 sx={{ backgroundColor: item.color, margin: 1 }}
-                startIcon={<Icon>brush</Icon>}
+                startIcon={<Icon name='brush' />}
               >
                 {item.name}
               </Button>

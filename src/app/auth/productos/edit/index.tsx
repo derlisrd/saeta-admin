@@ -13,6 +13,7 @@ function EditProducto() {
   const { isLoading, data: productoDesdeQuery } = useEditProductoQuery(id, !productoDesdeState && !!id);
 
   const producto: ProductoResults | undefined = productoDesdeState || productoDesdeQuery;
+  console.log(producto);
 
   return (
     <Container>
