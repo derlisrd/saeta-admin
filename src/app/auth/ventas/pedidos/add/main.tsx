@@ -1,4 +1,4 @@
-import { Box, Container, Dialog, DialogContent, Fade, Grid2 as Grid } from "@mui/material";
+import { Box, Container, Dialog, DialogContent, Fade, Grid2 as Grid, Stack, Typography } from "@mui/material";
 import Items from "./_components/items";
 import Error from "./_components/error";
 import InputCodigo from "./_components/codigo";
@@ -8,11 +8,11 @@ import InputCantidad from "./_components/cantidad";
 import FinalizarButton from "./_components/finalizarbtn";
 import CancelarButton from "./_components/cancelarbtn";
 import EsperarButton from "./_components/esperarbtn";
-import ListaDeEspera from "./_components/listadeespera";
+// import ListaDeEspera from "./_components/listadeespera";
 import useModal from "./_hooks/useModal";
 
 function Main() {
-  const { error, clearError } = useHook();
+  const { error, clearError, pedidos, index } = useHook();
   const { modal } = useModal();
 
 
@@ -22,33 +22,35 @@ function Main() {
       <Title />
       <DialogContent>
         <Container maxWidth="lg">
-          <Grid container spacing={1}>
+          <Grid container spacing={1} sx={{ height: "100%" }}>
             <Grid size={{ xs: 12, sm: 12, md: 8, lg: 9 }}>
               <Items />
             </Grid>
             <Grid size={{ xs: 12, sm: 12, md: 4, lg: 3 }}>
-              <Box sx={{ height: { xs: '180px', md: '0' } }} />
-              <Box sx={{ position: { xs: 'fixed', md: 'relative' }, bottom: 0, left: 0, width: '100%', px: { xs: 2, md: 0 }, backgroundColor: { xs: 'background.default', md: 'transparent' }, zIndex: 1 }}>
-                <Grid container spacing={2} pt={1}>
-                  <Grid size={12}>
+              <Box sx={{ height: { xs: "180px", md: "0" } }} />
+              <Box
+                sx={{
+                  position: { xs: "fixed", md: "relative" },
+                  bottom: 0,
+                  left: 0,
+                  width: "100%",
+                  px: { xs: 2, md: 0 },
+                  backgroundColor: { xs: "background.default", md: "transparent" },
+                  zIndex: 1,
+                }}
+              >
+                <Stack spacing={1} justifyContent="space-between" height="100%">
+                  <Stack spacing={2}>
                     <InputCodigo />
-                  </Grid>
-                  <Grid size={12}>
                     <InputCantidad />
-                  </Grid>
-                  <Grid size={6}>
+                  </Stack>
+                  <Stack spacing={1}>
+                    <Typography> Total: Total: {pedidos[index].total.toLocaleString('es-PY')} </Typography>
                     <EsperarButton />
-                  </Grid>
-                  <Grid size={6}>
                     <FinalizarButton />
-                  </Grid>
-                  <Grid size={12} sx={{ display: { xs: 'none', md: 'block' } }}>
                     <CancelarButton />
-                  </Grid>
-                  <Grid size={12}>
-                    <ListaDeEspera />
-                  </Grid>
-                </Grid>
+                  </Stack>
+                </Stack>
               </Box>
             </Grid>
           </Grid>

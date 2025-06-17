@@ -7,7 +7,7 @@ function InputCodigo() {
   const { inputCodigoRef, consultarCodigoInsertar, loadingAddProducto } = useHook();
   const { handleModal } = useModal();
   return (
-    <Box sx={{ display: { xs: "none", md: "block" } }}>
+    <Box sx={{ display: { xs: "none", md: "block" }, mt: 1 }}>
       <TextField
         placeholder="Código"
         label="Ingrese código y presione ENTER"
@@ -24,6 +24,7 @@ function InputCodigo() {
           }
         }}
         sx={{
+          marginTop: 1,
           "& .MuiInputBase-root": {
             backgroundColor: "background.paper",
             padding: "10px 4px",
