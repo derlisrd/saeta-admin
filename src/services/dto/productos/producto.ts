@@ -40,6 +40,7 @@ export class ProductoResults{
     cantidad_minima: number;
     created_at: string;
     cantidad: number | null;
+    images: ProductoResultsImages[]
   
     constructor({
       id = 0,
@@ -55,7 +56,8 @@ export class ProductoResults{
       tipo = 1,
       cantidad_minima = 0,
       created_at = "",
-      cantidad = null
+      cantidad = null,
+      images = []
     }: Partial<ProductoResults>) {
       this.id = id;
       this.impuesto_id = impuesto_id;
@@ -70,7 +72,8 @@ export class ProductoResults{
       this.cantidad_minima = cantidad_minima;
       this.descripcion = descripcion;
       this.created_at = created_at;
-    this.cantidad = cantidad;
+      this.cantidad = cantidad;
+      this.images = images;
     }
   
   
@@ -80,4 +83,26 @@ export class ProductoResults{
       cantidad: json.cantidad || null
       });
     }
+}
+
+export class ProductoResultsImages{
+  id: number;
+  url: string;
+  miniatura: string;
+
+  constructor({
+    id = 0,
+    url = "",
+    miniatura = ""
+  }: Partial<ProductoResultsImages>) {
+    this.id = id;
+    this.url = url;
+    this.miniatura = miniatura;
+  }
+  
+  static fromJSON(json: Record<string, any>): ProductoResultsImages {
+    return new ProductoResultsImages({
+      ...json,
+    });
+  }
 }

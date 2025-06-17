@@ -10,81 +10,73 @@ import { ProductoResults } from "@/services/dto/productos/producto";
 import Icon from "@/components/ui/icon";
 import { useNavigate } from "react-router-dom"; // Si necesitas la navegación aquí
 
-interface AccionesCellProps extends TableCellProps {
-    rowData: ProductoResults;
-    onSelectProducto: (producto: ProductoResults) => void;
-    // onCancelar: (pedido: PedidosDelDiaResults) => void; // Ejemplo si implementas cancelar
-}
 
-const AccionesCell = ({ rowData, onSelectProducto }: AccionesCellProps) => {
-    const nav = useNavigate(); // Si la lógica de acciones necesita navegación
 
-    // const handleCancelar = () => {
-    //   // Lógica para cancelar el pedido
-    //   onCancelar(rowData);
-    // };
+export const productosColumnConfig = (width: number, onSelectProducto?: (producto: ProductoResults) => void): ColumnConfigType[] => {
+    const nav = useNavigate();
 
-    return (
-        <Stack direction="row">
-            <Tooltip title="Código de barra" placement="top" arrow>
-                <IconButton onClick={() => onSelectProducto(rowData)}>
-                    <Icon name="printer" />
-                </IconButton>
-            </Tooltip>
-            <Tooltip title="Codigo de barra" placement="right" arrow>
-                <IconButton onClick={() => nav(`/productos/codigo-barra?codigo=${rowData.codigo}&precio=${rowData.precio_normal}`)}>
-                    <Icon name="barcode" />
-                </IconButton>
-            </Tooltip>
-            <Tooltip title="Editar" placement="right" arrow>
-                <IconButton onClick={() => nav(`/productos/edit/${rowData.id}`, { state: rowData })}>
-                    <Icon name="edit" />
-                </IconButton>
-            </Tooltip>
-        </Stack>
-    );
-};
-
-export const productosColumnConfig = (width: number, onSelectProducto?: (producto: ProductoResults) => void): ColumnConfigType[] => [
-    { dataKey: "codigo", label: "Código", width: width * 0.08 },
-    {
-        dataKey: "nombre", label: "Producto", width: width * 0.3,
-        cellRenderer: ({ rowData }: TableCellProps) => (
-            <Stack direction='row' spacing={1} alignItems='center'>
-                <IconButton>
-                    <Icon name="photo" size={22} />
-                </IconButton>
-                <Stack direction='column'>
-                    <Typography variant="caption">{rowData.nombre}</Typography>
-                    <Typography variant="caption">{rowData.precio_normal.toLocaleString("es-PY")}</Typography>
+    return [
+        { dataKey: "codigo", label: "Código", width: width * 0.08 },
+        {
+            dataKey: "nombre",
+            label: "Producto",
+            width: width * 0.3,
+            cellRenderer: ({ rowData }: TableCellProps) => (
+                <Stack direction="row" spacing={1} alignItems="center">
+                    <IconButton onClick={() => nav(`/productos/details/${rowData.id}`, { state: { producto: rowData } })} >
+                        <Icon name="photo" size={22} />
+                    </IconButton>
+                    <Stack direction="column">
+                        <Typography variant="caption">{rowData.nombre}</Typography>
+                        <Typography variant="caption">{rowData.precio_normal.toLocaleString("es-PY")}</Typography>
+                    </Stack>
                 </Stack>
-            </Stack>
-        )
-    },
-    {
-        dataKey: "stock",
-        label: "Stock",
-        width: width * 0.1,
-        cellRenderer: ({ rowData }: TableCellProps) => <Typography variant="caption">{rowData.cantidad}</Typography>,
-    },
-    {
-        dataKey: "created_at",
-        label: "Fecha",
-        width: width * 0.18,
-        cellRenderer: ({ rowData }: TableCellProps) => (
-            <Stack direction='column'>
-                <Typography variant="caption">{format(rowData.created_at, "DD-MMM-YY")}</Typography>
-                <Typography variant="caption">{format(rowData.created_at, "HH:mm")}</Typography>
-            </Stack>
-        ),
-    },
-    {
-        dataKey: "_",
-        label: "Acciones",
-        width: width * 0.2,
-        cellRenderer: (props: TableCellProps) => <AccionesCell {...props} onSelectProducto={onSelectProducto || (() => { })} />,
-    },
-];
+            ),
+        },
+        {
+            dataKey: "stock",
+            label: "Stock",
+            width: width * 0.1,
+            cellRenderer: ({ rowData }: TableCellProps) => <Typography variant="caption">{rowData.cantidad}</Typography>,
+        },
+        {
+            dataKey: "created_at",
+            label: "Fecha",
+            width: width * 0.18,
+            cellRenderer: ({ rowData }: TableCellProps) => (
+                <Stack direction="column">
+                    <Typography variant="caption">{format(rowData.created_at, "DD-MMM-YY")}</Typography>
+                    <Typography variant="caption">{format(rowData.created_at, "HH:mm")}</Typography>
+                </Stack>
+            ),
+        },
+        {
+            dataKey: "_",
+            label: "Acciones",
+            width: width * 0.2,
+            cellRenderer: ({ rowData }: TableCellProps) => (
+                <Stack direction="row">
+                    <Tooltip title="Código de barra" placement="top" arrow>
+                        <IconButton onClick={() => onSelectProducto?.(rowData)}>
+                            <Icon name="printer" />
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Codigo de barra" placement="right" arrow>
+                        <IconButton onClick={() => nav(`/productos/codigo-barra?codigo=${rowData.codigo}&precio=${rowData.precio_normal}`)}>
+                            <Icon name="barcode" />
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Editar" placement="right" arrow>
+                        <IconButton onClick={() => nav(`/productos/edit/${rowData.id}`, { state: rowData })}>
+                            <Icon name="edit" />
+                        </IconButton>
+                    </Tooltip>
+                </Stack>
+            ),
+        },
+    ];
+
+}
 
 
 

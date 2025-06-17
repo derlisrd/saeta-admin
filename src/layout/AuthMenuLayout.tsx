@@ -36,7 +36,7 @@ function AuthMenuLayout() {
             </IconButton>
             <Tooltip placement="bottom" arrow title={isOpenMenu ? "Cerrar menú" : "Abrir menú"}>
               <IconButton onClick={toggleMenu} sx={{ width: "50px", height: "50px", marginLeft: margin_left, display: { xs: "none", md: "block", transition: "all 0.2s" } }}>
-                <Icon size={24} name={isOpenMenu ? "chevron-left" : "arrow-narrow-right"} />
+                <Icon size={24} name={"menu-2"} />
               </IconButton>
             </Tooltip>
             <Typography variant="body1" sx={{ fontWeight: "bold" }}>
