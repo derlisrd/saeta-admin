@@ -1,5 +1,5 @@
 import Icon from "@/components/ui/icon";
-import { Button, Container, Stack, TextField } from "@mui/material";
+import { Button, Container, Stack, TextField, Grid2 as Grid } from "@mui/material";
 
 function Actualizacion() {
 
@@ -10,13 +10,23 @@ function Actualizacion() {
     }
 
     return <Container>
-        <Stack gap={2}>
-        <Button startIcon={<Icon name='refresh' />} onClick={() => refresh()}>Actualizar</Button>
-        <Button variant="outlined">Outlined</Button>
-        <Button color='secondary' startIcon={<Icon name='refresh' />} onClick={() => refresh()}>Actualizar</Button>
-        <Button color='secondary' variant="outlined">Outlined</Button>
-        <TextField label="Codigo" />
-        </Stack>
+        <Grid container spacing={1}>
+            <Grid size={6}>
+                <Button startIcon={<Icon name='refresh' />} onClick={() => refresh()}>Actualizar</Button>
+            </Grid>
+            <Grid size={6}>
+                <Button variant="outlined">Outlined</Button>
+            </Grid>
+            <Grid size={6}>
+                <Button color='secondary' startIcon={<Icon name='refresh' />} onClick={() => refresh()}>Actualizar</Button>
+            </Grid>
+            <Grid size={6}>
+                <Button color='secondary' variant="outlined">Outlined</Button>
+            </Grid>
+            <Grid size={6}>
+                <TextField label="Codigo" />
+            </Grid>
+        </Grid>
     </Container>
 }
 

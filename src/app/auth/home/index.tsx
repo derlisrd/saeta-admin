@@ -55,16 +55,16 @@ function Home() {
           <Grid size={12}>
             <Typography variant="button">Lucro</Typography>
           </Grid>
-          <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+          <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
             <CardHome data={data.ayer.lucro.toLocaleString("es-PY")} title="De ayer" icon="chart-dots" />
           </Grid>
-          <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+          <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
             <CardHome data={data.hoy.lucro.toLocaleString("es-PY")} title="De hoy" icon="chart-histogram" />
           </Grid>
-          <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+          <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
             <CardHome data={data.semana.lucro.toLocaleString("es-PY")} title="De la semana" icon="chart-line" />
           </Grid>
-          <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+          <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
             <CardHome data={data.mes.lucro.toLocaleString("es-PY")} title="Del mes" icon="chart-pie" />
           </Grid>
 
