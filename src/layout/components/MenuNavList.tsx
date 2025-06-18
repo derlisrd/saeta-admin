@@ -35,12 +35,14 @@ const MenuNavList = ({ isMobile = false, navegar, isOpenMenu = true }: { isMobil
   const openCollapseMenu = (id: number) => {
     // Solo permitir colapsar/expandir si el menú está completamente abierto
     if (!isOpenMenu) return;
-    setLista(pre => {
-      let array = [...pre];
-      let index = array.findIndex(e => e.id === id)
-      array[index].open = !array[index].open;
-      return array
-    })
+    setLista((pre) => {
+      return pre.map((item) => {
+        if (item.id === id && item.submenu !== null) {
+          return { ...item, open: !item.open };
+        }
+        return item;
+      });
+    });
   };
 
   return (
