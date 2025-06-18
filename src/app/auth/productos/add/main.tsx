@@ -8,6 +8,7 @@ import LargeButtonStyled from "@/components/ui/LargeButton";
 import TabContainer from "@/components/containers/tabcontainer";
 import { useEffect } from "react";
 import { showAlert } from "@/core/utils/alert";
+import Atributos from "./containers/atributos";
 
 
 function AddProductoMain() {
@@ -41,6 +42,9 @@ function AddProductoMain() {
           </TabContainer>
           <TabContainer index={1} tabValue={tabValue}>
             <Imagenes />
+          </TabContainer>
+          <TabContainer index={2} tabValue={tabValue}>
+            <Atributos />
           </TabContainer>
         </Box>
       </Slide>

@@ -1,14 +1,15 @@
 import "simplebar-react/dist/simplebar.min.css";
 import { Fragment, useState } from "react";
 import SimpleBar from "simplebar-react";
-import { Toolbar, List, ListItem, ListItemButton, ListItemText, ListItemIcon, Collapse, Typography, ListItemButtonBaseProps, Stack, Avatar, Tooltip } from "@mui/material";
+import { Toolbar, List, ListItem, ListItemButton, ListItemText, ListItemIcon, Collapse, Typography, ListItemButtonBaseProps, Stack, Tooltip, Divider, Box, Button } from "@mui/material";
 import menu from "@/constants/menu";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "@/providers/AuthProvider";
 import Icon from "@/components/ui/icon";
 
 const MenuNavList = ({ isMobile = false, navegar, isOpenMenu = true }: { isMobile?: boolean; navegar: Function; isOpenMenu?: boolean }) => {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
   const [lista, setLista] = useState(menu);
   const { userData } = useAuth();
 
@@ -31,43 +32,41 @@ const MenuNavList = ({ isMobile = false, navegar, isOpenMenu = true }: { isMobil
     padding: isOpenMenu ? undefined : "12px 0",
   } as ListItemButtonBaseProps["sx"];
 
-  const openCollapseMenu = (sw: boolean, id: number) => {
+  const openCollapseMenu = (id: number) => {
     // Solo permitir colapsar/expandir si el menú está completamente abierto
     if (!isOpenMenu) return;
-
-    let array = [...lista];
-    let index = array.findIndex((e) => e.id === id);
-    array[index].open = !sw;
-    setLista(array);
+    setLista(pre => {
+      let array = [...pre];
+      let index = array.findIndex(e => e.id === id)
+      array[index].open = !array[index].open;
+      return array
+    })
   };
 
   return (
-    <SimpleBar forceVisible="y" autoHide={true} style={{ maxHeight: "100vh" }}>
+    <SimpleBar forceVisible="y" autoHide={true} style={{ maxHeight: "100vh", height: "100%" }}>
       <Toolbar sx={{ flexDirection: "column", alignItems: "center", minHeight: isOpenMenu ? undefined : "70px" }}>
-        {isOpenMenu ? (
-          <Stack gap={1} mt={1} direction="column" alignItems="center" justifyContent="center" width="100%">
-            <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-              SGA
-            </Typography>
-            <Stack direction="column" justifyContent="center" alignItems="center" gap={1}>
-              <Avatar sx={{ bgcolor: "primary.main", width: 48, height: 48 }} />
-              <Typography variant="caption">{userData && userData.user.name}</Typography>
-            </Stack>
+
+        <Stack gap={1} my={1} direction="column" alignItems="center" justifyContent="center" width="100%">
+          <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+            SGA
+          </Typography>
+          <Stack direction="column" justifyContent="center" alignItems="center" gap={1}>
+            <Icon name="user-square-rounded" size={32} />
+            <Typography variant="caption">{userData && userData.user.name}</Typography>
           </Stack>
-        ) : (
-          <Tooltip title="SGA" placement="right">
-            <Avatar sx={{ bgcolor: "primary.main", width: 40, height: 40 }} />
-          </Tooltip>
-        )}
+        </Stack>
+
       </Toolbar>
+      <Divider />
       <List>
-        {menu.map((e) => (
+        {lista.map((e) => (
           <Fragment key={e.id}>
             {e.submenu != null ? (
               <Fragment>
                 <ListItem disablePadding>
                   {isOpenMenu ? (
-                    <ListItemButton onClick={() => openCollapseMenu(e.open, e.id)} sx={SELECTED}>
+                    <ListItemButton onClick={() => openCollapseMenu(e.id)} sx={SELECTED}>
                       <ListItemIcon>
                         <Icon name={e.icon} size={18} />
                       </ListItemIcon>
@@ -76,7 +75,7 @@ const MenuNavList = ({ isMobile = false, navegar, isOpenMenu = true }: { isMobil
                     </ListItemButton>
                   ) : (
                     <Tooltip title={e.title} placement="right">
-                      <ListItemButton onClick={() => openCollapseMenu(e.open, e.id)} sx={SELECTED}>
+                      <ListItemButton onClick={() => openCollapseMenu(e.id)} sx={SELECTED}>
                         <ListItemIcon sx={{ minWidth: 0, justifyContent: "center" }}>
                           <Icon name={e.icon} size={18} />
                         </ListItemIcon>
@@ -128,6 +127,10 @@ const MenuNavList = ({ isMobile = false, navegar, isOpenMenu = true }: { isMobil
           </Fragment>
         ))}
       </List>
+      <Divider />
+      <Box sx={{ p: 1, zIndex: 100, backgroundColor: 'background.paper' }} >
+        <Button size="large" fullWidth variant="text" onClick={() => navigate("/logout")} startIcon={<Icon name='logout' />} >Cerrar sesión</Button>
+      </Box>
     </SimpleBar>
   );
 };

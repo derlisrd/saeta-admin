@@ -44,10 +44,12 @@ function Main() {
                     <InputCodigo />
                     <InputCantidad />
                   </Stack>
-                  <Stack spacing={1}>
+                  <Stack spacing={1} pb={1}>
                     <Typography> Total: Total: {pedidos[index].total.toLocaleString('es-PY')} </Typography>
-                    <EsperarButton />
-                    <FinalizarButton />
+                    <Stack direction='row' spacing={1}>
+                      <EsperarButton />
+                      <FinalizarButton />
+                    </Stack>
                     <CancelarButton />
                   </Stack>
                 </Stack>

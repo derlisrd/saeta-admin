@@ -130,7 +130,8 @@ function AddProductoProvider({ children }: { children: React.ReactNode }) {
       const updatedStock = form.stock.some((item) => item.deposito_id === deposito_id)
         ? form.stock.map((item) => (item.deposito_id === deposito_id ? new AddStock({ ...item, cantidad: (item.cantidad ?? 0) + cantidad }) : item))
         : [...form.stock, new AddStock({ deposito_id, cantidad, deposito: depositoFind?.nombre })];
-      setForm(new AddProducto({ ...form, stock: updatedStock }));
+
+      setForm(prev => new AddProducto({ ...prev, stock: updatedStock }));
       setStockState((prev) => new AddStock({ ...prev, cantidad: 0 }));
     }
   }, [stockState, form]);

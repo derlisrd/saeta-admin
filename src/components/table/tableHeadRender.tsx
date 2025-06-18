@@ -10,10 +10,10 @@ const TableHeadRender = ({ label }: TableHeaderProps) => (
       boxSizing: "border-box",
       cursor: "pointer",
       height: 48,
-      padding: "0 0 0 14px",
+      padding: "0 0 0 14px"
     }}
   >
-    {label}
+    <span style={{ color: '#fff' }}>{label}</span>
   </Box>
 );
 

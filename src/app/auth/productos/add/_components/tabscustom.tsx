@@ -12,7 +12,8 @@ function TabsCustom() {
         }}
       >
         <Tab label="Datos" tabIndex={0} />
-        <Tab label="Imagenes" tabIndex={1} />
+        <Tab label="Imágenes" tabIndex={1} />
+        <Tab label="Atributos" tabIndex={2} />
       </Tabs>
     </Box>
   );
