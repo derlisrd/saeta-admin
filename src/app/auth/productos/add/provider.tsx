@@ -40,25 +40,33 @@ function AddProductoProvider({ children }: { children: React.ReactNode }) {
         queryKey: ["impuestos"],
         queryFn: () => API.impuestos.list(userData && userData.token),
         select: (data: ImpuestoResponse) => (data && data.results) ? data.results : [],
-        retry: false
+        retry: false,
+        staleTime: 1000 * 60 * 5,
+        refetchOnWindowFocus: false,
       },
       {
         queryKey: ["categorias"],
         queryFn: () => API.categorias.list(userData && userData.token),
         select: (data: CategoriaResponse) => (data && data.results) ? data.results : [],
-        retry: false
+        retry: false,
+        staleTime: 1000 * 60 * 5,
+        refetchOnWindowFocus: false,
       },
       {
         queryKey: ["depositos"],
         queryFn: () => API.depositos.list(userData && userData.token),
         select: (data: DepositoResponse) => (data && data.results) ? data.results : [],
-        retry: false
+        retry: false,
+        staleTime: 1000 * 60 * 5,
+        refetchOnWindowFocus: false
       },
       {
         queryKey: ["medidas"],
         queryFn: () => API.medidas.list(userData && userData.token),
         select: (data: MedidasResponse) => (data && data.results) ? data.results : [],
-        retry: false
+        retry: false,
+        staleTime: 1000 * 60 * 5,
+        refetchOnWindowFocus: false,
       },
     ],
   });
