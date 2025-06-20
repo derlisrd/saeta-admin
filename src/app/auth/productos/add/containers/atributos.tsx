@@ -1,6 +1,6 @@
 import Icon from "@/components/ui/icon";
 import { Button, Grid2 as Grid, TextField, Typography, IconButton, Tooltip } from "@mui/material";
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import useAddProducto from "../_hook/useAddProducto";
 import { AddProducto } from "@/services/dto/productos/AddProducto";
 
