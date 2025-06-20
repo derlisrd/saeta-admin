@@ -1,3 +1,4 @@
+import { AtributosProducto } from "@/core/types/atributoproducto";
 import { AddStock } from "./AddStock";
 
 export class AddProducto {
@@ -14,7 +15,8 @@ export class AddProducto {
   tipo: number;
   cantidad_minima: number;
   stock: AddStock[];
-  images: File[] | null
+  images: File[] | null;
+  atributos: AtributosProducto[];
   constructor({
     images = null,
     impuesto_id = 0,
@@ -29,7 +31,8 @@ export class AddProducto {
     disponible = 1,
     tipo = 1,
     cantidad_minima = 0,
-    stock = []
+    stock = [],
+    atributos = []
   }: Partial<AddProducto>) {
     this.images = images;
     this.impuesto_id = impuesto_id;
@@ -44,6 +47,7 @@ export class AddProducto {
     this.disponible = disponible;
     this.tipo = tipo;
     this.cantidad_minima = cantidad_minima;
+    this.atributos = atributos;
     this.stock = stock.map((item) => new AddStock(item));
   }
 

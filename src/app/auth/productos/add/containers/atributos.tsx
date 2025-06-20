@@ -1,59 +1,47 @@
 import Icon from "@/components/ui/icon";
 import { Button, Grid2 as Grid, TextField, Typography, IconButton } from "@mui/material";
 import { Fragment, useState } from "react";
+import useAddProducto from "../_hook/useAddProducto";
 
-type AtributosForm = {
-    nombre: string;
-    valores: string[];
-};
 
 function Atributos() {
-    const [atributosForm, setAtributosForm] = useState<AtributosForm[]>([
-        { nombre: "", valores: [""] }
-    ]);
+    const { form, setForm } = useAddProducto()
+
+    const atributosForm = form.atributos || [
+        {
+            nombre: "",
+            opciones: [""],
+        }]
 
     const handleAddAtributo = () => {
-        setAtributosForm([...atributosForm, { nombre: "", valores: [""] }]);
-    };
+
+    }
 
     const handleAddOpcion = (atributoIndex: number) => {
-        const newAtributos = [...atributosForm];
 
-
-        if (newAtributos[atributoIndex].nombre.length === 0) {
-            return
-        }
-
-        newAtributos[atributoIndex].valores.push("");
-        setAtributosForm(newAtributos);
     };
 
     const handleNombreChange = (atributoIndex: number, value: string) => {
-        const newAtributos = [...atributosForm];
-        newAtributos[atributoIndex].nombre = value;
-        setAtributosForm(newAtributos);
+        setForm((prev) => {
+            const newAtributos = [...prev.atributos];
+            newAtributos[atributoIndex].nombre = value;
+            return {};
+        });
+
     };
 
     const handleValorChange = (atributoIndex: number, valorIndex: number, value: string) => {
-        const newAtributos = [...atributosForm];
-        newAtributos[atributoIndex].valores[valorIndex] = value;
-        setAtributosForm(newAtributos);
+
     };
 
     const handleRemoveOpcion = (atributoIndex: number, valorIndex: number) => {
-        const newAtributos = [...atributosForm];
-        if (newAtributos[atributoIndex].valores.length > 1) {
-            newAtributos[atributoIndex].valores.splice(valorIndex, 1);
-            setAtributosForm(newAtributos);
-        }
+
     };
 
     const handleRemoveAtributo = (atributoIndex: number) => {
-        if (atributosForm.length > 1) {
-            const newAtributos = atributosForm.filter((_, index) => index !== atributoIndex);
-            setAtributosForm(newAtributos);
-        }
+
     };
+
 
     return (
         <Grid container spacing={2}>
@@ -61,7 +49,6 @@ function Atributos() {
                 <Typography>Agregar atributos al producto</Typography>
                 <Typography variant="caption">Ej: color, tamaño, propiedades, etc.</Typography>
             </Grid>
-
             {atributosForm.map((atributo, atributoIndex) => (
                 <Fragment key={atributoIndex}>
                     <Grid size={{ xs: 12, sm: 4, md: 3 }}>
@@ -86,7 +73,7 @@ function Atributos() {
                     </Grid>
 
                     <Grid size={{ xs: 12, sm: 4, md: 5 }}>
-                        {atributo.valores.map((valor, valorIndex) => (
+                        {atributo.opciones.map((valor, valorIndex) => (
                             <div key={valorIndex} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                                 <TextField
                                     label={`Opción ${valorIndex + 1}`}
@@ -96,7 +83,7 @@ function Atributos() {
                                     onChange={(e) => handleValorChange(atributoIndex, valorIndex, e.target.value)}
                                     placeholder="Ej: Rojo, Azul..."
                                 />
-                                {atributo.valores.length > 1 && (
+                                {atributo.opciones.length > 1 && (
                                     <IconButton
                                         onClick={() => handleRemoveOpcion(atributoIndex, valorIndex)}
                                         size="small"
@@ -129,11 +116,11 @@ function Atributos() {
                     onClick={handleAddAtributo}
                     variant="contained"
                 >
-                    Agregar más atributos
+                    {atributosForm.length > 0 ? "Agregar otro atributo" : "Agregar atributo"}
+
                 </Button>
             </Grid>
-        </Grid>
-    );
+        </Grid>)
 }
 
 export default Atributos;
