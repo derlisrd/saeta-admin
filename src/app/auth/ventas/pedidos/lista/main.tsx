@@ -1,5 +1,5 @@
 
-import { Container, Box, LinearProgress, Slide } from "@mui/material";
+import { Container, Box, LinearProgress, Slide, Typography } from "@mui/material";
 import Filtros from "./_components/filtros";
 import { PedidosDelDiaResults } from "@/services/dto/pedidos/pedidosDelDia";
 
@@ -37,7 +37,9 @@ function ListaPedidosMain() {
 
             return matchesSearch;
         });
-
+    const importeTotal = listado.reduce((suma, pedido) => {
+        return suma + (pedido.importe_final || 0);
+    }, 0);
     const handleImprimir = (pedido: PedidosDelDiaResults) => {
         setSelectedRow(pedido);
         handleModals("imprimir");
@@ -55,6 +57,7 @@ function ListaPedidosMain() {
                     <Slide direction="up" in={true} mountOnEnter unmountOnExit>
                         <Box>
                             <GenericTable data={listado} columns={columnsPedidos(handleImprimir)} rowHeight={40} headerHeight={36} />
+                            <Typography variant="body1">Total: {importeTotal.toLocaleString('es-PY')}</Typography>
                         </Box>
                     </Slide>
                 </Box>
