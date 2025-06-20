@@ -2,8 +2,8 @@ import API from "@/services/api";
 import { useContext, createContext, useState, Dispatch, SetStateAction } from "react";
 import { useAuth } from "@/providers/AuthProvider";
 import { ProductoResponse, ProductoResults } from "@/services/dto/productos/producto";
-import { QueryObserverResult, RefetchOptions, useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
-import { DepositoResults } from "@/services/dto/productos/deposito";
+import { useMutation, useQueryClient, useSuspenseQueries } from "@tanstack/react-query";
+import { DepositoResponse, DepositoResults } from "@/services/dto/productos/deposito";
 
 type modalsType = {
     codigo: boolean;
@@ -19,7 +19,8 @@ type ProductosListaContextType = {
     setSelectDeposito: Dispatch<SetStateAction<number>>;
     selectedProducto: ProductoResults | null;
     setSelectedProducto: Dispatch<SetStateAction<ProductoResults | null>>;
-    refresh: (options?: RefetchOptions) => Promise<QueryObserverResult<ProductoResponse, Error>>
+    refresh: () => void,
+    isFeching: boolean;
     modals: modalsType;
     handleModals: (key: keyof modalsType) => void;
     changeSelectDeposito: (id: number, q: string) => void;
@@ -40,40 +41,61 @@ export const ProductosListaProvider = ({ children }: { children: React.ReactNode
     const [selectDeposito, setSelectDeposito] = useState<number>(0);
     const [selectedProducto, setSelectedProducto] = useState<ProductoResults | null>(null);
     // Fetch productos
-    const { data: productosData, isLoading: productosLoading, error: productosError, refetch, isFetching } = useSuspenseQuery({
-        queryKey: ["productos", userData?.token],
-        queryFn: () => API.productos.list(userData && userData?.token),
-        staleTime: 1000 * 60 * 5, // Cache por 5 minutos
-    });
 
-    // Fetch depósitos
-    const { data: depositosData, isLoading: depositosLoading, error: depositosError } = useSuspenseQuery({
-        queryKey: ["depositos", userData?.token],
-        queryFn: () => API.depositos.list(userData && userData?.token),
-        staleTime: 1000 * 60 * 5, // Cache por 5 minutos
+    const fetchs = useSuspenseQueries({
+        queries: [
+            {
+                queryKey: ["productos", userData && userData.token],
+                queryFn: () => API.productos.list(userData && userData?.token),
+                staleTime: 1000 * 60 * 5, // Cache por 5 minutos
+                select: (data: ProductoResponse) => {
+                    if (data && data.results && data.success) {
+                        return data.results;
+                    }
+                    return [];
+                },
+            },
+            {
+                queryKey: ["depositos", userData && userData.token],
+                queryFn: () => API.depositos.list(userData && userData?.token),
+                staleTime: 1000 * 60 * 5, // Cache por 5 minutos
+                select: (data: DepositoResponse) => {
+                    if (data && data.results && data.success) {
+                        return data.results;
+                    }
+                    return [];
+                }
+            },
+        ],
     });
 
     const searchPorDeposito = useMutation({
-        mutationKey: ["productos-deposito", userData?.token],
+        mutationKey: ["productos-deposito", userData && userData.token],
         mutationFn: ({ deposito_id, q }: { deposito_id: number; q: string }) =>
-            API.productos.productosPorDeposito(userData && userData?.token, deposito_id, q),
+            API.productos.productosPorDeposito(userData && userData.token, deposito_id, q),
         onSettled(data) {
             if (data && data.success) {
-                queryClient.setQueryData(["productos", userData?.token], data);
+                queryClient.setQueryData(["productos", userData && userData.token], data);
             }
         },
     })
+    const [
+        productosData,
+        depositosData,
+    ] = fetchs
 
-    const values = {
-        list: productosData?.results ?? [],
-        depositos: depositosData?.results ?? [],
-        loading: productosLoading || depositosLoading || searchPorDeposito.isPending || isFetching,
-        error: productosError || depositosError,
+
+    const values: ProductosListaContextType = {
+        list: productosData.data,
+        depositos: depositosData.data,
+        loading: productosData.isFetching || depositosData.isFetching,
+        isFeching: searchPorDeposito.isPending,
+        error: productosData.error,
         selectDeposito,
         setSelectDeposito,
         selectedProducto,
         setSelectedProducto,
-        refresh: refetch,
+        refresh: productosData.refetch,
         modals,
         handleModals,
         changeSelectDeposito: (id: number, q: string) => {

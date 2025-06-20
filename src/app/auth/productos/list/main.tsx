@@ -12,7 +12,7 @@ import { useProductosLista } from "./provider";
 
 function ListaProductosMain() {
 
-  const { refresh, list, handleModals, setSelectedProducto, loading } = useProductosLista()
+  const { refresh, list, handleModals, setSelectedProducto, isFeching, loading } = useProductosLista()
 
   const [search, setSearch] = useState("");
 
@@ -20,8 +20,6 @@ function ListaProductosMain() {
     setSelectedProducto(producto);
     handleModals('codigo')
   };
-
-
 
 
 
@@ -39,20 +37,19 @@ function ListaProductosMain() {
         search={search}
         refresh={refresh}
       />
-      {loading ? (
-        <LinearProgress />
-      ) : (
-        <Slide direction="up" in={true} mountOnEnter unmountOnExit>
-          <Box>
-            <GenericTable
-              data={listado}
-              columns={columns(handleSelectProducto)} // Pasa el ancho inicial
-              rowHeight={52}
-              headerHeight={36}
-            />
-          </Box>
-        </Slide>
-      )}
+      {(isFeching || loading) && <LinearProgress sx={{ my: 1 }} />}
+
+      <Slide direction="up" in={true} mountOnEnter unmountOnExit>
+        <Box>
+          <GenericTable
+            data={listado}
+            columns={columns(handleSelectProducto)} // Pasa el ancho inicial
+            rowHeight={52}
+            headerHeight={36}
+          />
+        </Box>
+      </Slide>
+
 
     </Container>
   );
