@@ -69,7 +69,9 @@ export class AddProducto {
       disponible: this.disponible,
       tipo: this.tipo,
       cantidad_minima: this.cantidad_minima,
-      stock: this.stock.map((item) => item.toJSON())
+      stock: this.stock.map((item) => item.toJSON()),
+      atributos: this.atributos,
+      images: this.images
     };
   }
 }

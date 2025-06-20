@@ -155,10 +155,18 @@ export const apiServiceProductos = {
             formData.append(`stock[${index}][cantidad]`, String(stock.cantidad));
           });
         }
-
+        if (form.atributos) {
+          form.atributos.forEach((atributo, index: number) => {
+              formData.append(`atributos[${index}][nombre]`, atributo.nombre);
+              
+              atributo.opciones.forEach((opcion, opcionIndex: number) => {
+                  formData.append(`atributos[${index}][opciones][${opcionIndex}]`, opcion);
+              });
+          });
+        }
         // Agregar los otros datos del producto
         Object.entries(form.toJSON()).forEach(([key, value]) => {
-          if (key !== "images" && key !== "stock") {
+          if (key !== "images" && key !== "stock" && key !== "atributos") {
             formData.append(key, String(value)); // Convertir valores a string si es necesario
           }
         });

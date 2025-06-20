@@ -25,7 +25,7 @@ function AddProductoProvider({ children }: { children: React.ReactNode }) {
   const [stockState, setStockState] = useState<AddStock>(new AddStock({}));
   const [error, setError] = useState({ code: 0, message: "" });
   const [success, setSuccess] = useState({ active: false, message: "" });
-
+  console.log(form)
   const [modal, setModal] = useState<modalType>({
     categorias: false,
     unidad: false,
