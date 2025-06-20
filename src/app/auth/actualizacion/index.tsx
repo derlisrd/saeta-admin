@@ -1,5 +1,5 @@
 import Icon from "@/components/ui/icon";
-import { Button, Container, Stack, TextField, Grid2 as Grid } from "@mui/material";
+import { Button, Container, TextField, Grid2 as Grid } from "@mui/material";
 
 function Actualizacion() {
 

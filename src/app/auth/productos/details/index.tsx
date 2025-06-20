@@ -6,7 +6,7 @@ function Details() {
     const { id } = useParams();
     const location = useLocation();
     const { producto } = location.state || {}
-
+    console.log({ producto, id })
 
     return <Container>
         <Grid container spacing={2}>
