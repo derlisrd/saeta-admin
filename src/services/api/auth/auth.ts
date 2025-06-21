@@ -2,6 +2,7 @@ import axios from "axios";
 import { LoginResponse } from "../../dto/auth/login";
 import {BASE} from "../base";
 import { RefreshTokenResponse } from "@/services/dto/auth/refresh";
+import { ApiError } from "../error";
 
 export const apiServiceAuth = {
     login : async( username : string, password : string)=>{
@@ -61,29 +62,14 @@ export const apiServiceAuth = {
           status,
           message: ''
         });
-      } catch (error) {
-        if(axios.isAxiosError(error)){
-          return new RefreshTokenResponse( {
-            success : false,
-            results : null,
-            status : error.response?.status || 500,
-            message : error.response?.data.message || 'Error en conexion'
-          })
+      } catch (err) {
+        if(axios.isAxiosError(err)){
+         throw new ApiError(err.response?.data.message || "Error en conexion", err.response?.status || 500);
         }
         if(!navigator.onLine){
-          return new RefreshTokenResponse({
-            success : false,
-            results : null,
-            status : 400,
-            message : 'No hay conexión a internet'
-          })
+        throw new ApiError("No hay conexión a Internet", 0);
         }
-        return new RefreshTokenResponse ({
-          success : false,
-          results : null,
-          status : 500,
-          message : 'Error de servidor intente más tarde o contacte con Atención al cliente'
-        })
+      throw new ApiError("Error de servidor intente más tarde o contacte con Atención al cliente", 500);
       }
     }
 }

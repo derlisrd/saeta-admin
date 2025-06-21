@@ -27,9 +27,15 @@ export default function AgregarActions() {
             >
                 <MenuItem onClick={() => nav("/ventas/pedidos/add")}>
                     <ListItemIcon>
-                        <Icon name="receipt" />
+                        <Icon name="shopping-cart-plus" />
                     </ListItemIcon>
                     Nuevo pedido
+                </MenuItem>
+                <MenuItem onClick={() => nav("/productos/add")}>
+                    <ListItemIcon>
+                        <Icon name="shopping-bag-plus" />
+                    </ListItemIcon>
+                    Nuevo producto
                 </MenuItem>
                 <MenuItem onClick={() => nav("/clientes/add")}>
                     <ListItemIcon>

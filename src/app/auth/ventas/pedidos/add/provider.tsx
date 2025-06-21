@@ -68,7 +68,7 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
     total: 0,
     items: [],
   });
-  const [pedidos, setPedidos] = useState<Array<AddPedido>>(store?.pedidos || [initialPedido]);
+  const [pedidos, setPedidos] = useState<AddPedido[]>(store?.pedidos || [initialPedido]);
   const initialConfig: ConfiguracionType = { showKeyboard: false };
 
   const [config, setConfig] = useState<ConfiguracionType>(configPedidoStore || initialConfig);

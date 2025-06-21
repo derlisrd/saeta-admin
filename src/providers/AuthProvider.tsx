@@ -104,6 +104,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       }
       return null;
     },
+    throwOnError() {
+      window.sessionStorage.removeItem("userData");
+      queryClient.clear();
+      return false
+    },
+    retry: 1,
     staleTime: 30 * 60000,
     refetchOnWindowFocus: true,
     refetchInterval: 30 * 60000, // Refrescar si el token es válido y tiene un refreshToken

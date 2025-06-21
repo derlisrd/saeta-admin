@@ -75,6 +75,7 @@ function EstadisticasProducto() {
                         <Grid size={{ xs: 12, sm: 6, md: 4 }}>
                             <DatePicker
                                 label="Desde"
+                                disabled={selectedProducto === null}
                                 value={fechaDesde}
                                 onChange={(date) => {
                                     setFechaDesde(date);
@@ -92,6 +93,7 @@ function EstadisticasProducto() {
                         <Grid size={{ xs: 12, sm: 6, md: 4 }}>
                             <DatePicker
                                 label="Hasta"
+                                disabled={selectedProducto === null}
                                 value={fechaHasta}
                                 onChange={(date) => {
                                     setFechaHasta(date);
@@ -107,8 +109,8 @@ function EstadisticasProducto() {
                             />
                         </Grid>
                         <Grid size={{ xs: 12, sm: 6, md: 2 }}>
-                            <Button onClick={handleSend} fullWidth endIcon={<Icon name='report-search' />}>
-                                Consultar
+                            <Button onClick={handleSend} disabled={selectedProducto === null} fullWidth endIcon={<Icon name='report-search' />}>
+                                Consulta
                             </Button>
                         </Grid>
                         <Grid size={{ xs: 12, sm: 6, md: 2 }}>

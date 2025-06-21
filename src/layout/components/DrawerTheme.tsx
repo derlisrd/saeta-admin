@@ -101,7 +101,7 @@ function DrawerTheme({ isOpen, handleIsOpen }: ThemeDrawerLayoutProps) {
                         step={1}
                         marks
                         value={fontSize}
-                        min={10}
+                        min={8}
                         max={16}
                         sx={{ mt: 4 }}
                         valueLabelDisplay="on"

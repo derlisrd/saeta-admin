@@ -13,24 +13,16 @@ const StyledContainer = styled(Container)(({ theme }) => ({
   textAlign: "center",
 }));
 
-const IconWrapper = styled(Box)(({ theme }) => ({
-  marginBottom: theme.spacing(2),
-  "& svg": {
-    fontSize: "6rem",
-    color: theme.palette.error.main,
-  },
-}));
+
 
 function NotFoundPage() {
   return (
     <StyledContainer maxWidth="sm">
       <Slide direction="down" in={true} mountOnEnter unmountOnExit>
         <Box>
-          <IconWrapper>
-            <Icon color="silver" name="carrot" size={64} />
-
-
-          </IconWrapper>
+          <Box sx={{ fontSize: "10rem", color: "primary.main", mb: 2 }}>
+            🤔
+          </Box>
           <Typography variant="h4" gutterBottom>
             Página no encontrada
           </Typography>

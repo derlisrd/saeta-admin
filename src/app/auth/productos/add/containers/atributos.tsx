@@ -1,16 +1,16 @@
 import Icon from "@/components/ui/icon";
-import { Button, Grid2 as Grid, TextField, Typography, IconButton, Tooltip } from "@mui/material";
-import { Fragment } from "react";
+import { Button, Grid2 as Grid, TextField, Typography, IconButton, Tooltip, Autocomplete, Chip } from "@mui/material";
+import { Fragment, useState } from "react";
 import useAddProducto from "../_hook/useAddProducto";
 import { AddProducto } from "@/services/dto/productos/AddProducto";
 
-
 function Atributos() {
     const { form, setForm } = useAddProducto()
+    const [inputValues, setInputValues] = useState<{ [key: number]: string }>({});
 
     const atributosForm = form.atributos || [{
         nombre: "",
-        opciones: [""],
+        opciones: [],
     }]
 
     const handleAddAtributo = () => {
@@ -20,25 +20,9 @@ function Atributos() {
         }
         setForm((prev) => new AddProducto({
             ...prev,
-            atributos: [...prev.atributos, { nombre: "", opciones: [""] }],
+            atributos: [...prev.atributos, { nombre: "", opciones: [] }],
         }));
-
     }
-
-    const handleAddOpcion = (atributoIndex: number) => {
-        const lastIndex = atributosForm[atributoIndex].opciones.length - 1;
-        if (atributosForm[atributoIndex].nombre.length === 0) {
-            return;
-        }
-        if (lastIndex > -1 && atributosForm[atributoIndex].opciones[lastIndex] === "") {
-            return;
-        }
-        setForm((prev) => {
-            const newAtributos = [...prev.atributos];
-            newAtributos[atributoIndex].opciones.push("");
-            return new AddProducto({ ...prev, atributos: newAtributos });
-        });
-    };
 
     const handleNombreTextChange = (atributoIndex: number, value: string) => {
         setForm((prev) => {
@@ -46,23 +30,21 @@ function Atributos() {
             newAtributos[atributoIndex].nombre = value;
             return new AddProducto({ ...prev, atributos: newAtributos });
         });
-
     };
 
-    const handleOpcionTextChange = (atributoIndex: number, valorIndex: number, value: string) => {
+    const handleOpcionesChange = (atributoIndex: number, newValue: string[]) => {
         setForm((prev) => {
             const newAtributos = [...prev.atributos];
-            newAtributos[atributoIndex].opciones[valorIndex] = value;
-            return new AddProducto({ ...prev, atributos: newAtributos });
-        })
-    };
-
-    const handleRemoveOpcion = (atributoIndex: number, valorIndex: number) => {
-        setForm((prev) => {
-            const newAtributos = [...prev.atributos];
-            newAtributos[atributoIndex].opciones.splice(valorIndex, 1);
+            newAtributos[atributoIndex].opciones = newValue;
             return new AddProducto({ ...prev, atributos: newAtributos });
         });
+    };
+
+    const handleInputChange = (atributoIndex: number, inputValue: string) => {
+        setInputValues(prev => ({
+            ...prev,
+            [atributoIndex]: inputValue
+        }));
     };
 
     const handleRemoveAtributo = (atributoIndex: number) => {
@@ -71,8 +53,13 @@ function Atributos() {
             newAtributos.splice(atributoIndex, 1);
             return new AddProducto({ ...prev, atributos: newAtributos });
         });
+        // Limpiar el input value del atributo eliminado
+        setInputValues(prev => {
+            const newInputValues = { ...prev };
+            delete newInputValues[atributoIndex];
+            return newInputValues;
+        });
     };
-
 
     return (
         <Grid container spacing={2}>
@@ -108,40 +95,56 @@ function Atributos() {
                         </div>
                     </Grid>
 
-                    <Grid size={{ xs: 12, sm: 4, md: 5 }}>
-                        {atributo.opciones.map((valor, valorIndex) => (
-                            <div key={valorIndex} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                                <TextField
-                                    label={`Opción ${valorIndex + 1}`}
-                                    fullWidth
-                                    sx={{ marginTop: 1 }}
-                                    value={valor}
-                                    onChange={(e) => handleOpcionTextChange(atributoIndex, valorIndex, e.target.value)}
-                                    placeholder="Ej: Rojo, Azul..."
-                                />
-                                {atributo.opciones.length > 1 && (
-                                    <IconButton
-                                        onClick={() => handleRemoveOpcion(atributoIndex, valorIndex)}
+                    <Grid size={{ xs: 12, sm: 8, md: 9 }}>
+                        <Autocomplete
+                            multiple
+                            freeSolo
+                            options={[]} // Sin opciones predeterminadas
+                            value={atributo.opciones}
+                            onChange={(_, newValue) => {
+                                // Filtrar valores vacíos
+                                const filteredValues = newValue.filter(value =>
+                                    typeof value === 'string' && value.trim() !== ''
+                                );
+                                handleOpcionesChange(atributoIndex, filteredValues);
+                            }}
+                            inputValue={inputValues[atributoIndex] || ''}
+                            onInputChange={(_, newInputValue) => {
+                                handleInputChange(atributoIndex, newInputValue);
+                            }}
+                            onKeyDown={(event) => {
+                                if (event.key === 'Enter') {
+                                    event.preventDefault();
+                                    const inputValue = inputValues[atributoIndex]?.trim();
+                                    if (inputValue && !atributo.opciones.includes(inputValue)) {
+                                        const newOpciones = [...atributo.opciones, inputValue];
+                                        handleOpcionesChange(atributoIndex, newOpciones);
+                                        handleInputChange(atributoIndex, '');
+                                    }
+                                }
+                            }}
+                            renderTags={(value, getTagProps) =>
+                                value.map((option, index) => (
+                                    <Chip
+                                        variant="outlined"
+                                        label={option}
                                         size="small"
-                                        color="error"
-                                        sx={{ mt: 1 }}
-                                    >
-                                        <Icon name="x" />
-                                    </IconButton>
-                                )}
-                            </div>
-                        ))}
-                    </Grid>
+                                        {...getTagProps({ index })}
+                                        key={index}
+                                    />
+                                ))
+                            }
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    label="Opciones"
+                                    placeholder={atributo.opciones.length === 0 ? "Escribe una opción y presiona Enter" : "Agregar más opciones..."}
+                                    sx={{ marginTop: 1 }}
+                                    helperText="Presiona Enter para agregar cada opción"
+                                />
+                            )}
 
-                    <Grid size={{ xs: 12, sm: 4, md: 4 }}>
-                        <Button
-                            endIcon={<Icon name="plus" />}
-                            onClick={() => handleAddOpcion(atributoIndex)}
-                            sx={{ marginTop: 1 }}
-                            variant="outlined"
-                        >
-                            Agregar opción
-                        </Button>
+                        />
                     </Grid>
                 </Fragment>
             ))}
@@ -153,10 +156,10 @@ function Atributos() {
                     variant="contained"
                 >
                     {atributosForm.length > 0 ? "Agregar otro atributo" : "Agregar atributo"}
-
                 </Button>
             </Grid>
-        </Grid>)
+        </Grid>
+    )
 }
 
 export default Atributos;

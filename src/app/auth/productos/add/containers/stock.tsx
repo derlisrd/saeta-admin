@@ -4,7 +4,7 @@ import Icon from "@/components/ui/icon";
 import { NumericFormat } from "react-number-format";
 
 function Stock() {
-  const { form, depositos, addStock, stockState, error, changeStockState } = useAddProducto();
+  const { form, depositos, addStock, stockState, error, changeStockState, removeStock } = useAddProducto();
   return (
     <>
       <Grid size={12}>
@@ -62,7 +62,7 @@ function Stock() {
           {form.stock.map((e, i) => (
             <ListItem disablePadding key={i}>
               <ListItemButton>
-                <ListItemIcon>
+                <ListItemIcon onClick={() => removeStock(e.deposito_id)}  >
                   <Icon name="trash" />
                 </ListItemIcon>
                 <ListItemText primary={`Deposito: ${e.deposito}`} secondary={`Cantidad: ${e.cantidad}`} />

@@ -21,42 +21,57 @@ function Printable({ pedido, empresa }: PrintableProps) {
   };
 
   const locale = "es-PY";
-
   return (
     <div style={{ fontFamily: "monospace !important" }}>
       <div style={{ lineHeight: "0.1" }}>
         <h4 style={{ fontWeight: "bold" }}>{empresa && empresa.nombre}</h4>
         <h5>
-          {empresa && empresa.direccion} Tel: {empresa && empresa.telefono}
+          {empresa && empresa.direccion} TEL: {empresa && empresa.telefono}
         </h5>
-        <h5>Fecha: {format(pedido.created_at, "DD/MM/YYYY")}</h5>
-        <h5>Condicion: {pedido.condicion === 1 ? "Credito" : "Contado"}</h5>
+        <h5>FECHA: {format(pedido.created_at, "DD/MM/YYYY")}</h5>
+        <h5>CONDICION: {pedido.condicion === 1 ? "CREDITO" : "CONTADO"}</h5>
+        <h5>CODIGO: {pedido.id}</h5>
       </div>
       <div style={dashedBorderStyle} />
       <div>
-        <b>CI/RUC: {pedido.doc || "x"}</b>
+        <small>CI/RUC: {pedido.doc || "x"}</small>
         <br />
-        <b>Cliente: {pedido.razon_social || "x"}</b>
+        <small>CLIENTE: {pedido.razon_social || "x"}</small>
       </div>
       <div style={{ ...dashedBorderStyle, marginBottom: "16px" }} />
 
-      <div style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", columnGap: "8px" }}>
-        <div style={{ textAlign: "right", fontWeight: "bold" }}>Cant</div>
-        <div style={{ fontWeight: "bold" }}>Descrip.</div>
-        <div style={{ textAlign: "right", fontWeight: "bold" }}>Prec.</div>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr auto auto", // 3 columnas: descripción flexible, cantidad y precio fijos
+          columnGap: "6px",
+          rowGap: "4px",
+        }}
+      >
+        {/* Headers */}
+        <small style={{ fontWeight: "bold", gridColumn: "1 / -1" }}>Codigo</small>
+        <small style={{ fontWeight: "bold" }}>Descrip.</small>
+        <small style={{ textAlign: "right", fontWeight: "bold" }}>Cant</small>
+        <small style={{ textAlign: "right", fontWeight: "bold" }}>Prec.</small>
+
         {pedido.items &&
           pedido.items.map((item, i) => (
             <Fragment key={i}>
-              <div>{item.cantidad}</div>
-              <div>{item.nombre}</div>
-              <div style={{ textAlign: "right" }}>{item.precio.toLocaleString(locale)}</div>
+              {/* Código ocupa toda la fila */}
+              <small style={{ textAlign: "left", gridColumn: "1 / -1" }}>{item.codigo}</small>
+              {/* Los demás elementos comparten la siguiente fila con línea debajo */}
+              <small style={{ borderBottom: "1px solid", paddingBottom: "2px" }}>
+                {item.nombre.length > 28 ? item.nombre.substring(0, 28) : item.nombre}
+              </small>
+              <small style={{ textAlign: "right", borderBottom: "1px solid", paddingBottom: "2px" }}>{item.cantidad}</small>
+              <small style={{ textAlign: "right", borderBottom: "1px solid", paddingBottom: "2px" }}>{item.precio.toLocaleString(locale)}</small>
             </Fragment>
           ))}
       </div>
 
       <div style={{ ...dashedBorderStyle, marginTop: "16px" }} />
       <div style={{ marginTop: "16px" }}>
-        <b style={{ lineHeight: "0.5" }}>Formas de Pago</b>
+        <small style={{ lineHeight: "0.5", fontWeight: "bold" }}>Formas de Pago</small>
         <ul>
           {pedido.formas_pago_pedido &&
             pedido.formas_pago_pedido.map((pago) => (
@@ -67,10 +82,10 @@ function Printable({ pedido, empresa }: PrintableProps) {
         </ul>
       </div>
 
-      <div style={{ textAlign: "right", marginTop: "16px", lineHeight: "0.6" }}>
-        <p>Subtotal: {pedido.total.toLocaleString(locale)}</p>
-        <p>Descuento: -{pedido.descuento.toLocaleString(locale)}</p>
-        <p>Importe Final: {pedido.importe_final.toLocaleString(locale)}</p>
+      <div style={{ textAlign: "right", marginTop: "16px", display: "flex", flexDirection: "column", fontWeight: "bold" }}>
+        <small>SUBTOTAL: {pedido.total.toLocaleString(locale)}</small>
+        <small>DESCUENTO: -{pedido.descuento.toLocaleString(locale)}</small>
+        <small>TOTAL: {pedido.importe_final.toLocaleString(locale)}</small>
       </div>
 
       <p>Gracias por su compra!</p>

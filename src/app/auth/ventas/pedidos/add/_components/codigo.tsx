@@ -17,7 +17,7 @@ function InputCodigo() {
         autoComplete="off"
         autoFocus
         onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
-          if (e.key === "Enter") {
+          if (e.key === "Enter" && loadingAddProducto === false) {
             const target = e.target as HTMLInputElement; // Asegurar que e.target es un HTMLInputElement
             consultarCodigoInsertar(target.value);
             target.value = "";
@@ -27,7 +27,7 @@ function InputCodigo() {
           marginTop: 1,
           "& .MuiInputBase-root": {
             backgroundColor: "background.paper",
-            padding: "10px 4px",
+            padding: "8px 4px",
           },
         }}
         slotProps={{

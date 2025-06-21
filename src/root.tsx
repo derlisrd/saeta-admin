@@ -12,8 +12,11 @@ function Root() {
     defaultOptions: {
       queries: {
 
-      }
-    }
+      },
+      mutations: {
+
+      },
+    },
   });
   return (
     <QueryClientProvider client={queryClient}>
