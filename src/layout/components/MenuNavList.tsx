@@ -48,7 +48,6 @@ const MenuNavList = ({ isMobile = false, navegar, isOpenMenu = true }: { isMobil
   return (
     <SimpleBar forceVisible="y" autoHide={true} style={{ maxHeight: "100vh", height: "100%" }}>
       <Toolbar sx={{ flexDirection: "column", alignItems: "center", minHeight: isOpenMenu ? undefined : "70px" }}>
-
         <Stack gap={1} my={1} direction="column" alignItems="center" justifyContent="center" width="100%">
           <Typography variant="h6" sx={{ fontWeight: "bold" }}>
             SGA
@@ -58,7 +57,6 @@ const MenuNavList = ({ isMobile = false, navegar, isOpenMenu = true }: { isMobil
             <Typography variant="caption">{userData && userData.user.name}</Typography>
           </Stack>
         </Stack>
-
       </Toolbar>
       <Divider />
       <List>
@@ -130,8 +128,10 @@ const MenuNavList = ({ isMobile = false, navegar, isOpenMenu = true }: { isMobil
         ))}
       </List>
       <Divider />
-      <Box sx={{ p: 1, zIndex: 100, backgroundColor: 'background.paper' }} >
-        <Button size="large" fullWidth variant="text" onClick={() => navigate("/logout")} startIcon={<Icon name='logout' />} >Cerrar sesión</Button>
+      <Box sx={{ p: 1, zIndex: 100, backgroundColor: { xs: "background.default", md: "background.paper" } }}>
+        <Button size="large" fullWidth variant="text" onClick={() => navigate("/logout")} startIcon={<Icon name="logout" />}>
+          Cerrar sesión
+        </Button>
       </Box>
     </SimpleBar>
   );

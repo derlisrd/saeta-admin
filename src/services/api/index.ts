@@ -14,9 +14,11 @@ import { apiServiceProductos } from "./productos/producto";
 import { apiServiceStock } from "./productos/stock";
 import { apiServiceUsers } from "./users/users";
 import { apiServicePermisos } from "./auth/permisos";
+import { apiServicePassword } from "./auth/password";
 
 const API = {
     auth : apiServiceAuth,
+    password: apiServicePassword,
     permisos: apiServicePermisos,
     clientes: apiServiceClientes,
     productos: apiServiceProductos,

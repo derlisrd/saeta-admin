@@ -87,7 +87,8 @@ function AuthMenuLayout() {
         onClose={toggleMobileMenu}
         sx={{
           display: { xs: "block", md: "none" },
-          "& .MuiDrawer-paper": { bosmizing: "border-box", width: 256 },
+
+          "& .MuiDrawer-paper": { bosmizing: "border-box", width: 256, backgroundColor: "background.paper", },
         }}
       >
         <MenuNavList navegar={navegar} isMobile />

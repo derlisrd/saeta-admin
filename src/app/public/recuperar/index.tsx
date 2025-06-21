@@ -1,35 +1,36 @@
 import Icon from "@/components/ui/icon";
+import API from "@/services/api";
 import { TextField, Stack, Button, Typography, Container, InputAdornment, CircularProgress, Alert, Box, Link as Enlace, } from "@mui/material";
+import { useMutation } from "@tanstack/react-query";
 import { useState } from "react"; // Importa useState si necesitas manejar estados locales
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function RecuperarPassword() {
     const [email, setEmail] = useState("");
-    const [isLoading, setIsLoading] = useState(false); // Ejemplo de estado de carga
-    const [error, setError] = useState<{ code: number; message: string } | null>(null); // Ejemplo de estado de error
-    const [message, setMessage] = useState<string | null>(null); // Ejemplo de estado de mensaje de éxito
+    const [error, setError] = useState<{ code: number; message: string } | null>(null); // Ejemplo de estado de error// Ejemplo de estado de mensaje de éxito
+
+    const nav = useNavigate();
+
+    const { mutateAsync, isPending } = useMutation({
+        mutationKey: ["send-code"],
+        mutationFn: async () => API.password.sendCode(email),
+        onSuccess: () => {
+            setError(null);
+            nav("/recuperar/verify-code", { state: { email } });
+        },
+        onError: (error) => {
+            setError({ code: 400, message: error.message || "Error en conexion" });
+        },
+    })
 
     const handleRecuperarPassword = async (event: React.FormEvent) => {
         event.preventDefault();
-        setIsLoading(true);
-        setError(null);
-        setMessage(null);
-
-        // Simulación de una llamada asíncrona para enviar el correo de recuperación
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-
-        if (email === "test@example.com") {
-            setMessage("Se ha enviado un enlace de recuperación a tu correo electrónico.");
-        } else {
-            setError({ code: 1, message: "No se encontró ninguna cuenta con ese correo electrónico." });
-        }
-
-        setIsLoading(false);
+        mutateAsync()
     };
 
     return (
         <Container maxWidth="md">
-            {isLoading ? (
+            {isPending ? (
                 <Stack sx={{ height: "100vh", alignItems: "center", justifyContent: "center", width: "100%" }}>
                     <CircularProgress />
                 </Stack>
@@ -41,7 +42,6 @@ function RecuperarPassword() {
                                 RECUPERAR CONTRASEÑA
                             </Typography>
                             {error && <Alert severity="error">{error.message}</Alert>}
-                            {message && <Alert severity="success">{message}</Alert>}
 
                             <TextField
                                 slotProps={{
