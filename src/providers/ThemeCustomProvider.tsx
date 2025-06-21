@@ -10,11 +10,9 @@ import { availableColorsType } from "@/core/types/availablecolors";
 
 interface ThemeCustomContextValuesType {
   modeDark: boolean;
-  toggleModeDark: () => void;
+  toggleTheme: ({ toggleMode, availablecolors, size }: { toggleMode: boolean; availablecolors?: availableColorsType, size?: number }) => void;
   customTheme?: Theme;
-  changeColor: (availablecolors: availableColorsType) => void;
   checkTheme: (refresh: boolean) => void;
-  changeFontSize: (size: number) => void;
   fontSize: number;
 }
 
@@ -36,43 +34,49 @@ function ThemeCustomProvider({ children }: ThemeCustomProviderType) {
 
   const modeDark = customTheme?.palette.mode === "dark";
 
-  const toggleModeDark = () => {
+  const toggleTheme = ({ toggleMode, availablecolors, size }: { toggleMode: boolean; availablecolors?: availableColorsType, size?: number }) => {
     const modeDark = customTheme?.palette.mode === "dark";
     const newModeTheme = { ...customThemeStorage } as Theme;
-    if (modeDark) {
-      newModeTheme.palette.mode = "light";
-      newModeTheme.palette.background.default = colorsMode.light.bgdefault;
-      newModeTheme.palette.background.paper = colorsMode.light.bgpaper;
-      newModeTheme.palette.text.primary = colorsMode.light.textPrimary;
-      newModeTheme.palette.text.secondary = colorsMode.light.textSecondary;
-      newModeTheme.palette.divider = colorsMode.light.divider;
-      newModeTheme.shadows = shadowsLight;
+    if (toggleMode) {
+      if (modeDark) {
+        newModeTheme.palette.mode = "light";
+        newModeTheme.palette.background.default = colorsMode.light.bgdefault;
+        newModeTheme.palette.background.paper = colorsMode.light.bgpaper;
+        newModeTheme.palette.text.primary = colorsMode.light.textPrimary;
+        newModeTheme.palette.text.secondary = colorsMode.light.textSecondary;
+        newModeTheme.palette.divider = colorsMode.light.divider;
+        newModeTheme.shadows = shadowsLight;
 
-    } else {
-      newModeTheme.palette.mode = "dark";
-      newModeTheme.palette.background.default = colorsMode.dark.bgdefault;
-      newModeTheme.palette.background.paper = colorsMode.dark.bgpaper;
-      newModeTheme.palette.text.primary = colorsMode.dark.textPrimary;
-      newModeTheme.palette.text.secondary = colorsMode.dark.textSecondary;
-      newModeTheme.palette.divider = colorsMode.dark.divider;
-      newModeTheme.shadows = shadowsDark;
+      } else {
+        newModeTheme.palette.mode = "dark";
+        newModeTheme.palette.background.default = colorsMode.dark.bgdefault;
+        newModeTheme.palette.background.paper = colorsMode.dark.bgpaper;
+        newModeTheme.palette.text.primary = colorsMode.dark.textPrimary;
+        newModeTheme.palette.text.secondary = colorsMode.dark.textSecondary;
+        newModeTheme.palette.divider = colorsMode.dark.divider;
+        newModeTheme.shadows = shadowsDark;
+      }
     }
+    if (availablecolors) {
+      newModeTheme.palette.primary.main = availablecolors.color;
+      newModeTheme.palette.secondary.main = availablecolors.secondary;
+    }
+    if (size) {
+      newModeTheme.typography.fontSize = size;
+      setFontSize(size);
+    }
+
     setCustomTheme(createTheme({ ...newModeTheme, cssVariables: true }));
     window.localStorage.setItem("customTheme", JSON.stringify(newModeTheme));
   }
 
-  const changeColor = ({ color, secondary }: availableColorsType) => {
-    const newModeTheme = { ...customThemeStorage } as Theme;
-    newModeTheme.palette.primary.main = color;
-    newModeTheme.palette.secondary.main = secondary;
 
-    setCustomTheme(createTheme(newModeTheme));
-    window.localStorage.setItem("customTheme", JSON.stringify(newModeTheme));
-  };
 
   const checkTheme = useCallback((refresh: boolean = false) => {
     let temaDark: boolean;
-    if (customThemeStorage === undefined || refresh) {
+    const storage = window.localStorage.getItem("customTheme");
+    const storageTheme = storage ? JSON.parse(storage) : undefined;
+    if (storageTheme === undefined || refresh) {
       if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
         temaDark = true;
       } else {
@@ -84,30 +88,36 @@ function ThemeCustomProvider({ children }: ThemeCustomProviderType) {
       setCustomTheme(createTheme({ ...newModeTheme, cssVariables: true }));
       setCustomThemeStorage(newModeTheme);
     } else {
-      setCustomTheme(createTheme(customThemeStorage));
+      setCustomTheme(createTheme(storageTheme));
     }
-    //console.log('checkTheme render')
+    console.log('checkTheme render')
   }, []);
 
-  const changeFontSize = (size: number) => {
-    const newModeTheme = { ...customThemeStorage } as Theme;
-    newModeTheme.typography.fontSize = size;
-    setFontSize(size);
-    setCustomTheme(createTheme(newModeTheme));
-    window.localStorage.setItem("customTheme", JSON.stringify(newModeTheme));
-  };
 
   useEffect(() => {
-    const ca = new AbortController();
-    let isActive = true;
-    if (isActive) { checkTheme() }
-    return () => {
-      isActive = false;
-      ca.abort();
-    }
-  }, [checkTheme]);
+    (() => {
+      let temaDark: boolean;
+      const storage = window.localStorage.getItem("customTheme");
+      const storageTheme = storage ? JSON.parse(storage) : undefined;
+      if (storageTheme === undefined) {
+        if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+          temaDark = true;
+        } else {
+          temaDark = false;
+        }
+        const newModeTheme = { ...initialCustomTheme };
+        newModeTheme.palette.mode = temaDark ? "dark" : "light";
+        setFontSize(12)
+        setCustomTheme(createTheme({ ...newModeTheme, cssVariables: true }));
+        setCustomThemeStorage(newModeTheme);
+      } else {
+        setCustomTheme(createTheme(storageTheme));
+      }
+    })()
+    console.log("ThemeCustomProvider render");
+  }, []);
 
-  const values = { modeDark, toggleModeDark, customTheme, changeColor, checkTheme, changeFontSize, fontSize };
+  const values = { modeDark, toggleTheme, customTheme, checkTheme, fontSize };
   return <ThemeCustomContext.Provider value={values}>
     {children}
   </ThemeCustomContext.Provider>;

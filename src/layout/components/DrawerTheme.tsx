@@ -10,7 +10,7 @@ interface ThemeDrawerLayoutProps {
 }
 function DrawerTheme({ isOpen, handleIsOpen }: ThemeDrawerLayoutProps) {
 
-    const { changeColor, toggleModeDark, modeDark, checkTheme, changeFontSize, fontSize } = useThemeCustom();
+    const { toggleTheme, modeDark, checkTheme, fontSize } = useThemeCustom();
 
     const refresh = () => checkTheme(true);
     const abrirPantallaCompleta = () => {
@@ -52,7 +52,7 @@ function DrawerTheme({ isOpen, handleIsOpen }: ThemeDrawerLayoutProps) {
                     </Stack>
                 </Stack>
                 <Box my={2}>
-                    <Button variant="outlined" sx={{ backgroundColor: "background.paper", p: 2, borderRadius: 4 }} onClick={toggleModeDark}>
+                    <Button variant="outlined" sx={{ backgroundColor: "background.paper", p: 2, borderRadius: 4 }} onClick={() => { toggleTheme({ toggleMode: true }) }}>
                         <Stack direction="column" spacing={1} alignItems="center">
                             <Stack direction="row" spacing={1} alignItems="center">
                                 <Icon name='sun-moon' />
@@ -60,7 +60,7 @@ function DrawerTheme({ isOpen, handleIsOpen }: ThemeDrawerLayoutProps) {
                                     size="small"
                                     checked={!modeDark}
                                     onChange={() => {
-                                        toggleModeDark();
+                                        toggleTheme({ toggleMode: true });
                                     }}
                                 />
                             </Stack>
@@ -83,7 +83,7 @@ function DrawerTheme({ isOpen, handleIsOpen }: ThemeDrawerLayoutProps) {
                                 <IconButton
                                     sx={{ p: 1 }}
                                     onClick={() => {
-                                        changeColor(item);
+                                        toggleTheme({ toggleMode: false, availablecolors: item });
                                     }}
                                 >
                                     <Icon name="color-swatch" size={24} color={item.color} />
@@ -106,7 +106,9 @@ function DrawerTheme({ isOpen, handleIsOpen }: ThemeDrawerLayoutProps) {
                         sx={{ mt: 4 }}
                         valueLabelDisplay="on"
                         onChange={(_, value) => {
-                            changeFontSize(typeof value === "number" ? value : value[0]);
+
+                            const nuevoFontSize = typeof value === "number" ? value : value[0]
+                            toggleTheme({ toggleMode: false, size: nuevoFontSize });
                         }}
                     />
                 </Box>
