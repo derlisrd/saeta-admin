@@ -2,10 +2,11 @@ import Icon from "@/components/ui/icon";
 import MenuNavList from "./components/MenuNavList";
 
 
-import { Drawer, Box, Toolbar, Stack, IconButton, Tooltip, Typography } from "@mui/material";
+import { Drawer, Box, Toolbar, Stack, IconButton, Tooltip, Typography, Button } from "@mui/material";
 import { NavigateOptions, Outlet, To, useLocation, useNavigate } from "react-router-dom";
 import DrawerTheme from "./components/DrawerTheme";
 import { useLayoutContext } from "@/providers/LayoutProvider";
+import AgregarActions from "./components/agregaractions";
 
 function AuthMenuLayout() {
   const navigate = useNavigate();
@@ -45,7 +46,7 @@ function AuthMenuLayout() {
           </Stack>
 
           <Stack flexDirection="row">
-
+            <AgregarActions />
             <Tooltip placement="bottom" arrow title="Configuraciones">
               <IconButton onClick={toggleConfigDrawer}>
                 <Icon name='settings-code' />

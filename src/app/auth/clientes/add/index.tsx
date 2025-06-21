@@ -67,7 +67,7 @@ function ClientesAdd() {
                 <Button disabled={isLoading} size="large" startIcon={<Icon name="chevrons-left" />} onClick={() => navigate("/clientes")} variant="outlined">
                   Regresar
                 </Button>
-                <Button disabled={isLoading} size="large" startIcon={<Icon name="device-floppy" />} onClick={submit} variant="contained">
+                <Button disabled={isLoading} size="large" endIcon={<Icon name="device-floppy" />} onClick={submit} variant="contained">
                   Guardar
                 </Button>
               </Stack>

@@ -8,7 +8,13 @@ import { LayoutProvider } from "./providers/LayoutProvider";
 import ConfigProvider from "./providers/ConfigProvider";
 
 function Root() {
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+
+      }
+    }
+  });
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter basename="/admin">

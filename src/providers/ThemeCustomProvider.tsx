@@ -114,7 +114,6 @@ function ThemeCustomProvider({ children }: ThemeCustomProviderType) {
         setCustomTheme(createTheme(storageTheme));
       }
     })()
-    console.log("ThemeCustomProvider render");
   }, []);
 
   const values = { modeDark, toggleTheme, customTheme, checkTheme, fontSize };
