@@ -102,7 +102,7 @@ function Teclado({ onEnter, onNumberClick, onBackspace, clear }: TecladoProps) {
       <Grid size={3}>
         <Button
           variant="outlined"
-          color="secondary"
+          color="warning"
           sx={{
             fontSize: { xs: 12, sm: 24 },
             height: "100%",
@@ -130,7 +130,7 @@ function Teclado({ onEnter, onNumberClick, onBackspace, clear }: TecladoProps) {
       <Grid size={3}>
         <Button
           variant="outlined"
-          color="warning"
+          color="error"
           sx={{
             fontSize: { xs: 12, sm: 24 },
             height: "100%",
