@@ -29,7 +29,7 @@ function Title() {
           size="small"
           startIcon={<Icon name='user-plus' />}
         >
-          {pedidos[index].cliente_id === 0 ? "Agregar Cliente" : pedidos[index].cliente}
+          {pedidos[index].cliente_id === 0 ? "Seleccionar Cliente" : pedidos[index].cliente}
         </Button>
       </Stack>
     </DialogTitle>

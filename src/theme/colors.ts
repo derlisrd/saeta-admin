@@ -12,7 +12,7 @@ export const availableColors : Array<availableColorsType> = [
     { name: "red", color: "#c52f6f", secondary : "#7d2eaa", mode:'system' },
     { name: "new", color: "#2065D1", secondary : "#d18c20", mode:'dark' },
     {name : "black", color: "#000000", secondary : "#646464", mode:'light'},
-    {name : "insta", color: "#517fa4", secondary : "#a47651", mode:'light'},
+    {name : "insta", color: "#517fa4", secondary : "#535d5e", mode:'light'},
   ];
   
   export const colorsMode = {
