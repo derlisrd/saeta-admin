@@ -128,7 +128,7 @@ const MenuNavList = ({ isMobile = false, navegar, isOpenMenu = true }: { isMobil
         ))}
       </List>
       <Divider />
-      <Box sx={{ p: 1, zIndex: 100, backgroundColor: { xs: "background.default", md: "background.paper" } }}>
+      <Box sx={{ p: 1, zIndex: 100 }}>
         <Button size="large" fullWidth variant="text" onClick={() => navigate("/logout")} startIcon={<Icon name="logout" />}>
           Cerrar sesión
         </Button>

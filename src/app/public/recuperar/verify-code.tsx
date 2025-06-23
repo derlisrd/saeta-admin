@@ -8,6 +8,7 @@ import {
     Stack,
     Link,
     Alert,
+    CircularProgress,
 } from '@mui/material';
 import Icon from '@/components/ui/icon';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -83,7 +84,7 @@ function VerifyCode() {
     };
 
 
-    const { mutateAsync } = useMutation({
+    const { mutateAsync, isPending } = useMutation({
         mutationKey: ["verify-code"],
         mutationFn: async () => API.password.verifyCode(otp.join(''), email),
         onSuccess: (data) => {
@@ -116,121 +117,113 @@ function VerifyCode() {
         }
     };
 
-    return (
-        <Box
-            sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                minHeight: '100vh',
-            }}
-        >
-            <Paper
-                elevation={3}
+    return (<>
+        {isPending ? (
+            <Stack sx={{ height: "100vh", alignItems: "center", justifyContent: "center", width: "100%" }}>
+                <CircularProgress />
+            </Stack>
+        ) :
+
+            <Box
                 sx={{
-                    padding: 4,
-                    borderRadius: 2,
-                    textAlign: 'center',
-                    maxWidth: 360,
-                    width: '100%',
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    minHeight: "100vh",
                 }}
             >
-                <Box>
-                    📩
-                </Box>
-
-                <Typography variant="h5" component="h1" gutterBottom sx={{ fontWeight: 'bold', mb: 2 }}>
-                    Verifica tu email
-                </Typography>
-                <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-                    Te hemos enviado un código de verificación a tu correo electrónico.
-                </Typography>
-                {error && <Alert severity="error">{error.message}</Alert>}
-                <Stack
-                    direction="row"
-                    spacing={1}
-                    justifyContent="center"
-                    sx={{ mb: 3 }}
-                    onPaste={handlePaste} // Manejar el pegado en el contenedor
+                <Paper
+                    elevation={3}
+                    sx={{
+                        padding: 4,
+                        borderRadius: 2,
+                        textAlign: "center",
+                        maxWidth: 360,
+                        width: "100%",
+                    }}
                 >
-                    {otp.map((data, index) => (
-                        <TextField
-                            key={index}
-                            // Explicitamos el tipo de elemento para inputRef
-                            inputRef={(el: InputElement | null) => (inputRefs.current[index] = el)}
-                            type="text"
-                            slotProps={{
-                                htmlInput: {
-                                    maxLength: 1,
-                                }
+                    <Box>📩</Box>
 
-                            }}
-                            sx={{
-                                width: { xs: 40, sm: 50 },
-                                height: { xs: 40, sm: 50 },
-                                fontSize: { xs: '1.2rem', sm: '1.5rem' },
-                                fontWeight: 'bold',
-                                '& input': {
-                                    padding: '10px',
-                                    borderRadius: '4px',
-                                },
-                                '& .MuiOutlinedInput-root': {
-                                    '& fieldset': {
-                                        borderColor: '#ccc',
+                    <Typography variant="h5" component="h1" gutterBottom sx={{ fontWeight: "bold", mb: 2 }}>
+                        Verifica tu email
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+                        Te hemos enviado un código de verificación a tu correo electrónico.
+                    </Typography>
+                    {error && <Alert severity="error">{error.message}</Alert>}
+                    <Stack
+                        direction="row"
+                        spacing={1}
+                        justifyContent="center"
+                        sx={{ mb: 3 }}
+                        onPaste={handlePaste} // Manejar el pegado en el contenedor
+                    >
+                        {otp.map((data, index) => (
+                            <TextField
+                                key={index}
+                                // Explicitamos el tipo de elemento para inputRef
+                                inputRef={(el: InputElement | null) => (inputRefs.current[index] = el)}
+                                type="text"
+                                slotProps={{
+                                    htmlInput: {
+                                        maxLength: 1,
                                     },
-                                    '&:hover fieldset': {
-                                        borderColor: 'primary.main',
+                                }}
+                                sx={{
+                                    width: { xs: 40, sm: 50 },
+                                    height: { xs: 40, sm: 50 },
+                                    fontSize: { xs: "1.2rem", sm: "1.5rem" },
+                                    fontWeight: "bold",
+                                    "& input": {
+                                        padding: "10px",
+                                        borderRadius: "4px",
+                                        textAlign: "center",
                                     },
-                                    '&.Mui-focused fieldset': {
-                                        borderColor: 'primary.main',
+                                    "& .MuiOutlinedInput-root": {
+                                        "& fieldset": {
+                                            borderColor: "#ccc",
+                                        },
+                                        "&:hover fieldset": {
+                                            borderColor: "primary.main",
+                                        },
+                                        "&.Mui-focused fieldset": {
+                                            borderColor: "primary.main",
+                                        },
                                     },
-                                },
-                            }}
-                            value={data}
-                            onChange={(e) => handleChange(e, index)} // Pasamos el evento directamente
-                            onFocus={(e) => e.target.select()}
-                            onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => handleKeyDown(e, index)} // Pasamos el evento directamente
+                                }}
+                                value={data}
+                                onChange={(e) => handleChange(e, index)} // Pasamos el evento directamente
+                                onFocus={(e) => e.target.select()}
+                                onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => handleKeyDown(e, index)} // Pasamos el evento directamente
+                            />
+                        ))}
+                    </Stack>
 
-                        />
-                    ))}
-                </Stack>
+                    <Button fullWidth sx={{ mb: 3 }} onClick={handleVerify} disabled={otp.join("").length !== 4 || isPending}>
+                        Verificar
+                    </Button>
 
-                <Button
-                    fullWidth
-                    sx={{ mb: 3 }}
-                    onClick={handleVerify}
-                    disabled={otp.join('').length !== 4}
-                >
-                    Verificar
-                </Button>
-
-                <Typography variant="body2" sx={{ mb: 2 }}>
-                    No recibiste el código?
                     <Link
                         component="button"
                         variant="body2"
                         onClick={handleResend}
                         sx={{
-                            textDecoration: 'none',
-                            '&:hover': {
-                                textDecoration: 'underline',
+                            textDecoration: "none",
+                            mb: 2,
+                            "&:hover": {
+                                textDecoration: "underline",
                             },
-
                         }}
                     >
-                        Re enviar
+                        No recibiste el código? Re enviar
                     </Link>
-                </Typography>
 
-                <Button
-
-                    startIcon={<Icon name='arrow-narrow-left-dashed' />}
-                    onClick={() => nav('/')}
-                >
-                    Volver al inicio
-                </Button>
-            </Paper>
-        </Box>
+                    <Button startIcon={<Icon name="arrow-narrow-left-dashed" />} onClick={() => nav("/")}>
+                        Volver al inicio
+                    </Button>
+                </Paper>
+            </Box>}
+    </>
     );
 }
 

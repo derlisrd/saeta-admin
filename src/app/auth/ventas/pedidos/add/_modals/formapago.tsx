@@ -151,17 +151,18 @@ function FormaPagoModal() {
             </Stack>
           </Grid>
           <Grid size={12}>
-            <Stack direction="row" spacing={2}>
+            <Stack direction="row" spacing={1}>
               {formasPago.map((e, i) => (
                 <Button
                   key={i}
                   size="small"
+                  sx={{ fontSize: '0.65rem' }}
                   onClick={() => {
                     setFormaPagoSelected(e.id);
                     setError({ code: 0, message: "" });
                   }}
                   variant={formaPagoSelected === e.id ? "contained" : "outlined"}
-                  startIcon={<Icon name={e.tipo === "efectivo" ? "cash" : "credit-card-pay"} size={24} />}
+
 
                 >
                   {e.descripcion}
