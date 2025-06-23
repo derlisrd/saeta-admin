@@ -108,7 +108,7 @@ const menu: menuType[] = [
         title: "Créditos",
         icon: "list",
         color: "#0066cc",
-        url: "/ventas/creditos",
+        url: "/ventas/creditos/lista",
         private: false,
         descripcion: "Créditos",
         submenu: null

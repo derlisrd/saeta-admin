@@ -15,6 +15,7 @@ import { apiServiceStock } from "./productos/stock";
 import { apiServiceUsers } from "./users/users";
 import { apiServicePermisos } from "./auth/permisos";
 import { apiServicePassword } from "./auth/password";
+import { apiServiceCreditos } from "./pedidos/creditos";
 
 const API = {
     auth : apiServiceAuth,
@@ -24,6 +25,7 @@ const API = {
     productos: apiServiceProductos,
     stock : apiServiceStock,
     pedidos: apiServicePedidos,
+    creditos: apiServiceCreditos,
     categorias: apiServiceCategorias,
     impuestos: apiServiceImpuestos,
     formasPago: apiServiceFormasPago,
