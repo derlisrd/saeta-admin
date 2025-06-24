@@ -1,32 +1,48 @@
 import Icon from "@/components/ui/icon";
 import { CreditosResults } from "@/services/dto/pedidos/creditos";
 import { IconButton, Stack, Tooltip } from "@mui/material";
-import { TableCellProps } from "react-virtualized"
+import { TableCellProps } from "react-virtualized";
 import { format } from "@formkit/tempo";
 import { useNavigate } from "react-router-dom";
+import { memo, useCallback, useMemo } from "react";
 
 interface AccionesCellProps extends TableCellProps {
     rowData: CreditosResults;
 }
 
-export default function columnsListaCreditos() {
-    const width = window.innerWidth
-    const nav = useNavigate()
+// Componente memoizado para las acciones
+const AccionesCell = memo(({ rowData }: AccionesCellProps) => {
+    const navigate = useNavigate();
 
-    const AccionesCell = ({ rowData }: AccionesCellProps) => (
-        <Stack direction="row">
+    const handleImprimir = useCallback(() => {
+        console.log(rowData);
+        // Aquí implementar la lógica de impresión
+    }, [rowData]);
+
+    const handleCobrar = useCallback(() => {
+        navigate(`/ventas/creditos/cobrar/${rowData.id}`, {
+            state: { credito: rowData }
+        });
+    }, [navigate, rowData]);
+
+    return (
+        <Stack direction="row" spacing={0.5}>
             <Tooltip title="Imprimir" placement="top" arrow>
-                <IconButton onClick={() => console.log(rowData)}>
-                    <Icon name='printer' />
+                <IconButton onClick={handleImprimir} size="small">
+                    <Icon name="printer" />
                 </IconButton>
             </Tooltip>
             <Tooltip title="Cobrar" placement="top" arrow>
-                <IconButton onClick={() => nav(`/ventas/creditos/cobrar/${rowData.id}`, { state: { credito: rowData } })}>
-                    <Icon name='wallet' />
+                <IconButton onClick={handleCobrar} size="small">
+                    <Icon name="wallet" />
                 </IconButton>
             </Tooltip>
         </Stack>
     );
+});
+
+export default function columnsListaCreditos() {
+    const width = window.innerWidth
 
     return [
         {
@@ -37,12 +53,12 @@ export default function columnsListaCreditos() {
         {
             dataKey: "doc",
             label: "Doc",
-            width: width * 0.1
+            width: width * 0.12
         },
         {
             dataKey: "razon_social",
             label: "Cliente",
-            width: width * 0.5
+            width: width * 0.4
         },
         {
             dataKey: "monto",
@@ -60,7 +76,7 @@ export default function columnsListaCreditos() {
         {
             dataKey: "created_at",
             label: "Fecha",
-            width: width * 0.1,
+            width: width * 0.12,
             cellRenderer: ({ rowData }: TableCellProps) => format(rowData.created_at, "DD-MM-YYYY"),
         },
         {

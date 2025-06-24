@@ -8,7 +8,7 @@ import Filtros from "./_components/filtros";
 import columnsListaCreditos from "./_components/columns";
 
 function MainListaCreditos() {
-    const { lista, isLoading, setSelectedRow, selectedRow, desde, hasta } = useListaCreditosContext();
+    const { lista, isLoading, desde, hasta } = useListaCreditosContext();
     const [search, setSearch] = useState("");
 
     const listado =
@@ -18,7 +18,7 @@ function MainListaCreditos() {
 
             // Si hay filtro de fechas, verificar que la fecha del pedido está dentro del rango
             if (desde && hasta && item.created_at) {
-                const fechaPedido = new Date(item.created_at);
+                const fechaCredito = new Date(item.created_at);
                 const fechaDesde = new Date(desde);
                 const fechaHasta = new Date(hasta);
 
@@ -26,11 +26,12 @@ function MainListaCreditos() {
                 fechaDesde.setHours(0, 0, 0, 0);
                 fechaHasta.setHours(23, 59, 59, 999);
 
-                return matchesSearch && fechaPedido >= fechaDesde && fechaPedido <= fechaHasta;
+                return matchesSearch && fechaCredito >= fechaDesde && fechaCredito <= fechaHasta;
             }
 
             return matchesSearch;
         });
+
 
     return <Container>
         {isLoading ? (

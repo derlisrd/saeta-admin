@@ -48,8 +48,6 @@ export function ListaCreditosProvider({ children }: { children: React.ReactNode 
             }
             return [];
         },
-        retry: 2,
-        //enabled: Boolean(userData && userData?.token),
         staleTime: 1000 * 60 * 5 // 5 minutos
     })
 
@@ -67,14 +65,17 @@ export function ListaCreditosProvider({ children }: { children: React.ReactNode 
         desde,
         hasta,
         handleModals,
-        modals
+        modals,
     };
 
     return <ListaCreditosContext.Provider value={values}>{children}</ListaCreditosContext.Provider>;
-} export function useListaCreditosContext() {
+}
+
+
+export function useListaCreditosContext() {
     const context = useContext(ListaCreditosContext);
     if (!context) {
-        throw new Error("useListaProductosContext debe ser usado dentro de un ListaProductosProvider");
+        throw new Error("useListaCreditosContext debe ser usado dentro de un ListaCreditosProvider");
     }
     return context;
 }

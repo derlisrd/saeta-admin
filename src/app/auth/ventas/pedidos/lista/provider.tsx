@@ -39,7 +39,7 @@ export function ListaPedidosProvider({ children }: { children: React.ReactNode }
     const handleModals = (modal: keyof modalsType) => setModals((prev) => ({ ...prev, [modal]: !prev[modal] }));
 
 
-    const { isLoading, refetch, isFetching, data } = useSuspenseQuery({
+    const { refetch, isFetching, data, isLoading } = useSuspenseQuery({
         queryKey: ['listaPedidos'],
         queryFn: async () => API.pedidos.lista(userData && userData.token, desde, hasta),
         select: (data) => {
@@ -57,7 +57,7 @@ export function ListaPedidosProvider({ children }: { children: React.ReactNode }
 
     const values: ListaPedidosContextType = {
         lista: data || [],
-        isLoading: isLoading || isFetching,
+        isLoading: isFetching || isLoading,
         refetch,
         setSelectedRow,
         selectedRow,
@@ -70,7 +70,9 @@ export function ListaPedidosProvider({ children }: { children: React.ReactNode }
     };
 
     return <ListaPedidosContext.Provider value={values}>{children}</ListaPedidosContext.Provider>;
-} export function useListaPedidosContext() {
+}
+
+export function useListaPedidosContext() {
     const context = useContext(ListaPedidosContext);
     if (!context) {
         throw new Error("useListaProductosContext debe ser usado dentro de un ListaProductosProvider");
