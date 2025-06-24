@@ -90,7 +90,6 @@ function ThemeCustomProvider({ children }: ThemeCustomProviderType) {
     } else {
       setCustomTheme(createTheme(storageTheme));
     }
-    console.log('checkTheme render')
   }, []);
 
 

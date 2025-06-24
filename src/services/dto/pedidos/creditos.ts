@@ -16,19 +16,21 @@ export class CreditosResults {
     id: number;
     pedido_id: number;
   doc: string;
-  razonn_social: string;
+  razon_social: string;
   monto: number;
   fecha_vencimiento: string;
   created_at: string;
 
-  constructor({ id = 0, pedido_id = 0, doc = "", razonn_social = "", monto = 0, fecha_vencimiento = "", created_at = "" }) {
+  constructor({ id = 0, pedido_id = 0, doc = "", razon_social = "", monto = 0, fecha_vencimiento = "", created_at = "" }) {
     this.id = id;
     this.pedido_id = pedido_id;
     this.doc = doc;
-    this.razonn_social = razonn_social;
+    this.razon_social = razon_social;
     this.monto = monto;
     this.fecha_vencimiento = fecha_vencimiento;
     this.created_at = created_at;
   }
+
+  
 
 }
