@@ -45,7 +45,7 @@ function Main() {
                     <InputCantidad />
                   </Stack>
                   <Stack spacing={1} pb={1}>
-                    <Typography> Total: Total: {pedidos[index].total.toLocaleString('es-PY')} </Typography>
+                    <Typography fontWeight='bold'>Total: {pedidos[index].total.toLocaleString('es-PY')} </Typography>
                     <Stack direction='row' spacing={1}>
                       <EsperarButton />
                       <FinalizarButton />

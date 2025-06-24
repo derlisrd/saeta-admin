@@ -2,7 +2,7 @@ import { useAuth } from "@/providers/AuthProvider";
 import API from "@/services/api";
 import { CreditosResults } from "@/services/dto/pedidos/creditos";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useMemo, useState } from "react";
 
 type modalsType = {
     imprimir: boolean
@@ -41,32 +41,25 @@ export function ListaCreditosProvider({ children }: { children: React.ReactNode 
 
     const { isLoading, refetch, isFetching, data } = useSuspenseQuery({
         queryKey: ['listaCreditos'],
-        queryFn: async () => API.creditos.lista(userData && userData.token, desde, hasta),
-        select: (data) => {
-            if (data && data.success && data.results !== null) {
-                return data.results;
-            }
-            return [];
-        },
-        staleTime: 1000 * 60 * 5 // 5 minutos
-    })
+        queryFn: () => API.creditos.lista(userData && userData.token, desde, hasta),
+        select: (res) => res?.success && res.results ? res.results : [],
+        staleTime: 1000 * 60 * 5,
+    });
 
 
 
 
-    const values: ListaCreditosContextType = {
+    const values = useMemo(() => ({
         lista: data || [],
         isLoading: isLoading || isFetching,
         refetch,
-        setSelectedRow,
-        selectedRow,
-        setDesde,
-        setHasta,
-        desde,
-        hasta,
-        handleModals,
-        modals,
-    };
+        desde, hasta, setDesde, setHasta,
+        selectedRow, setSelectedRow,
+        modals, handleModals,
+    }), [
+        data, isLoading, isFetching,
+        desde, hasta, selectedRow, modals
+    ]);
 
     return <ListaCreditosContext.Provider value={values}>{children}</ListaCreditosContext.Provider>;
 }

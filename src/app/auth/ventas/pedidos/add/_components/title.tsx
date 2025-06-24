@@ -1,4 +1,4 @@
-import { Button, DialogTitle, IconButton, Stack, Tooltip, Typography, Zoom } from "@mui/material";
+import { Button, DialogTitle, IconButton, Stack, Tooltip, Zoom } from "@mui/material";
 import useHook from "../_hooks/useHook";
 import useModal from "../_hooks/useModal";
 import Icon from "@/components/ui/icon";
@@ -20,7 +20,6 @@ function Title() {
               <Icon size={36} name="arrow-left-dashed" />
             </IconButton>
           </Tooltip>
-          <Typography variant="body1" sx={{ display: { xs: 'none', md: 'block' } }}>Pedido | Total: {pedidos[index].total.toLocaleString('es-PY')} Gs</Typography>
         </Stack>
         <Button
           onClick={() => {
