@@ -52,7 +52,10 @@ function AutenticatedPages() {
           <Route path="/ventas/facturacion" element={<Facturacion />} />
           <Route path="/ventas/pedidos/add" element={<PedidosAdd />} />
           <Route path="/ventas/pedidos/lista" element={<PedidosLista />} />
+
           <Route path="/ventas/creditos/lista" element={<CreditosLista />} />
+          <Route path="/ventas/creditos/cobrar/:id" element={<CreditosCobrar />} />
+
           <Route path="/ventas/pedidos/devoluciones" element={<Devoluciones />} />
           <Route path="/actualizacion" element={<Actualizaciones />} />
           <Route path="/logout" element={<LogOut />} />
@@ -73,6 +76,7 @@ const ConfigEmpresa = Loadable(lazy(() => import("./config/empresa")));
 const Users = Loadable(lazy(() => import("./config/users/list")));
 const UserAdd = Loadable(lazy(() => import("./config/users/add")));
 const CreditosLista = Loadable(lazy(() => import("./ventas/creditos/lista")));
+const CreditosCobrar = Loadable(lazy(() => import("./ventas/creditos/cobrar")));
 const FormasPago = Loadable(lazy(() => import("./config/formas-pago")));
 
 const Facturacion = Loadable(lazy(() => import("./ventas/facturacion")));

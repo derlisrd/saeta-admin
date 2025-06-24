@@ -3,6 +3,7 @@ import { CreditosResults } from "@/services/dto/pedidos/creditos";
 import { IconButton, Stack, Tooltip } from "@mui/material";
 import { TableCellProps } from "react-virtualized"
 import { format } from "@formkit/tempo";
+import { useNavigate } from "react-router-dom";
 
 interface AccionesCellProps extends TableCellProps {
     rowData: CreditosResults;
@@ -10,6 +11,7 @@ interface AccionesCellProps extends TableCellProps {
 
 export default function columnsListaCreditos() {
     const width = window.innerWidth
+    const nav = useNavigate()
 
     const AccionesCell = ({ rowData }: AccionesCellProps) => (
         <Stack direction="row">
@@ -18,9 +20,9 @@ export default function columnsListaCreditos() {
                     <Icon name='printer' />
                 </IconButton>
             </Tooltip>
-            <Tooltip title="Cancelar" placement="top" arrow>
-                <IconButton onClick={() => console.log("Cancelar pedido ID:", rowData.id)}>
-                    <Icon name='x' />
+            <Tooltip title="Cobrar" placement="top" arrow>
+                <IconButton onClick={() => nav(`/ventas/creditos/cobrar/${rowData.id}`, { state: { credito: rowData } })}>
+                    <Icon name='wallet' />
                 </IconButton>
             </Tooltip>
         </Stack>
