@@ -8,8 +8,8 @@ function Cobrar() {
     const location = useLocation()
     const { formasPago, isLoading } = useCobrarCredito();
 
-    const credito = location.state?.credito;
-    console.info({ formasPago, isLoading });
+    //const credito = location.state?.credito;
+    console.info({ formasPago, isLoading, location });
 
 
     return <Container>

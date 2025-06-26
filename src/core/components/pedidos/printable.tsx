@@ -76,7 +76,7 @@ function Printable({ pedido, empresa }: PrintableProps) {
           {pedido.formas_pago_pedido &&
             pedido.formas_pago_pedido.map((pago) => (
               <li key={pago.id}>
-                {pago.abreviatura}: {parseFloat(pago.monto).toLocaleString(locale)}
+                <small>{pago.abreviatura}: {parseFloat(pago.monto).toLocaleString(locale)}</small>
               </li>
             ))}
         </ul>
@@ -88,7 +88,7 @@ function Printable({ pedido, empresa }: PrintableProps) {
         <small>TOTAL: {pedido.importe_final.toLocaleString(locale)}</small>
       </div>
 
-      <p>Gracias por su compra!</p>
+      <small>Gracias por su compra!</small>
     </div>
   );
 }

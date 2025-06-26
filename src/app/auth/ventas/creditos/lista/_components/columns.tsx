@@ -4,7 +4,7 @@ import { IconButton, Stack, Tooltip } from "@mui/material";
 import { TableCellProps } from "react-virtualized";
 import { format } from "@formkit/tempo";
 import { useNavigate } from "react-router-dom";
-import { memo, useCallback, useMemo } from "react";
+import { memo, useCallback } from "react";
 
 interface AccionesCellProps extends TableCellProps {
     rowData: CreditosResults;

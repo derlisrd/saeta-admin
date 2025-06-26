@@ -1,17 +1,20 @@
-export class FormasPagoAdd{
-    tipo: "efectivo" | "digital";
-    descripcion: string;
-    porcentaje_descuento: number;
+export class FormasPagoAdd {
+  tipo: "caja" | "banco";
+  condicion: "contado" | "credito";
+  descripcion: string;
+  porcentaje_descuento: number;
 
-    constructor({ tipo = 'efectivo', descripcion ='', porcentaje_descuento = 0 }: {
-        tipo: "efectivo" | "digital";
-        descripcion: string;
-        porcentaje_descuento: number;
-    }){
-        this.tipo = tipo;
-        this.descripcion = descripcion;
-        this.porcentaje_descuento = porcentaje_descuento;
-    }
+  constructor({
+    tipo = "caja",
+    condicion = "contado",
+    descripcion = "",
+    porcentaje_descuento = 0
+  }: Partial<FormasPagoAdd>) {
+    this.tipo = tipo;
+    this.condicion = condicion;
+    this.descripcion = descripcion;
+    this.porcentaje_descuento = porcentaje_descuento;
+  }
 }
 
 export class FormasPagoAddResponse {
@@ -53,27 +56,37 @@ export class FormasPagoResponse {
 }
 
 export class FormasPagoResults {
-    id: number;
-    tipo: "efectivo" | "digital";
-    descripcion: string;
-    porcentaje_descuento: number;
+  id: number;
+  tipo: "caja" | "banco";
+  condicion: "contado" | "credito";
+  descripcion: string;
+  porcentaje_descuento: number;
+  activo: number;
+
+  constructor({
+    id = 0,
+    tipo = "caja",
+    condicion = "contado",
+    descripcion = "",
+    porcentaje_descuento = 0,
+    activo = 0
+  }: {
+    id?: number;
+    tipo?: "caja" | "banco";
+    condicion?: "contado" | "credito";
+    descripcion?: string;
+    porcentaje_descuento?: number;
     activo: number;
+  }) {
+    this.id = id;
+    this.tipo = tipo;
+    this.condicion = condicion;
+    this.descripcion = descripcion;
+    this.porcentaje_descuento = porcentaje_descuento;
+    this.activo = activo;
+  }
 
-    constructor({ id = 0, tipo = "efectivo", descripcion = "", porcentaje_descuento = 0, activo = 0 }: { 
-        id?: number; 
-        tipo?: "efectivo" | "digital"; 
-        descripcion?: string; 
-        porcentaje_descuento?: number; 
-        activo: number;
-    }) {
-        this.id = id;
-        this.tipo = tipo;
-        this.descripcion = descripcion;
-        this.porcentaje_descuento = porcentaje_descuento;
-        this.activo = activo;
-    }
-
-    static fromJSON(data: any) {
-        return new FormasPagoResults({...data});
-    }
+  static fromJSON(data: any) {
+    return new FormasPagoResults({ ...data });
+  }
 }

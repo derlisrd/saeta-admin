@@ -2,7 +2,7 @@ import Icon from "@/components/ui/icon";
 import MenuNavList from "./components/MenuNavList";
 
 
-import { Drawer, Box, Toolbar, Stack, IconButton, Tooltip, Typography, Button } from "@mui/material";
+import { Drawer, Box, Toolbar, Stack, IconButton, Tooltip, Typography } from "@mui/material";
 import { NavigateOptions, Outlet, To, useLocation, useNavigate } from "react-router-dom";
 import DrawerTheme from "./components/DrawerTheme";
 import { useLayoutContext } from "@/providers/LayoutProvider";

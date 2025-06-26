@@ -16,7 +16,8 @@ function AddFormasPagoModal() {
   } = useForm<FormasPagoAdd>({
     defaultValues: {
       descripcion: "",
-      tipo: "efectivo",
+      tipo: "caja",
+      condicion: "contado",
       porcentaje_descuento: 0,
     },
     mode: "onBlur", // Validar al perder el foco
@@ -61,11 +62,11 @@ function AddFormasPagoModal() {
                             disabled={isPending}
                             icon={<Icon size={22} name='circle-dashed' />}
                             checkedIcon={<Icon size={22} name='circle-check' />}
-                            checked={field.value === "efectivo"}
-                            onChange={() => field.onChange("efectivo")}
+                            checked={field.value === "caja"}
+                            onChange={() => field.onChange("caja")}
                           />
                         }
-                        label="Efectivo"
+                        label="Efectivo o caja"
                       />
                       <FormControlLabel
                         control={
@@ -73,11 +74,48 @@ function AddFormasPagoModal() {
                             disabled={isPending}
                             icon={<Icon size={22} name='circle-dashed' />}
                             checkedIcon={<Icon size={22} name='circle-check' />}
-                            checked={field.value === "digital"}
-                            onChange={() => field.onChange("digital")}
+                            checked={field.value === "banco"}
+                            onChange={() => field.onChange("banco")}
                           />
                         }
                         label="Banco o digital"
+                      />
+                    </Stack>
+                  )}
+                />
+              </Stack>
+            </Grid>
+            <Grid size={12}>
+              <Stack direction="row" spacing={2} alignItems="center">
+                <FormLabel>Condición de forma de pago: </FormLabel>
+                <Controller
+                  name="condicion"
+                  control={control}
+                  render={({ field }) => (
+                    <Stack direction="row" spacing={2}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            disabled={isPending}
+                            icon={<Icon size={22} name='circle-dashed' />}
+                            checkedIcon={<Icon size={22} name='circle-check' />}
+                            checked={field.value === "contado"}
+                            onChange={() => field.onChange("contado")}
+                          />
+                        }
+                        label="Contado"
+                      />
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            disabled={isPending}
+                            icon={<Icon size={22} name='circle-dashed' />}
+                            checkedIcon={<Icon size={22} name='circle-check' />}
+                            checked={field.value === "credito"}
+                            onChange={() => field.onChange("credito")}
+                          />
+                        }
+                        label="Crédito"
                       />
                     </Stack>
                   )}
@@ -89,6 +127,10 @@ function AddFormasPagoModal() {
                 name="porcentaje_descuento"
                 control={control}
                 rules={{
+                  pattern: {
+                    value: /^\d*\.?\d*$/,
+                    message: "El porcentaje debe ser un número.",
+                  },
                   min: {
                     value: 0,
                     message: "El porcentaje mínimo es 0.",
@@ -101,7 +143,7 @@ function AddFormasPagoModal() {
                 render={({ field }) => (
                   <TextField
                     {...field}
-                    type="number"
+                    type="text"
                     label="Porcentaje de descuento"
                     placeholder="Descuento"
                     fullWidth

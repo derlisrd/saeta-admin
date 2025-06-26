@@ -43,7 +43,8 @@ export const FormasPagoProvider = ({ children }: { children: React.ReactNode }) 
                     const newData = { ...oldData };
                     const nuevoResultado = {
                         id: data.results?.id || 0,
-                        tipo: data.results?.tipo || "efectivo",
+                        tipo: data.results?.tipo || "caja",
+                        condicion: data.results?.condicion || "contado",
                         descripcion: data.results?.descripcion || "",
                         porcentaje_descuento: data.results?.porcentaje_descuento || 0,
                         activo: data.results?.activo || 0,
