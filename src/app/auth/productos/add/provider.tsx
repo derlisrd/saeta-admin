@@ -53,7 +53,7 @@ function AddProductoProvider({ children }: { children: React.ReactNode }) {
         refetchOnWindowFocus: false,
       },
       {
-        queryKey: ["depositos"],
+        queryKey: ["depositos", 'productos'],
         queryFn: () => API.depositos.list(userData && userData.token),
         select: (data: DepositoResponse) => (data && data.results) ? data.results : [],
         retry: false,
@@ -188,10 +188,10 @@ function AddProductoProvider({ children }: { children: React.ReactNode }) {
       error,
       changeByName,
       sendForm,
-      impuestos: data?.impuestos || [], // Access data.impuestos, handle loading state
-      categorias: data?.categorias || [],
-      depositos: data?.depositos || [],
-      medidas: data?.medidas || [],
+      impuestos: data.impuestos, // Access data.impuestos, handle loading state
+      categorias: data?.categorias,
+      depositos: data.depositos,
+      medidas: data.medidas,
       loading: isLoading || mutateCaller.isPending,
       addStock,
       stockState,
