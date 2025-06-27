@@ -30,6 +30,7 @@ function AutenticatedPages() {
           <Route index element={<Home />} />
 
           <Route path="/estadisticas/producto" element={<EstadisticasProducto />} />
+          <Route path="/estadisticas/general" element={<EstadisticasGeneral />} />
 
           <Route path="/clientes" element={<Clientes />} />
           <Route path="/clientes/add" element={<ClientesAdd />} />
@@ -96,4 +97,5 @@ const Actualizaciones = Loadable(lazy(() => import('./actualizacion')));
 
 
 const EstadisticasProducto = Loadable(lazy(() => import("./estadisticas/producto")));
+const EstadisticasGeneral = Loadable(lazy(() => import("./estadisticas/general")));
 export default AutenticatedPages;

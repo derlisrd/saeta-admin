@@ -1,7 +1,8 @@
 import useEstadisticas from "@/core/hooks/home/useEstadisticas";
 import { Container, Grid2 as Grid, IconButton, LinearProgress, Tooltip, Typography } from "@mui/material";
-import CardHome from "./card";
+
 import Icon from "@/components/ui/icon";
+import CardEstadistica from "@/core/components/estadisticas/card.estadistica";
 
 function Home() {
   const { data, isLoading, refresh } = useEstadisticas();
@@ -19,34 +20,34 @@ function Home() {
           </Grid>
 
           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-            <CardHome data={data.ayer.importe.toLocaleString("es-PY")} title="Ayer" icon="calendar-clock"
+            <CardEstadistica data={data.ayer.importe.toLocaleString("es-PY")} title="Ayer" icon="calendar-clock"
               caption={'Cantidad pedidos: ' + data.ayer.cantidad}
             />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-            <CardHome data={data.semana_pasada.importe.toLocaleString("es-PY")} title="Semana pasada" icon="calendar-event"
+            <CardEstadistica data={data.semana_pasada.importe.toLocaleString("es-PY")} title="Semana pasada" icon="calendar-event"
               caption={'Cantidad pedidos: ' + data.semana_pasada.cantidad} />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-            <CardHome data={data.mes_pasado.importe.toLocaleString("es-PY")} title="Mes pasado" icon="calendar"
+            <CardEstadistica data={data.mes_pasado.importe.toLocaleString("es-PY")} title="Mes pasado" icon="calendar"
               caption={'Cantidad pedidos: ' + data.mes_pasado.cantidad} />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-            <CardHome data={data.hoy.importe.toLocaleString("es-PY")} title="Ventas de hoy" icon="moneybag"
+            <CardEstadistica data={data.hoy.importe.toLocaleString("es-PY")} title="Ventas de hoy" icon="moneybag"
               caption={data.comparaciones.dia.porcentaje.toFixed(2) + '%'}
               captionColor={data.comparaciones.dia.porcentaje > 0 ? "green" : "red"}
               captionIcon={data.comparaciones.dia.porcentaje > 0 ? "arrow-big-up" : "arrow-big-down"}
             />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-            <CardHome data={data.semana.importe.toLocaleString("es-PY")} title="Ventas de la semana" icon="calendar-plus"
+            <CardEstadistica data={data.semana.importe.toLocaleString("es-PY")} title="Ventas de la semana" icon="calendar-plus"
               caption={data.comparaciones.semana.porcentaje.toFixed(2) + '%'}
               captionColor={data.comparaciones.semana.porcentaje > 0 ? "green" : "red"}
               captionIcon={data.comparaciones.semana.porcentaje > 0 ? "arrow-big-up" : "arrow-big-down"}
             />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-            <CardHome data={data.mes.importe.toLocaleString("es-PY")} title="Ventas del mes" icon="calendar-month"
+            <CardEstadistica data={data.mes.importe.toLocaleString("es-PY")} title="Ventas del mes" icon="calendar-month"
               caption={data.comparaciones.mensual.porcentaje.toFixed(2) + '%'}
               captionColor={data.comparaciones.mensual.porcentaje > 0 ? "green" : "red"}
               captionIcon={data.comparaciones.mensual.porcentaje > 0 ? "arrow-big-up" : "arrow-big-down"}
@@ -56,16 +57,16 @@ function Home() {
             <Typography variant="button">Lucro</Typography>
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
-            <CardHome data={data.ayer.lucro.toLocaleString("es-PY")} title="De ayer" icon="chart-dots" />
+            <CardEstadistica data={data.ayer.lucro.toLocaleString("es-PY")} title="De ayer" icon="chart-dots" />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
-            <CardHome data={data.hoy.lucro.toLocaleString("es-PY")} title="De hoy" icon="chart-histogram" />
+            <CardEstadistica data={data.hoy.lucro.toLocaleString("es-PY")} title="De hoy" icon="chart-histogram" />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
-            <CardHome data={data.semana.lucro.toLocaleString("es-PY")} title="De la semana" icon="chart-line" />
+            <CardEstadistica data={data.semana.lucro.toLocaleString("es-PY")} title="De la semana" icon="chart-line" />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
-            <CardHome data={data.mes.lucro.toLocaleString("es-PY")} title="Del mes" icon="chart-pie" />
+            <CardEstadistica data={data.mes.lucro.toLocaleString("es-PY")} title="Del mes" icon="chart-pie" />
           </Grid>
 
         </Grid>

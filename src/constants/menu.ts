@@ -26,7 +26,7 @@ const menu: menuType[] = [
         title: "General",
         icon: "receipt_long",
         color: "#0066cc",
-        url: "/estadisticas",
+        url: "/estadisticas/general",
         private: false,
         descripcion: null,
         submenu: null
