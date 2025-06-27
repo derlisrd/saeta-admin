@@ -102,11 +102,13 @@ export class ProductoMasVendido {
   precio: number;
   costo: number;
   total_vendido: number;
+  codigo: string;
   constructor(data: Partial<ProductoMasVendido>) {
     this.id = data.id || 0;
     this.nombre = data.nombre || "";
     this.precio = data.precio || 0;
     this.costo = data.costo || 0;
     this.total_vendido = data.total_vendido || 0;
+    this.codigo = data.codigo || "";
   }
 }
