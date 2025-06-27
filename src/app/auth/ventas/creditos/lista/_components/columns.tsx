@@ -69,6 +69,14 @@ export default function columnsListaCreditos() {
             ),
         },
         {
+            dataKey: "monto_abonado",
+            label: "Abonado",
+            width: width * 0.1,
+            cellRenderer: ({ rowData }: TableCellProps) => (
+                <p>{rowData.monto_abonado.toLocaleString("es-PY")}</p>
+            ),
+        },
+        {
             dataKey: "pedido_id",
             label: "Pedido",
             width: width * 0.1
