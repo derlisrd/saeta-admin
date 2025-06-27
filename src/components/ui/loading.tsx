@@ -6,7 +6,7 @@ function LoadingScreen() {
         open={true}
         onClick={() => { }}
     >
-        <CircularProgress />
+        <CircularProgress color="secondary" />
     </Backdrop>
 }
 

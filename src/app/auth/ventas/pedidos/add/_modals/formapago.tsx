@@ -26,6 +26,8 @@ import useModal from "../_hooks/useModal";
 import Total from "../_components/total";
 import useResponsive from "@/hooks/useResponsive";
 import useValidateFormaPago from "../_hooks/useValidateFormaPago";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import dayjs from "dayjs";
 
 function FormaPagoModal() {
   const { formasPago, pedidos, index, changePedido, handleFormasPago } = useHook();
@@ -35,6 +37,7 @@ function FormaPagoModal() {
   const [formaPagoSelected, setFormaPagoSelected] = useState<number>(0);
   const [monto, setMonto] = useState<number | undefined>(undefined);
   const [inputValue, setInputValue] = useState("");
+  const [fechaVencimiento, setFechaVencimiento] = useState<dayjs.Dayjs | null>(dayjs(new Date()));
   const [detallesText, setDetallesText] = useState("");
   const [detallesFocused, setDetallesFocused] = useState(false);
 
@@ -131,23 +134,53 @@ function FormaPagoModal() {
               </Zoom>
             )}
           </Grid>
-          <Grid size={{ xs: 12, md: 6 }}>
-            <Stack direction="row" spacing={2} alignItems="center" justifyContent="flex-end">
-              <FormLabel>Condición de venta: </FormLabel>
-              <FormControlLabel
-                value={0}
-                control={<Checkbox icon={<Icon name='circle-dashed' size={22} />} checkedIcon={<Icon name='circle-check' size={22} />} />}
-                checked={pedidos[index].condicion === 0}
-                onChange={() => changePedido("condicion", 0)}
-                label="Contado"
-              />
-              <FormControlLabel
-                value={1}
-                control={<Checkbox icon={<Icon name='circle-dashed' size={22} />} checkedIcon={<Icon name='circle-check' size={22} />} />}
-                checked={pedidos[index].condicion === 1}
-                onChange={() => changePedido("condicion", 1)}
-                label="Crédito"
-              />
+          <Grid size={12}>
+            <Stack direction="row" spacing={2} alignItems="center" justifyContent='space-between'>
+              <Stack direction='row' alignItems='center' spacing={1}>
+                <FormLabel>Condición de venta: </FormLabel>
+                <FormControlLabel
+                  value={0}
+                  control={<Checkbox icon={<Icon name='circle-dashed' size={22} />} checkedIcon={<Icon name='circle-check' size={22} />} />}
+                  checked={pedidos[index].condicion === 0}
+                  onChange={() => changePedido("condicion", 0)}
+                  label="Contado"
+                />
+                <FormControlLabel
+                  value={1}
+                  control={<Checkbox icon={<Icon name='circle-dashed' size={22} />} checkedIcon={<Icon name='circle-check' size={22} />} />}
+                  checked={pedidos[index].condicion === 1}
+                  onChange={() => changePedido("condicion", 1)}
+                  label="Crédito"
+                />
+              </Stack>
+              <Stack direction='row' alignItems='center' spacing={1}>
+                {pedidos[index].condicion === 1 && (
+                  <DatePicker
+                    label="Vencimiento"
+                    value={fechaVencimiento}
+                    onChange={(date) => {
+                      setFechaVencimiento(date);
+                      changePedido("fecha_vencimiento", date ? date.format("YYYY-MM-DD") : "");
+                      //setDesde(date ? date.format("YYYY-MM-DD") : "");
+                    }}
+                    localeText={{
+                      cancelButtonLabel: "Cancelar",
+                      okButtonLabel: "Aceptar",
+
+                    }}
+                    format="DD-MMM-YYYY"
+                    slotProps={{
+                      textField: {
+                        fullWidth: true,
+                        placeholder: "Fecha de inicio",
+                        sx: {
+                          padding: 0,
+                        }
+                      },
+                    }}
+                  />
+                )}
+              </Stack>
             </Stack>
           </Grid>
           <Grid size={12}>

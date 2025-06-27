@@ -25,6 +25,7 @@ function InputCodigo() {
         }}
         sx={{
           marginTop: 1,
+
           "& .MuiInputBase-root": {
             backgroundColor: "background.paper",
             padding: "8px 4px",

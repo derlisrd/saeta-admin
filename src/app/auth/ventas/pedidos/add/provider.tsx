@@ -29,6 +29,7 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
           }
           return [];
         },
+        staleTime: 1000 * 60 * 5
       },
       {
         queryKey: ["monedas"],
@@ -39,6 +40,7 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
           }
           return [];
         },
+        staleTime: 1000 * 60 * 5
       },
       {
         queryKey: ["depositos"],
@@ -49,6 +51,7 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
           }
           return [];
         },
+        staleTime: 1000 * 60 * 5
       },
     ],
   });
@@ -287,28 +290,6 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
     },
     [formasPago, pedidos]
   );
-
-  /* const getAllDatas = useCallback(async () => {
-    try {
-      setLoading(true);
-      const [formasPagoRes, monedasRes, depositosRes] = await Promise.all([
-        API.formasPago.list(userData && userData?.token),
-        API.monedas.list(userData && userData?.token),
-        API.depositos.list(userData && userData?.token),
-      ]);
-      if (formasPagoRes.success && formasPagoRes.results) {
-        setFormasPago(formasPagoRes.results);
-      }
-      if (monedasRes.success && monedasRes.results) {
-        setMonedas(monedasRes.results);
-      }
-      if (depositosRes.success && depositosRes.results) {
-        setDepositos(depositosRes.results);
-      }
-    } finally {
-      setLoading(false);
-    }
-  }, [userData?.token]); */
 
   useEffect(() => {
     if (store) {

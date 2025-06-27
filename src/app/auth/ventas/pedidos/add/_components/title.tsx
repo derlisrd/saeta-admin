@@ -22,10 +22,9 @@ function Title() {
           </Tooltip>
         </Stack>
         <Button
-          onClick={() => {
-            handleModal("clientes");
-          }}
+          onClick={() => handleModal("clientes")}
           size="small"
+          variant={pedidos[index].cliente_id === 0 ? "contained" : "outlined"}
           startIcon={<Icon name='user-plus' />}
         >
           {pedidos[index].cliente_id === 0 ? "Seleccionar Cliente" : pedidos[index].cliente}

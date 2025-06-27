@@ -13,6 +13,7 @@ export class AddPedido {
   descuento: number = 0;
   total: number = 0;
   items: AddPedidoItem[] = [];
+  fecha_vencimiento: string = "";
 
   constructor({
     aplicar_impuesto,
@@ -26,7 +27,8 @@ export class AddPedido {
     descuento,
     total,
     items,
-    condicion
+    condicion,
+    fecha_vencimiento
   }: Partial<AddPedido> = {}) { // Se agrega un objeto vacío como valor por defecto
     this.entregado = entregado ?? this.entregado;
     this.moneda_id = moneda_id ?? this.moneda_id;
@@ -40,6 +42,7 @@ export class AddPedido {
     this.descuento = descuento ?? this.descuento;
     this.total = total ?? this.total;
     this.items = (items ?? this.items).map((item) => new AddPedidoItem(item));
+    this.fecha_vencimiento = fecha_vencimiento ?? this.fecha_vencimiento;
   }
 }
 

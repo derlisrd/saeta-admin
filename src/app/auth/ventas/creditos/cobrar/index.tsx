@@ -6,6 +6,7 @@ import useCobrarCredito from "./_hooks/useCobrar";
 import { CreditosResults } from "@/services/dto/pedidos/creditos";
 import { useCobroForm } from "./_hooks/useCobroForm";
 import { useCobrarCreditoActions } from "./_hooks/useCobrarCreditoActions";
+import { format } from "@formkit/tempo";
 
 function Cobrar() {
     const location = useLocation();
@@ -179,6 +180,16 @@ function Cobrar() {
                             <Grid size={6}>
                                 <Typography variant="body2" fontWeight="bold" color="error.main">
                                     {montoAdeudado.toLocaleString("es-PY")}
+                                </Typography>
+                            </Grid>
+                            <Grid size={6}>
+                                <Typography variant="body2" fontWeight="bold">
+                                    Vencimiento:
+                                </Typography>
+                            </Grid>
+                            <Grid size={6}>
+                                <Typography variant="body2" fontWeight="bold">
+                                    {format(credito.fecha_vencimiento, "medium")}
                                 </Typography>
                             </Grid>
                         </Grid>

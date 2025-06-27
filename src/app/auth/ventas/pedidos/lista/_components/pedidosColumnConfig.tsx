@@ -40,15 +40,18 @@ const buildColumnConfig = (
   width: number,
   onImprimir: (pedido: PedidosDelDiaResults) => void
 ): ColumnConfigType[] => [
-    { dataKey: "id", label: "ID", width: width * 0.07 },
+    { dataKey: "id", label: "ID", width: width * 0.06 },
     {
       dataKey: "created_at",
       label: "Fecha",
-      width: width * 0.12,
-      cellRenderer: ({ rowData }: TableCellProps) => format(rowData.created_at, "DD-MM-YY HH:mm"),
+      width: width * 0.07,
+      cellRenderer: ({ rowData }: TableCellProps) => format(rowData.created_at, "DD-MMM-YY"),//HH:mm
     },
-    { dataKey: "doc", label: "Doc", width: width * 0.12 },
-    { dataKey: "razon_social", label: "Cliente", width: width * 0.25 },
+    { dataKey: "doc", label: "Doc", width: width * 0.1 },
+    {
+      dataKey: "razon_social", label: "Cliente", width: width * 0.3,
+      cellRenderer: ({ rowData }: TableCellProps) => <p>{rowData.razon_social.substring(0, 28)}</p>
+    },
     {
       dataKey: "estado",
       label: "Estado",
