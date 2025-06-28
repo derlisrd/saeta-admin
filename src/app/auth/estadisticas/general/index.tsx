@@ -3,12 +3,13 @@ import { Container, Typography, Grid2 as Grid, Button, Stack, Alert, LinearProgr
 import useEstadisticasGeneral from "./_hooks/useEstadisticasGeneral";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import CardEstadistica from "@/core/components/estadisticas/card.estadistica";
+import ProductosMasVendidosLista from "./_components/productos";
 
 function EstadisticasGeneral() {
 
     const { errorPeriodo, selectedDate, handleDateChange, handleConsultar, isLoading, periodo, productos } = useEstadisticasGeneral();
 
-    console.log(productos)
+
     return <Container>
         <Grid container spacing={2}>
             <Grid size={12}>
@@ -61,7 +62,12 @@ function EstadisticasGeneral() {
                     </Grid>
                 )
             }
+
         </Grid>
+        {
+            productos && productos.productos &&
+            <ProductosMasVendidosLista data={productos.productos} />
+        }
     </Container>
 }
 
