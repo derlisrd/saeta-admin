@@ -5,7 +5,8 @@ import AutoSizer from "react-virtualized-auto-sizer";
 import TableCellHead from "@/components/table/tablecellhead";
 import TableCell from "@/components/table/tablecell";
 import StyledTableContainer from "@/components/table/styledtable";
-import { SxProps, Theme } from "@mui/material";
+import { Box, SxProps, Theme, Typography } from "@mui/material";
+import Icon from "../ui/icon";
 
 interface GenericTableProps<T> {
   data: T[];
@@ -14,12 +15,13 @@ interface GenericTableProps<T> {
   headerHeight?: number;
   sx?: SxProps<Theme>;
   minHeight?: number;
+  dataTextNull?: string;
 }
 
 const defaultHeaderRenderer = ({ label }: TableHeaderProps) => <TableCellHead>{label}</TableCellHead>;
 const defaultCellRenderer = ({ cellData }: TableCellProps) => <TableCell>{cellData}</TableCell>;
 
-function GenericTable<T extends object>({ data, columns, rowHeight = 48, headerHeight = 48, sx, minHeight = 190 }: GenericTableProps<T>) {
+function GenericTable<T extends object>({ data, dataTextNull = 'No data', columns, rowHeight = 48, headerHeight = 48, sx, minHeight = 190 }: GenericTableProps<T>) {
   return (
     <StyledTableContainer sx={{ minHeight: `calc(100% - ${headerHeight + minHeight}px)`, ...sx }}>
       {data && (
@@ -44,10 +46,18 @@ function GenericTable<T extends object>({ data, columns, rowHeight = 48, headerH
                   width={Number(column.width)}
                 />
               ))}
+
             </Table>
           )}
         </AutoSizer>
       )}
+      {data.length === 0 && <Box sx={{
+        minHeight: `calc(100% - ${headerHeight + minHeight}px)`, display: "flex",
+        justifyContent: "center", alignItems: "center", gap: 2, flexDirection: "column"
+      }}>
+        <Icon name="database" size={24} />
+        <Typography>{dataTextNull}</Typography>
+      </Box>}
     </StyledTableContainer>
   );
 }

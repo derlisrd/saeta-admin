@@ -36,8 +36,8 @@ function FiltrosProductos({
                 <DepositoSelect />
             </Grid>
             <Grid size={{ xs: 6, sm: 6, md: 2 }}>
-                <Button startIcon={<Icon name='device-ipad-horizontal-plus' />} onClick={() => nav("/productos/add")}>
-                    Registrar
+                <Button startIcon={<Icon name='plus' />} onClick={() => nav("/productos/add")}>
+                    nuevo
                 </Button>
             </Grid>
             <Grid size={{ xs: 6, sm: 6, md: 1 }}>

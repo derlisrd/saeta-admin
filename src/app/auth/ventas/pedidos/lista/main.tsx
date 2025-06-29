@@ -56,7 +56,7 @@ function ListaPedidosMain() {
                     <Filtros setSearch={setSearch} search={search} />
                     <Slide direction="up" in={true} mountOnEnter unmountOnExit>
                         <Box>
-                            <GenericTable data={listado} columns={columnsPedidos(handleImprimir)} rowHeight={40} headerHeight={36} />
+                            <GenericTable dataTextNull="Aún no hay pedidos" data={listado} columns={columnsPedidos(handleImprimir)} rowHeight={40} headerHeight={36} />
                             <Typography variant="body1">Total: {importeTotal.toLocaleString('es-PY')}</Typography>
                         </Box>
                     </Slide>
