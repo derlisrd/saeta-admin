@@ -1,5 +1,5 @@
 import { useLocalStorage } from "@/hooks/useLocalStorage";
-import { components } from "@/theme/components";
+import { components as getComponents } from "@/theme/components";
 import { pallete } from "@/theme/pallete";
 import { colorsMode } from "@/theme/colors";
 import { shadowsDark, shadowsLight } from "@/theme/shadows";
@@ -23,7 +23,7 @@ interface ThemeCustomProviderType { children: ReactNode; }
 function ThemeCustomProvider({ children }: ThemeCustomProviderType) {
   const initialCustomTheme = {
     palette: pallete,
-    components: components(),
+    components: getComponents(),
     typography: typography,
     shadows: shadowsDark,
   } as Theme;

@@ -64,12 +64,12 @@ export const apiServiceAuth = {
         });
       } catch (err) {
         if(axios.isAxiosError(err)){
-         throw new ApiError(err.response?.data.message || "Error en conexion", err.response?.status || 500);
+         throw new Error(err.response?.data.message || "Error en conexion");
         }
         if(!navigator.onLine){
-        throw new ApiError("No hay conexión a Internet", 0);
+        throw new Error("No hay conexión a Internet");
         }
-      throw new ApiError("Error de servidor intente más tarde o contacte con Atención al cliente", 500);
+      throw new Error("Error de servidor intente más tarde o contacte con Atención al cliente");
       }
     }
 }

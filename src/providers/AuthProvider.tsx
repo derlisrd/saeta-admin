@@ -107,7 +107,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     throwOnError() {
       window.sessionStorage.removeItem("userData");
       queryClient.clear();
-      return false
+      window.location.reload()
+      return true
     },
     retry: 1,
     staleTime: 30 * 60000,

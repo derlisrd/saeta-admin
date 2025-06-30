@@ -4,7 +4,7 @@ import { AddProducto } from "@/services/dto/productos/AddProducto";
 import { AddStock } from "@/services/dto/productos/AddStock";
 import { useCallback, useMemo, useRef, useState } from "react";
 import AddProductoContext, { modalType } from "./context";
-import { useMutation, useQueries } from "@tanstack/react-query";
+import { useMutation, useQueries, useQueryClient } from "@tanstack/react-query";
 
 import API from "@/services/api";
 import { ImpuestoResponse } from "@/services/dto/factura/impuesto";
@@ -17,7 +17,7 @@ import { validateForm } from "./helpers/validate";
 
 function AddProductoProvider({ children }: { children: React.ReactNode }) {
   const { userData } = useAuth();
-
+  const queryClient = useQueryClient();
   const inputCodigoRef = useRef<HTMLInputElement>(null);
   const [tabValue, setTabValue] = useState(0);
 
@@ -155,11 +155,10 @@ function AddProductoProvider({ children }: { children: React.ReactNode }) {
       return API.productos.add(form, userData && userData?.token);
     },
     onSuccess: (res) => {
-      if (res.success) {
+      if (res && res.success) {
+        queryClient.invalidateQueries({ queryKey: ["productos"] });
         setSuccess({ active: true, message: "Producto creado correctamente" });
         clear();
-      } else {
-        setError({ code: 10, message: res.message || "Error al crear el producto" });
       }
     },
     onError: () => {

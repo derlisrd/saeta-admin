@@ -1,4 +1,4 @@
-import { Alert, AlertTitle, Slide, Snackbar } from "@mui/material";
+import { Alert, AlertTitle, Snackbar, Zoom } from "@mui/material";
 
 export interface NotificacionSnackProps {
   open: boolean;
@@ -10,7 +10,7 @@ export interface NotificacionSnackProps {
 
 function NotificacionSnack({ title, open, message, severity, onClose }: NotificacionSnackProps) {
   return (
-    <Snackbar TransitionComponent={Slide} open={open} autoHideDuration={4000} onClose={onClose} anchorOrigin={{ vertical: "top", horizontal: "right" }}>
+    <Snackbar TransitionComponent={Zoom} open={open} autoHideDuration={4000} onClose={onClose} anchorOrigin={{ vertical: "top", horizontal: "right" }}>
       <Alert onClose={onClose} severity={severity} sx={{ width: "100%" }}>
         <AlertTitle>{title}</AlertTitle>
         {message}

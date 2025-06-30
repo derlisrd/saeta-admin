@@ -3,6 +3,7 @@ import { BASE } from "../base";
 import { ProductoResponse } from "@/services/dto/productos/producto";
 import { ConsultarPorDepositoResponse } from "@/services/dto/productos/consulta";
 import axios from 'axios'
+import { EditProductoForm } from "@/services/dto/productos/EditProductoForm";
 
 export const apiServiceProductos = {
   productosPorDeposito: async (token: string | null, deposito_id: number, q : string): Promise<ProductoResponse> => {
@@ -77,7 +78,7 @@ export const apiServiceProductos = {
       throw new Error("Error al obtener productos");
     }
   },
-  edit: async(token: string | null, id: number, form: any) => {
+  edit: async(token: string | null, id: number, form: EditProductoForm) => {
     try {
       const {data, status} = await BASE.put(`/productos/${id}`, form, { headers: { Authorization: token } });
       return {

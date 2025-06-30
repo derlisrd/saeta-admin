@@ -1,11 +1,19 @@
 import { Components, CssVarsTheme, Theme } from "@mui/material";
 
 export const components = (): Components<Omit<Theme, "components" | "palette"> & CssVarsTheme> => ({
-  /* MuiCssBaseline: {
-    styleOverrides: {
-      "::-webkit-scrollbar": { width: 12 }
-    }
-  }, */
+   MuiCssBaseline: {
+    /* styleOverrides: {
+      "::-webkit-scrollbar": { 
+        width: '12px',
+        backgroundColor: '#DDD'
+      },
+      '::-webkit-scrollbar-thumb':{
+        backgroundColor: "#242b33",
+        borderRadius: "10px"
+      }
+    }, */
+    
+  },
   MuiCard: {
     styleOverrides: {
       root: {
@@ -183,11 +191,6 @@ export const components = (): Components<Omit<Theme, "components" | "palette"> &
       root: {
         backdropFilter: "blur(3px)"
       }
-    }
-  },
-  MuiCssBaseline: {
-    styleOverrides: {
-      
     }
   }
 });

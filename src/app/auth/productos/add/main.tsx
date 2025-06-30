@@ -1,18 +1,18 @@
-import { Box, Container, LinearProgress, Paper, Slide } from "@mui/material";
+import { Alert, Box, Container, LinearProgress, Paper, Slide } from "@mui/material";
 import Datos from "./containers/datos";
 import Imagenes from "./containers/imagenes";
 import useAddProducto from "./_hook/useAddProducto";
 import NotificacionSnack from "@/components/common/NotificacionSnack";
-import LargeButtonStyled from "@/components/ui/LargeButton";
 import TabContainer from "@/components/containers/tabcontainer";
 import { useEffect } from "react";
 import { showAlert } from "@/core/utils/alert";
 import Atributos from "./containers/atributos";
 import TabsCustom from "@/core/components/productos/tabscustom";
+import SenderForm from "./containers/senderForm";
 
 
 function AddProductoMain() {
-  const { clearSuccess, success, loading, tabValue, sendForm, dataError, setTabValue } = useAddProducto();
+  const { clearSuccess, success, loading, tabValue, dataError, setTabValue, error } = useAddProducto();
 
   useEffect(() => {
     if (dataError) {
@@ -27,9 +27,13 @@ function AddProductoMain() {
 
   return (
     <Container>
-      <Box sx={{ position: "fixed", bottom: 32, right: 32, zIndex: 100 }}>
-        <LargeButtonStyled onClick={sendForm}>Guardar</LargeButtonStyled>
-      </Box>
+      {error.code > 0 && (
+        <Alert severity="error" sx={{ mb: 2 }}>
+          {error.message}
+        </Alert>
+      )}
+
+      <SenderForm />
 
       <NotificacionSnack open={success.active} onClose={clearSuccess} message={success.message} severity="info" />
 
