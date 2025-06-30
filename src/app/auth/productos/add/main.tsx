@@ -1,5 +1,4 @@
 import { Box, Container, LinearProgress, Paper, Slide } from "@mui/material";
-import TabsCustom from "./_components/tabscustom";
 import Datos from "./containers/datos";
 import Imagenes from "./containers/imagenes";
 import useAddProducto from "./_hook/useAddProducto";
@@ -9,10 +8,11 @@ import TabContainer from "@/components/containers/tabcontainer";
 import { useEffect } from "react";
 import { showAlert } from "@/core/utils/alert";
 import Atributos from "./containers/atributos";
+import TabsCustom from "@/core/components/productos/tabscustom";
 
 
 function AddProductoMain() {
-  const { clearSuccess, success, loading, tabValue, sendForm, dataError } = useAddProducto();
+  const { clearSuccess, success, loading, tabValue, sendForm, dataError, setTabValue } = useAddProducto();
 
   useEffect(() => {
     if (dataError) {
@@ -36,7 +36,7 @@ function AddProductoMain() {
       <Slide direction="up" in={true} mountOnEnter unmountOnExit>
         <Box boxShadow={4} borderRadius={4} component={Paper} mb={6} padding={{ xs: 0, sm: 1 }}>
           {loading && <LinearProgress sx={{ margin: "18px" }} />}
-          <TabsCustom />
+          <TabsCustom setTabValue={setTabValue} tabValue={tabValue} />
           <TabContainer index={0} tabValue={tabValue}>
             <Datos />
           </TabContainer>

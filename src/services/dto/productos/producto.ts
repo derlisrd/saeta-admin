@@ -29,6 +29,7 @@ export class ProductoResults{
     id: number;
     impuesto_id: number;
     category_id: number;
+    medida_id: number;
     codigo: string;
     nombre: string;
     descripcion: string;
@@ -46,6 +47,7 @@ export class ProductoResults{
       id = 0,
       impuesto_id = 0,
       category_id = 0,
+      medida_id = 0,
       codigo = "",
       nombre = "",
       descripcion = '',
@@ -74,6 +76,7 @@ export class ProductoResults{
       this.created_at = created_at;
       this.cantidad = cantidad;
       this.images = images;
+    this.medida_id = medida_id;
     }
   
   

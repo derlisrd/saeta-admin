@@ -15,12 +15,10 @@ export const apiServiceProductos = {
         message: ""
       });
     } catch (e) {
-      return ProductoResponse.fromJSON({
-        success: false,
-        status: 500,
-        results: null,
-        message: "Error al obtener productos"
-      });
+      if (axios.isAxiosError(e)) {
+        throw new Error(e.response?.data.message || "Error al obtener productos");
+      }
+      throw new Error("Error al obtener productos");
     }
   },
   consultarCodigoPorDeposito: async (token: string | null, codigo: string, deposito_id: number, cantidad : number): Promise<ConsultarPorDepositoResponse> => {
@@ -33,20 +31,10 @@ export const apiServiceProductos = {
         message: data.message
       });
     } catch (e) {
-        if (axios.isAxiosError(e)) {
-            return new ConsultarPorDepositoResponse({
-              success: false,
-              results: null,
-              status: e.response?.status || 500,
-              message: e.response?.data.message
-            });
-          }
-      return new ConsultarPorDepositoResponse({
-        success: false,
-        status: 500,
-        results: null,
-        message: "Error al consultar producto"
-      });
+      if (axios.isAxiosError(e)) {
+        throw new Error(e.response?.data.message || "Error al obtener productos");
+      }
+      throw new Error("Error al obtener productos");
     }
   },
   verificarCodigoDisponible: async (codigo: string, token: string | null): Promise<boolean> => {
@@ -67,12 +55,10 @@ export const apiServiceProductos = {
         message: ""
       });
     } catch (e) {
-      return ({
-        success: false,
-        status: 500,
-        results: null,
-        message: "Error al obtener productos"
-      });
+      if (axios.isAxiosError(e)) {
+        throw new Error(e.response?.data.message || "Error al obtener productos");
+      }
+      throw new Error("Error al obtener productos");
     }
   },
   list: async (token: string | null): Promise<ProductoResponse> => {
@@ -85,17 +71,27 @@ export const apiServiceProductos = {
         message: ""
       });
     } catch (e) {
-      return ProductoResponse.fromJSON({
-        success: false,
-        status: 500,
-        results: null,
-        message: "Error al obtener productos"
-      });
+      if (axios.isAxiosError(e)) {
+        throw new Error(e.response?.data.message || "Error al obtener productos");
+      }
+      throw new Error("Error al obtener productos");
     }
   },
-  edit: () => {
+  edit: async(token: string | null, id: number, form: any) => {
     try {
-    } catch (e) {}
+      const {data, status} = await BASE.put(`/productos/${id}`, form, { headers: { Authorization: token } });
+      return {
+        success: data.success,
+        status,
+        results: data.results,
+        message: ""
+      };
+    } catch (e) {
+      if (axios.isAxiosError(e)) {
+        throw new Error(e.response?.data.message || "Error guardar producto");
+      }
+      throw new Error("Error al guardar producto");
+    }
   },
   delete: () => {
     try {
@@ -111,12 +107,10 @@ export const apiServiceProductos = {
         message: ""
       });
     } catch (e) {
-      return ProductoResponse.fromJSON({
-        success: false,
-        status: 500,
-        results: null,
-        message: "Error al obtener productos"
-      });
+      if (axios.isAxiosError(e)) {
+        throw new Error(e.response?.data.message || "Error al obtener productos");
+      }
+      throw new Error("Error al obtener productos");
     }
   },
   searchPorDeposito : async (token: string | null, q: string, id: number): Promise<ProductoResponse> => {
@@ -129,12 +123,10 @@ export const apiServiceProductos = {
         message: ""
       });
     } catch (e) {
-      return ProductoResponse.fromJSON({
-        success: false,
-        status: 500,
-        results: null,
-        message: "Error al obtener productos"
-      });
+      if (axios.isAxiosError(e)) {
+        throw new Error(e.response?.data.message || "Error al obtener productos");
+      }
+      throw new Error("Error al obtener productos");
     }
   },
 
@@ -179,12 +171,10 @@ export const apiServiceProductos = {
         message: data.message
       });
     } catch (e) {
-      return AddProductoResponse.fromJSON({
-        success: false,
-        status: 500,
-        results: null,
-        message: "Error al crear producto"
-      });
+      if (axios.isAxiosError(e)) {
+        throw new Error(e.response?.data.message || "Error al obtener productos");
+      }
+      throw new Error("Error al obtener productos");
     }
   }
 };
