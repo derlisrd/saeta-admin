@@ -199,12 +199,12 @@ const menu: menuType[] = [
       },
       {
         id: 3431,
-        title: "Reposición",
+        title: "Inventario",
         icon: "list",
         color: "#0066cc",
         url: "/productos/carga-stock",
         private: false,
-        descripcion: "Reposición de stock de productos",
+        descripcion: "Inventario de productos",
         submenu: null
       },
 
