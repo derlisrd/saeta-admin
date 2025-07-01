@@ -1,6 +1,6 @@
 import useCorregirStock from "@/core/hooks/productos/stock/useCorregirStock";
 import { ConsultarStockResults } from "@/services/dto/productos/ConsultarStock";
-import { Button, Grid2 as Grid, LinearProgress, TextField } from "@mui/material";
+import { Button, Grid, LinearProgress, TextField } from "@mui/material";
 import { NumericFormat } from "react-number-format";
 
 interface ReponerStockProps {

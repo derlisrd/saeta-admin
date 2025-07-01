@@ -1,4 +1,4 @@
-import { Box, Container, Dialog, DialogContent, Fade, Grid2 as Grid, Stack, Typography } from "@mui/material";
+import { Box, Container, Dialog, DialogContent, Fade, Grid, Stack, Typography } from "@mui/material";
 import Items from "./_components/items";
 import Error from "./_components/error";
 import InputCodigo from "./_components/codigo";

@@ -4,7 +4,7 @@ import { pallete } from "@/theme/pallete";
 import { colorsMode } from "@/theme/colors";
 import { shadowsDark, shadowsLight } from "@/theme/shadows";
 import { typography } from "@/theme/typography";
-import { createTheme, Theme } from "@mui/material";
+import { createTheme, Theme } from "@mui/material/styles";
 import { ReactNode, useCallback, useEffect, useState, createContext } from "react";
 import { availableColorsType } from "@/core/types/availablecolors";
 
@@ -29,7 +29,7 @@ function ThemeCustomProvider({ children }: ThemeCustomProviderType) {
   } as Theme;
   const { current: customThemeStorage, setItemValue: setCustomThemeStorage } = useLocalStorage<Theme>("customTheme", initialCustomTheme);
 
-  const [customTheme, setCustomTheme] = useState<Theme>();
+  const [customTheme, setCustomTheme] = useState<Theme>(createTheme(initialCustomTheme));
   const [fontSize, setFontSize] = useState<number>(customThemeStorage?.typography.fontSize || 12);
 
   const modeDark = customTheme?.palette.mode === "dark";

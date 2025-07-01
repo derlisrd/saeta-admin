@@ -1,4 +1,4 @@
-import { Container, Grid2 as Grid } from "@mui/material";
+import { Container, Grid } from "@mui/material";
 import { useLocation, useParams } from "react-router-dom";
 
 function Details() {

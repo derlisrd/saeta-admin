@@ -1,4 +1,4 @@
-import { DialogTitle, Dialog, Grid2 as Grid, DialogContent, DialogActions, Button, TextField } from "@mui/material";
+import { DialogTitle, Dialog, Grid, DialogContent, DialogActions, Button, TextField } from "@mui/material";
 import useHook from "../_hooks/useHook";
 import useModal from "../_hooks/useModal";
 import { useState } from "react";

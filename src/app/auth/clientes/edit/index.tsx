@@ -2,7 +2,7 @@ import NotificacionSnack from "@/components/common/NotificacionSnack";
 import Icon from "@/components/ui/icon";
 import useAddClientes from "@/core/hooks/clientes/useAddCliente";
 import { AddCliente } from "@/services/dto/clientes/AddCliente";
-import { Box, Breadcrumbs, Button, Container, Grid2 as Grid, LinearProgress, Paper, Slide, Stack, TextField, Typography } from "@mui/material";
+import { Box, Breadcrumbs, Button, Container, Grid, LinearProgress, Paper, Slide, Stack, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 

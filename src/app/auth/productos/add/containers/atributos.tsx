@@ -1,5 +1,5 @@
 import Icon from "@/components/ui/icon";
-import { Button, Grid2 as Grid, TextField, Typography, IconButton, Tooltip, Autocomplete, Chip } from "@mui/material";
+import { Button, Grid, TextField, Typography, IconButton, Tooltip, Autocomplete, Chip } from "@mui/material";
 import { Fragment, useState } from "react";
 import useAddProducto from "../_hook/useAddProducto";
 import { AddProducto } from "@/services/dto/productos/AddProducto";

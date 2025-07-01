@@ -1,5 +1,5 @@
 import { AddProducto } from "@/services/dto/productos/AddProducto";
-import { Container, Grid2 as Grid, IconButton, Card, CardMedia, Typography, Box } from "@mui/material";
+import { Container, Grid, IconButton, Card, CardMedia, Typography, Box } from "@mui/material";
 import useAddProducto from "../_hook/useAddProducto";
 import imageCompression from "browser-image-compression";
 import { useDropzone } from "react-dropzone";

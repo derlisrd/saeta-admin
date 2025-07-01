@@ -1,4 +1,4 @@
-import { Grid2 as Grid, Box, Button, Tooltip, CircularProgress } from "@mui/material";
+import { Grid, Box, Button, Tooltip, CircularProgress } from "@mui/material";
 import Item from "./item";
 import useHook from "../_hooks/useHook";
 import CardItem from "./carditem";

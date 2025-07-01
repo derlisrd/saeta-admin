@@ -1,4 +1,4 @@
-import { Autocomplete, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid2 as Grid, TextField } from "@mui/material";
+import { Autocomplete, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextField } from "@mui/material";
 import useHook from "../_hooks/useHook";
 import useBuscarCliente from "../_hooks/useBuscarCliente";
 import useModal from "../_hooks/useModal";

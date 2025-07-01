@@ -7,7 +7,7 @@ import {
     FormControlLabel,
     FormHelperText,
     FormLabel,
-    Grid2 as Grid,
+    Grid,
     InputAdornment,
     InputLabel,
     List,

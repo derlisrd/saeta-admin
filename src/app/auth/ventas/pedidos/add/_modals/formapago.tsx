@@ -8,7 +8,7 @@ import {
   DialogTitle,
   FormControlLabel,
   FormLabel,
-  Grid2 as Grid,
+  Grid,
   IconButton,
   InputAdornment,
   Stack,

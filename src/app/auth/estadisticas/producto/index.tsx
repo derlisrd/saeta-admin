@@ -2,7 +2,7 @@
 
 import useBuscaProducto from "@/core/hooks/productos/stock/useBuscaProducto";
 import { ProductoResults } from "@/services/dto/productos/producto";
-import { Container, Grid2 as Grid, Box, Paper, Slide, Autocomplete, TextField, Typography, Button, LinearProgress } from "@mui/material";
+import { Container, Grid, Box, Paper, Slide, Autocomplete, TextField, Typography, Button, LinearProgress } from "@mui/material";
 import { useDeferredValue, useRef, useState } from "react";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";

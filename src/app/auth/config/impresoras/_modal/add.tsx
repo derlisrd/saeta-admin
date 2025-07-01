@@ -1,6 +1,6 @@
 import { useState } from "react";
 import useImpresoras from "@/core/hooks/config/useImpresoras";
-import { Button, Dialog, DialogTitle, DialogActions, DialogContent, Grid2 as Grid, TextField, CircularProgress, Alert } from "@mui/material";
+import { Button, Dialog, DialogTitle, DialogActions, DialogContent, Grid, TextField, CircularProgress, Alert } from "@mui/material";
 import { Impresora } from "@/services/dto/config/impresora";
 import { useAuth } from "@/providers/AuthProvider";
 

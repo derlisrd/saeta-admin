@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid2 as Grid, LinearProgress, Link, Stack, Typography } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, LinearProgress, Link, Stack, Typography } from "@mui/material";
 import useHook from "../_hooks/useHook";
 
 import useInsertPedido from "../_hooks/useInsertPedido";

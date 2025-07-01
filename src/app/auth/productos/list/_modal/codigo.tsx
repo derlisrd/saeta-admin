@@ -2,7 +2,7 @@ import Icon from "@/components/ui/icon";
 import Barcode from "react-barcode";
 import { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
-import { Button, Dialog, DialogActions, DialogContent, Grid2 as Grid } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, Grid } from "@mui/material";
 import { useAuth } from "@/providers/AuthProvider";
 import { useProductosLista } from "../provider";
 

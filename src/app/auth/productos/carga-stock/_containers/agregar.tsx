@@ -1,5 +1,5 @@
 // src/components/Stock/AgregarStock.tsx
-import { Button, Grid2 as Grid, LinearProgress, TextField } from "@mui/material";
+import { Button, Grid, LinearProgress, TextField } from "@mui/material";
 import { NumericFormat } from "react-number-format";
 import { useState } from "react";
 import { useAuth } from "@/providers/AuthProvider";

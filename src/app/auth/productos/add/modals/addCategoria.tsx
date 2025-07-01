@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogTitle, Grid2 as Grid, TextField, LinearProgress, DialogActions, Button } from "@mui/material";
+import { Dialog, DialogContent, DialogTitle, Grid, TextField, LinearProgress, DialogActions, Button } from "@mui/material";
 import useAddProducto from "../_hook/useAddProducto";
 import useAddCategoria from "../_hook/useAddCategoria";
 import NotificacionSnack from "@/components/common/NotificacionSnack";

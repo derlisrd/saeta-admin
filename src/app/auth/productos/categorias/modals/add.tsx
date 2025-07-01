@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid2 as Grid, LinearProgress, TextField } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, LinearProgress, TextField } from "@mui/material";
 import useCategoria from "../useCategoria";
 import { useState } from "react";
 import { AddCategoria } from "@/services/dto/productos/AddCategoria";

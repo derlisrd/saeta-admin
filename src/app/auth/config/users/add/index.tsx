@@ -2,7 +2,7 @@ import Icon from "@/components/ui/icon";
 import useSucursales from "@/core/hooks/sucursales/useSucursales";
 import useAddUsers from "@/core/hooks/users/useAddUsers";
 import { UserCreateForm } from "@/services/dto/users/user";
-import { Box, Breadcrumbs, Button, Container, FormControl, FormHelperText, Grid2 as Grid, InputLabel, LinearProgress, MenuItem, Paper, Select, Slide, Stack, TextField, Typography } from "@mui/material";
+import { Box, Breadcrumbs, Button, Container, FormControl, FormHelperText, Grid, InputLabel, LinearProgress, MenuItem, Paper, Select, Slide, Stack, TextField, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import NotificacionSnack from "@/components/common/NotificacionSnack";

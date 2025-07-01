@@ -1,5 +1,5 @@
 import useEstadisticas from "@/core/hooks/home/useEstadisticas";
-import { Container, Grid2 as Grid, IconButton, LinearProgress, Tooltip, Typography } from "@mui/material";
+import { Container, Grid, IconButton, LinearProgress, Tooltip, Typography } from "@mui/material";
 
 import Icon from "@/components/ui/icon";
 import CardEstadistica from "@/core/components/estadisticas/card.estadistica";

@@ -1,5 +1,5 @@
 import Icon from "@/components/ui/icon";
-import { Box, Container, Grid2 as Grid, Paper, Typography, TextField, Stack, Button, LinearProgress, Alert } from "@mui/material";
+import { Box, Container, Grid, Paper, Typography, TextField, Stack, Button, LinearProgress, Alert } from "@mui/material";
 import { NumericFormat } from "react-number-format";
 import { useLocation } from "react-router-dom";
 import useCobrarCredito from "./_hooks/useCobrar";
@@ -34,7 +34,7 @@ function Cobrar() {
             resetForm();
         }
     };
-    console.log(errors)
+
     const montoAdeudado = credito ? credito.monto - credito.monto_abonado : 0;
     const excedeMonto = form.monto > montoAdeudado;
 

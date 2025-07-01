@@ -16,6 +16,7 @@ function PublicPages() {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
+      <Route path="/config" element={<Config />} />
       <Route path="/recuperar" element={<Recuperar />} />
       <Route path="/recuperar/verify-code" element={<Verify />} />
       <Route path="/recuperar/reset-password" element={<Reset />} />
@@ -25,6 +26,7 @@ function PublicPages() {
 }
 
 const Login = Loadable(lazy(() => import("./login")));
+const Config = Loadable(lazy(() => import("./config")));
 const Recuperar = Loadable(lazy(() => import("./recuperar")));
 const Verify = Loadable(lazy(() => import("./recuperar/verify-code")));
 const Reset = Loadable(lazy(() => import("./recuperar/reset-password")));

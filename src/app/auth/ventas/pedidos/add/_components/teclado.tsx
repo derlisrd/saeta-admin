@@ -1,5 +1,5 @@
 import Icon from "@/components/ui/icon";
-import { Button, Grid2 as Grid } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import { useEffect } from "react";
 
 interface TecladoProps {

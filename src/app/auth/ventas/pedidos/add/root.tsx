@@ -1,4 +1,4 @@
-import { Button, Container, Grid2 as Grid, IconButton, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
+import { Button, Container, Grid, IconButton, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import useHook from "./_hooks/useHook";
 import useModal from "./_hooks/useModal";
 import Icon from "@/components/ui/icon";

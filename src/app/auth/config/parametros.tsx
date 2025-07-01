@@ -1,6 +1,6 @@
 import Icon from "@/components/ui/icon";
 import { parametros } from "@/constants/parametros";
-import { Avatar, Box, Breadcrumbs, Card, CardContent, Container, Grid2 as Grid, Slide, Stack, Typography } from "@mui/material";
+import { Avatar, Box, Breadcrumbs, Card, CardContent, Container, Grid, Slide, Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
 function Parametros() {

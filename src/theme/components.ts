@@ -1,4 +1,5 @@
-import { Components, CssVarsTheme, Theme } from "@mui/material";
+import { Components, CssVarsTheme, Theme } from "@mui/material/styles";
+
 
 export const components = (): Components<Omit<Theme, "components" | "palette"> & CssVarsTheme> => ({
    MuiCssBaseline: {

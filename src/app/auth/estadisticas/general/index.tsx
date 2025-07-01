@@ -1,5 +1,5 @@
 
-import { Container, Typography, Grid2 as Grid, Button, Stack, Alert, LinearProgress } from "@mui/material"
+import { Container, Typography, Grid, Button, Stack, Alert, LinearProgress } from "@mui/material"
 import useEstadisticasGeneral from "./_hooks/useEstadisticasGeneral";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import CardEstadistica from "@/core/components/estadisticas/card.estadistica";

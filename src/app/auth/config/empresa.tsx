@@ -1,6 +1,6 @@
 import Icon from "@/components/ui/icon";
 import useConfigEmpresa from "@/core/hooks/config/useConfigEmpresa";
-import { Box, Breadcrumbs, Container, Grid2 as Grid, Paper, TextField, Typography, Button, Snackbar, Alert, LinearProgress, Slide, Stack } from "@mui/material";
+import { Box, Breadcrumbs, Container, Grid, Paper, TextField, Typography, Button, Snackbar, Alert, LinearProgress, Slide, Stack } from "@mui/material";
 
 function Empresa() {
   const { empresa, success, clearSuccess, onChange, isLoading, updateEmpresa } = useConfigEmpresa();

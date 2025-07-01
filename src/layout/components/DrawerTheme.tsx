@@ -1,5 +1,5 @@
 import Icon from "@/components/ui/icon";
-import { Drawer, Box, Chip, Grid2 as Grid, IconButton, Button, Switch, Stack, Typography, Tooltip, Slider } from "@mui/material";
+import { Drawer, Box, Chip, Grid, IconButton, Button, Switch, Stack, Typography, Tooltip, Slider } from "@mui/material";
 import { availableColors } from "@/theme/colors";
 import useThemeCustom from "@/hooks/useThemeCustom";
 

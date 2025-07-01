@@ -1,7 +1,7 @@
 // src/components/Stock/StockForm.tsx
 import { DepositoResults } from "@/services/dto/productos/deposito";
 import { ProductoResults } from "@/services/dto/productos/producto";
-import { Autocomplete, Button, FormControl, Grid2 as Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { Autocomplete, Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { useRef } from "react";
 
 interface StockFormProps {

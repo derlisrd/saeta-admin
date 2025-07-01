@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogTitle, Grid2 as Grid, Autocomplete, DialogActions, Button, TextField } from "@mui/material";
+import { Dialog, DialogContent, DialogTitle, Grid, Autocomplete, DialogActions, Button, TextField } from "@mui/material";
 import useModal from "../_hooks/useModal";
 import useBuscarProducto from "../_hooks/useBuscarProducto";
 import { ProductoResults } from "@/services/dto/productos/producto";

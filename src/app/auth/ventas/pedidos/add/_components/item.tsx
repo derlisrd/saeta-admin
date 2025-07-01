@@ -1,5 +1,5 @@
 
-import { Grid2 as Grid, IconButton } from "@mui/material";
+import { Grid, IconButton } from "@mui/material";
 import { AddPedidoItem } from "@/services/dto/pedidos/AddPedido";
 import Icon from "@/components/ui/icon";
 

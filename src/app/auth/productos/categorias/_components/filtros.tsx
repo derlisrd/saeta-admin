@@ -1,5 +1,5 @@
 import Icon from "@/components/ui/icon";
-import { Button, Grid2 as Grid, InputAdornment, TextField } from "@mui/material";
+import { Button, Grid, InputAdornment, TextField } from "@mui/material";
 import useCategoria from "../useCategoria";
 
 function Filtros() {

@@ -1,5 +1,5 @@
 import Icon from "@/components/ui/icon";
-import { Button, Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, FormControlLabel, FormLabel, Grid2 as Grid, LinearProgress, Stack, TextField } from "@mui/material";
+import { Button, Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, FormControlLabel, FormLabel, Grid, LinearProgress, Stack, TextField } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
 import { FormasPagoAdd } from "@/services/dto/config/formaspago";
 import { useFormasPagoContext } from "../provider";

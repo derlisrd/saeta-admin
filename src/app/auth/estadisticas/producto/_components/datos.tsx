@@ -1,5 +1,5 @@
 import { EstadisticasProductoResults } from "@/services/dto/estadisticas/producto";
-import { Alert, Grid2 as Grid, Typography } from "@mui/material";
+import { Alert, Grid, Typography } from "@mui/material";
 
 function Datos({ data }: { data: EstadisticasProductoResults }) {
     return <Grid container spacing={2}>

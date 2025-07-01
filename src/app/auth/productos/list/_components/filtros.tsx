@@ -1,5 +1,5 @@
 import Icon from "@/components/ui/icon";
-import { Grid2 as Grid, TextField, InputAdornment, Button, IconButton, Tooltip } from "@mui/material";
+import { Grid, TextField, InputAdornment, Button, IconButton, Tooltip } from "@mui/material";
 import DepositoSelect from "./deposito.select";
 import { useNavigate } from "react-router-dom";
 

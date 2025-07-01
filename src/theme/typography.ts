@@ -1,16 +1,11 @@
-import { TypographyOptions } from "@mui/material/styles/createTypography";
+import { TypographyVariantsOptions } from "@mui/material";
 
-export const typography = {
+
+export const typography: TypographyVariantsOptions = {
     fontSize: 12,
-    caption: {
-    },
-    body1: {
-      
-    },
-    h5: {
-      fontWeight: "bold",
-    },
+  fontWeightMedium: 400,
+    fontWeightBold: 700,
     fontFamily: [
       'ContiSans'
     ].join(','),
-  } as TypographyOptions
+  } 

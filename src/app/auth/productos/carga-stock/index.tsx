@@ -1,7 +1,7 @@
 import useBuscaProducto from "@/core/hooks/productos/stock/useBuscaProducto";
 import useCargaStock from "@/core/hooks/productos/stock/useCargaStock";
 import useNotificacionSnack from "@/hooks/useNotificacionSnack";
-import { Box, Container, Grid2 as Grid, LinearProgress, Paper, Slide } from "@mui/material";
+import { Box, Container, Grid, LinearProgress, Paper, Slide } from "@mui/material";
 import { useState, useDeferredValue } from "react";
 import StockForm from "./_containers/stock";
 import Reponer from "./_containers/reponer";
