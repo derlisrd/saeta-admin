@@ -6,7 +6,7 @@ import { useAuth } from "@/providers/AuthProvider";
 import { PedidoStoreType } from "./_types/pedidoStore";
 import useStore from "@/hooks/useStore";
 import { ConfiguracionType } from "./_types/configuracion";
-import { useSuspenseQueries } from "@tanstack/react-query";
+import { useMutation, useSuspenseQueries } from "@tanstack/react-query";
 
 function AddPedidoProvider({ children }: { children: ReactNode }) {
   const { userData } = useAuth();
@@ -58,7 +58,6 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
 
   const [selectedDeposito, setSelectedDeposito] = useState(1);
   const [cantidad, setCantidad] = useState(1);
-  const [loadingAddProducto, setLoadingAddProducto] = useState(false);
   const initialPedido: AddPedido = new AddPedido({
     cliente_id: 0,
     aplicar_impuesto: true,
@@ -117,44 +116,12 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
     [setStore]
   );
 
-  const consultarCodigoInsertar = useCallback(
-    async (codigo: string) => {
-      if (codigo === "") {
-        return setError({ code: 123, message: "Ingrese el código del producto", active: true });
-      }
-      setLoadingAddProducto(true);
 
-      // Verificar primero si el producto ya existe en el pedido actual
-      const existingItemIndex = pedidos[index].items.findIndex((item) => item.codigo === codigo);
-
-      if (existingItemIndex !== -1) {
-        // Si el producto ya existe, solo actualizamos la cantidad sin consultar a la API
-        setPedidos((prevPedidos) => {
-          const updatedPedidos = [...prevPedidos];
-          const item = updatedPedidos[index].items[existingItemIndex];
-          const cantidadNueva = item.cantidad + cantidad;
-          if (cantidadNueva > item.cantidad_disponible) {
-            setError({ code: 2, message: "La cantidad solicitada es mayor al stock disponible", active: true });
-            return prevPedidos;
-          }
-          updatedPedidos[index].items[existingItemIndex] = new AddPedidoItem({
-            ...item,
-            cantidad: cantidadNueva,
-            total: item.precio * (item.cantidad + cantidad),
-          });
-
-          set(updatedPedidos, index);
-          return updatedPedidos;
-        });
-
-        setLoadingAddProducto(false);
-        return;
-      }
-
-      // Si el producto no existe, entonces hacemos la consulta a la API
-      const res = await API.productos.consultarCodigoPorDeposito(userData && userData?.token, codigo, selectedDeposito, cantidad);
-      setLoadingAddProducto(false);
-
+  const { mutate, isPending: loadingAddProducto } = useMutation({
+    mutationFn: async ({ codigo, cantidad, selectedDeposito }: { codigo: string; cantidad: number; selectedDeposito: number }) => {
+      return API.productos.consultarCodigoPorDeposito(userData && userData.token, codigo, selectedDeposito, cantidad);
+    },
+    onSuccess: (res) => {
       if (!res.success) {
         setError({ code: 1, message: res.message, active: true });
         return;
@@ -162,7 +129,6 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
 
       setPedidos((prevPedidos) => {
         const updatedPedidos = [...prevPedidos];
-
         if (res.results) {
           updatedPedidos[index].items.push(
             new AddPedidoItem({
@@ -180,12 +146,56 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
             })
           );
         }
-
         set(updatedPedidos, index);
         return updatedPedidos;
       });
+      // Opcional: Invalidar consultas si es necesario, aunque en este caso podría no serlo
+      // queryClient.invalidateQueries({ queryKey: ['someOtherQuery'] });
     },
-    [cantidad, index, selectedDeposito, set, userData?.token, pedidos]
+    onError: (error: Error) => {
+      setError({ code: 500, message: "Error al consultar el producto: " + (error.message || "Error desconocido"), active: true });
+    },
+  });
+
+
+  const consultarCodigoInsertar = useCallback(
+    async (codigo: string) => {
+      clearError(); // Limpiar errores previos
+
+      if (codigo === "") {
+        setError({ code: 123, message: "Ingrese el código del producto", active: true });
+        return;
+      }
+
+      // Verificar primero si el producto ya existe en el pedido actual
+      const existingItemIndex = pedidos[index].items.findIndex((item) => item.codigo === codigo);
+
+      if (existingItemIndex !== -1) {
+        // Si el producto ya existe, solo actualizamos la cantidad sin consultar a la API
+        setPedidos((prevPedidos) => {
+          const updatedPedidos = [...prevPedidos];
+          const item = updatedPedidos[index].items[existingItemIndex];
+          const cantidadNueva = item.cantidad + cantidad;
+          if (cantidadNueva > item.cantidad_disponible) {
+            setError({ code: 2, message: "La cantidad solicitada es mayor al stock disponible", active: true });
+            return prevPedidos;
+          }
+          updatedPedidos[index].items[existingItemIndex] = new AddPedidoItem({
+            ...item,
+            cantidad: cantidadNueva,
+            total: item.precio * cantidadNueva, // Corregido el cálculo del total
+          });
+
+          set(updatedPedidos, index);
+          return updatedPedidos;
+        });
+        return;
+      }
+
+      // Si el producto no existe, entonces hacemos la consulta a la API usando useMutation
+      mutate({ codigo, cantidad, selectedDeposito });
+    },
+    [cantidad, index, selectedDeposito, set, mutate, pedidos] // Añade `mutate` a las dependencias
   );
 
   const changePedido = useCallback(
