@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import { useConfigContext } from "./_provider/provider";
 import Form1 from "./_containers/form1";
-
+import Form2 from "./_containers/form2";
 
 
 
@@ -18,6 +18,7 @@ function MainConfig() {
 
     const steps: { [key: string]: JSX.Element } = {
         "1": <Form1 />,
+        "2": <Form2 />,
     };
 
 
@@ -30,19 +31,18 @@ function MainConfig() {
                     <Typography variant="h4">
                         Configuración Inicial
                     </Typography>
-                    <Typography variant="h6" sx={{ opacity: 0.9, fontWeight: 400 }}>
+                    <Typography variant="h6" sx={{ opacity: 0.9 }}>
                         Completa los datos para finalizar la configuración
                     </Typography>
 
                     <Box sx={{ mt: 3, mb: 1 }}>
                         <LinearProgress
                             variant="determinate"
-                            value={50}
-
+                            value={33 * step}
                         />
                     </Box>
                     <Typography variant="caption" sx={{ opacity: 0.8 }}>
-                        Paso {step} de 2
+                        Paso {step} de 3
                     </Typography>
                 </Box>
             </Paper>

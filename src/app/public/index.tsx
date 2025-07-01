@@ -16,6 +16,7 @@ function PublicPages() {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
+      <Route path="/login" element={<Login />} />
       <Route path="/config" element={<Config />} />
       <Route path="/recuperar" element={<Recuperar />} />
       <Route path="/recuperar/verify-code" element={<Verify />} />

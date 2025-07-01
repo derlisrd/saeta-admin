@@ -5,7 +5,7 @@ import { AuthProvider } from "./providers/AuthProvider";
 import ThemeCustomProvider from "./providers/ThemeCustomProvider";
 import { BrowserRouter } from "react-router-dom";
 import { LayoutProvider } from "./providers/LayoutProvider";
-import ConfigProvider from "./providers/ConfigProvider";
+import { ConfigProvider } from "./providers/ConfigProvider";
 import { NotificationManager } from "./providers/NotificationManagerProvider";
 
 function Root() {

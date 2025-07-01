@@ -48,35 +48,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     queryClient.removeQueries({ queryKey: 'checkAuth' }) // Limpia la query al cerrar sesión
   }
 
-  /* const isTokenExpiredFn = (token: string): boolean => {
-    if (!token) return true;
 
-    try {
-      const parts = token.split(".");
-      if (parts.length !== 3) return true;
-      const payload = JSON.parse(atob(parts[1]));
-      if (!payload.exp) return false;
-      const currentTime = Math.floor(Date.now() / 1000);
-      return payload.exp < currentTime;
-    } catch (error) {
-      console.error("Error al verificar el token:", error);
-      return true;
-    }
-  } */
-
-  /* const refreshTokenFnInternal = useCallback(async (refreshToken: string) => {
-    const res = await API.auth.refreshToken("Bearer " + refreshToken);
-    if (res && res.success && res.results && userDataInternal) {
-      const newUserData = { ...userDataInternal, token: res.results.token, refreshToken: res.results.refreshToken };
-      updateUserDataInternal(newUserData);
-      return newUserData; // Importante retornar los nuevos datos
-    }
-    if (res && !res.success) {
-      cerrarSesionInternal();
-      return null;
-    }
-    return null;
-  }, [API.auth, userDataInternal, updateUserDataInternal, cerrarSesionInternal]); */
 
   const { isLoading } = useQuery({
     queryKey: ["checkAuth"],

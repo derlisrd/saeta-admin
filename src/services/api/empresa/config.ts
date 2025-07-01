@@ -3,8 +3,42 @@ import { BASE } from "../base";
 import { EmpresaResponse } from "@/services/dto/config/empresa";
 import { Impresora, ImpresoraResponse } from "@/services/dto/config/impresora";
 import axios from "axios";
+import { VerificarConfigEmpresaResponse } from "@/services/dto/config/verificarConfigEmpresa";
+import { typeConfigForm } from "@/core/types/configForm";
 
 export const apiServiceConfig = {
+    configurarPrimeraVez: async(form: typeConfigForm)=>{
+        try {
+            const { data, status } = await BASE.post("/config",form);
+              return new VerificarConfigEmpresaResponse({
+                success: data.success,
+                status,
+                message: "Configurado correctamente",
+                results: data.results
+              });
+          } catch (e) {
+            if (axios.isAxiosError(e)) {
+              throw new Error(e.response?.data.message || "Error de servidor");
+            }
+            throw new Error("Error de servidor");
+          }
+    },
+    verificarEmpresa: async()=>{
+        try {
+          const { data, status } = await BASE.get("/config/verificar");
+            return new VerificarConfigEmpresaResponse({
+                success: data.success,
+                status,
+                message: '',
+                results: data.results
+            });
+        } catch (e) {
+          if (axios.isAxiosError(e)) {
+            throw new Error(e.response?.data.message || "Error de servidor");
+          }
+          throw new Error("Error de servidor");
+        }
+    },
     updateEmpresa: async(form: Empresa, token : string | null)=>{
         try {
             const { data, status } = await BASE.put('/config/empresa', form, { headers: { Authorization: token } });
@@ -14,9 +48,12 @@ export const apiServiceConfig = {
                 results: data.results,
                 message: data.message
             })
-        } catch (error) {
-            return EmpresaResponse.fromJSON({ success : false, status : 500, results: null, message: 'Error de servidor'});
-        }
+        } catch (e) {
+            if (axios.isAxiosError(e)) {
+              throw new Error(e.response?.data.message || "Error de servidor");
+            }
+            throw new Error("Error de servidor");
+          }
     },
     impresoras: async(token : string | null)=>{
         try {
@@ -27,17 +64,14 @@ export const apiServiceConfig = {
                 results: data.results,
                 message: data.message
             })
-        } catch (e) {
-            if (axios.isAxiosError(e)) {
-                return ImpresoraResponse.fromJSON({
-                  success: false,
-                  results: null,
-                  status: e.response?.status || 500,
-                  message: e.response?.data.message || 'Error en conexion'
-                });
-              }
-            return ImpresoraResponse.fromJSON({ success : false, status : 500, results: null, message: 'Error de servidor'});
         }
+        catch (e) {
+        if (axios.isAxiosError(e)) {
+            throw new Error(e.response?.data.message || "Error de servidor");
+        }
+        throw new Error("Error de servidor");
+        }
+        
     },
     insertarImpresora: async ( token : string | null, form : Impresora)=>{
         try {
@@ -50,14 +84,10 @@ export const apiServiceConfig = {
             })
         } catch (e) {
             if (axios.isAxiosError(e)) {
-                return ImpresoraResponse.fromJSON({
-                  success: false,
-                  results: null,
-                  status: e.response?.status || 500,
-                  message: e.response?.data.message || 'Error en conexion'
-                });
-              }
-            return ImpresoraResponse.fromJSON({ success : false, status : 500, results: null, message: 'Error de servidor'});
+                throw new Error(e.response?.data.message || "Error de servidor");
+            }
+            throw new Error("Error de servidor");
+            
         }
     }
 }

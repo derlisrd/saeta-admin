@@ -1,15 +1,17 @@
 import Icon from "@/components/ui/icon";
 import useLogin from "@/core/hooks/login/useLogin";
 import { useAuth } from "@/providers/AuthProvider";
+import { useConfigContext } from "@/providers/ConfigProvider";
 import { TextField, Stack, Button, Typography, Container, InputAdornment, CircularProgress, Alert, IconButton, Link as Enlace, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 
 function Login() {
   const { username, setUsername, password, setPassword, handleLogin, isLoading, error, hide, toggleHide } = useLogin();
+  const { isLoadingConfig } = useConfigContext()
   const { loading } = useAuth();
   return (
     <Container maxWidth="md">
-      {isLoading || loading ? (
+      {isLoading || loading || isLoadingConfig ? (
         <Stack sx={{ height: "100vh", alignItems: "center", justifyContent: "center", width: "100%" }}>
           <CircularProgress />
         </Stack>
