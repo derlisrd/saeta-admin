@@ -3,7 +3,6 @@ import { createContext, useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
 import API from "@/services/api";
 import { config as configConstants } from '@/constants/config'
-import { VerificarEmpresaResults } from "@/services/dto/config/verificarConfigEmpresa";
 import { useNavigate } from "react-router-dom";
 
 
