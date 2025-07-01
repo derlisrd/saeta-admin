@@ -9,8 +9,7 @@ interface FiltrosProps {
     refresh: () => void;
 }
 
-function FiltrosProductos({
-    setSearch, refresh }: FiltrosProps) {
+function FiltrosProductos({ setSearch }: FiltrosProps) {
     const nav = useNavigate();
 
     return (
@@ -32,20 +31,13 @@ function FiltrosProductos({
                     onChange={({ target }) => setSearch(target.value)}
                 />
             </Grid>
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+            <Grid size={{ xs: 12, sm: 6, md: 4 }}>
                 <DepositoSelect />
             </Grid>
             <Grid size={{ xs: 6, sm: 6, md: 2 }}>
                 <Button startIcon={<Icon name='plus' />} onClick={() => nav("/productos/add")}>
                     nuevo
                 </Button>
-            </Grid>
-            <Grid size={{ xs: 6, sm: 6, md: 1 }}>
-                <Tooltip title="Actualizar" placement="top" arrow>
-                    <IconButton onClick={() => refresh()}>
-                        <Icon name="refresh" />
-                    </IconButton>
-                </Tooltip>
             </Grid>
         </Grid>
     );

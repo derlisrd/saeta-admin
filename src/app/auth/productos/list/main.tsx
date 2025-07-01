@@ -46,6 +46,7 @@ function ListaProductosMain() {
             columns={columns(handleSelectProducto)} // Pasa el ancho inicial
             rowHeight={52}
             headerHeight={36}
+            dataTextNull="Sin datos"
           />
         </Box>
       </Slide>
