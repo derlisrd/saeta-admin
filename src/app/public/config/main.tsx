@@ -1,14 +1,10 @@
 import {
     Box,
-
     Container,
-
     Typography,
     Paper,
-
     LinearProgress
 } from "@mui/material";
-import { useEffect } from "react";
 import { useConfigContext } from "./_provider/provider";
 import Form1 from "./_containers/form1";
 
