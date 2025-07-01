@@ -1,57 +1,41 @@
 import {
-    Box,
     Container,
     Typography,
     Paper,
-    LinearProgress
+    LinearProgress,
+    Fade
 } from "@mui/material";
 import { useConfigContext } from "./_provider/provider";
 import Form1 from "./_containers/form1";
 import Form2 from "./_containers/form2";
+import Success from "./_containers/success";
 
 
 
 
 
 function MainConfig() {
-    const { step } = useConfigContext();
+    const { step, isPending } = useConfigContext();
 
     const steps: { [key: string]: JSX.Element } = {
         "1": <Form1 />,
         "2": <Form2 />,
+        "3": <Success />,
     };
 
 
 
     return (
         <Container maxWidth="md" sx={{ py: 4 }}>
-
-            <Paper elevation={0} sx={{ padding: 3, borderRadius: 4, mb: 3 }}>
-                <Box sx={{ position: 'relative', zIndex: 1 }}>
-                    <Typography variant="h4">
-                        Configuración Inicial
-                    </Typography>
-                    <Typography variant="h6" sx={{ opacity: 0.9 }}>
-                        Completa los datos para finalizar la configuración
-                    </Typography>
-
-                    <Box sx={{ mt: 3, mb: 1 }}>
-                        <LinearProgress
-                            variant="determinate"
-                            value={33 * step}
-                        />
-                    </Box>
-                    <Typography variant="caption" sx={{ opacity: 0.8 }}>
-                        Paso {step} de 3
-                    </Typography>
-                </Box>
-            </Paper>
-
-
+            <Typography variant="h4" sx={{ mb: 2 }}>
+                Configuración
+            </Typography>
+            {isPending && <Fade in={true} timeout={1200}>
+                <LinearProgress sx={{ mb: 2 }} />
+            </Fade>}
             <Paper sx={{ p: 3, borderRadius: 3 }}>
                 {steps[step]}
             </Paper>
-
         </Container>
     );
 }

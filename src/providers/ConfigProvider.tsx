@@ -1,14 +1,14 @@
 
-import { createContext, useState, useMemo, useContext } from "react";
+import { createContext, useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
 import API from "@/services/api";
-
+import { config as configConstants } from '@/constants/config'
 import { VerificarEmpresaResults } from "@/services/dto/config/verificarConfigEmpresa";
 import { useNavigate } from "react-router-dom";
 
 
+
 interface ConfigContextType {
-    empresaConfig: VerificarEmpresaResults | null;
     isLoadingConfig: boolean;
 }
 
@@ -16,44 +16,39 @@ const ConfigContext = createContext<ConfigContextType | undefined>(undefined);
 
 
 export const getEmpresaConfigFromStorage = () => {
-    const data = localStorage.getItem('configEmpresa');
+    const data = localStorage.getItem(configConstants.CONFIG_LOCAL_STORAGE);
     return data ? JSON.parse(data) : null;
 };
 
-export const setEmpresaConfigToStorage = (config: VerificarEmpresaResults) => {
-    localStorage.setItem('configEmpresa', JSON.stringify(config));
-};
+
 
 function ConfigProvider({ children }: { children: React.ReactNode }) {
-    const nav = useNavigate()
-    const [empresaConfig, setEmpresaConfig] = useState<VerificarEmpresaResults | null>(
-        getEmpresaConfigFromStorage()
-    );
+    const nav = useNavigate();
+
 
     const { isLoading: isLoadingConfig } = useQuery({
         queryKey: ["config"],
         queryFn: () => API.config.verificarEmpresa(),
-        enabled: empresaConfig === null,
+        enabled: () => {
+            const store = window.localStorage.getItem(configConstants.CONFIG_LOCAL_STORAGE)
+            return store ? false : true;
+        },
         select: (response) => {
             if (response.success && response.results?.configurado) {
-                setEmpresaConfig(response.results);
-                setEmpresaConfigToStorage(response.results);
-                return
+                window.localStorage.setItem(configConstants.CONFIG_LOCAL_STORAGE, JSON.stringify(response.results));
             }
-            nav("/config");
+            if (response.success && response.results?.configurado === false) {
+                nav('/config')
+            }
+            return response;
         },
     });
 
-    const value = useMemo(
-        () => ({
-            empresaConfig,
-            isLoadingConfig,
-        }),
-        [empresaConfig, isLoadingConfig]
-    );
+
+    const values = { isLoadingConfig }
 
     return (
-        <ConfigContext.Provider value={value}>
+        <ConfigContext.Provider value={values}>
             {children}
         </ConfigContext.Provider>
     );

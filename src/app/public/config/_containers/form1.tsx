@@ -1,5 +1,5 @@
 // _containers/form1.tsx
-import { Box, Button, Fade, Grid, TextField, Typography } from "@mui/material";
+import { Box, Button, Fade, Grid, LinearProgress, TextField, Typography } from "@mui/material";
 import { useConfigContext } from "../_provider/provider";
 import Icon from "@/components/ui/icon";
 import { useForm, SubmitHandler, Controller } from "react-hook-form"; // Removed yup and resolver
@@ -42,7 +42,13 @@ function Form1() {
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Grid container spacing={3}>
                     <Grid size={12}>
-                        <Typography variant="h6">Datos de empresa</Typography>
+                        <LinearProgress value={50} variant="determinate" />
+                        <Typography variant="caption" sx={{ opacity: 0.8 }}>
+                            Paso 1 de 2
+                        </Typography>
+                    </Grid>
+                    <Grid size={12}>
+                        <Typography variant="h6">Completa los datos de empresa</Typography>
                     </Grid>
                     <Grid size={12}>
                         <Controller

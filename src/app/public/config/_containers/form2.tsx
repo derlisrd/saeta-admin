@@ -1,5 +1,5 @@
 // _containers/form2.tsx
-import { Button, Fade, Grid, Stack, TextField, Typography } from "@mui/material";
+import { Button, Fade, Grid, LinearProgress, Stack, TextField, Typography } from "@mui/material";
 import { useConfigContext } from "../_provider/provider";
 import Icon from "@/components/ui/icon";
 import { useForm, SubmitHandler, Controller } from "react-hook-form"; // Removed yup and resolver
@@ -13,7 +13,7 @@ type Form2Data = {
 };
 
 function Form2() {
-    const { backStep, setFormData, formData, sendForm } = useConfigContext();
+    const { backStep, setFormData, formData, sendForm, isPending } = useConfigContext();
 
     const {
         control,
@@ -43,6 +43,12 @@ function Form2() {
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Grid container spacing={3}>
                     <Grid size={12}>
+                        <LinearProgress value={100} variant="determinate" />
+                        <Typography variant="caption" sx={{ opacity: 0.8 }}>
+                            Paso 2 de 2
+                        </Typography>
+                    </Grid>
+                    <Grid size={12}>
                         <Typography variant="h6">Datos de usuario</Typography>
                     </Grid>
                     <Grid size={{ xs: 12, sm: 6 }}>
@@ -60,6 +66,7 @@ function Form2() {
                                     error={!!errors.name}
                                     helperText={errors.name?.message}
                                     onBlur={() => trigger("name")}
+                                    disabled={isPending}
                                 />
                             )}
                         />
@@ -84,6 +91,7 @@ function Form2() {
                                     error={!!errors.email}
                                     helperText={errors.email?.message}
                                     onBlur={() => trigger("email")}
+                                    disabled={isPending}
                                 />
                             )}
                         />
@@ -106,6 +114,7 @@ function Form2() {
                                     error={!!errors.password}
                                     helperText={errors.password?.message}
                                     onBlur={() => trigger("password")}
+                                    disabled={isPending}
                                 />
                             )}
                         />
@@ -128,16 +137,17 @@ function Form2() {
                                     error={!!errors.password_confirmation}
                                     helperText={errors.password_confirmation?.message}
                                     onBlur={() => trigger("password_confirmation")}
+                                    disabled={isPending}
                                 />
                             )}
                         />
                     </Grid>
                     <Grid size={12}>
                         <Stack direction="row" spacing={2} justifyContent="flex-end">
-                            <Button startIcon={<Icon name="arrow-narrow-left-dashed" />} variant="outlined" onClick={backStep}>
+                            <Button disabled={isPending} startIcon={<Icon name="arrow-narrow-left-dashed" />} variant="outlined" onClick={backStep}>
                                 Atrás
                             </Button>
-                            <Button type="submit">Finalizar</Button>
+                            <Button endIcon={<Icon name='circle-dashed-check' />} disabled={isPending} type="submit">Finalizar</Button>
                         </Stack>
                     </Grid>
                 </Grid>
