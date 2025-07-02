@@ -2,8 +2,14 @@
 
 
 const CONFIG_LOCAL_STORAGE = "configEmpresa";
-const APP_PRODUCTION = (import.meta.env.VITE_APP_PRODUCTION  === 'true') as boolean;
-const API_URL = APP_PRODUCTION ? import.meta.env.VITE_API_BASE_URL : import.meta.env.VITE_API_BASE_DEV_URL;
+//const APP_PRODUCTION = (import.meta.env.VITE_APP_PRODUCTION  === 'true') as boolean;
+//const API_URL = APP_PRODUCTION ? import.meta.env.VITE_API_BASE_URL : import.meta.env.VITE_API_BASE_DEV_URL;
+
+const isLocal = window.location.hostname === 'localhost';
+export const API_URL = isLocal
+  ? 'http://localhost:8000/api'
+  : `${window.location.protocol}//${window.location.hostname}/api`;
+
 
 export const config = {
     BASE_PATH: import.meta.env.VITE_BASE_PATH,
