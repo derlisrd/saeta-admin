@@ -36,7 +36,7 @@ function Login() {
         </Stack>
       ) : (
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Stack sx={{ height: "100vh", alignItems: "center", justifyContent: "center", width: "100%" }}>
+          <Stack sx={{ height: "95vh", alignItems: "center", justifyContent: "center", width: "100%" }}>
             <Stack gap={3} p={3} boxShadow={5} borderRadius={3} maxWidth={360} width="100%" alignItems="center" sx={{ border: "1px solid #efefef" }}>
               <Typography variant="h5">
                 INGRESAR
