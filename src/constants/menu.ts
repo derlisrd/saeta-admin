@@ -116,58 +116,6 @@ const menu: menuType[] = [
     ]
   },
   {
-    id: 1334,
-    title: "Caja",
-    icon: "cash-register",
-    color: "#0066cc",
-    url: null,
-    private: false,
-    open: false,
-    descripcion: null,
-    submenu: [
-      {
-        id: 1432,
-        title: "Abrir caja",
-        icon: "add",
-        color: "#0066cc",
-        url: "/caja/add",
-        private: false,
-        descripcion: null,
-        submenu: null
-      },
-      {
-        id: 343,
-        title: "Lista de cajas",
-        icon: "list",
-        color: "#0066cc",
-        url: "/caja/lista",
-        private: false,
-        descripcion: "Abrir o habilitar caja",
-        submenu: null
-      },
-      {
-        id: 14232,
-        title: "Movimientos",
-        icon: "add",
-        color: "#0066cc",
-        url: "/caja/movimientos",
-        private: false,
-        descripcion: "Lista de movimientos",
-        submenu: null
-      },
-      {
-        id: 142,
-        title: "Cerrar caja",
-        icon: "close",
-        color: "#0066cc",
-        url: "/caja/cerrar",
-        private: false,
-        descripcion: "Cerrar caja",
-        submenu: null
-      }
-    ]
-  },
-  {
     id: 34,
     title: "Productos",
     icon: "packages",
@@ -220,38 +168,7 @@ const menu: menuType[] = [
       }
     ]
   },
-  {
-    id: 3565,
-    title: "Compras",
-    icon: "shopping-cart",
-    color: "#0066cc",
-    url: null,
-    private: false,
-    open: false,
-    descripcion: null,
-    submenu: [
-      {
-        id: 14232,
-        title: "Generar compra",
-        icon: "receipt_long",
-        color: "#0066cc",
-        url: "/compras/add",
-        private: false,
-        descripcion: null,
-        submenu: null
-      },
-      {
-        id: 34,
-        title: "Lista de compras",
-        icon: "list",
-        color: "#0066cc",
-        url: "/compras/lista",
-        private: false,
-        descripcion: "Lista de compras",
-        submenu: null
-      }
-    ]
-  },
+
   {
     id: 3,
     title: "Configuracion",
