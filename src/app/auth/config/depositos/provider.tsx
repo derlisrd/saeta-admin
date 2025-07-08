@@ -36,7 +36,8 @@ function DepositosProvider({ children }: { children: React.ReactNode }) {
         mutationFn: ({ id }: { id: number }) => API.depositos.activar(userData && userData.token, id),
         onSuccess: (data) => {
             if (data) {
-                queryClient.invalidateQueries({ queryKey: ["depositos", "depositoActivo"] });
+                queryClient.removeQueries({ queryKey: ["depositos"] });
+                queryClient.invalidateQueries({ queryKey: ["depositoActivo"] });
             }
         },
     });

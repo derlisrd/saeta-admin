@@ -51,7 +51,7 @@ function Main() {
                       <FinalizarButton />
                     </Stack>
                     <CancelarButton />
-                    <Typography variant="button" fontWeight='bold'>Deposito: {depositoActivo.nombre}</Typography>
+                    <Typography variant="button" fontWeight='bold'>Deposito seleccionado: {depositoActivo.nombre}</Typography>
                   </Stack>
                 </Stack>
               </Box>
