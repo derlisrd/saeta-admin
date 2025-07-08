@@ -1,15 +1,14 @@
 import { useAuth } from "@/providers/AuthProvider";
 
 import { AddProducto } from "@/services/dto/productos/AddProducto";
-import { AddStock } from "@/services/dto/productos/AddStock";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import AddProductoContext, { modalType } from "./context";
 import { useMutation, useQueries, useQueryClient } from "@tanstack/react-query";
 
 import API from "@/services/api";
 import { ImpuestoResponse } from "@/services/dto/factura/impuesto";
 import { CategoriaResponse } from "@/services/dto/productos/categoria";
-import { DepositoResponse } from "@/services/dto/productos/deposito";
+import { DepositoActivoResponse } from "@/services/dto/productos/deposito";
 import { MedidasResponse } from "@/services/dto/productos/medidas";
 import { validateForm } from "./helpers/validate";
 
@@ -21,8 +20,8 @@ function AddProductoProvider({ children }: { children: React.ReactNode }) {
   const inputCodigoRef = useRef<HTMLInputElement>(null);
   const [tabValue, setTabValue] = useState(0);
 
+
   const [form, setForm] = useState<AddProducto>(new AddProducto({}));
-  const [stockState, setStockState] = useState<AddStock>(new AddStock({}));
   const [error, setError] = useState({ code: 0, message: "" });
   const [success, setSuccess] = useState({ active: false, message: "" });
 
@@ -53,14 +52,6 @@ function AddProductoProvider({ children }: { children: React.ReactNode }) {
         refetchOnWindowFocus: false,
       },
       {
-        queryKey: ["depositos", 'productos'],
-        queryFn: () => API.depositos.list(userData && userData.token),
-        select: (data: DepositoResponse) => (data && data.results) ? data.results : [],
-        retry: false,
-        staleTime: 1000 * 60 * 5,
-        refetchOnWindowFocus: false
-      },
-      {
         queryKey: ["medidas"],
         queryFn: () => API.medidas.list(userData && userData.token),
         select: (data: MedidasResponse) => (data && data.results) ? data.results : [],
@@ -68,10 +59,26 @@ function AddProductoProvider({ children }: { children: React.ReactNode }) {
         staleTime: 1000 * 60 * 5,
         refetchOnWindowFocus: false,
       },
+      {
+        queryKey: ["depositoActivo"],
+        queryFn: async () => API.depositos.activo(userData && userData.token),
+        select: (data: DepositoActivoResponse) => {
+          if (data && data.success && data.results) {
+            return data.results;
+          }
+          return {
+            id: 0,
+            nombre: '',
+            sucursal_id: 0,
+            descripcion: '',
+            activo: 0
+          }
+        }
+      }
     ],
   });
 
-  const [impuestosRes, categoriasRes, depositosRes, medidasRes] = results;
+  const [impuestosRes, categoriasRes, medidasRes, depositosRes] = results;
 
 
   const isLoading = results.some((r) => r.isLoading);
@@ -82,8 +89,8 @@ function AddProductoProvider({ children }: { children: React.ReactNode }) {
   const data = {
     impuestos: impuestosRes.data ? impuestosRes.data : [],
     categorias: categoriasRes.data ? categoriasRes.data : [],
-    depositos: depositosRes.data ? depositosRes.data : [],
     medidas: medidasRes.data ? medidasRes.data : [],
+    depositoActivo: depositosRes.data || { id: 0, nombre: "", sucursal_id: 0, descripcion: "", activo: 0 },
   };
 
 
@@ -121,39 +128,8 @@ function AddProductoProvider({ children }: { children: React.ReactNode }) {
     [userData, clearError]
   );
 
-  const changeStockState = useCallback((name: string, value: number) => {
-    setStockState((prev) => new AddStock({ ...prev, [name]: value }));
-  }, []);
-
-  const addStock = useCallback(() => {
-    const { deposito_id, cantidad } = stockState;
-    if (deposito_id === 0 || cantidad === 0) {
-      setError({ code: 9, message: "Seleccione un depósito y una cantidad" });
-      return;
-    }
-    setError({ code: 0, message: "" });
-    if (data && cantidad) {
-      const depositoFind = data.depositos.find((e) => e.id === deposito_id);
-      if (!depositoFind) return;
-      const updatedStock = form.stock.some((item) => item.deposito_id === deposito_id)
-        ? form.stock.map((item) => (item.deposito_id === deposito_id ? new AddStock({ ...item, cantidad: (item.cantidad ?? 0) + cantidad }) : item))
-        : [...form.stock, new AddStock({ deposito_id, cantidad, deposito: depositoFind?.nombre })];
-
-      setForm(prev => new AddProducto({ ...prev, stock: updatedStock }));
-      setStockState((prev) => new AddStock({ ...prev, cantidad: 0 }));
-    }
-  }, [stockState, form]);
-
-  const removeStock = useCallback((deposito_id: number) => {
-    setForm((prev) => new AddProducto({ ...prev, stock: prev.stock.filter((item) => item.deposito_id !== deposito_id) }));
-  }, []);
-
-
-
   const mutateCaller = useMutation({
-    mutationFn: async () => {
-      return API.productos.add(form, userData && userData?.token);
-    },
+    mutationFn: async ({ formulario }: { formulario: AddProducto }) => API.productos.add(formulario, userData && userData?.token),
     onSuccess: (res) => {
       if (res && res.success) {
         queryClient.invalidateQueries({ queryKey: ["productos"] });
@@ -173,70 +149,36 @@ function AddProductoProvider({ children }: { children: React.ReactNode }) {
       setError({ code: validateError.code, message: validateError.message });
       return;
     }
-    mutateCaller.mutate();
-  }, [validateForm, form, userData, clear]);
+    const f = new AddProducto({ ...form })
+    f.deposito_id = data.depositoActivo.id
+    mutateCaller.mutate({ formulario: f });
+  }, [validateForm, form, mutateCaller, data.depositoActivo.id]);
 
 
-
-
-  const values = useMemo(
-    () => ({
-      form,
-      setForm,
-      clearError,
-      error,
-      changeByName,
-      sendForm,
-      impuestos: data.impuestos, // Access data.impuestos, handle loading state
-      categorias: data?.categorias,
-      depositos: data.depositos,
-      medidas: data.medidas,
-      loading: isLoading || mutateCaller.isPending,
-      addStock,
-      stockState,
-      setStockState,
-      removeStock,
-      success,
-      clearSuccess,
-      verificarCodigoDisponible,
-      generateCode,
-      inputCodigoRef,
-      changeStockState,
-      tabValue,
-      setTabValue,
-      modal,
-      handleModal,
-      dataError,
-      isError
-    }),
-    [
-      form,
-      error,
-      data?.impuestos,
-      data?.categorias,
-      data?.depositos,
-      data?.medidas,
-      isLoading,
-      dataError,
-      isError,
-      data,
-      stockState,
-      success,
-      tabValue,
-      clearError,
-      changeByName,
-      sendForm,
-      addStock,
-      setStockState,
-      removeStock,
-      clearSuccess,
-      verificarCodigoDisponible,
-      generateCode,
-      changeStockState,
-      modal,
-      handleModal,
-    ]
-  );
+  const values = {
+    form,
+    setForm,
+    clearError,
+    error,
+    changeByName,
+    sendForm,
+    impuestos: data.impuestos,
+    categorias: data.categorias,
+    medidas: data.medidas,
+    loading: isLoading || mutateCaller.isPending,
+    depositoActivo: data.depositoActivo,
+    success,
+    clearSuccess,
+    verificarCodigoDisponible,
+    generateCode,
+    inputCodigoRef,
+    tabValue,
+    setTabValue,
+    modal,
+    handleModal,
+    dataError,
+    isError
+  }
 
   return <AddProductoContext.Provider value={values}>{children}</AddProductoContext.Provider>;
 }

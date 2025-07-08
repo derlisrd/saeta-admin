@@ -4,16 +4,11 @@ export class DepositoResponse{
      public results: DepositoResults[] | null;
      public message : string | null;
      constructor({
-         success,
-         status,
-         results,
+         success=false,
+         status=0,
+         results=null,
          message
-     }:{
-         success: boolean,
-         status: number,
-         results: DepositoResults[] | null,
-            message?: string | null
-     }){
+     }:Partial<DepositoResponse>){
          this.success = success;
          this.status = status;
          this.results = results;
@@ -30,34 +25,43 @@ export class DepositoResponse{
      }
  }
  
- export class DepositoResults{
-     public id: number;
-     public sucursal_id: number;
-     public nombre: string;
-     public descripcion: string | null;
-
-        constructor({
-            id,
-            nombre,
-            sucursal_id,
-            descripcion
-        }:{
-            id: number,
-            nombre: string,
-            sucursal_id: number,
-            descripcion: string | null
-        }){
-            this.id = id;
-            this.nombre = nombre;
-            this.sucursal_id = sucursal_id;
-            this.descripcion = descripcion;
-        }
-        static fromJSON(json: Record<string, any>): DepositoResults {
-            return new DepositoResults({
-                id: json.id,
-                sucursal_id: json.sucursal_id,
-                nombre: json.nombre,
-                descripcion: json.descripcion,
-            });
-        }
+ export class DepositoResults {
+   public id: number;
+   public sucursal_id: number;
+   public nombre: string;
+   public descripcion: string | null;
+   public activo: number;
+   constructor({ id =0, nombre='', sucursal_id=0, descripcion='', activo=0 }: Partial<DepositoResults>) {
+     this.id = id;
+     this.nombre = nombre;
+     this.sucursal_id = sucursal_id;
+     this.descripcion = descripcion;
+     this.activo = activo;
+   }
+   static fromJSON(json: Record<string, any>): DepositoResults {
+     return new DepositoResults({
+       id: json.id,
+       nombre: json.nombre,
+       sucursal_id: json.sucursal_id,
+       descripcion: json.descripcion,
+       activo: json.activo});
+   }
  }
+
+ export class DepositoActivoResponse{
+  public success: boolean;
+     public status: number;
+     public results: DepositoResults | null;
+     public message : string | null;
+     constructor({
+         success=false,
+         status=0,
+         results=null,
+         message
+     }:Partial<DepositoActivoResponse>){
+         this.success = success;
+         this.status = status;
+         this.results = results;
+         this.message = message || null;
+     }
+  }

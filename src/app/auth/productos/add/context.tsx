@@ -1,7 +1,7 @@
 import React, { createContext } from "react";
 import { ImpuestoResults } from "@/services/dto/factura/impuesto";
 import { AddProducto } from "@/services/dto/productos/AddProducto";
-import { AddStock } from "@/services/dto/productos/AddStock";
+//import { AddStock } from "@/services/dto/productos/AddStock";
 import { CategoriaResults } from "@/services/dto/productos/categoria";
 import { DepositoResults } from "@/services/dto/productos/deposito";
 import { MedidasResults } from "@/services/dto/productos/medidas";
@@ -32,23 +32,25 @@ interface AddProductoContextTypes {
   sendForm: () => Promise<void>;
   impuestos: Array<ImpuestoResults>;
   categorias: Array<CategoriaResults>;
-  depositos: Array<DepositoResults>;
+  depositoActivo: DepositoResults;
   loading: boolean;
   medidas: Array<MedidasResults>;
-  addStock: () => void;
+  /* addStock: () => void;
   stockState: AddStock;
   setStockState: React.Dispatch<React.SetStateAction<AddStock>>;
-  removeStock: (deposito_id: number) => void;
+  removeStock: (deposito_id: number) => void; 
+  changeStockState: (name: string, value: number) => void;
+  */
   success: successType;
   clearSuccess: () => void;
   verificarCodigoDisponible: (codigo: string) => void;
   generateCode: () => void;
   inputCodigoRef: React.RefObject<HTMLInputElement>;
-  changeStockState: (name: string, value: number) => void;
   tabValue: number;
   setTabValue: React.Dispatch<React.SetStateAction<number>>;
   dataError: Error | null | undefined,
   isError: boolean;
+
 }
 
 const AddProductoContext = createContext<AddProductoContextTypes | undefined>(undefined);

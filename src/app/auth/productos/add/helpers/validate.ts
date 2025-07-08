@@ -47,5 +47,10 @@ export const validateForm = (form: AddProducto) => {
       return error;
     }
 
+    if(form.stock<0){
+      error = ({ code: 9, message: "El stock no puede ser negativo" });
+      return error;
+    }
+
     return error;
   }

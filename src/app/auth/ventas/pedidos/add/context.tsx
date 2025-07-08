@@ -29,9 +29,7 @@ interface AddPedidoContextProps {
   setIndex: Dispatch<SetStateAction<number>>;
   consultarCodigoInsertar: (codigo: string) => void;
   handleFormasPago: (monto: number, id: number, type: "add" | "remove", detalles: string) => void;
-  selectedDeposito: number;
-  setSelectedDeposito: Dispatch<SetStateAction<number>>;
-  depositos: DepositoResults[];
+  depositoActivo: DepositoResults;
   config: ConfiguracionType;
   settingConfig: (config: ConfiguracionType) => void;
   aplicarDescuento: (descuento: number) => void;

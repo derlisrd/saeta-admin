@@ -273,6 +273,16 @@ const menu: menuType[] = [
         submenu: null
       },
       {
+        id: 4,
+        title: "Depositos",
+        icon: "tune",
+        color: "#0066cc",
+        url: "/config/depositos",
+        private: false,
+        descripcion: "Depositos",
+        submenu: null
+      },
+      {
         id: 2,
         title: "Usuarios",
         icon: "tune",

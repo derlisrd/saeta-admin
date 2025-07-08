@@ -142,12 +142,12 @@ export const apiServiceProductos = {
           });
         }
 
-        if(form.stock){
+        /* if(form.stock){
           form.stock.forEach((stock, index : number) => {
             formData.append(`stock[${index}][deposito_id]`, String(stock.deposito_id));
             formData.append(`stock[${index}][cantidad]`, String(stock.cantidad));
           });
-        }
+        } */
         if (form.atributos) {
           form.atributos.forEach((atributo, index: number) => {
               formData.append(`atributos[${index}][nombre]`, atributo.nombre);
@@ -159,7 +159,7 @@ export const apiServiceProductos = {
         }
         // Agregar los otros datos del producto
         Object.entries(form.toJSON()).forEach(([key, value]) => {
-          if (key !== "images" && key !== "stock" && key !== "atributos") {
+          if (key !== "images" && key !== "atributos") {
             formData.append(key, String(value)); // Convertir valores a string si es necesario
           }
         });

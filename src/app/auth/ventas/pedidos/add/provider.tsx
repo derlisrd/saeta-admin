@@ -7,6 +7,7 @@ import { PedidoStoreType } from "./_types/pedidoStore";
 import useStore from "@/hooks/useStore";
 import { ConfiguracionType } from "./_types/configuracion";
 import { useMutation, useSuspenseQueries } from "@tanstack/react-query";
+import { DepositoActivoResponse } from "@/services/dto/productos/deposito";
 
 function AddPedidoProvider({ children }: { children: ReactNode }) {
   const { userData } = useAuth();
@@ -18,7 +19,7 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
   const [result, setResult] = useState<AddPedidoResponse | null>(null);
 
   // Utilizar React Query para las peticiones en paralelo
-  const [{ data: formasPago }, { data: monedas }, { data: depositos }] = useSuspenseQueries({
+  const [{ data: formasPago }, { data: monedas }, { data: depositoActivo }] = useSuspenseQueries({
     queries: [
       {
         queryKey: ["formasPago"],
@@ -43,20 +44,26 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
         staleTime: 1000 * 60 * 5
       },
       {
-        queryKey: ["depositos"],
-        queryFn: async () => {
-          const res = await API.depositos.list(userData && userData.token);
-          if (res.success && res.results) {
-            return res.results;
+        queryKey: ["depositoActivo"],
+        queryFn: async () => API.depositos.activo(userData && userData.token),
+        select: (data: DepositoActivoResponse) => {
+          if (data && data.success && data.results) {
+            return data.results;
           }
-          return [];
+          return {
+            id: 0,
+            nombre: '',
+            sucursal_id: 0,
+            descripcion: '',
+            activo: 0
+          }
         },
         staleTime: 1000 * 60 * 5
       },
     ],
   });
 
-  const [selectedDeposito, setSelectedDeposito] = useState(1);
+
   const [cantidad, setCantidad] = useState(1);
   const initialPedido: AddPedido = new AddPedido({
     cliente_id: 0,
@@ -117,9 +124,9 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
   );
 
 
-  const { mutate, isPending: loadingAddProducto } = useMutation({
-    mutationFn: async ({ codigo, cantidad, selectedDeposito }: { codigo: string; cantidad: number; selectedDeposito: number }) => {
-      return API.productos.consultarCodigoPorDeposito(userData && userData.token, codigo, selectedDeposito, cantidad);
+  const { mutateAsync, isPending: loadingAddProducto } = useMutation({
+    mutationFn: async ({ codigo, cantidad }: { codigo: string; cantidad: number; }) => {
+      return API.productos.consultarCodigoPorDeposito(userData && userData.token, codigo, depositoActivo.id, cantidad);
     },
     onSuccess: (res) => {
       if (!res.success) {
@@ -133,7 +140,7 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
           updatedPedidos[index].items.push(
             new AddPedidoItem({
               producto_id: res.results.id,
-              deposito_id: selectedDeposito,
+              deposito_id: depositoActivo.id,
               impuesto_id: res.results.impuesto_id,
               cantidad,
               precio: res.results.precio_normal,
@@ -193,9 +200,9 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
       }
 
       // Si el producto no existe, entonces hacemos la consulta a la API usando useMutation
-      mutate({ codigo, cantidad, selectedDeposito });
+      mutateAsync({ codigo, cantidad });
     },
-    [cantidad, index, selectedDeposito, set, mutate, pedidos] // Añade `mutate` a las dependencias
+    [cantidad, index, set, mutateAsync, pedidos] // Añade `mutate` a las dependencias
   );
 
   const changePedido = useCallback(
@@ -332,9 +339,7 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
       limpiarFinalizarPedido,
       monedas,
       handleFormasPago,
-      selectedDeposito,
-      setSelectedDeposito,
-      depositos,
+      depositoActivo,
       config,
       settingConfig,
       aplicarDescuento,
@@ -359,9 +364,7 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
       limpiarFinalizarPedido,
       monedas,
       handleFormasPago,
-      selectedDeposito,
-      setSelectedDeposito,
-      depositos,
+      depositoActivo,
       config,
       settingConfig,
       aplicarDescuento,

@@ -1,6 +1,6 @@
 // components/table/GenericTable.tsx
 import { ColumnConfigType } from "@/core/types/columnconfig";
-import { Table, Column, TableHeaderProps, TableCellProps } from "react-virtualized";
+import { Table, Column, TableHeaderProps, TableCellProps, ColumnProps } from "react-virtualized";
 import AutoSizer from "react-virtualized-auto-sizer";
 import TableCellHead from "@/components/table/tablecellhead";
 import TableCell from "@/components/table/tablecell";
@@ -10,7 +10,7 @@ import Icon from "../ui/icon";
 
 interface GenericTableProps<T> {
   data: T[];
-  columns: ColumnConfigType[];
+  columns: ColumnConfigType[] | ColumnProps[];
   rowHeight?: number;
   headerHeight?: number;
   sx?: SxProps<Theme>;
