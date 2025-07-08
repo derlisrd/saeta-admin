@@ -14,10 +14,12 @@ export class AddPedido {
   total: number = 0;
   items: AddPedidoItem[] = [];
   fecha_vencimiento: string = "";
+  deposito_id: number = 0;
 
   constructor({
     aplicar_impuesto,
     cliente_id,
+    deposito_id,
     entregado,
     formas_pagos,
     moneda_id,
@@ -43,6 +45,7 @@ export class AddPedido {
     this.total = total ?? this.total;
     this.items = (items ?? this.items).map((item) => new AddPedidoItem(item));
     this.fecha_vencimiento = fecha_vencimiento ?? this.fecha_vencimiento;
+    this.deposito_id = deposito_id ?? this.deposito_id;
   }
 }
 

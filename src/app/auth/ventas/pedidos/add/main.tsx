@@ -8,11 +8,11 @@ import InputCantidad from "./_components/cantidad";
 import FinalizarButton from "./_components/finalizarbtn";
 import CancelarButton from "./_components/cancelarbtn";
 import EsperarButton from "./_components/esperarbtn";
-// import ListaDeEspera from "./_components/listadeespera";
 import useModal from "./_hooks/useModal";
+import Total from "./_components/total";
 
 function Main() {
-  const { error, clearError, pedidos, index } = useHook();
+  const { error, clearError, depositoActivo } = useHook();
   const { modal } = useModal();
 
 
@@ -45,12 +45,13 @@ function Main() {
                     <InputCantidad />
                   </Stack>
                   <Stack spacing={1} pb={1}>
-                    <Typography fontWeight='bold'>Total: {pedidos[index].total.toLocaleString('es-PY')} </Typography>
+                    <Total />
                     <Stack direction='row' spacing={1}>
                       <EsperarButton />
                       <FinalizarButton />
                     </Stack>
                     <CancelarButton />
+                    <Typography variant="button" fontWeight='bold'>Deposito: {depositoActivo.nombre}</Typography>
                   </Stack>
                 </Stack>
               </Box>

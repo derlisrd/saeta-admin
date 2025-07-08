@@ -76,6 +76,7 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
     entregado: true,
     total: 0,
     items: [],
+    deposito_id: depositoActivo.id
   });
   const [pedidos, setPedidos] = useState<AddPedido[]>(store?.pedidos || [initialPedido]);
   const initialConfig: ConfiguracionType = { showKeyboard: false };

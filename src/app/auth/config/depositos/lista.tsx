@@ -5,7 +5,7 @@ import GenericTable from "@/components/table/GenericTable";
 import { ColumnProps } from "react-virtualized";
 
 function ListaDepositos() {
-    const { isLoading, lista, activar } = useDepositosContext()
+    const { isLoading, lista, activar, isPending } = useDepositosContext()
     const width = window.innerWidth
     const columnas: ColumnProps[] = [
         {
@@ -61,7 +61,7 @@ function ListaDepositos() {
                 Agregar
             </Button>
         </Stack>
-        {isLoading ? (
+        {isLoading || isPending ? (
             <LinearProgress />
         ) : (
             <Slide direction="down" in mountOnEnter unmountOnExit>
