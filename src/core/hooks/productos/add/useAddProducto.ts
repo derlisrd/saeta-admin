@@ -60,7 +60,7 @@ function useAddProducto() {
     clearError();
   }
 
-  const changeStockState = (name : string, value :number)=>{
+  /* const changeStockState = (name : string, value :number)=>{
       const updatedStockState = new AddStock({...stockState, [name]: value});
       setStockState(updatedStockState);
   }
@@ -80,12 +80,12 @@ function useAddProducto() {
       ? form.stock.map((item) => (item.deposito_id === deposito_id ? new AddStock({ ...item, cantidad: (item.cantidad || 0) + (cantidad) }) : item))      : [...form.stock, new AddStock({ deposito_id, cantidad: cantidad || 0, deposito: depositoFind?.nombre })];    setForm(new AddProducto({ ...form, stock: updatedStock }));
 
     setStockState(new AddStock({ deposito_id, cantidad: 0, deposito: depositoFind?.nombre }));
-  };
+  }; */
 
-  const removeStock = (deposito_id: number) => {
+  /* const removeStock = (deposito_id: number) => {
     const updatedStock = form.stock.filter((item) => item.deposito_id !== deposito_id);
     setForm(new AddProducto({ ...form, stock: updatedStock }));
-  };
+  }; */
 
   
 
@@ -202,16 +202,14 @@ function useAddProducto() {
     depositos,
     loading,
     medidas,
-    addStock,
     stockState,
     setStockState,
-    removeStock,
     success,
     clearSuccess,
     verificarCodigoDisponible,
     generateCode,
     inputCodigoRef,
-    changeStockState,
+
     tabValue, setTabValue
   };
 }

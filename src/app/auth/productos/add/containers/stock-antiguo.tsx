@@ -1,4 +1,4 @@
-import { TextField, Grid, Typography, Select, FormControl, InputLabel, MenuItem, Button, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
+/* import { TextField, Grid, Typography, Select, FormControl, InputLabel, MenuItem, Button, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import useAddProducto from "../_hook/useAddProducto";
 import Icon from "@/components/ui/icon";
 import { NumericFormat } from "react-number-format";
@@ -76,3 +76,4 @@ function Stock() {
 }
 
 export default Stock;
+ */
