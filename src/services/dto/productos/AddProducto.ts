@@ -81,7 +81,7 @@ export class AddProducto {
       cantidad_minima: this.cantidad_minima,
       stock: this.stock,
       deposito_id: this.deposito_id,
-      //stock: this.stock.map((item) => item.toJSON()),
+      precio_descuento: this.precio_descuento,
       atributos: this.atributos,
       images: this.images
     };
