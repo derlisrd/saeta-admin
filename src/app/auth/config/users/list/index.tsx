@@ -1,5 +1,6 @@
 
 
+import Notificacion from "./_components/noti";
 import PasswordModal from "./_modals/password";
 import PermisosModal from "./_modals/permisos";
 import UsersList from "./list";
@@ -10,6 +11,7 @@ function Users() {
     <PermisosModal />
     <PasswordModal />
     <UsersList />
+    <Notificacion />
   </UserProvider>
 }
 

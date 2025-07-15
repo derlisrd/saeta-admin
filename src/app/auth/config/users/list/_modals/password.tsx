@@ -6,7 +6,7 @@ import useResetPassword from "../_hooks/useResetPassword";
 import { useEffect } from "react";
 
 function PasswordModal() {
-    const { modals, handleModals, selectedUser, setSelectedUser } = useUserProvider();
+    const { modals, handleModals, selectedUser, setSelectedUser, setNoti } = useUserProvider();
     const { isPending, error, mutateAsync, isSuccess } = useResetPassword()
     // 1. Inicializa useForm sin resolver externo
     const {
@@ -30,6 +30,12 @@ function PasswordModal() {
     }, [isSuccess]); // Se ejecuta cada vez que isSuccess cambia
 
     const close = () => {
+        if (isSuccess) {
+            setNoti({
+                title: "success",
+                message: "Contraseña cambiada correctamente."
+            })
+        }
         setSelectedUser(null);
         handleModals('password');
         reset();

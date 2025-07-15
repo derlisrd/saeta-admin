@@ -2,15 +2,15 @@ import Icon from "@/components/ui/icon";
 import MenuNavList from "./components/MenuNavList";
 
 
-import { Drawer, Box, Toolbar, Stack, IconButton, Tooltip, Typography } from "@mui/material";
-import { NavigateOptions, Outlet, To, useLocation, useNavigate } from "react-router-dom";
+import { Drawer, Box, Toolbar, Stack, IconButton, Tooltip } from "@mui/material";
+import { NavigateOptions, Outlet, To, useNavigate } from "react-router-dom";
 import DrawerTheme from "./components/DrawerTheme";
 import { useLayoutContext } from "@/providers/LayoutProvider";
 import AgregarActions from "./components/agregaractions";
 
 function AuthMenuLayout() {
   const navigate = useNavigate();
-  const location = useLocation();
+
   const { isOpenMenu, toggleMenu, isOpenMobileMenu, toggleMobileMenu, DRAWER_WIDTH, isOpenConfigDrawer, toggleConfigDrawer } = useLayoutContext();
 
 
@@ -40,9 +40,7 @@ function AuthMenuLayout() {
                 <Icon size={24} name={"menu-2"} />
               </IconButton>
             </Tooltip>
-            <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-              {location.state?.descripcion || ""}
-            </Typography>
+
           </Stack>
 
           <Stack flexDirection="row">
