@@ -11,7 +11,6 @@ function useAddCategoria() {
     const {userData} = useAuth()
     const queryClient = useQueryClient();
 
-    const [agregado,setAgregado] = useState(false)
 
     const [form,setForm] = useState<AddCategoria>({
         nombre: "",
@@ -22,7 +21,7 @@ function useAddCategoria() {
 
 
 
-    const { mutate, isPending, isSuccess } = useMutation<AddCategoriaResponse,Error,AddCategoria>({
+    const { mutate, isPending, isSuccess, error } = useMutation<AddCategoriaResponse,Error,AddCategoria>({
         mutationFn: async (form: AddCategoria) => {
           return API.categorias.create(userData && userData?.token, form);
         },
@@ -43,12 +42,6 @@ function useAddCategoria() {
             });
           }
         },
-        onSettled: (data: AddCategoriaResponse | undefined) => {
-          // Invalida la consulta para asegurarse de que los datos estén sincronizados
-          if(data){
-            setAgregado(true)
-          }
-        },
       });
     
       const addCategoria = async (form: AddCategoria) => {
@@ -56,7 +49,7 @@ function useAddCategoria() {
       };
 
 
-  return { form, setForm, addCategoria, isPendingAdd: isPending, isSuccess, setAgregado, agregado };
+  return { form, setForm, addCategoria, isPendingAdd: isPending, isSuccess, error };
 }
 
 export default useAddCategoria;

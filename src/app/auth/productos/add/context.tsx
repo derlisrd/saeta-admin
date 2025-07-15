@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import React, { createContext, Dispatch, SetStateAction } from "react";
 import { ImpuestoResults } from "@/services/dto/factura/impuesto";
 import { AddProducto } from "@/services/dto/productos/AddProducto";
 //import { AddStock } from "@/services/dto/productos/AddStock";
@@ -15,6 +15,13 @@ type successType = {
   active: boolean;
   message: string;
 };
+
+export type notiType = {
+  title: string;
+  message: string;
+  type?: "success" | "error" | "warning" | "info"
+  icon?: string;
+}
 
 export type modalType = {
   categorias: boolean;
@@ -35,12 +42,6 @@ interface AddProductoContextTypes {
   depositoActivo: DepositoResults;
   loading: boolean;
   medidas: Array<MedidasResults>;
-  /* addStock: () => void;
-  stockState: AddStock;
-  setStockState: React.Dispatch<React.SetStateAction<AddStock>>;
-  removeStock: (deposito_id: number) => void; 
-  changeStockState: (name: string, value: number) => void;
-  */
   success: successType;
   clearSuccess: () => void;
   verificarCodigoDisponible: (codigo: string) => void;
@@ -48,9 +49,10 @@ interface AddProductoContextTypes {
   inputCodigoRef: React.RefObject<HTMLInputElement>;
   tabValue: number;
   setTabValue: React.Dispatch<React.SetStateAction<number>>;
-  dataError: Error | null | undefined,
+  dataError: Error | null | undefined;
   isError: boolean;
-
+  noti: notiType | null;
+  setNoti: Dispatch<SetStateAction<notiType | null>>;
 }
 
 const AddProductoContext = createContext<AddProductoContextTypes | undefined>(undefined);

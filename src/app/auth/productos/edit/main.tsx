@@ -5,6 +5,8 @@ import TabContainer from "@/components/containers/tabcontainer";
 import Datos from "./_containers/datos";
 import NotificacionSnack from "@/components/common/NotificacionSnack";
 import SenderFormEdit from "./_components/sendFormEdit";
+import Imagenes from "./_containers/imagenes";
+import Atributos from "./_containers/atributos";
 
 function EditProductoMain() {
   const {
@@ -46,6 +48,12 @@ function EditProductoMain() {
             <TabsCustom setTabValue={setTabValue} tabValue={tabValue} />
             <TabContainer index={0} tabValue={tabValue}>
               <Datos />
+            </TabContainer>
+            <TabContainer index={1} tabValue={tabValue}>
+              <Imagenes />
+            </TabContainer>
+            <TabContainer index={2} tabValue={tabValue}>
+              <Atributos />
             </TabContainer>
           </Box>
         </Slide>

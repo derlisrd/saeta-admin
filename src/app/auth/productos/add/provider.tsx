@@ -2,7 +2,7 @@ import { useAuth } from "@/providers/AuthProvider";
 
 import { AddProducto } from "@/services/dto/productos/AddProducto";
 import { useCallback, useRef, useState } from "react";
-import AddProductoContext, { modalType } from "./context";
+import AddProductoContext, { modalType, notiType } from "./context";
 import { useMutation, useQueries, useQueryClient } from "@tanstack/react-query";
 
 import API from "@/services/api";
@@ -20,6 +20,7 @@ function AddProductoProvider({ children }: { children: React.ReactNode }) {
   const inputCodigoRef = useRef<HTMLInputElement>(null);
   const [tabValue, setTabValue] = useState(0);
 
+  const [noti, setNoti] = useState<notiType | null>(null)
 
   const [form, setForm] = useState<AddProducto>(new AddProducto({}));
   const [error, setError] = useState({ code: 0, message: "" });
@@ -62,6 +63,9 @@ function AddProductoProvider({ children }: { children: React.ReactNode }) {
       {
         queryKey: ["depositoActivo"],
         queryFn: async () => API.depositos.activo(userData && userData.token),
+        retry: false,
+        staleTime: 1000 * 60 * 5,
+        refetchOnWindowFocus: false,
         select: (data: DepositoActivoResponse) => {
           if (data && data.success && data.results) {
             return data.results;
@@ -177,7 +181,9 @@ function AddProductoProvider({ children }: { children: React.ReactNode }) {
     modal,
     handleModal,
     dataError,
-    isError
+    isError,
+    noti,
+    setNoti
   }
 
   return <AddProductoContext.Provider value={values}>{children}</AddProductoContext.Provider>;
