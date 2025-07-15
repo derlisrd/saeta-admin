@@ -11,6 +11,7 @@ export class AddProducto {
   costo: number;
   precio_normal: number;
   precio_minimo: number;
+  precio_descuento: number;
   disponible: number;
   tipo: number;
   cantidad_minima: number;
@@ -31,6 +32,7 @@ export class AddProducto {
     costo = 0,
     precio_normal = 0,
     precio_minimo = 0,
+    precio_descuento = 0,
     disponible = 1,
     tipo = 1,
     cantidad_minima = 0,
@@ -49,6 +51,7 @@ export class AddProducto {
     this.descripcion = descripcion;
     this.precio_normal = precio_normal;
     this.precio_minimo = precio_minimo;
+    this.precio_descuento = precio_descuento;
     this.disponible = disponible;
     this.tipo = tipo;
     this.cantidad_minima = cantidad_minima;

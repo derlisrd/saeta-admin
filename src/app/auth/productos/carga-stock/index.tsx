@@ -75,11 +75,6 @@ function CargaStock() {
 
             {/* Componentes para reponer o agregar stock */}
             <Grid size={12}>
-              {selectedProducto && (
-                <h3>
-                  {selectedProducto.nombre} {selectedProducto.codigo}
-                </h3>
-              )}
               {results && results !== null && (
                 <Reponer
                   results={results}

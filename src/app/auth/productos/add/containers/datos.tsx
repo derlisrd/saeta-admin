@@ -254,12 +254,26 @@ function Datos() {
             fullWidth
             required
             label="Precio mínimo"
-            helperText="Precio con descuento"
+            helperText="Precio mínimo"
             error={error.code === 8}
           />
         </Grid>
         <Grid size={{ xs: 12, md: 3 }}>
-          <TextField placeholder="Generar precios por %" fullWidth label="Generar precios por %" helperText="Generar precios por %" />
+          <NumericFormat
+            customInput={TextField}
+            thousandSeparator="."
+            decimalSeparator=","
+            placeholder="Precio promocional"
+            name="precio_descuento"
+            value={form.precio_descuento}
+            onValueChange={(e) => {
+              changeByName("precio_descuento", Number(e.value));
+            }}
+            fullWidth
+            label="Si tiene promoción"
+            helperText="Precio con promoción"
+            error={error.code === 8}
+          />
         </Grid>
         {form.tipo === 1 && <Stock />}
       </Grid>

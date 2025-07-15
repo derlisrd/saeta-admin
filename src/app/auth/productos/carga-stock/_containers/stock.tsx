@@ -1,4 +1,5 @@
 // src/components/Stock/StockForm.tsx
+import Icon from "@/components/ui/icon";
 import { DepositoResults } from "@/services/dto/productos/deposito";
 import { ProductoResults } from "@/services/dto/productos/producto";
 import { Autocomplete, Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material";
@@ -24,6 +25,7 @@ function StockForm({
   listaBusqueda,
   search,
   selectedDeposito,
+  selectedProducto,
   loadingBusqueda,
   isLoading,
   onDepositoChange,
@@ -36,7 +38,7 @@ function StockForm({
 
   return (
     <Grid container spacing={2} alignItems="center">
-      <Grid size={{ xs: 12, sm: 4, md: 4 }}>
+      <Grid size={{ xs: 12, sm: 4, md: 3 }}>
         <FormControl fullWidth>
           <InputLabel id="deposito-select-label">Depósito</InputLabel>
           <Select
@@ -60,7 +62,7 @@ function StockForm({
           </Select>
         </FormControl>
       </Grid>
-      <Grid size={{ xs: 12, sm: 4, md: 4 }}>
+      <Grid size={{ xs: 12, sm: 4, md: 6 }}>
         <Autocomplete
           ref={autocompleteRef}
           onChange={(_, value) => {
@@ -72,20 +74,22 @@ function StockForm({
           loading={loadingBusqueda}
           loadingText="Buscando..."
           noOptionsText="No se encontraron resultados"
-          value={null}
+          value={selectedProducto}
+          disabled={!selectedDeposito}
           renderInput={(params) => <TextField {...params} placeholder="Buscar producto..." onChange={(e) => onSearchChange(e.target.value)} value={search} />}
         />
       </Grid>
-      <Grid size={{ xs: 12, sm: 4, md: 4 }}>
+      <Grid size={{ xs: 12, sm: 4, md: 3 }}>
         <Button
           onClick={() => {
             if (validarFormulario()) {
               onConsultar();
             }
           }}
-          disabled={isLoading}
+          disabled={isLoading || !selectedDeposito}
+          endIcon={<Icon name='arrow-big-down' />}
         >
-          Consultar
+          Traer datos
         </Button>
       </Grid>
     </Grid>
