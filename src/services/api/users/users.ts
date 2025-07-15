@@ -52,4 +52,25 @@ export const apiServiceUsers = {
 
     },
 
+    resetPassword: async(token: string | null, id: number, password: string, password_confirmation: string) => {
+        try{
+            const {data, status} = await BASE.post('/users/reset-password', {id,password, password_confirmation}, {
+                headers: {
+                    Authorization: token
+                }
+            });
+            return ( {
+                success: data.success,
+                status,
+                message: data.message
+            })
+        }
+        catch (e) {
+            if(isAxiosError(e)){
+                throw new Error(e.response?.data.message || "Error de servidor");
+            }
+            throw new Error("Error de servidor");
+        }
+    }
+
 }

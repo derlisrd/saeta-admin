@@ -171,7 +171,7 @@ const menu: menuType[] = [
 
   {
     id: 3,
-    title: "Configuracion",
+    title: "Configuración",
     icon: "settings",
     color: "#0066cc",
     url: null,
@@ -191,7 +191,7 @@ const menu: menuType[] = [
       },
       {
         id: 4,
-        title: "Depositos",
+        title: "Depósitos",
         icon: "tune",
         color: "#0066cc",
         url: "/config/depositos",

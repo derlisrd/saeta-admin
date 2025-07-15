@@ -6,7 +6,14 @@ import { useQueries } from "@tanstack/react-query";
 import { createContext, Dispatch, SetStateAction, useContext, useState } from "react";
 
 export type modalsType = {
-    permisos: boolean
+    permisos: boolean;
+    password: boolean;
+}
+export type notiType = {
+    title: string;
+    message: string;
+    type?: "success" | "error" | "warning" | "info"
+    icon?: string;
 }
 
 type ContextUserProviderType = {
@@ -18,13 +25,16 @@ type ContextUserProviderType = {
     setSelectedUser: Dispatch<SetStateAction<UserListResults | null>>;
     users: UserListResults[];
     permisos: PermisosResults[];
+    noti: notiType | null;
+    setNoti: Dispatch<SetStateAction<notiType | null>>;
 };
 
 const UserContext = createContext<ContextUserProviderType | null>(null);
 
 function UserProvider({ children }: { children: React.ReactNode }) {
     const { userData } = useAuth()
-    const [modals, setModals] = useState<modalsType>({ permisos: false })
+    const [modals, setModals] = useState<modalsType>({ permisos: !1, password: !1 });
+    const [noti, setNoti] = useState<notiType | null>(null)
     const [selectedUser, setSelectedUser] = useState<UserListResults | null>(null)
     const handleModals = (modalName: keyof modalsType) => setModals({ ...modals, [modalName]: !modals[modalName] })
 
@@ -74,7 +84,9 @@ function UserProvider({ children }: { children: React.ReactNode }) {
         permisos: data.permisos,
         error: dataError,
         selectedUser,
-        setSelectedUser
+        setSelectedUser,
+        noti,
+        setNoti,
     };
 
     return <UserContext.Provider value={values}>

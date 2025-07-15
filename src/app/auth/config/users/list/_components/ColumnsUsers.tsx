@@ -10,14 +10,24 @@ export default function ColumnsUsers(setSelectedUser: React.Dispatch<React.SetSt
 
   const Acciones = (rowData: UserListResults) => (
     <Stack direction="row" spacing={1}>
-      <Tooltip title="Seleccionar">
+      <Tooltip title="Cambiar contraseña" arrow>
+        <IconButton
+          onClick={() => {
+            setSelectedUser(rowData);
+            handleModals("password");
+          }}
+        >
+          <Icon name="password-user" />
+        </IconButton>
+      </Tooltip>
+      <Tooltip title="Permisos" arrow>
         <IconButton
           onClick={() => {
             setSelectedUser(rowData);
             handleModals("permisos");
           }}
         >
-          <Icon name="key" />
+          <Icon name="user-cog" />
         </IconButton>
       </Tooltip>
     </Stack>

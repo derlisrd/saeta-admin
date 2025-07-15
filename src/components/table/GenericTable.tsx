@@ -21,7 +21,7 @@ interface GenericTableProps<T> {
 const defaultHeaderRenderer = ({ label }: TableHeaderProps) => <TableCellHead>{label}</TableCellHead>;
 const defaultCellRenderer = ({ cellData }: TableCellProps) => <TableCell>{cellData}</TableCell>;
 
-function GenericTable<T extends object>({ data, dataTextNull = 'No data', columns, rowHeight = 48, headerHeight = 48, sx, minHeight = 190 }: GenericTableProps<T>) {
+function GenericTable<T extends object>({ data, dataTextNull = 'No hay datos', columns, rowHeight = 48, headerHeight = 48, sx, minHeight = 190 }: GenericTableProps<T>) {
   return (
     <StyledTableContainer sx={{ minHeight: `calc(100% - ${headerHeight + minHeight}px)`, ...sx }}>
       {data && (
