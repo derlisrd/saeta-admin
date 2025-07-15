@@ -3,19 +3,16 @@ import {
     Grid,
     Box,
     Typography,
-    Button,
-    IconButton,
     Rating,
-    TextField,
     Breadcrumbs,
 } from "@mui/material";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { Key, useState } from "react";
 import { APP_IMAGE_BASE } from "@/constants/config";
 
 
 function Details() {
-    const { id } = useParams();
+    //const { id } = useParams();
     const location = useLocation();
     const { producto } = location.state || {};
     const [selectedImage, setSelectedImage] = useState(
