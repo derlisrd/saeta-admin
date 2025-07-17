@@ -223,13 +223,24 @@ const menu: menuType[] = [
   },
   {
     id: 8,
-    title: "Actualización",
-    icon: "refresh",
+    title: "Tienda virtual",
+    icon: "building-store",
     color: "#0066cc",
-    url: "/actualizacion",
+    url: "/tienda",
     private: false,
-    submenu: null,
-    descripcion: "Actualización"
+    descripcion: "",
+    submenu: [
+      {
+        id: 3,
+        title: "Información",
+        icon: "tune",
+        color: "#0066cc",
+        url: "/tienda/info",
+        private: false,
+        descripcion: "",
+        submenu: null
+      }
+    ]
   }
 ];
 

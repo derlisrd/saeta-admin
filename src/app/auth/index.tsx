@@ -61,6 +61,10 @@ function AutenticatedPages() {
           <Route path="/ventas/pedidos/devoluciones" element={<Devoluciones />} />
           <Route path="/actualizacion" element={<Actualizaciones />} />
           <Route path="/logout" element={<LogOut />} />
+
+          <Route path="/tienda/info" element={<TiendaInfo />} />
+
+
         </Route>
         <Route path="*" element={<Page404 />} />
       </Routes>
@@ -102,4 +106,8 @@ const Actualizaciones = Loadable(lazy(() => import('./actualizacion')));
 
 const EstadisticasProducto = Loadable(lazy(() => import("./estadisticas/producto")));
 const EstadisticasGeneral = Loadable(lazy(() => import("./estadisticas/general")));
+
+
+const TiendaInfo = Loadable(lazy(() => import("./tienda/info")));
+
 export default AutenticatedPages;
