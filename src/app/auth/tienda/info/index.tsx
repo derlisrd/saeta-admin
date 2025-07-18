@@ -1,6 +1,10 @@
 import { Button, Card, CardActions, CardContent, Container, Grid, TextField, Typography } from "@mui/material";
+import useOptionTienda from "./_hooks/useOptionTienda";
 
 function InfoTienda() {
+    const { data, isLoading } = useOptionTienda()
+
+    console.log({ data, isLoading })
     return (
         <Container>
             <Grid container spacing={2}>

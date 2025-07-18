@@ -16,6 +16,7 @@ import { apiServiceUsers } from "./users/users";
 import { apiServicePermisos } from "./auth/permisos";
 import { apiServicePassword } from "./auth/password";
 import { apiServiceCreditos } from "./pedidos/creditos";
+import { apiServiceOptions } from "./tienda/options";
 
 const API = {
     auth : apiServiceAuth,
@@ -35,7 +36,8 @@ const API = {
     config: apiServiceConfig ,
     users: apiServiceUsers,
     estadisticas: apiServiceEstadisticas,
-    sucursales: apiServiceSucursales
+    sucursales: apiServiceSucursales,
+    options: apiServiceOptions
 }
 
 export default API
