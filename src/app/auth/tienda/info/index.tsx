@@ -1,4 +1,4 @@
-import { Button, Card, CardActions, CardContent, Container, Grid, Stack, TextField, Typography } from "@mui/material";
+import { Button, Card, CardActions, CardContent, Container, Grid, TextField, Typography } from "@mui/material";
 
 function InfoTienda() {
     return (
