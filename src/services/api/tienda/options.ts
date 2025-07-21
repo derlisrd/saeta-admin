@@ -13,5 +13,20 @@ export const apiServiceOptions = {
       }
       throw new Error("Error de servidor");
     }
+  },
+  createOrUpdate : async(token: string | null, key: string, value: string)=>{
+    try {
+      const {data, status} = await BASE.post('/options',
+        {
+          key,value
+        },
+        {headers: { Authorization: token}})
+      return new OptionsResponse({ results: data.results, status: status, message: '', success : data.success });
+  } catch (e) {
+    if (isAxiosError(e)) {
+      throw new Error(e.response?.data.message || "Error de servidor");
+    }
+    throw new Error("Error de servidor");
+  }
   }
 };

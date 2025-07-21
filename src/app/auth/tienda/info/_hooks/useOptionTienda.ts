@@ -1,6 +1,6 @@
 import { useAuth } from "@/providers/AuthProvider";
 import API from "@/services/api";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 function useOptionTienda() {
 
@@ -11,8 +11,13 @@ function useOptionTienda() {
         queryFn: ()=> API.options.all(userData && userData.token)
     });
 
+    const { isPending } = useMutation({
+      mutationKey: ["updateOrCreate"],
+      mutationFn: ({ key, value }: { key: string; value: string }) => API.options.createOrUpdate(userData && userData.token, key, value)
+    });
+
     
-    return {isLoading, data}
+    return {isLoading, isPending, data}
 }
 
 export default useOptionTienda;
