@@ -25,7 +25,19 @@ function InfoTienda() {
                     </Card>
                 </Grid>
                 <Grid size={{ xs: 12, sm: 6, md: 6 }}>
-
+                    <Card>
+                        <CardContent>
+                            <Typography variant="h6" sx={{ mb: 2 }}>
+                                Logo de la tienda
+                            </Typography>
+                            <TextField fullWidth label="Nombre de tienda virtual" helperText="Máximo 12 caracteres" />
+                        </CardContent>
+                        <CardActions>
+                            <Button>Guardar cambios</Button>
+                        </CardActions>
+                    </Card>
+                </Grid>
+                <Grid size={{ xs: 12, sm: 12, md: 12 }}>
                     <Card>
                         <CardContent>
                             <Typography variant="h6" sx={{ mb: 2 }}>
@@ -38,8 +50,33 @@ function InfoTienda() {
                         </CardActions>
                     </Card>
                 </Grid>
-                <Grid size={{ xs: 12, sm: 6, md: 6 }}>
-
+                <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+                    <Card>
+                        <CardContent>
+                            <Typography variant="h6" sx={{ mb: 2 }}>
+                                Whatsapp
+                            </Typography>
+                            <TextField fullWidth label="Teléfono" helperText="Número de teléfono" />
+                        </CardContent>
+                        <CardActions>
+                            <Button>Guardar cambios</Button>
+                        </CardActions>
+                    </Card>
+                </Grid>
+                <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+                    <Card>
+                        <CardContent>
+                            <Typography variant="h6" sx={{ mb: 2 }}>
+                                Teléfono
+                            </Typography>
+                            <TextField fullWidth label="Teléfono" helperText="Número de teléfono" />
+                        </CardContent>
+                        <CardActions>
+                            <Button>Guardar cambios</Button>
+                        </CardActions>
+                    </Card>
+                </Grid>
+                <Grid size={{ xs: 12, sm: 6, md: 4 }}>
                     <Card>
                         <CardContent>
                             <Typography variant="h6" sx={{ mb: 2 }}>

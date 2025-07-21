@@ -1,5 +1,5 @@
 import { AddProducto } from "@/services/dto/productos/AddProducto";
-import { Container, Grid, IconButton, Card, CardMedia, Typography, Box } from "@mui/material";
+import { Container, Grid, IconButton, Card, CardMedia, Typography, Box, Stack } from "@mui/material";
 import useAddProducto from "../_hook/useAddProducto";
 import imageCompression from "browser-image-compression";
 import { useDropzone } from "react-dropzone";
@@ -58,10 +58,12 @@ function Imagenes() {
       {/* Área de subida con Drag & Drop */}
       <Box {...getRootProps()} borderRadius={2} border={2} padding={3} sx={{ borderStyle: "dashed", cursor: "pointer" }}>
         <input {...getInputProps()} />
-        <Icon size={24} name='photo-up' />
-        <Typography variant="h6" color="textSecondary">
-          {isDragActive ? "Suelta las imágenes aquí..." : "Arrastra y suelta imágenes aquí o haz clic para seleccionar"}
-        </Typography>
+        <Stack direction='row' gap={4}>
+          <Icon size={24} name='photo-up' />
+          <Typography variant="body1" color="textSecondary">
+            {isDragActive ? "Suelta las imágenes aquí..." : "Arrastra y suelta imágenes aquí o haz clic para seleccionar (Máximo 6 imágenes JPG o PNG)"}
+          </Typography>
+        </Stack>
       </Box>
 
       {/* Vista previa de imágenes */}
