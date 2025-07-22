@@ -56,6 +56,7 @@ export class AddPedidoItem {
   deposito_id: number;
   impuesto_id: number;
   cantidad: number;
+  comision: number;
   precio: number;
   descuento: number;
   total: number;
@@ -68,6 +69,7 @@ export class AddPedidoItem {
     impuesto_id = 0,
     cantidad = 0,
     precio = 0,
+    comision = 0,
     descuento = 0,
     total = 0,
     observacion = "",
@@ -80,6 +82,7 @@ export class AddPedidoItem {
     this.impuesto_id = impuesto_id;
     this.cantidad = cantidad;
     this.precio = precio;
+    this.comision = comision;
     this.descuento = descuento;
     this.total = total;
     this.observacion = observacion;

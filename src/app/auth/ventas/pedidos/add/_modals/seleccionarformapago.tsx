@@ -29,7 +29,7 @@ import useValidateFormaPago from "../_hooks/useValidateFormaPago";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 
-function FormaPagoModal() {
+export default function SeleccionarFormaPagoModal() {
   const { formasPago, pedidos, index, changePedido, handleFormasPago } = useHook();
   const { isMdDown } = useResponsive();
   const { modal, handleModal, setModal } = useModal();
@@ -114,7 +114,7 @@ function FormaPagoModal() {
   };
 
   return (
-    <Dialog open={modal.formapago} onClose={close} fullWidth maxWidth="md" fullScreen={isMdDown}>
+    <Dialog open={modal.formapago} onClose={close} fullWidth maxWidth="md" fullScreen={isMdDown} slotProps={{ paper: { sx: { borderRadius: 0 } } }}>
       <DialogTitle>
         <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
           <Total />
@@ -258,4 +258,4 @@ function FormaPagoModal() {
   );
 }
 
-export default FormaPagoModal;
+

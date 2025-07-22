@@ -1,6 +1,7 @@
 import GenericTable from '@/components/table/GenericTable';
 import { ProductoMasVendido } from '@/services/dto/estadisticas/productos';
 import { Box } from '@mui/material'
+import { TableCellProps } from 'react-virtualized';
 
 interface ProductosMasVendidosProps {
     data: ProductoMasVendido[];
@@ -29,11 +30,13 @@ function ProductosMasVendidosLista({ data }: ProductosMasVendidosProps) {
             dataKey: "ingresos_total",
             label: "Ingresos",
             width: width * 0.15,
+            cellRenderer: ({ rowData }: TableCellProps) => rowData.ingresos_total.toLocaleString("es-ES"),
         },
         {
             dataKey: "lucro_total",
             label: "Lucro",
             width: width * 0.15,
+            cellRenderer: ({ rowData }: TableCellProps) => rowData.lucro_total.toLocaleString("es-ES"),
         },
     ];
 

@@ -138,6 +138,7 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
       setPedidos((prevPedidos) => {
         const updatedPedidos = [...prevPedidos];
         if (res.results) {
+
           updatedPedidos[index].items.push(
             new AddPedidoItem({
               producto_id: res.results.id,
@@ -146,6 +147,7 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
               cantidad,
               precio: res.results.precio_normal,
               descuento: 0,
+              comision: res.results.valor_comision || 0,
               total: res.results.precio_normal * cantidad,
               observacion: "",
               codigo: res.results.codigo,

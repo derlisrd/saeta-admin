@@ -23,6 +23,7 @@ import useAddProducto from "../_hook/useAddProducto";
 import { NumericFormat } from "react-number-format";
 import Stock from "./stock";
 import Icon from "@/components/ui/icon";
+import Comision from "./comision";
 
 function Datos() {
   const { form, handleModal, changeByName, impuestos, categorias, medidas, inputCodigoRef, verificarCodigoDisponible, error, generateCode } = useAddProducto();
@@ -93,7 +94,7 @@ function Datos() {
           />
         </Grid>
         <Grid size={12}>
-          <Typography variant="button">INFORMACION</Typography>
+          <Typography variant="button" fontWeight='bold'>INFORMACION</Typography>
         </Grid>
         <Grid size={{ xs: 12, md: 4 }}>
           <TextField
@@ -202,7 +203,7 @@ function Datos() {
           </FormControl>
         </Grid>
         <Grid size={12}>
-          <Typography variant="button">VALORES</Typography>
+          <Typography variant="button" fontWeight='bold'>VALORES</Typography>
         </Grid>
         <Grid size={{ xs: 12, md: 3 }}>
           <NumericFormat
@@ -275,6 +276,8 @@ function Datos() {
             error={error.code === 8}
           />
         </Grid>
+        <Comision />
+
         {form.tipo === 1 && <Stock />}
       </Grid>
     </Fragment>

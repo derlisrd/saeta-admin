@@ -1,4 +1,4 @@
-import { Box, Container, Dialog, DialogContent, Fade, Grid, Stack, Typography } from "@mui/material";
+import { Box, Container, Dialog, DialogContent, Grid, Stack, Typography } from "@mui/material";
 import Items from "./_components/items";
 import Error from "./_components/error";
 import InputCodigo from "./_components/codigo";
@@ -17,7 +17,7 @@ function Main() {
 
 
   return (
-    <Dialog open={modal.main} fullScreen TransitionComponent={Fade} disableRestoreFocus PaperProps={{ sx: { borderRadius: "0" } }}>
+    <Dialog open={modal.main} fullScreen disableRestoreFocus slotProps={{ paper: { sx: { borderRadius: 0 } } }} >
       <Error error={error} clearError={clearError} />
       <Title />
       <DialogContent>
