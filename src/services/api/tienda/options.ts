@@ -1,6 +1,6 @@
 import { isAxiosError } from "axios";
 import { BASE } from "../base";
-import { OptionsResponse } from "@/services/dto/tienda/options";
+import { OptionsResponse, OptionsResults } from "@/services/dto/tienda/options";
 
 export const apiServiceOptions = {
   all: async (token: string | null) => {
@@ -14,11 +14,11 @@ export const apiServiceOptions = {
       throw new Error("Error de servidor");
     }
   },
-  createOrUpdate : async(token: string | null, key: string, value: string)=>{
+  createOrUpdate : async(token: string | null, option : OptionsResults)=>{
     try {
       const {data, status} = await BASE.post('/options',
         {
-          key,value
+          key: option.key,value : option.value, json: option.json
         },
         {headers: { Authorization: token}})
       return new OptionsResponse({ results: data.results, status: status, message: '', success : data.success });
