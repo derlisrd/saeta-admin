@@ -3,7 +3,7 @@ import { NumericFormat } from "react-number-format";
 import useAddProducto from "../_hook/useAddProducto";
 
 function Comision() {
-    const { form } = useAddProducto()
+    const { form, changeByName } = useAddProducto()
     return (
         <>
             <Grid size={12}>
@@ -13,18 +13,21 @@ function Comision() {
             </Grid>
             <Grid size={{ xs: 12, md: 3 }}>
                 <NumericFormat
+                    allowNegative={false}
                     customInput={TextField}
+                    suffix="%"
                     thousandSeparator="."
                     decimalSeparator=","
-                    placeholder="Precio promocional"
-                    name="precio_descuento"
-                    value={0}
+                    placeholder="Si tiene comisión"
+                    isAllowed={({ floatValue }) => floatValue !== undefined && floatValue < 100}
+                    value={form.porcentaje_comision}
+                    valueIsNumericString
                     onValueChange={(e) => {
-                        //changeByName("precio_descuento", Number(e.value));
+                        changeByName("porcentaje_comision", Number(e.value));
                     }}
                     fullWidth
-                    label="Si tiene promoción"
-                    helperText="Precio con promoción"
+                    label="Completa si tiene comisión"
+                    helperText="% de comision"
                 /* error={error.code === 8} */
                 />
             </Grid>

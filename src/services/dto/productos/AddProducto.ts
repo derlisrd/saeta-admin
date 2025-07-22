@@ -12,12 +12,13 @@ export class AddProducto {
   precio_normal: number;
   precio_minimo: number;
   precio_descuento: number;
+  porcentaje_comision: number;
   disponible: number;
   tipo: number;
   cantidad_minima: number;
-  //stock: AddStock[];
   stock: number;
   deposito_id: number;
+  modo_comision: number;
 
   images: File[] | null;
   atributos: AtributosProducto[];
@@ -36,9 +37,10 @@ export class AddProducto {
     disponible = 1,
     tipo = 1,
     cantidad_minima = 0,
-    //stock = [],
+    porcentaje_comision = 0,
     stock = 0,
     deposito_id = 0,
+    modo_comision = 1,
     atributos = []
   }: Partial<AddProducto>) {
     this.images = images;
@@ -58,7 +60,8 @@ export class AddProducto {
     this.atributos = atributos;
     this.stock = stock;
     this.deposito_id = deposito_id;
-    //this.stock = stock.map((item) => new AddStock(item));
+    this.porcentaje_comision = porcentaje_comision;
+    this.modo_comision = modo_comision;
   }
 
   static fromJSON(json: Record<string, any>): AddProducto {
@@ -76,12 +79,14 @@ export class AddProducto {
       costo: this.costo,
       precio_normal: this.precio_normal,
       precio_minimo: this.precio_minimo,
+      precio_descuento: this.precio_descuento,
+      modo_comision: 1,//this.modo_comision,
+      porcentaje_comision: this.porcentaje_comision,
       disponible: this.disponible,
       tipo: this.tipo,
       cantidad_minima: this.cantidad_minima,
       stock: this.stock,
       deposito_id: this.deposito_id,
-      precio_descuento: this.precio_descuento,
       atributos: this.atributos,
       images: this.images
     };
