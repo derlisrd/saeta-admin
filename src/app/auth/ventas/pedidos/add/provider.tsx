@@ -130,7 +130,7 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
       return API.productos.consultarCodigoPorDeposito(userData && userData.token, codigo, depositoActivo.id, cantidad);
     },
     onSuccess: (res) => {
-      if (!res.success) {
+      if (!res.success || !res.results) {
         setError({ code: 1, message: res.message, active: true });
         return;
       }
@@ -138,7 +138,6 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
       setPedidos((prevPedidos) => {
         const updatedPedidos = [...prevPedidos];
         if (res.results) {
-
           updatedPedidos[index].items.push(
             new AddPedidoItem({
               producto_id: res.results.id,
@@ -147,7 +146,7 @@ function AddPedidoProvider({ children }: { children: ReactNode }) {
               cantidad,
               precio: res.results.precio_normal,
               descuento: 0,
-              comision: res.results.valor_comision || 0,
+              comision: res.results.porcentaje_comision === null ? 0 : (res.results.porcentaje_comision * res.results.precio_normal / 100),
               total: res.results.precio_normal * cantidad,
               observacion: "",
               codigo: res.results.codigo,

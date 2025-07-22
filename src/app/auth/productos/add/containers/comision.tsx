@@ -11,7 +11,7 @@ function Comision() {
                     COMISIÓN
                 </Typography>
             </Grid>
-            <Grid size={{ xs: 12, md: 3 }}>
+            <Grid size={{ xs: 12, md: 4 }}>
                 <NumericFormat
                     allowNegative={false}
                     customInput={TextField}
@@ -20,7 +20,7 @@ function Comision() {
                     decimalSeparator=","
                     placeholder="Si tiene comisión"
                     isAllowed={({ floatValue }) => floatValue !== undefined && floatValue < 100}
-                    value={form.porcentaje_comision}
+                    value={form.porcentaje_comision === 0 ? '' : form.porcentaje_comision}
                     valueIsNumericString
                     onValueChange={(e) => {
                         changeByName("porcentaje_comision", Number(e.value));

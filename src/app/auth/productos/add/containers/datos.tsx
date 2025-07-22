@@ -36,10 +36,10 @@ function Datos() {
               input: {
                 startAdornment: (
                   <InputAdornment position="start">
-                    <Icon name='barcode' />
+                    <Icon name="barcode" />
                   </InputAdornment>
-                )
-              }
+                ),
+              },
             }}
             id="codigo"
             fullWidth
@@ -60,7 +60,7 @@ function Datos() {
           />
         </Grid>
         <Grid size={{ xs: 12, md: 6 }}>
-          <Button variant="contained" endIcon={<Icon name='arrows-random' />} onClick={generateCode}>
+          <Button variant="contained" endIcon={<Icon name="arrows-random" />} onClick={generateCode}>
             GENERAR
           </Button>
         </Grid>
@@ -71,30 +71,31 @@ function Datos() {
               value="1"
               checked={form.tipo === 1}
               onChange={() => changeByName("tipo", 1)}
-              control={<Checkbox icon={<Icon name='circle-dashed' />} checkedIcon={<Icon name='circle-check' />} />}
+              control={<Checkbox icon={<Icon name="circle-dashed" />} checkedIcon={<Icon name="circle-check" />} />}
               label="Producto"
             />
             <FormControlLabel
               value="2"
               checked={form.tipo === 2}
               onChange={() => changeByName("tipo", 2)}
-              control={<Checkbox icon={<Icon name='circle-dashed' />} checkedIcon={<Icon name='circle-check' />} />}
+              control={<Checkbox icon={<Icon name="circle-dashed" />} checkedIcon={<Icon name="circle-check" />} />}
               label="Servicio"
             />
           </Stack>
         </Grid>
         <Grid size={{ xs: 12, md: 6 }}>
-
           <FormControlLabel
             value="1"
             checked={form.disponible === 1}
             onChange={() => changeByName("disponible", form.disponible === 1 ? 0 : 1)}
-            control={<Checkbox icon={<Icon name='circle-dashed' />} checkedIcon={<Icon name='circle-check' />} />}
+            control={<Checkbox icon={<Icon name="circle-dashed" />} checkedIcon={<Icon name="circle-check" />} />}
             label="Mostrar en tienda virtual"
           />
         </Grid>
         <Grid size={12}>
-          <Typography variant="button" fontWeight='bold'>INFORMACION</Typography>
+          <Typography variant="button" fontWeight="bold">
+            INFORMACION
+          </Typography>
         </Grid>
         <Grid size={{ xs: 12, md: 4 }}>
           <TextField
@@ -168,7 +169,7 @@ function Datos() {
               <List>
                 <ListItemButton onClick={() => handleModal("categorias")}>
                   <ListItemIcon>
-                    <Icon name='circle-plus' />
+                    <Icon name="circle-plus" />
                   </ListItemIcon>
                   <ListItemText primary="Agregar categoria" />
                 </ListItemButton>
@@ -203,7 +204,9 @@ function Datos() {
           </FormControl>
         </Grid>
         <Grid size={12}>
-          <Typography variant="button" fontWeight='bold'>VALORES</Typography>
+          <Typography variant="button" fontWeight="bold">
+            VALORES
+          </Typography>
         </Grid>
         <Grid size={{ xs: 12, md: 3 }}>
           <NumericFormat
@@ -212,7 +215,7 @@ function Datos() {
             decimalSeparator=","
             placeholder="Costo"
             name="costo"
-            value={form.costo}
+            value={form.costo === 0 ? "" : form.costo}
             onValueChange={(e) => {
               changeByName("costo", Number(e.value));
             }}
@@ -230,7 +233,7 @@ function Datos() {
             decimalSeparator=","
             placeholder="Precio normal"
             name="precio_normal"
-            value={form.precio_normal}
+            value={form.precio_normal === 0 ? "" : form.precio_normal}
             onValueChange={(e) => {
               changeByName("precio_normal", Number(e.value));
             }}
@@ -248,7 +251,7 @@ function Datos() {
             decimalSeparator=","
             placeholder="Precio mínimo"
             name="precio_minimo"
-            value={form.precio_minimo}
+            value={form.precio_minimo === 0 ? "" : form.precio_minimo}
             onValueChange={(e) => {
               changeByName("precio_minimo", Number(e.value));
             }}
@@ -266,7 +269,7 @@ function Datos() {
             decimalSeparator=","
             placeholder="Precio promocional"
             name="precio_descuento"
-            value={form.precio_descuento}
+            value={form.precio_descuento === 0 ? "" : form.precio_descuento}
             onValueChange={(e) => {
               changeByName("precio_descuento", Number(e.value));
             }}

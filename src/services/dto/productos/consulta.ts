@@ -41,7 +41,7 @@ export class ConsultarPorDepositoResults {
     tipo: number;
     cantidad: number;
     valor_comision: number | null;
-
+    porcentaje_comision : number;
     constructor({
         id = 0,
         producto_id = 0,
@@ -56,7 +56,8 @@ export class ConsultarPorDepositoResults {
         disponible = 0,
         tipo = 0,
         cantidad = 0,
-        valor_comision = 0
+        valor_comision = 0,
+        porcentaje_comision = 0
     } : Partial<ConsultarPorDepositoResults> = {}){
         this.id = id;
         this.producto_id = producto_id;
@@ -72,5 +73,6 @@ export class ConsultarPorDepositoResults {
         this.cantidad = cantidad;
         this.impuesto_id = impuesto_id;
         this.valor_comision = valor_comision;
+        this.porcentaje_comision = porcentaje_comision;
     }
 }
