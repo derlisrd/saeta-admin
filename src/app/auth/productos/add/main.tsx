@@ -2,7 +2,6 @@ import { Alert, Box, Container, LinearProgress, Paper, Slide } from "@mui/materi
 import Datos from "./containers/datos";
 import Imagenes from "./containers/imagenes";
 import useAddProducto from "./_hook/useAddProducto";
-import NotificacionSnack from "@/components/common/NotificacionSnack";
 import TabContainer from "@/components/containers/tabcontainer";
 import { useEffect } from "react";
 import { showAlert } from "@/core/utils/alert";
@@ -12,7 +11,7 @@ import SenderForm from "./containers/senderForm";
 
 
 function AddProductoMain() {
-  const { clearSuccess, success, loading, tabValue, dataError, setTabValue, error } = useAddProducto();
+  const { loading, tabValue, dataError, setTabValue, error } = useAddProducto();
 
   useEffect(() => {
     if (dataError) {
@@ -26,7 +25,7 @@ function AddProductoMain() {
 
 
   return (
-    <Container>
+    <Container sx={{ mb: 8 }}>
       {error.code > 0 && (
         <Alert severity="error" sx={{ mb: 2 }}>
           {error.message}
@@ -35,7 +34,6 @@ function AddProductoMain() {
 
       <SenderForm />
 
-      <NotificacionSnack open={success.active} onClose={clearSuccess} message={success.message} severity="info" />
 
       <Slide direction="up" in={true} mountOnEnter unmountOnExit>
         <Box boxShadow={4} borderRadius={4} component={Paper} mb={6} padding={{ xs: 0, sm: 1 }}>

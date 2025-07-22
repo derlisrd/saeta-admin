@@ -12,9 +12,7 @@ function SenderForm() {
             zIndex: 1000, // Asegura que esté por encima de otros elementos
             backdropFilter: "blur(5px)",
             padding: 2,
-            // Para que ocupe todo el ancho del contenedor padre
             width: "100%",
-            // Agregamos un poco de sombra para que se vea mejor
             boxShadow: "0px -4px 10px rgba(0, 0, 0, 0.1)",
         }}
     >
