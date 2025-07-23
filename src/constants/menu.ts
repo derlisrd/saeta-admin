@@ -239,6 +239,16 @@ const menu: menuType[] = [
         private: false,
         descripcion: "",
         submenu: null
+      },
+      {
+        id: 3,
+        title: "Apariencia",
+        icon: "tune",
+        color: "#0066cc",
+        url: "/tienda/apariencia",
+        private: false,
+        descripcion: "",
+        submenu: null
       }
     ]
   }

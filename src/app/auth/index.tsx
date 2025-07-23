@@ -22,9 +22,7 @@ const Loadable =
 
 function AutenticatedPages() {
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}
-      adapterLocale="es"
-    >
+    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
       <Routes>
         <Route path="/" element={<AuthMenuLayout />}>
           <Route index element={<Home />} />
@@ -63,8 +61,7 @@ function AutenticatedPages() {
           <Route path="/logout" element={<LogOut />} />
 
           <Route path="/tienda/info" element={<TiendaInfo />} />
-
-
+          <Route path="/tienda/apariencia" element={<TiendaApariencia />} />
         </Route>
         <Route path="*" element={<Page404 />} />
       </Routes>
@@ -109,5 +106,6 @@ const EstadisticasGeneral = Loadable(lazy(() => import("./estadisticas/general")
 
 
 const TiendaInfo = Loadable(lazy(() => import("./tienda/info")));
+const TiendaApariencia = Loadable(lazy(() => import("./tienda/apariencia")));
 
 export default AutenticatedPages;

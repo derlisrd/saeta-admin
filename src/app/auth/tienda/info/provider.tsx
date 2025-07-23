@@ -1,7 +1,7 @@
 import { useAuth } from "@/providers/AuthProvider";
 import API from "@/services/api";
 import { OptionsResults } from "@/services/dto/tienda/options";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { createContext, useContext, useState } from "react";
 
 export type notiType = {
@@ -26,13 +26,16 @@ const Context = createContext<IOptions | undefined>(undefined)
 
 function OptionsProvider({ children }: { children: React.ReactNode }) {
 
+    const queryClient = useQueryClient()
     const { userData } = useAuth()
     const [noti, setNoti] = useState<notiType | null>(null)
+
     const { data, isLoading } = useQuery({
         queryKey: ["options"],
         queryFn: async () => API.options.all(userData && userData.token),
         select: (data) => data.results,
-        refetchOnWindowFocus: false
+        refetchOnWindowFocus: false,
+        staleTime: 30 * 5 * 1000
     })
 
     const updateInfo = useMutation({
@@ -46,7 +49,9 @@ function OptionsProvider({ children }: { children: React.ReactNode }) {
                     type: "success",
                     icon: "check-circle",
                 });
+                queryClient.invalidateQueries({ queryKey: ["options"] });
             }
+
         },
         onError(error) {
             setNoti({
