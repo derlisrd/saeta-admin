@@ -4,6 +4,7 @@ import Descripcion from "./containers/descripcion";
 import { useOptionsProvider } from "./provider";
 import Telefono from "./containers/telefono";
 import Direccion from "./containers/direccion";
+import Whatsapp from "./containers/whatsapp";
 
 function MainOptions() {
     const { isLoading, isPending } = useOptionsProvider()
@@ -26,6 +27,9 @@ function MainOptions() {
                     </Grid>
                     <Grid size={{ xs: 12, md: 8 }}>
                         <Direccion />
+                    </Grid>
+                    <Grid size={{ xs: 12, md: 4 }}>
+                        <Whatsapp />
                     </Grid>
                 </Grid>
             )}

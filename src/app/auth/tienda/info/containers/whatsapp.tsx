@@ -3,12 +3,12 @@ import { useOptionsProvider } from "../provider";
 import { useEffect, useState } from "react";
 import Icon from "@/components/ui/icon";
 
-export default function Telefono() {
+export default function Whatsapp() {
     const { options, isPending, updateInfoOption } = useOptionsProvider()
     const [title, setTitle] = useState("");
 
     // Buscar la opción específica para el nombre de tienda
-    const titleOption = options.find(option => option.key === "telefono");
+    const titleOption = options.find(option => option.key === "whatsapp");
 
     useEffect(() => {
         if (titleOption) {
@@ -20,7 +20,7 @@ export default function Telefono() {
     const enviar = () => {
 
         updateInfoOption({
-            key: "telefono",
+            key: "whatsapp",
             value: title,
             json: 0
         });
@@ -33,21 +33,15 @@ export default function Telefono() {
         <Card>
             <CardContent>
                 <Typography variant="h6" sx={{ mb: 2 }}>
-                    Teléfono de contacto
+                    WhatsApp
                 </Typography>
-                <TextField
-                    fullWidth
-                    label="Teléfono"
-                    helperText="Número de contacto"
+                <TextField fullWidth
                     slotProps={{
                         input: {
-                            startAdornment: <Icon name="phone" />
+                            startAdornment: <Icon name="brand-whatsapp" />
                         }
                     }}
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    disabled={isPending}
-                />
+                    label="Whatsapp" helperText="Número de whatsapp" value={title} onChange={(e) => setTitle(e.target.value)} disabled={isPending} />
             </CardContent>
             <CardActions>
                 <Button disabled={isPending} onClick={enviar}>
