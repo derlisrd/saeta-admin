@@ -17,13 +17,13 @@ export default function Descripcion() {
 
 
     const enviar = () => {
-        if (title.length <= 16) {
-            updateInfoOption({
-                key: "descripcion",
-                value: title,
-                json: 0
-            });
-        }
+
+        updateInfoOption({
+            key: "descripcion",
+            value: title,
+            json: 0
+        });
+
     };
 
 
@@ -35,12 +35,14 @@ export default function Descripcion() {
             </Typography>
             <TextField
                 fullWidth
-                label="Nombre de tienda virtual"
+                label="Descripcion de tu tienda"
                 helperText={`${title.length}/144 caracteres`}
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 error={title.length > 144}
                 disabled={isPending}
+                multiline
+                rows={1}
             />
         </CardContent>
         <CardActions>
