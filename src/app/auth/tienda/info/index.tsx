@@ -1,5 +1,5 @@
 
-import OptionsProvider from "./provider";
+import OptionsProvider from "../provider";
 import MainOptions from "./main";
 import Notificacion from "./containers/noti";
 

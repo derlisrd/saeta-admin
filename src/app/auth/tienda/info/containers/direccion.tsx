@@ -1,5 +1,5 @@
 import { Button, Card, CardActions, CardContent, TextField, Typography } from "@mui/material";
-import { useOptionsProvider } from "../provider";
+import { useOptionsProvider } from "../../provider";
 import { useEffect, useState } from "react";
 
 export default function Direccion() {

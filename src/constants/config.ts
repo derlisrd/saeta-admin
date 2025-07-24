@@ -15,9 +15,11 @@ export const API_URL = isLocal? `${api_local}/api` : `${window.location.protocol
 export const APP_IMAGE_BASE = isLocal ? `${base}` : `${window.location.protocol}//${window.location.hostname}`;
 
 export const config = {
-    BASE_PATH: import.meta.env.VITE_BASE_PATH,
-    BASE_API_URL: API_URL,
-    X_API_KEY: import.meta.env.VITE_X_API_KEY,
-    CONFIG_LOCAL_STORAGE,
-    APP_IMAGE_BASE
-}
+  BASE_PATH: import.meta.env.VITE_BASE_PATH,
+  BASE_API_URL: API_URL,
+  X_API_KEY: import.meta.env.VITE_X_API_KEY,
+  CONFIG_LOCAL_STORAGE,
+  APP_IMAGE_BASE,
+  SUPABASE_URL: import.meta.env.VITE_SUPABASE_URL,
+  SUPABASE_ANON_KEY: import.meta.env.VITE_SUPABASE_ANON_KEY
+};

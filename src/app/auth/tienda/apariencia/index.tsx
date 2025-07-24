@@ -1,5 +1,5 @@
 function AparienciaTienda() {
-    return <h1>apareciencia</h1>
+    return <h1>En contruccion...</h1>;
 }
 
 export default AparienciaTienda;
