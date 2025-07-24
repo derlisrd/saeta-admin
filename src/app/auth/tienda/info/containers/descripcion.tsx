@@ -7,7 +7,7 @@ export default function Descripcion() {
     const [title, setTitle] = useState("");
 
     // Buscar la opción específica para el nombre de tienda
-    const titleOption = options.find(option => option.key === "descripcion");
+    const titleOption = options.find(option => option.key === "description");
 
     useEffect(() => {
         if (titleOption) {
@@ -19,7 +19,7 @@ export default function Descripcion() {
     const enviar = () => {
 
         updateInfoOption({
-            key: "descripcion",
+            key: "description",
             value: title,
             json: 0
         });
