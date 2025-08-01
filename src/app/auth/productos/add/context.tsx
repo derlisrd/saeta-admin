@@ -11,10 +11,6 @@ type errorType = {
   message: string;
 };
 
-type successType = {
-  active: boolean;
-  message: string;
-};
 
 export type notiType = {
   title: string;
@@ -42,8 +38,6 @@ interface AddProductoContextTypes {
   depositoActivo: DepositoResults;
   loading: boolean;
   medidas: Array<MedidasResults>;
-  success: successType;
-  clearSuccess: () => void;
   verificarCodigoDisponible: (codigo: string) => void;
   generateCode: () => void;
   inputCodigoRef: React.RefObject<HTMLInputElement>;

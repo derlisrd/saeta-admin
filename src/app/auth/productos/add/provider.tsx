@@ -24,7 +24,6 @@ function AddProductoProvider({ children }: { children: React.ReactNode }) {
 
   const [form, setForm] = useState<AddProducto>(new AddProducto({}));
   const [error, setError] = useState({ code: 0, message: "" });
-  const [success, setSuccess] = useState({ active: false, message: "" });
 
   const [modal, setModal] = useState<modalType>({
     categorias: false,
@@ -98,7 +97,7 @@ function AddProductoProvider({ children }: { children: React.ReactNode }) {
   };
 
 
-  const clearSuccess = useCallback(() => setSuccess({ active: false, message: "" }), []);
+
   const clearForm = useCallback(() => setForm(new AddProducto({})), []);
   const clearError = useCallback(() => setError({ code: 0, message: "" }), []);
 
@@ -137,11 +136,12 @@ function AddProductoProvider({ children }: { children: React.ReactNode }) {
     onSuccess: (res) => {
       if (res && res.success) {
         queryClient.invalidateQueries({ queryKey: ["productos"] });
-        setSuccess({ active: true, message: "Producto creado correctamente" });
+        setNoti({ title: 'Correcto', message: "Producto creado correctamente" });
         clear();
       }
     },
     onError: () => {
+      setNoti({ title: 'Correcto', message: "Producto creado correctamente", type: "error" });
       setError({ code: 500, message: "Ocurrió un error inesperado" });
     },
   });
@@ -171,8 +171,6 @@ function AddProductoProvider({ children }: { children: React.ReactNode }) {
     medidas: data.medidas,
     loading: isLoading || mutateCaller.isPending,
     depositoActivo: data.depositoActivo,
-    success,
-    clearSuccess,
     verificarCodigoDisponible,
     generateCode,
     inputCodigoRef,
